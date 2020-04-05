@@ -21,10 +21,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-<<<<<<< HEAD
-/backend/.env
-/backend/node_modules
-=======
-/backend/.env
->>>>>>> 4119ee9295e1bf6d0edc665fb9e1ba7345f65435
