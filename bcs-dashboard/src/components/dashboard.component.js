@@ -115,11 +115,17 @@ export default function LeftDrawerDashboard() {
           <Typography variant="h6" noWrap>
             BCS Dashboard
           </Typography>
+          
 
           <div className={classes.grow} />
+  
+          
+           
         </Toolbar>
+        
 
       </AppBar>
+      
       <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -134,6 +140,7 @@ export default function LeftDrawerDashboard() {
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
+        <Button color="inherit">I AM A BUTTON IN A DRAWER</Button>
         <Divider />
         <List>
           {['Timetable', 'Organizer', 'Course Select', 'Compare'].map((text, index) => (
@@ -153,6 +160,7 @@ export default function LeftDrawerDashboard() {
           ))}
         </List>
       </Drawer>
+      
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
