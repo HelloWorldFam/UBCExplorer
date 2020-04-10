@@ -1,70 +1,106 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React, { Component } from "react";
+import axios from "axios";
 
-import Helmet from 'react-helmet';
+export default class SignupScreen extends Component {
+  constructor(props) {
+    super(props);
 
-import {
-  FormControl,
-  Input,
-  InputLabel,
-  Button as MuiButton,
-  Paper,
-  Typography
-} from "@material-ui/core";
-import { spacing } from "@material-ui/system";
+    //binds the fields in this object to the methods defined below
+    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
-const Button = styled(MuiButton)(spacing);
+    this.state = {
+      username: "",
+      password: "",
+      email: "",
+    };
+  }
 
-const Wrapper = styled(Paper)`
-  padding: 10px;
-`;
+  // always use setState (not this.property = ...)
+  onChangeUsername(e) {
+    this.setState({
+      username: e.target.value,
+    });
+  }
 
-function SignUp() {
-  return (
-    <Wrapper>
-      <Helmet title="Sign Up" />
-      <Typography component="h1" variant="h4" align="center" gutterBottom>
-        Get started
-      </Typography>
-      <Typography component="h2" variant="body1" align="center">
-        Start creating the best possible user experience for you customers
-      </Typography>
-      <form>
-        <FormControl margin="normal" required fullWidth>
-          <InputLabel htmlFor="name">Name</InputLabel>
-          <Input id="name" name="name" autoFocus />
-        </FormControl>
-        <FormControl margin="normal" required fullWidth>
-          <InputLabel htmlFor="company">Company</InputLabel>
-          <Input id="company" name="company" />
-        </FormControl>
-        <FormControl margin="normal" required fullWidth>
-          <InputLabel htmlFor="email">Email Address</InputLabel>
-          <Input id="email" name="email" autoComplete="email" />
-        </FormControl>
-        <FormControl margin="normal" required fullWidth>
-          <InputLabel htmlFor="password">Password</InputLabel>
-          <Input
-            name="password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-        </FormControl>
-        <Button
-          component={Link}
-          to="/"
-          fullWidth
-          variant="contained"
-          color="primary"
-          mt={2}
-        >
-          Sign up
-        </Button>
-      </form>
-      </Wrapper>
-  );
+  onChangePassword(e) {
+    this.setState({
+      password: e.target.value,
+    });
+  }
+
+  onChangeEmail(e) {
+    this.setState({
+      email: e.target.value,
+    });
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+
+    const user = {
+      username: this.state.username,
+      password: this.state.password,
+      email: this.state.email,
+    };
+
+    console.log(user);
+
+    axios
+      .post("http://localhost:5000/users/register", user)
+      .then((res) => console.log(res.data));
+
+    this.setState({
+      username: "",
+      password: "",
+      email: "",
+    });
+  }
+
+  render() {
+    return (
+      <div class = "container">
+        <span class="border">
+        <h3>Signup</h3>
+        <form onSubmit={this.onSubmit}>
+          <div className="form-group"> 
+            <label>Username: </label>
+            <input type="text"
+                required
+                className="form-control"
+                value={this.state.username}
+                onChange={this.onChangeUsername}
+                placeholder="Enter a username"
+                />
+            </div>
+            <div className="form-group"> 
+            <label>Password: </label>
+            <input type="password"
+                required  
+                className="form-control"
+                value={this.state.password}
+                onChange={this.onChangePassword}
+                placeholder="Enter a password"
+                />
+            </div>
+            <div className="form-group"> 
+            <label>Email: </label>
+            <input type="email"
+                required  
+                className="form-control"
+                value={this.state.email}
+                onChange={this.onChangeEmail}
+                placeholder="Enter an email"
+                />
+            </div>
+          <div className="form-group">
+            <input type="submit" value="Sign Up" className="btn btn-primary" />
+          </div>
+        </form>
+        </span>
+      </div>
+    );
+  }
 }
-
-export default SignUp;
