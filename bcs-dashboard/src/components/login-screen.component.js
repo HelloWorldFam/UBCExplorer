@@ -62,7 +62,6 @@ export default class SignupScreen extends Component {
   render() {
     return (
       <div class = "container">
-        <span class="border">
         <h3>Signup</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group"> 
@@ -82,7 +81,7 @@ export default class SignupScreen extends Component {
                 className="form-control"
                 value={this.state.password}
                 onChange={this.onChangePassword}
-                placeholder="Enter a password"
+                placeholder="Password"
                 />
             </div>
             <div className="form-group"> 
@@ -92,14 +91,17 @@ export default class SignupScreen extends Component {
                 className="form-control"
                 value={this.state.email}
                 onChange={this.onChangeEmail}
-                placeholder="Enter an email"
+                placeholder="Email"
                 />
             </div>
           <div className="form-group">
             <input type="submit" value="Sign Up" className="btn btn-primary" />
           </div>
         </form>
-        </span>
+
+        <p>FOR TESTING: in order to make this actually write to the database, make sure you have the server running:</p>
+        <code>> cd backend</code><br />
+        <code>> nodemon server</code><br />
       </div>
     );
   }
