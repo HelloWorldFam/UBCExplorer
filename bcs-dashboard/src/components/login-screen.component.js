@@ -1,108 +1,108 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 
-export default class SignupScreen extends Component {
-  constructor(props) {
-    super(props);
+const useStyles = makeStyles({
+  root: {
+    minWidth: 550,
+    minHeight: 275,
+    padding: "10px",
+  },
+});
 
-    //binds the fields in this object to the methods defined below
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+export default function SetupPage() {
+  const classes = useStyles();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
-    this.state = {
-      username: "",
-      password: "",
-      email: "",
-    };
-  }
-
-  // always use setState (not this.property = ...)
-  onChangeUsername(e) {
-    this.setState({
-      username: e.target.value,
-    });
-  }
-
-  onChangePassword(e) {
-    this.setState({
-      password: e.target.value,
-    });
-  }
-
-  onChangeEmail(e) {
-    this.setState({
-      email: e.target.value,
-    });
-  }
-
-  onSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const user = {
-      username: this.state.username,
-      password: this.state.password,
-      email: this.state.email,
+      username: username,
+      password: password,
+      email: email,
     };
-
-    console.log(user);
 
     axios
       .post("http://localhost:5000/users/register", user)
       .then((res) => console.log(res.data));
 
-    this.setState({
-      username: "",
-      password: "",
-      email: "",
-    });
-  }
+    setUsername("");
+    setPassword("");
+    setEmail("");
+  };
 
-  render() {
-    return (
-      <div class = "container">
-        <h3>Signup</h3>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group"> 
-            <label>Username: </label>
-            <input type="text"
-                required
-                className="form-control"
-                value={this.state.username}
-                onChange={this.onChangeUsername}
-                placeholder="Enter a username"
-                />
-            </div>
-            <div className="form-group"> 
-            <label>Password: </label>
-            <input type="password"
-                required  
-                className="form-control"
-                value={this.state.password}
-                onChange={this.onChangePassword}
-                placeholder="Password"
-                />
-            </div>
-            <div className="form-group"> 
-            <label>Email: </label>
-            <input type="email"
-                required  
-                className="form-control"
-                value={this.state.email}
-                onChange={this.onChangeEmail}
-                placeholder="Email"
-                />
-            </div>
-          <div className="form-group">
-            <input type="submit" value="Sign Up" className="btn btn-primary" />
-          </div>
-        </form>
-
-        <p>FOR TESTING: in order to make this actually write to the database, make sure you have the server running:</p>
-        <code>> cd backend</code><br />
-        <code>> nodemon server</code><br />
-      </div>
-    );
-  }
+  return (
+    <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justify="center"
+      style={{ minHeight: "100vh" }}
+    >
+      <Card className={classes.root}>
+        <CardContent>
+          <br />
+          <Typography component="h1" variant="h4" align="center" gutterBottom>
+            Sign up
+          </Typography>
+          <br />
+          <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
+            <TextField
+              autoFocus
+              required
+              id="standard-full-width"
+              label="Username"
+              style={{ margin: 2 }}
+              placeholder="Enter a username"
+              fullWidth
+              margin="normal"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+            />
+            <br />
+            <br />
+            <TextField
+              required
+              id="standard-password-input"
+              label="Password"
+              type="password"
+              placeholder="Enter a password (3 characters minimum)"
+              style={{ margin: 2 }}
+              fullWidth
+              margin="normal"
+              onChange={e => setPassword(e.target.value)}
+            />
+            <br />
+            <br />
+            <TextField
+              required
+              id="standard-full-width"
+              type="email"
+              label="Email"
+              style={{ margin: 2 }}
+              placeholder="Enter an email"
+              fullWidth
+              margin="normal"
+              onChange={e => setEmail(e.target.value)}
+            />
+            <br />
+            <br />
+            <Button fullWidth variant="contained" color="primary" type="submit">
+              Sign up
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </Grid>
+  );
 }
