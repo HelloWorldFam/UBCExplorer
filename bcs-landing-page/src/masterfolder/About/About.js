@@ -11,14 +11,14 @@ export default class About extends Component {
                 <div className="container">
                     <div className="row">
                         <h4 className="center">
-                             <span className="purple-text darken-1">OUR</span> FEATURES
+                             <span className="blue-text darken-1">OUR</span> FEATURES
                          </h4>
                          <div className="col s12 m4">
                              <div className="card">
                                  <div className="card-image">
                                      <img src={Pic1} alt="Schedule" />
                                      <span className="card-title">Schedule</span>
-        <Link className="btn-floating activator halfway-fab waves-effect waves-light purple"><i class="material-icons">search</i></Link>
+        <Link className="btn-floating activator halfway-fab waves-effect waves-light blue"><i class="material-icons">search</i></Link>
         
                                  </div>
                                  <div className="card-content">
@@ -36,7 +36,7 @@ export default class About extends Component {
                                  <div className="card-image">
                                      <img src={Pic2} alt="Course Finder" />
                                      <span className="card-title">Course Finder</span>
-        <Link className="btn-floating activator halfway-fab waves-effect waves-light purple"><i class="material-icons">search</i></Link>
+        <Link className="btn-floating activator halfway-fab waves-effect waves-light blue"><i class="material-icons">search</i></Link>
         
                                  </div>
                                  <div className="card-content">
@@ -54,7 +54,7 @@ export default class About extends Component {
                                  <div className="card-image">
                                      <img src={Pic3} alt="Discussion Forum" />
                                      <span className="card-title">Discussion Forum</span>
-        <Link className="btn-floating activator halfway-fab waves-effect waves-light purple"><i class="material-icons">search</i></Link>
+        <Link className="btn-floating activator halfway-fab waves-effect waves-light blue"><i class="material-icons">search</i></Link>
         
                                  </div>
                                  <div className="card-content">

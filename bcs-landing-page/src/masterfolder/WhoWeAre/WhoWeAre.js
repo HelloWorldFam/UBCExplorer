@@ -72,7 +72,7 @@ class PhotoGallery extends Component {
             <section id="WhoWeAre" className="section section-WhoWeAre scrollspy">
                 <div className="container">
                     <h4 className="center">
-                        <span className="purple-text text-darken-1">FOUNDERS</span> WHO WE ARE
+                        <span className="blue-text text-darken-1">FOUNDERS</span> WHO WE ARE
                         
                         <p className="sizeFont">
                            We are a team of five, current BCS students

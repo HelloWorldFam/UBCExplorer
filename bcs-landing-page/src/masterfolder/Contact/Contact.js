@@ -8,7 +8,7 @@ export default class Contact extends Component {
                 <div className="container">
                     <div className="row">
                     <div className="col s12 m6">
-                        <div className="card-panel purple white-text center">
+                        <div className="card-panel blue white-text center">
                         <span class="material-icons">mail</span>
                         <h4>Email</h4>
                         <p>Please email us for any questions:_____ @gmail.com</p>
@@ -21,7 +21,7 @@ export default class Contact extends Component {
                             {/* <form>
                                 <div className="input-field">
                                     <input type="text" id="vision" className="validate" /> */}
-                                        {/* <label for="vision" className="purple-text">With the BCS course-selector App, we hope to deliver a one-in-all website</label> */}
+                                        {/* <label for="vision" className="blue-text">With the BCS course-selector App, we hope to deliver a one-in-all website</label> */}
                                         <p>With the BCS course-selector App, we hope to deliver a one-in-all with course planning</p>
                                         <p>More description to be added here</p>
                                 </div>

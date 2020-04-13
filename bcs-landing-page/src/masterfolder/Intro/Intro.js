@@ -8,32 +8,32 @@ export default class Intro extends Component {
                 <div className="container">
                 <div className="row">
                     <h4 className="center"> 
-                    <span className="purple-text darken-1">INTRODUCTION TO BCS APP</span> 
+                    <span className="blue-text darken-1">INTRODUCTION TO BCS APP</span> 
                     </h4>
                     <div className="col s6 m3">
                         <div className="card-panel">
-                        <i class="material-icons large purple-text">account_circle</i>
+                        <i class="material-icons large blue-text">account_circle</i>
                         <h4>Founders</h4>
                         <p>We are a group of 5 BCS students</p>
                         </div>
                     </div>
                     <div className="col s6 m3">
                         <div className="card-panel">
-                        <i class="material-icons large purple-text">done</i>
+                        <i class="material-icons large blue-text">done</i>
                         <h4>Vision</h4>
                         <p>We are a group of 5 BCS students</p>
                         </div>
                     </div>
                     <div className="col s6 m3">
                         <div className="card-panel">
-                        <i class="material-icons large purple-text">description</i>
+                        <i class="material-icons large blue-text">description</i>
                         <h4>About App</h4>
                         <p>We are a group of 5 BCS students</p>
                         </div>
                     </div>
                     <div className="col s6 m3">
                         <div className="card-panel">
-                        <i class="material-icons large purple-text">help</i>
+                        <i class="material-icons large blue-text">help</i>
                         <h4>Questions</h4>
                         <p>We are a group of 5 BCS students</p>
                         </div>

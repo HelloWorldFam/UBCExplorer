@@ -16,7 +16,7 @@ export default class Banner extends Component {
                         <div className="caption right-align">
                             <h2>BCS journey</h2>
                             <h5 className="">Welcome to your BCS course selector app</h5>
-                            <Link to="#" className="btn btn-large purple">Find Out</Link>
+                            <Link to="#" className="btn btn-large blue">Find Out</Link>
                         </div>
 
                     
@@ -26,7 +26,7 @@ export default class Banner extends Component {
                         <div className="caption left-align">
                             <h2>Course Schedule</h2>
                             <h5 className="">Welcome to your BCS course selector app</h5>
-                            <Link to="#" className="btn btn-large purple">Find Out</Link>
+                            <Link to="#" className="btn btn-large blue">Find Out</Link>
                         </div>
 
                     
@@ -36,7 +36,7 @@ export default class Banner extends Component {
                         <div className="caption center-align">
                             <h2>Find your classmates</h2>
                             <h5 className="">Welcome to your BCS course selector app</h5>
-                            <Link to="#" className="btn btn-large purple">Find Out</Link>
+                            <Link to="#" className="btn btn-large blue">Find Out</Link>
                         </div>
 
                     
