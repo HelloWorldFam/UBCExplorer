@@ -9,7 +9,7 @@ export default class SignIn extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col s12 center">
-                            <a href="!#" className="btn btn-large waves-effect white deep-blue-text text-darken-2">
+                            <a href="!#" className="btn btn-large waves-effect blue deep-white-text text-darken-2">
                             <span class="material-icons">how_to_reg</span> Sign in/Register
                             </a>
                         </div>
