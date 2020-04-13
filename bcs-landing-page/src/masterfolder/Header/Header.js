@@ -6,7 +6,7 @@ const SmoothScroll = () => {
     return (
         <section>
             <div className="navbar-fixed">
-                <nav className="purple">
+                <nav className="blue">
                     <div className="container">
                         <div className="nav-wrapper">
                             <AnchorLink href="!#" className="brand-logo">BCS Course Selector App</AnchorLink>
