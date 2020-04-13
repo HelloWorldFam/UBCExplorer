@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Fragment } from 'react';
 import './App.css';
+import { BrowserRouter as Router  } from 'react-router-dom';
+import Header from './masterfolder/Header/Header';
+import Banner from './masterfolder/Banner/Banner';
+import Intro from './masterfolder/Intro/Intro';
+import About from './masterfolder/About/About';
+import WhoWeAre from './masterfolder/WhoWeAre/WhoWeAre';
+import Contact from './masterfolder/Contact/Contact';
+import Footer from './masterfolder/Footer/Footer';
+import SignIn from './masterfolder/SignIn/SignIn';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+    <Fragment>
+      <Header />
+      <Banner />
+      <Intro />
+      <About />
+      <WhoWeAre />
+      <Contact />
+      <Footer />
+      <SignIn />
+    </Fragment>
+  </Router>
+
   );
 }
 
