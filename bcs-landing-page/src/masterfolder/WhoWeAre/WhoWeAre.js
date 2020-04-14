@@ -46,7 +46,12 @@ class PhotoGallery extends Component {
                 alt: "robot"
 
             },
-            
+            {
+                id: 1,
+                img: Pic3,
+                alt: "robot"
+
+            },
             
         ]
     }
@@ -75,7 +80,7 @@ class PhotoGallery extends Component {
                         <span className="blue-text text-darken-1">FOUNDERS</span> WHO WE ARE
                         
                         <p className="sizeFont">
-                           We are a team of five, current BCS students
+                           We are a team of six, current BCS students
                         </p>
                     </h4>
                     <PhotoGallery />

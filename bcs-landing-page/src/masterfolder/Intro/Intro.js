@@ -14,28 +14,35 @@ export default class Intro extends Component {
                         <div className="card-panel">
                         <i class="material-icons large blue-text">account_circle</i>
                         <h4>Founders</h4>
-                        <p>We are a group of 5 BCS students</p>
+                        <p>We are a group of 6 BCS students: 
+                            <li>Ben Cheung</li>
+                            <li>Scott King</li>
+                            <li>James Park</li>
+                            <li>Brenden Yee</li>
+                            <li>James Sun</li>
+                            <li>Jerry Hall</li>
+                            </p>
                         </div>
                     </div>
                     <div className="col s6 m3">
                         <div className="card-panel">
                         <i class="material-icons large blue-text">done</i>
                         <h4>Vision</h4>
-                        <p>We are a group of 5 BCS students</p>
+                        <p>To guide incoming BCS students on their journey through UBC</p>
                         </div>
                     </div>
                     <div className="col s6 m3">
                         <div className="card-panel">
                         <i class="material-icons large blue-text">description</i>
                         <h4>About App</h4>
-                        <p>We are a group of 5 BCS students</p>
+                        <p>The BCS Course Selector App allows BCS Students to easily plan out their degree requirements and explore courses of interest</p>
                         </div>
                     </div>
                     <div className="col s6 m3">
                         <div className="card-panel">
                         <i class="material-icons large blue-text">help</i>
                         <h4>Questions</h4>
-                        <p>We are a group of 5 BCS students</p>
+                        <p>Please feel free to contact our group with any questions</p>
                         </div>
                     </div>
                     </div>

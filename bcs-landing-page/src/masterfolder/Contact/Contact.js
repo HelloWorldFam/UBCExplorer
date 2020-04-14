@@ -22,8 +22,7 @@ export default class Contact extends Component {
                                 <div className="input-field">
                                     <input type="text" id="vision" className="validate" /> */}
                                         {/* <label for="vision" className="blue-text">With the BCS course-selector App, we hope to deliver a one-in-all website</label> */}
-                                        <p>With the BCS course-selector App, we hope to deliver a one-in-all with course planning</p>
-                                        <p>More description to be added here</p>
+                                        <p>With the BCS course-selector App, we aim to deliver a one-in-all with course planning</p>
                                 </div>
 
 

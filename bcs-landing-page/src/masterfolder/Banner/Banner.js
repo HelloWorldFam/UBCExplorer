@@ -14,9 +14,9 @@ export default class Banner extends Component {
                     <li>
                         <img src={FirstPic} alt="Study" />
                         <div className="caption right-align">
-                            <h2>BCS journey</h2>
-                            <h5 className="">Welcome to your BCS course selector app</h5>
-                            <Link to="#" className="btn btn-large blue">Find Out</Link>
+                            <h2>BCS Course Selector App</h2>
+                            <h5 className="">Welcome to your journey at UBC</h5>
+                            <Link to="#" className="btn btn-large blue">Get Started</Link>
                         </div>
 
                     
@@ -25,8 +25,8 @@ export default class Banner extends Component {
                         <img src={SecondPic} alt="Plan your timetable" />
                         <div className="caption left-align">
                             <h2>Course Schedule</h2>
-                            <h5 className="">Welcome to your BCS course selector app</h5>
-                            <Link to="#" className="btn btn-large blue">Find Out</Link>
+                            <h5 className="">Plan your degree</h5>
+                            <Link to="#" className="btn btn-large blue">Build your worklist</Link>
                         </div>
 
                     
@@ -35,8 +35,8 @@ export default class Banner extends Component {
                         <img src={ThirdPic} alt="Find out your classmates" />
                         <div className="caption center-align">
                             <h2>Find your classmates</h2>
-                            <h5 className="">Welcome to your BCS course selector app</h5>
-                            <Link to="#" className="btn btn-large blue">Find Out</Link>
+                            <h5 className="">Connect with peers and alumni</h5>
+                            <Link to="#" className="btn btn-large blue">Find Out More</Link>
                         </div>
 
                     
