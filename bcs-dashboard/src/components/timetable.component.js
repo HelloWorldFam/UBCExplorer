@@ -93,92 +93,13 @@ export default function LeftDrawerDashboard() {
     setOpen(false);
   };
 
+
   return (
-    <div className={classes.root}>
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            TIME TABLE PAGE
-          </Typography>
-
-          <div className={classes.grow} />
-        </Toolbar>
-      </AppBar>
-
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </div>
-        <Button color="inherit">I AM A BUTTON IN A DRAWER</Button>
-        <Divider />
-        <List>
-          {["Timetable", "Organizer", "Course Select", "Compare"].map(
-            (text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <Button href={text}>
-                  <ListItemText primary={text} />{" "}
-                </Button>
-              </ListItem>
-            )
-          )}
-        </List>
-        <Divider />
-        <List>
-          {["Profile", "Settings", "Logout"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <Button href={text}>
-                <ListItemText primary={text} />{" "}
-              </Button>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: open,
-        })}
-      >
-        <div className={classes.drawerHeader} />
+    <div>
         <Typography paragraph>Some Time Table content here</Typography>
         <Typography paragraph>More content</Typography>
         <Typography paragraph>Even more content!</Typography>
         <Typography paragraph>???</Typography>
-      </main>
-    </div>
-  );
+    </div>);
 }
+
