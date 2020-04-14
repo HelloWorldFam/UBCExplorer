@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { styled } from '@material-ui/core/styles';          // with npm install @material-ui/core
-import clsx from 'clsx';                                              //npm install --save clsx
+import clsx from 'clsx';                                              //npm install --save clsxgit
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
