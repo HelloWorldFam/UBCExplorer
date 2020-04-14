@@ -7,7 +7,7 @@ export default class Home extends Component {
       <div>
         <Link to="/signup">Signup Page</Link> <br/>
         <Link to= "/dashboard">Dashboard</Link>
-      </div>
+      </div>            
     );
   }
 }
