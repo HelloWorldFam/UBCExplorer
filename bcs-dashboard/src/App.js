@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Home from "./components/home.component";
-import SignupScreen from "./components/login-screen.component";
+import SignupScreen from "./components/signup-screen.component";
 import Dashboard from "./components/dashboard.component";
 
 import Button from '@material-ui/core/Button';
