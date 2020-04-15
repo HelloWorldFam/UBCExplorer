@@ -17,14 +17,13 @@ router.route('/').get((req, res) => {
 // after the user is saved to the database, we return "User registered!", else catch error
 router.route('/signup').post(async (req, res) => {
   try {
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const username = req.body.username;
     const salt = await Bcrypt.genSalt();
     const password = await Bcrypt.hash(req.body.password, salt);
-    const username = req.body.username;
     const email = req.body.email;
-    const newUser = new User({username, password, email});
-    console.log(username);
-    console.log(password);
-    console.log(email);
+    const newUser = new User({firstName, lastName, username, password, email});
     newUser.save()
         .then(() => res.json('User registered!'))
         .catch(err => res.status(400).json('Error: ' + err));

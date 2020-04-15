@@ -25,6 +25,8 @@ const Wrapper = styled(Paper)`
 `;
 
 function SignUp() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -33,35 +35,51 @@ function SignUp() {
     e.preventDefault();
 
     const user = {
+      firstName: firstName,
+      lastName: lastName,
       username: username,
       password: password,
       email: email,
     };
 
     axios
-      .post("http://localhost:5000/users/register", user)
+      .post("http://localhost:5000/users/signup", user)
       .then((res) => console.log(res.data));
-
-    setUsername("");
-    setPassword("");
-    setEmail("");
   };
 
   return (
     <Wrapper>
       <Helmet title="Sign Up" />
       <Typography component="h1" variant="h4" align="center" gutterBottom>
-        BCS Dashboard Signup
+        BCS Explorer Signup
       </Typography>
       <Typography component="h2" variant="body1" align="center">
         Create an account to start your BCS journey.
       </Typography>
-      <form onSubmit={handleSubmit}>
-        <FormControl margin="normal" required fullWidth>
-          <InputLabel htmlFor="name">Username</InputLabel>
+      <form>
+      <FormControl margin="normal" fullWidth>
+          <InputLabel htmlFor="firstName">First Name</InputLabel>
           <Input
-            id="name"
-            name="name"
+            id="firstName"
+            name="firstName"
+            onChange={(e) => setFirstName(e.target.value)}
+            autoFocus
+          />
+        </FormControl>
+        <FormControl margin="normal" fullWidth>
+          <InputLabel htmlFor="lastName">Last Name</InputLabel>
+          <Input
+            id="lastName"
+            name="lastName"
+            onChange={(e) => setLastName(e.target.value)}
+            autoFocus
+          />
+        </FormControl>
+        <FormControl margin="normal" required fullWidth>
+          <InputLabel htmlFor="username">Username</InputLabel>
+          <Input
+            id="username"
+            name="username"
             onChange={(e) => setUsername(e.target.value)}
             autoFocus
             required
@@ -94,12 +112,13 @@ function SignUp() {
         </FormControl>
         <Button
           component={Link}
-          to="/"
+          type="submit"
           fullWidth
           variant="contained"
           color="primary"
           mt={2}
-          type="submit"
+          onClick={handleSubmit}
+          to="/"
         >
           Sign up
         </Button>
