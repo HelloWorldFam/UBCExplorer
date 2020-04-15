@@ -151,6 +151,7 @@ const profileRoutes = {
 const pagesRoutes = {
   id: "Pages",
   path: "/pages",
+  header: "Everything below this will be removed later. It is just for inspiration",
   icon: <Layout />,
   children: [
     {
