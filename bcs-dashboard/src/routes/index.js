@@ -19,6 +19,7 @@ import {
   User,
   Users
 } from "react-feather";
+import { GolfCourse, Directions, Dashboard } from "@material-ui/icons";
 
 // Auth components
 const SignIn = async(() => import("../pages/auth/SignIn"));
@@ -84,21 +85,67 @@ const Presentation = async(() => import("../pages/docs/Presentation"));
 const dashboardsRoutes = {
   id: "Dashboard",
   path: "/dashboard",
-  header: "Pages",
   icon: <Sliders />,
   containsHome: true,
-  children: [
-    {
-      path: "/dashboard/default",
-      name: "Default",
-      component: Default
-    },
-    {
-      path: "/dashboard/analytics",
-      name: "Analytics",
-      component: Analytics
-    }
-  ]
+  component: Default,
+  /*
+    Note: Uncomment below if you require children componenents 
+  */
+  // children: [
+  //   {
+  //     path: "/dashboard/default",
+  //     name: "Default",
+  //     component: Default
+  //   },
+  //   {
+  //     path: "/dashboard/analytics",
+  //     name: "Analytics",
+  //     component: Analytics
+  //   }
+  // ]
+};
+
+const timeTableRoutes = {
+  id: "Timetable",
+  path: "/timetable",
+  icon: <CalendarIcon />,
+  component: Default,
+}
+
+const courseSelectorRoutes = {
+  id: "Course Selector",
+  path: "/courseselector",
+  icon: <GolfCourse />,
+  component: Default,
+}
+
+const degreeProgressRoutes = {
+  id: "Degree Progress",
+  path: "/degreeprogress",
+  icon: <Directions />,
+  component: Default,
+}
+
+const myCoursesRoutes = {
+  id: "My Courses",
+  path: "/mycourses",
+  icon: <Dashboard />,
+  component: Default,
+}
+
+const myToDosRoutes = {
+  id: "My ToDo's",
+  path: "/mytodos",
+  icon: <CheckSquare />,
+  component: Default,
+}
+
+const profileRoutes = {
+  id: "Profile",
+  path: "/profile",
+  icon: <User />,
+  component: Profile,
+  children: null
 };
 
 const pagesRoutes = {
@@ -122,14 +169,6 @@ const pagesRoutes = {
       component: Blank
     }
   ]
-};
-
-const profileRoutes = {
-  id: "Profile",
-  path: "/profile",
-  icon: <User />,
-  component: Profile,
-  children: null
 };
 
 const projectsRoutes = {
@@ -394,8 +433,13 @@ const privateRoutes = {
 
 export const dashboard = [
   dashboardsRoutes,
-  pagesRoutes,
+  timeTableRoutes,
+  courseSelectorRoutes,
+  degreeProgressRoutes,
+  myCoursesRoutes,
+  myToDosRoutes,
   profileRoutes,
+  pagesRoutes,
   projectsRoutes,
   invoiceRoutes,
   tasksRoutes,
@@ -416,8 +460,13 @@ export const auth = [authRoutes];
 
 export default [
   dashboardsRoutes,
-  pagesRoutes,
+  timeTableRoutes,
+  courseSelectorRoutes,
+  degreeProgressRoutes,
+  myCoursesRoutes,
+  myToDosRoutes,
   profileRoutes,
+  pagesRoutes,
   projectsRoutes,
   invoiceRoutes,
   tasksRoutes,

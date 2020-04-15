@@ -318,7 +318,7 @@ class Sidebar extends React.Component {
     return (
       <Drawer variant="permanent" {...other}>
         <Brand>
-          <BrandIcon /> <Box ml={1}>Material App <BrandChip label="PRO" /></Box> 
+          <BrandIcon /> <Box ml={1}>BCS Explorer <BrandChip label="PRO" /></Box> 
         </Brand>
         <Scrollbar>
           <List disablePadding>
