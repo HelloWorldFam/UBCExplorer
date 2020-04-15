@@ -27,6 +27,7 @@ router.route('/signup').post(async (req, res) => {
     newUser.save()
         .then(() => res.json('User registered!'))
         .catch(err => res.status(400).json('Error: ' + err));
+    console.log('Username: ' + username + ' has been registered.');
   } catch {
     res.status(400).send();
   }
