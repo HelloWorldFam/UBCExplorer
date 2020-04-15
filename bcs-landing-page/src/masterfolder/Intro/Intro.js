@@ -26,7 +26,7 @@ export default class Intro extends Component {
                     </div>
                     <div className="col s6 m3">
                         <div className="card-panel">
-                        <i class="material-icons large blue-text">done</i>
+                        <i class="material-icons large blue-text">blur_circular</i>
                         <h4>Vision</h4>
                         <p>To guide incoming BCS students on their journey through UBC</p>
                         </div>

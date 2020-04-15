@@ -18,7 +18,7 @@ export default class About extends Component {
                                 <div className="card-image">
                                     <img src={Pic1} alt="Schedule" />
                                     <span className="card-title">Schedule</span>
-                                    <Link className="btn-floating activator halfway-fab waves-effect waves-light blue"><i class="material-icons">search</i></Link>
+                                    <Link className="btn-floating activator halfway-fab waves-effect waves-light blue"><i class="material-icons">expand_less</i></Link>
 
                                 </div>
                                 <div className="card-content">
@@ -42,7 +42,7 @@ export default class About extends Component {
                                 <div className="card-image">
                                     <img src={Pic2} alt="Course Finder" />
                                     <span className="card-title">Course Finder</span>
-                                    <Link className="btn-floating activator halfway-fab waves-effect waves-light blue"><i class="material-icons">search</i></Link>
+                                    <Link className="btn-floating activator halfway-fab waves-effect waves-light blue"><i class="material-icons">expand_less</i></Link>
 
                                 </div>
                                 <div className="card-content">
@@ -66,7 +66,7 @@ export default class About extends Component {
                                 <div className="card-image">
                                     <img src={Pic3} alt="Discussion Forum" />
                                     <span className="card-title">Discussion Forum</span>
-                                    <Link className="btn-floating activator halfway-fab waves-effect waves-light blue"><i class="material-icons">search</i></Link>
+                                    <Link className="btn-floating activator halfway-fab waves-effect waves-light blue"><i class="material-icons">expand_less</i></Link>
 
                                 </div>
                                 <div className="card-content">
@@ -88,7 +88,14 @@ export default class About extends Component {
                         </div>
                     </div>
                 </div>
+
+                <div>
+                    <p>
+                        This is a test section
+                    </p>
+                </div>
             </section>
+
         )
 
     }
