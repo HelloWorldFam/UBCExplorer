@@ -29,6 +29,7 @@
     "@material-ui/pickers": "3.2.10",
     "@material-ui/styles": "4.9.0",
     "@material-ui/system": "4.9.3",
+    "axios": "^0.19.2",
     "chart.js": "2.9.3",
     "css-vendor": "2.0.7",
     "date-fns": "2.10.0",
