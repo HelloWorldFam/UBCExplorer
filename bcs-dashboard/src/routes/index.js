@@ -87,18 +87,23 @@ const dashboardsRoutes = {
   header: "Pages",
   icon: <Sliders />,
   containsHome: true,
-  children: [
-    {
-      path: "/dashboard/default",
-      name: "Default",
-      component: Default
-    },
-    {
-      path: "/dashboard/analytics",
-      name: "Analytics",
-      component: Analytics
-    }
-  ]
+  path: "/dashboard",
+  component: Default,
+  /*
+    Note: Uncomment below if you require children componenents 
+  */
+  // children: [
+  //   {
+  //     path: "/dashboard/default",
+  //     name: "Default",
+  //     component: Default
+  //   },
+  //   {
+  //     path: "/dashboard/analytics",
+  //     name: "Analytics",
+  //     component: Analytics
+  //   }
+  // ]
 };
 
 const pagesRoutes = {
