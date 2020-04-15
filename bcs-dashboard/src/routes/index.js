@@ -84,10 +84,8 @@ const Presentation = async(() => import("../pages/docs/Presentation"));
 const dashboardsRoutes = {
   id: "Dashboard",
   path: "/dashboard",
-  header: "Pages",
   icon: <Sliders />,
   containsHome: true,
-  path: "/dashboard",
   component: Default,
   /*
     Note: Uncomment below if you require children componenents 
@@ -105,6 +103,13 @@ const dashboardsRoutes = {
   //   }
   // ]
 };
+
+const courseSelectorRoutes = {
+  id: "Course Selector",
+  path: "/courseselector",
+  icon: <Sliders />,
+  component: Default,
+}
 
 const pagesRoutes = {
   id: "Pages",
@@ -399,6 +404,7 @@ const privateRoutes = {
 
 export const dashboard = [
   dashboardsRoutes,
+  courseSelectorRoutes,
   pagesRoutes,
   profileRoutes,
   projectsRoutes,
@@ -421,6 +427,7 @@ export const auth = [authRoutes];
 
 export default [
   dashboardsRoutes,
+  courseSelectorRoutes,
   pagesRoutes,
   profileRoutes,
   projectsRoutes,
