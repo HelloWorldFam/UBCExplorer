@@ -100,7 +100,7 @@ export default class About extends Component {
                             <div className="row">
                                 <div className="col s12 m6">
                                     <div className="white center">
-                                    <img src={Pic4} alt="random-image" />
+                                    <img src={Pic4} alt="placeholderpic1" />
                                         {/* <span class="material-icons">mail</span>
                                         <h4>Email</h4> */}
                                         {/* <p>Please email us for any questions:_____ @gmail.com</p> */}
@@ -131,7 +131,7 @@ export default class About extends Component {
                                 <div className="col s12 m6">
                                     <div className="white center">
                                         {/* <i class="material-icons">account_box</i> */}
-                                        <img src={Pic4} alt="random-image" />
+                                        <img src={Pic4} alt="placeholderpic2" />
                                        
                                     </div>
                                 </div>
