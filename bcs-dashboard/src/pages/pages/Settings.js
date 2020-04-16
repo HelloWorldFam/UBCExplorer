@@ -14,7 +14,10 @@ import {
   Divider as MuiDivider,
   FormControl as MuiFormControl,
   Grid,
+  Menu,
+  MenuItem,
   Input,
+  Paper as MuiPaper,
   InputLabel,
   Link,
   TextField,
@@ -39,6 +42,8 @@ const Divider = styled(MuiDivider)(spacing);
 
 const FormControl = styled(MuiFormControl)(spacing);
 
+const Paper = styled(MuiPaper)(spacing);
+
 const CloudUpload = styled(MuiCloudUpload)(spacing);
 
 const CenteredContent = styled.div`
@@ -46,11 +51,15 @@ const CenteredContent = styled.div`
 `;
 
 const SmallText = styled.div`
-  font-size:12px;
+  font-size: 12px;
 `;
 
 const Lefted = styled.div`
   text-align: left;
+`;
+
+const Righted = styled.div`
+  text-align: right;
 `;
 
 const BigAvatar = styled(Avatar)`
@@ -79,14 +88,24 @@ function Public(props) {
                 multiline={true}
                 rows={1}
                 rowsMax={5}
-                value={'I am a BCS student. More about me will go here.'}
+                value={"I am a BCS student. More about me will go here."}
               />
             </FormControl>
             <FormControl fullWidth mb={3}>
               <Lefted>
-                <SmallText><p>Courses taken</p></SmallText>
+                <SmallText>
+                  <p>Courses taken</p>
+                </SmallText>
                 {props.courses.map((course) => {
-                  return <Chip key={course} size="small" mr={1} mb={1} label={course} />
+                  return (
+                    <Chip
+                      key={course}
+                      size="small"
+                      mr={1}
+                      mb={1}
+                      label={course}
+                    />
+                  );
                 })}
               </Lefted>
             </FormControl>
@@ -162,37 +181,6 @@ function Private(props) {
           />
         </FormControl>
 
-        <FormControl fullWidth mb={3}>
-          <InputLabel htmlFor="address">Address</InputLabel>
-          <Input id="address" placeholder="1234 Main St" />
-        </FormControl>
-
-        <FormControl fullWidth mb={3}>
-          <InputLabel htmlFor="address2">Address 2</InputLabel>
-          <Input id="address2" placeholder="Apartment, studio, or floor" />
-        </FormControl>
-
-        <Grid container spacing={6}>
-          <Grid item md={6}>
-            <FormControl fullWidth mb={3}>
-              <InputLabel htmlFor="city">City</InputLabel>
-              <Input id="city" placeholder="City" />
-            </FormControl>
-          </Grid>
-          <Grid item md={4}>
-            <FormControl fullWidth mb={3}>
-              <InputLabel htmlFor="state">State</InputLabel>
-              <Input id="state" placeholder="State" />
-            </FormControl>
-          </Grid>
-          <Grid item md={2}>
-            <FormControl fullWidth mb={3}>
-              <InputLabel htmlFor="zip">Zip</InputLabel>
-              <Input id="zip" placeholder="Zip" />
-            </FormControl>
-          </Grid>
-        </Grid>
-
         <Button variant="contained" color="primary">
           Save changes
         </Button>
@@ -228,6 +216,16 @@ function Settings() {
       });
   }, []);
 
+  const handleChange = (userSelected) => {
+    setUser({
+      firstName: userSelected.firstName,
+      lastName: userSelected.lastName,
+      username: userSelected.username,
+      email: userSelected.email,
+      courses: userSelected.courses,
+    });
+  };
+
   return (
     <React.Fragment>
       <Helmet title="Settings" />
@@ -245,13 +243,13 @@ function Settings() {
         <Typography>Settings</Typography>
       </Breadcrumbs>
 
+      <SimpleMenu action={handleChange} />
+
       <Divider my={6} />
 
       <Grid container spacing={6}>
         <Grid item xs={12}>
-          <Public 
-            username={user.username}
-            courses={user.courses} />
+          <Public username={user.username} courses={user.courses} />
           <Private
             firstName={user.firstName}
             lastName={user.lastName}
@@ -260,6 +258,62 @@ function Settings() {
         </Grid>
       </Grid>
     </React.Fragment>
+  );
+}
+
+function SimpleMenu(props) {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [userList, setUserList] = useState([]);
+
+  useEffect(() => {
+    axios("http://localhost:5000/users/")
+      .then((response) => {
+        setUserList(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (e, val) => {
+    e.preventDefault();
+    props.action(val);
+    setAnchorEl(null);
+  };
+
+  return (
+    <Righted>
+      <Button
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        Choose User (for testing)
+      </Button>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        {userList.map((user) => {
+          return (
+            <MenuItem
+              key={user._id}
+              value={user.username}
+              onClick={(e) => handleClose(e, user)}
+            >
+              {user.firstName}
+            </MenuItem>
+          );
+        })}
+      </Menu>
+    </Righted>
   );
 }
 
