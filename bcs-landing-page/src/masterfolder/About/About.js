@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Pic1 from '../../Pictures/yes2.jpg';
 import Pic2 from '../../Pictures/yes3.jpg';
 import Pic3 from '../../Pictures/yes1.jpg';
+import Pic4 from '../../Pictures/1324.jpg';
 import { HashLink as Link } from 'react-router-hash-link';
 import './About.css';
 
@@ -98,18 +99,19 @@ export default class About extends Component {
                         <div className="toppadding">
                             <div className="row">
                                 <div className="col s12 m6">
-                                    <div className="card-panel white center">
-                                        <span class="material-icons">mail</span>
-                                        <h4>Email</h4>
-                                        <p>Please email us for any questions:_____ @gmail.com</p>
+                                    <div className="white center">
+                                    <img src={Pic4} alt="random-image" />
+                                        {/* <span class="material-icons">mail</span>
+                                        <h4>Email</h4> */}
+                                        {/* <p>Please email us for any questions:_____ @gmail.com</p> */}
                                     </div>
                                 </div>
                                 <div className="col s12 m6">
                                     <div className="card-panel white center">
-                                        <i class="material-icons">account_box</i>
-                                        <h4>Contact Address</h4>
+                                        {/* <i class="material-icons">account_box</i> */}
+                                        <h4>Description</h4>
 
-                                        <p>Address placeholder</p>
+                                        <p>description to be added</p>
                                     </div>
                                 </div>
                             </div>
@@ -121,16 +123,16 @@ export default class About extends Component {
                             <div className="row">
                                 <div className="col s12 m6">
                                     <div className="card-panel white center">
-                                        <span class="material-icons">mail</span>
-                                        <h4>Email</h4>
-                                        <p>Please email us for any questions:_____ @gmail.com</p>
+                                        {/* <span class="material-icons">mail</span> */}
+                                        <h4>Description</h4>
+                                        <p>description to be added</p>
                                     </div>
                                 </div>
                                 <div className="col s12 m6">
-                                    <div className="card-panel white center">
-                                        <i class="material-icons">account_box</i>
-                                        <h4>Contact Address</h4>
-                                        <p>Address placeholder</p>
+                                    <div className="white center">
+                                        {/* <i class="material-icons">account_box</i> */}
+                                        <img src={Pic4} alt="random-image" />
+                                       
                                     </div>
                                 </div>
                             </div>
