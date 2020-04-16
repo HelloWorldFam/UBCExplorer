@@ -87,6 +87,7 @@ export default class WhoWeAre extends Component {
                         <PhotoGallery />
                     </div>
 
+                    <div className="betweenpadding"></div>
 
                     <div className="col s12 m6">
                         <div className="card-panel white center">

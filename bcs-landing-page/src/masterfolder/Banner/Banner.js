@@ -26,7 +26,7 @@ export default class Banner extends Component {
                         <div className="caption left-align">
                             <h2>Course Schedule</h2>
                             <h5 className="">Plan your degree</h5>
-                            <Link to="#" className="btn btn-large blue">Build your worklist</Link>
+                            <Link to="#" className="btn btn-large blue">Explore Now</Link>
                         </div>
 
 
