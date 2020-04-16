@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import './App.css';
-import { BrowserRouter as Router  } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Header from './masterfolder/Header/Header';
 import Banner from './masterfolder/Banner/Banner';
 import Intro from './masterfolder/Intro/Intro';
@@ -14,17 +14,17 @@ import SignIn from './masterfolder/SignIn/SignIn';
 function App() {
   return (
     <Router>
-    <Fragment>
-      <Header />
-      <Banner />
-      <Intro />
-      <About />
-      <WhoWeAre />
-      <Contact />
-      <Footer />
-      <SignIn />
-    </Fragment>
-  </Router>
+      <Fragment>
+        <Header />
+        <Banner />
+        <Intro />
+        <About />
+        <WhoWeAre />
+        <Contact />
+        <Footer />
+        <SignIn />
+      </Fragment>
+    </Router>
 
   );
 }

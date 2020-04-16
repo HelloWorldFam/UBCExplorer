@@ -19,7 +19,7 @@ export default class Banner extends Component {
                             <Link to="#" className="btn btn-large blue">Get Started</Link>
                         </div>
 
-                    
+
                     </li>
                     <li>
                         <img src={SecondPic} alt="Plan your timetable" />
@@ -29,7 +29,7 @@ export default class Banner extends Component {
                             <Link to="#" className="btn btn-large blue">Build your worklist</Link>
                         </div>
 
-                    
+
                     </li>
                     <li>
                         <img src={ThirdPic} alt="Find out your classmates" />
@@ -39,10 +39,10 @@ export default class Banner extends Component {
                             <Link to="#" className="btn btn-large blue">Find Out More</Link>
                         </div>
 
-                    
+
                     </li>
                 </ul>
-                
+
             </section>
         )
     }

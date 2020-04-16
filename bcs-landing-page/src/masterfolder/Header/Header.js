@@ -9,12 +9,13 @@ const SmoothScroll = () => {
                 <nav className="blue">
                     <div className="container">
                         <div className="nav-wrapper">
-                            <AnchorLink href="!#" className="brand-logo">BCS Course Selector App</AnchorLink>
+                            <AnchorLink href="!#" className="brand-logo">BCS Course Selector App<i className="material-icons">search</i></AnchorLink>
                             <AnchorLink href="!#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></AnchorLink>
                             <ul className="right hide-on-med-and-down">
                                 <li><AnchorLink href="/home">Home</AnchorLink></li>
                                 <li><AnchorLink href="/intro">Highlights</AnchorLink></li>
                                 <li><AnchorLink href="/about">About</AnchorLink></li>
+                                <li><AnchorLink href="/WhoWeAre">Who We Are</AnchorLink></li>
                                 <li><AnchorLink href="/contact">Contact</AnchorLink></li>
                                 <li><AnchorLink href="/SignIn">Sign In</AnchorLink></li>
                                 <li>
