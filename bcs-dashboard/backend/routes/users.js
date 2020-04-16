@@ -8,9 +8,9 @@ let Users = require('../models/users.model');
 // .find() will get a list of all the users from the mongodb atlas database
 //        returns a promise
 router.route('/').get((req, res) => {
-    Users.find()
-        .then(users => res.json(users))
-        .catch(err => res.status(400).json('Error: ' + err));
+  Users.find()
+      .then(users => res.json(users))
+      .catch(err => res.status(400).json('Error: ' + err));
 })
 
 router.route('/:id').get((req, res) => {
@@ -31,14 +31,30 @@ router.route('/signup').post(async (req, res) => {
     const email = req.body.email;
     const newUser = new Users({firstName, lastName, username, password, email});
     newUser.save()
-        .then(() => {
-          res.json('User registered!');
-          console.log('Username: ' + username + ' has been registered.');})
-        .catch(err => res.status(400).json('Error: ' + err));
+      .then(() => {
+        res.json('User registered!');
+        console.log('Username: ' + username + ' has been registered.');})
+      .catch(err => res.status(400).json('Error: ' + err));
   } catch {
     res.status(400).send();
   }
 });
+
+router.route('/update/:id').post(async (req, res) => {
+  Users.findById(req.params.id)
+    .then(user => {
+      user.firstName = req.body.firstName;
+      user.lastName = req.body.lastName;
+      user.username = req.body.username;
+      user.email = req.body.email;
+      user.courses = req.body.courses;
+
+      user.save()
+        .then(() => res.json('User updated.'))
+        .catch(err => res.status(400).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
+})
 
 
 module.exports = router; 
