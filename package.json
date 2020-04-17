@@ -2,7 +2,7 @@
   "name": "bcs-course-selector",
   "version": "1.0.0",
   "description": "",
-  "main": "",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "install": "cd bcs-dashboard && npm i && cd .. && cd bcs-landing-page && npm i && cd .. && cd dashboard-template && npm i"
