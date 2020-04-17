@@ -14,16 +14,7 @@ import SignIn from './masterfolder/SignIn/SignIn';
 function App() {
   return (
     <Router>
-      <Fragment>
-        <Header />
-        <Banner />
-        <Intro />
-        <About />
-        <WhoWeAre />
-        <Contact />
-        <Footer />
-        <SignIn />
-      </Fragment>
+      <LandingPage />
     </Router>
 
   );

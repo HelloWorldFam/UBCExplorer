@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import 'materialize-css/dist/css/materialize.css';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
+import '@materialize-css/dist/css/materialize.css';
+import AnchorLink from '@react-anchor-link-smooth-scroll';
 
 const SmoothScroll = () => {
     return (

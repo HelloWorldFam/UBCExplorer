@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import Pic1 from '../../Pictures/yes2.jpg';
-import Pic2 from '../../Pictures/yes3.jpg';
-import Pic3 from '../../Pictures/yes1.jpg';
-import Pic4 from '../../Pictures/1324.jpg';
+import Pic1 from '../Pictures/yes2.jpg';
+import Pic2 from '../Pictures/yes3.jpg';
+import Pic3 from '../Pictures/yes1.jpg';
+import Pic4 from '../Pictures/1324.jpg';
 import { HashLink as Link } from 'react-router-hash-link';
 import './About.css';
 
