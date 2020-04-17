@@ -50,7 +50,10 @@ router.route('/update/:id').post(async (req, res) => {
       user.courses = req.body.courses;
 
       user.save()
-        .then(() => res.json('User updated.'))
+        .then(() => {
+          res.json('User updated.');
+          console.log(user);
+        })
         .catch(err => res.status(400).json('Error: ' + err));
     })
     .catch(err => res.status(400).json('Error: ' + err));
