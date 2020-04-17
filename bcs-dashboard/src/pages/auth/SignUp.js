@@ -24,7 +24,7 @@ const Wrapper = styled(Paper)`
   }
 `;
 
-function SignUp() {
+function SignUp(props) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
@@ -42,9 +42,14 @@ function SignUp() {
       email: email,
     };
 
+    // Form validation done through DB right now - may want to add fancy CSS for form
     axios
       .post("http://localhost:5000/users/signup", user)
-      .then((res) => console.log(res.data));
+      .then((res) => {
+        console.log(res.data);
+        props.history.push("/dashboard");
+      })
+      .catch(err => alert(err + ". Please fill in all the required fields."));
   };
 
   return (
@@ -111,14 +116,12 @@ function SignUp() {
           />
         </FormControl>
         <Button
-          component={Link}
           type="submit"
           fullWidth
           variant="contained"
           color="primary"
           mt={2}
           onClick={handleSubmit}
-          to="/"
         >
           Sign up
         </Button>

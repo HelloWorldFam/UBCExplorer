@@ -19,7 +19,7 @@ import {
   User,
   Users
 } from "react-feather";
-import { GolfCourse, Directions, Dashboard } from "@material-ui/icons";
+import { GolfCourse, Directions, Dashboard, Settings as SettingsIcon } from "@material-ui/icons";
 
 // Auth components
 const SignIn = async(() => import("../pages/auth/SignIn"));
@@ -140,6 +140,7 @@ const myToDosRoutes = {
   component: Default,
 }
 
+// these Profile and Settings are kinda similar, going to work on Settings for now. SK
 const profileRoutes = {
   id: "Profile",
   path: "/profile",
@@ -147,6 +148,15 @@ const profileRoutes = {
   component: Profile,
   children: null
 };
+
+const settingsRoutes = {
+  id: "Settings",
+  path: "/settings",
+  name: "Settings",
+  icon: <SettingsIcon />,
+  children: null,
+  component: Settings
+}
 
 const pagesRoutes = {
   id: "Pages",
@@ -440,6 +450,7 @@ export const dashboard = [
   myCoursesRoutes,
   myToDosRoutes,
   profileRoutes,
+  settingsRoutes,
   pagesRoutes,
   projectsRoutes,
   invoiceRoutes,
@@ -467,6 +478,7 @@ export default [
   myCoursesRoutes,
   myToDosRoutes,
   profileRoutes,
+  settingsRoutes,
   pagesRoutes,
   projectsRoutes,
   invoiceRoutes,
