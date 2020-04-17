@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import 'materialize-css/dist/css/materialize.min.css';
-import Pic3 from '../../Pictures/gg.jpg';
+import '../../../../node_modules/materialize-css/dist/css/materialize.css';
+import Pic3 from '../Pictures/gg.jpg';
 import './Gallery.css';
 
 const Photo = ({ img, alt }) => {

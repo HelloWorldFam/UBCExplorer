@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
-import FirstPic from '../../Pictures/image1.jpg';
-import SecondPic from '../../Pictures/image2.jpg';
-import ThirdPic from '../../Pictures/image3.jpg';
+import FirstPic from '../Pictures/image1.jpg';
+import SecondPic from '../Pictures/image2.jpg';
+import ThirdPic from '../Pictures/image3.jpg';
 import { Link } from 'react-router-dom';
 import './Banner.css';
 

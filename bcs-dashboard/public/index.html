@@ -15,6 +15,11 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/66b7256301.js" crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700&display=swap" rel="stylesheet">
+
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -28,8 +33,7 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    
-    <div id ="root"></div>
+    <div id="root"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -40,5 +44,40 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+    <script src="../node_modules/materialize-css/dist/js/materialize.min.js"></script>
+
+    <script>
+      
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems, options);
+  });
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+        
+  // Slider Javascript
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.carousel');
+    var instances = M.Carousel.init(elems, options);
+  });
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    //slider
+    $('.slider').slider({
+      indicators: true,
+      height: 650,
+      
+    });
+  });
+      
+    </script>
   </body>
 </html>

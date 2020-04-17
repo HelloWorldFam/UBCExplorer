@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import '../../../node_modules/materialize-css/dist/css/materialize.min.css';
+import '@materialize-css/dist/css/materialize.min.css';
 import './SignIn.css';
 
 export default class SignIn extends Component {
