@@ -81,12 +81,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 export default function DashboardComponent() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [main, setMain] = React.useState(<Timetable/>);
+  const [main, setMain] = React.useState(<Timetable />);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -104,7 +103,7 @@ export default function DashboardComponent() {
     } else {
       setMain(<h3>Hello three</h3>);
     }
-  }
+  };
 
   return (
     <div className={classes.root}>
