@@ -17,7 +17,7 @@ const SmoothScroll = () => {
                                 <li><AnchorLink href="/about">About</AnchorLink></li>
                                 <li><AnchorLink href="/WhoWeAre">Who We Are</AnchorLink></li>
                                 <li><AnchorLink href="/contact">Contact</AnchorLink></li>
-                                <li><AnchorLink href="/SignIn">Sign In</AnchorLink></li>
+                                <li><a href="/auth/google">Sign In</a></li>
                                 <li>
                                     <a href="!#" className="btn btn-medium waves-effect blue deep-white-text text-darken-2">
                                         <span class="material-icons">
