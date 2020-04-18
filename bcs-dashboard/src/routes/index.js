@@ -21,6 +21,9 @@ import {
 } from "react-feather";
 import { GolfCourse, Directions, Dashboard, Settings as SettingsIcon } from "@material-ui/icons";
 
+// Landing page component
+const LandingPage = async(() => import("../pages/landingpage/LandingPage"));
+
 // Auth components
 const SignIn = async(() => import("../pages/auth/SignIn"));
 const SignUp = async(() => import("../pages/auth/SignUp"));
@@ -81,6 +84,13 @@ const VectorMaps = async(() => import("../pages/maps/VectorMaps"));
 const Docs = async(() => import("../pages/docs/Documentation"));
 const Changelog = async(() => import("../pages/docs/Changelog"));
 const Presentation = async(() => import("../pages/docs/Presentation"));
+
+const landingPageRoutes = {
+  id: "Landing Page",
+  path: "/",
+  component: LandingPage,
+  children: null
+}
 
 const dashboardsRoutes = {
   id: "Dashboard",
@@ -410,7 +420,7 @@ const mapsRoutes = {
 
 const presentationRoutes = {
   id: "Presentation",
-  path: "/",
+  path: "/presentation",
   header: "Docs",
   icon: <Monitor />,
   component: Presentation,
@@ -441,6 +451,8 @@ const privateRoutes = {
   component: Blank,
   children: null
 };
+
+export const landing = [landingPageRoutes];
 
 export const dashboard = [
   dashboardsRoutes,
