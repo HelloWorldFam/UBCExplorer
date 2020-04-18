@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import '../../../../node_modules/materialize-css/dist/css/materialize.css';
+import '../../../../node_modules/materialize-css/dist/css/materialize.min.css';
 import Pic3 from '../Pictures/gg.jpg';
 import './Gallery.css';
 
@@ -91,7 +91,7 @@ export default class WhoWeAre extends Component {
 
                     <div className="col s12 m6">
                         <div className="card-panel white center">
-                            <i class="material-icons">emoji_people</i>
+                            <i className="material-icons">emoji_people</i>
                             <h4>Our Vision</h4>
                             {/* <form>
                                 <div className="input-field">

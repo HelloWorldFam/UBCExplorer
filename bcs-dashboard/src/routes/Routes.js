@@ -37,20 +37,7 @@ const childRoutes = (Layout, routes) =>
       />
     )
   );
-/*
-            <div>
-                <Switch>
-                    <Route path="/" exact component={Landing}/>
-                    <Route path="/login" render={() => <Login profiles={this.state.profiles} />}/>
-                    <Route path="/choice" render={() => <Choice profiles={this.state.profiles} />}/>
-                    <Route path="/signup" component={Signup}/>
-                    <Route path="/loginWithEmail" render={() => <LoginWithEmail profiles={this.state.profiles} />}/>
-                    <Route path="/signUpWithEmail" component={signUpWithEmail}/>
-                </Switch>
-            </div>
-        );
 
-*/
 const Routes = () => (
   <Router>
     <Switch>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import '../../../../node_modules/materialize-css/dist/css/materialize.css';
-import AnchorLink from '../../../../node_modules/react-anchor-link-smooth-scroll';
+import 'materialize-css/dist/css/materialize.min.css';
+import AnchorLink from 'react-anchor-link-smooth-scroll';
 
 const SmoothScroll = () => {
     return (
@@ -20,7 +20,7 @@ const SmoothScroll = () => {
                                 <li><a href="/auth/google">Sign In</a></li>
                                 <li>
                                     <a href="!#" className="btn btn-medium waves-effect blue deep-white-text text-darken-2">
-                                        <span class="material-icons">
+                                        <span className="material-icons">
                                             how_to_reg
                                         </span>
                                             Register
@@ -31,7 +31,7 @@ const SmoothScroll = () => {
                     </div>
                 </nav>
             </div>
-            <ul class="sidenav" id="mobile-demo">
+            <ul className="sidenav" id="mobile-demo">
                 <li><AnchorLink href="/home">Home</AnchorLink></li>
                 <li><AnchorLink href="/about">About</AnchorLink></li>
                 <li><AnchorLink href="/contact">Contact</AnchorLink></li>
