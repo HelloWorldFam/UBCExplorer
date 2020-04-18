@@ -148,6 +148,6 @@ app.get('/', (req, res) => {
 // only show if user is authenticated
 app.get('/dashboard', isUserAuthenticated, (res, req) => {
   console.log("Successfully logged into dashboard");
-  res.set({userData: req.user});
-  res.sendFile(path.join(__dirname, '../build/index.html'))
+  // res.set({userData: req.user}); //fails here
+  // res.sendFile(path.join(__dirname, '../build/index.html'))
 });
