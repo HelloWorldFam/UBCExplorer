@@ -23,7 +23,7 @@ export default class About extends Component {
                     <span className="card-title">Schedule</span>
                     <Link
                       className="btn-floating activator halfway-fab waves-effect waves-light blue"
-                      to={"/"}
+                      to={"#"}
                     >
                       <i className="material-icons">expand_less</i>
                     </Link>
@@ -55,7 +55,7 @@ export default class About extends Component {
                     <span className="card-title">Course Finder</span>
                     <Link
                       className="btn-floating activator halfway-fab waves-effect waves-light blue"
-                      to={"/"}
+                      to={"#"}
                     >
                       <i className="material-icons">expand_less</i>
                     </Link>
@@ -87,7 +87,7 @@ export default class About extends Component {
                     <span className="card-title">Discussion Forum</span>
                     <Link
                       className="btn-floating activator halfway-fab waves-effect waves-light blue"
-                      to={"/"}
+                      to={"#"}
                     >
                       <i className="material-icons">expand_less</i>
                     </Link>
