@@ -8,6 +8,7 @@ const findOrCreate = require('mongoose-findorcreate');
 const FacebookStrategy = require('passport-facebook');
 const GoogleOauth20Strategy = require('passport-google-oauth20');
 const TwitterStrategy = require('passport-twitter');
+const path = require("path");
 
 require('dotenv').config();
 
@@ -104,11 +105,14 @@ function isUserAuthenticated(req, res, next) {
 // passport.authenticate middleware is used here to authenticate the request
 app.get('/auth/google', passport.authenticate('google', {
   scope: ['profile', 'email'] // Used to specify the required data; we only want read-only access to public information
-}));
+}
+));
 
 // The middleware receives the data from Google and runs the function on Strategy config
 app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
-  res.redirect('/');
+  console.log("Successfully logged in");
+  res.redirect('/dashboard');
+  // res.redirect('/');
 });
 
 // Secret route
@@ -122,14 +126,15 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-app.get('/login', (req, res) => {
-  // login page
-});
-
 // Secret route (only if you are authenticated)
 app.get('/secret', isUserAuthenticated, (req, res) => {
   res.send('You have reached the secret route');
 });
+
+// // Dashboard route (only if you are authenticated)
+// app.get('/dashboard', isUserAuthenticated, (req, res) => {
+//   res.send('You have reached the dashboard route');
+// });
 
 // Nodemon success message
 app.listen(port, () => {
@@ -145,9 +150,14 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'))
 });
 
-// only show if user is authenticated
-app.get('/dashboard', isUserAuthenticated, (res, req) => {
-  console.log("Successfully logged into dashboard");
-  res.set({userData: req.user});
+app.get('/*', isUserAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'))
 });
+
+
+// // only show if user is authenticated
+// app.get('/dashboard', isUserAuthenticated, (req, res) => {
+//   console.log("Successfully logged into dashboard");
+//   // res.set({userData: req.user}); //fails here
+//   // res.sendFile(path.join(__dirname, '../build/index.html'))
+// });

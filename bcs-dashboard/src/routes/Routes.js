@@ -41,10 +41,10 @@ const childRoutes = (Layout, routes) =>
 const Routes = () => (
   <Router>
     <Switch>
-      <LandingPage/>
-      {/* Temp comment out routes */}
-      {/* {childRoutes(DashboardLayout, dashboardRoutes)}
-      {childRoutes(AuthLayout, authRoutes)} */}
+      <Route path ='/' exact component= {LandingPage}/>
+      {childRoutes(DashboardLayout, dashboardRoutes)}
+      {childRoutes(AuthLayout, authRoutes)}
+    
       <Route
         render={() => (
           <AuthLayout>

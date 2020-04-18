@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import '../../../../node_modules/materialize-css/dist/css/materialize.css';
+import '../../../../node_modules/materialize-css/dist/css/materialize.min.css';
 import './SignIn.css';
 
 export default class SignIn extends Component {
@@ -10,7 +10,7 @@ export default class SignIn extends Component {
                     <div className="row">
                         <div className="col s12 center">
                             <a href="!#" className="btn btn-large waves-effect blue deep-white-text text-darken-2">
-                                <span class="material-icons">how_to_reg</span> Sign in/Register
+                                <span className="material-icons">how_to_reg</span> Sign in/Register
                             </a>
                         </div>
                     </div>
