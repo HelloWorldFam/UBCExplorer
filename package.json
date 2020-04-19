@@ -16,8 +16,5 @@
   "bugs": {
     "url": "https://github.com/MrBenC88/BCS-Course-Selector/issues"
   },
-  "homepage": "https://github.com/MrBenC88/BCS-Course-Selector#readme",
-  "dependencies": {
-    "material-components-web": "^5.1.0"
-  }
+  "homepage": "https://github.com/MrBenC88/BCS-Course-Selector#readme"
 }
