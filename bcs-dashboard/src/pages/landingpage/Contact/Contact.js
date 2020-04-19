@@ -9,14 +9,14 @@ export default class Contact extends Component {
                     <div className="row">
                         <div className="col s12 m6">
                             <div className="card-panel blue white-text center">
-                                <span class="material-icons">mail</span>
+                                <span className="material-icons">mail</span>
                                 <h4>Email</h4>
                                 <p>Please email us for any questions:_____ @gmail.com</p>
                             </div>
                         </div>
                         <div className="col s12 m6">
                             <div className="card-panel white center">
-                                <i class="material-icons">account_box</i>
+                                <i className="material-icons">account_box</i>
                                 <h4>Contact Address</h4>
                                 {/* <form>
                                 <div className="input-field">

@@ -126,10 +126,6 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-app.get('/login', (req, res) => {
-  // login page
-});
-
 // Secret route (only if you are authenticated)
 app.get('/secret', isUserAuthenticated, (req, res) => {
   res.send('You have reached the secret route');
