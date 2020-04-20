@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled, { withTheme } from "styled-components";
+import axios from 'axios';
 
 import Helmet from 'react-helmet';
 
@@ -25,13 +26,25 @@ const Divider = styled(MuiDivider)(spacing);
 const Typography = styled(MuiTypography)(spacing);
 
 function Default({ theme }) {
+  const [firstName, setFirstName] = useState("");
+
+  useEffect(() => {
+    axios("http://localhost:3000/userdata")
+      .then((res) => {
+        setFirstName(res.data.user.given_name);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <React.Fragment>
       <Helmet title="Dashboard" />
       <Grid justify="space-between" container spacing={6}>
         <Grid item>
           <Typography variant="h3" display="inline">
-            Welcome back, Lucy
+            Welcome back, {firstName}.
           </Typography>
           <Typography variant="body2" ml={2} display="inline">
           {`Monday, 29 April ${new Date().getFullYear()}`}

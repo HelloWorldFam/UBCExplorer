@@ -60,6 +60,8 @@ app.use(passport.session()); // Used to persist login sessions
 //     })
 //   }));
 
+let userData;
+
 passport.use(new GoogleOauth20Strategy({
   clientID: '610240877212-muh7g8rvb1pficemikp3r3vdfaobgo9f.apps.googleusercontent.com',
   clientSecret: 'MpRbTT5AssctwpN0Id0GHIwe',
@@ -67,6 +69,7 @@ passport.use(new GoogleOauth20Strategy({
 },
   function (accessToken, refreshToken, profile, done) {
     console.log(profile); 
+    userData = profile;
     Users.findOrCreate({ email: profile.emails[0].value }, { firstName: profile.name.givenName, lastName: profile.name.familyName }, function (err, user) {
       return done(err, user);
     })
@@ -112,7 +115,11 @@ app.get('/auth/google', passport.authenticate('google', {
 app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
   console.log("Successfully logged in");
   res.redirect('/dashboard');
-  // res.redirect('/');
+});
+
+// Ask about this - using this to retrieve user data from the Passport 'profile' object
+app.get('/userdata', isUserAuthenticated, (req, res) => {
+  res.send({ user: userData._json });
 });
 
 // Secret route
