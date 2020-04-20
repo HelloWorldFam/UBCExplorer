@@ -202,11 +202,7 @@ class UserMenu extends Component {
           >
             Profile
           </MenuItem>
-          <MenuItem
-            onClick={() => {
-              this.closeMenu();
-            }}
-          >
+          <MenuItem>
             Sign out
           </MenuItem>
         </Menu>

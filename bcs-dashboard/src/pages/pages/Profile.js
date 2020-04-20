@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled, { withTheme } from "styled-components";
 import { NavLink as RouterNavLink } from "react-router-dom";
-
+import axios from "axios";
 import Helmet from 'react-helmet';
 
 import "../../vendor/roundedBarCharts";
@@ -113,7 +113,7 @@ const TableWrapper = styled.div`
   max-width: calc(100vw - ${props => props.theme.spacing(12)}px);
 `;
 
-function Details() {
+function Details(props) {
   return (
     <Card mb={6}>
       <CardContent>
@@ -124,10 +124,10 @@ function Details() {
         <Spacer mb={4} />
 
         <Centered>
-          <Avatar alt="Lucy Lavender" src="/static/img/avatars/avatar-1.jpg" />
+          <Avatar alt="Lucy Lavender" src={props.picture} />
           <Typography variant="body2" component="div" gutterBottom>
-            <Box fontWeight="fontWeightMedium">Lucy Lavender</Box>
-            <Box fontWeight="fontWeightRegular">Lead Developer</Box>
+            <Box fontWeight="fontWeightMedium">{props.firstName} {props.lastName}</Box>
+            <Box fontWeight="fontWeightRegular">{props.email}</Box>
           </Typography>
 
           <Button mr={2} variant="contained" size="small">
@@ -536,6 +536,24 @@ const SalesRevenue = withTheme(({ theme }) => {
 });
 
 function Profile() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [picture, setPicture] = useState("");
+
+  useEffect(() => {
+    axios("http://localhost:3000/userdata")
+      .then((res) => {
+        setFirstName(res.data.user.given_name);
+        setLastName(res.data.user.family_name);
+        setEmail(res.data.user.email);
+        setPicture(res.data.user.picture);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <React.Fragment>
       <Helmet title="Profile" />
@@ -558,7 +576,11 @@ function Profile() {
 
       <Grid container spacing={6}>
         <Grid item xs={12} lg={4} xl={3}>
-          <Details />
+          <Details
+            firstName={firstName}
+            lastName={lastName}
+            email={email}
+            picture={picture} />
           <Skills />
           <About />
           <Elsewhere />

@@ -14,8 +14,6 @@ import {
   Divider as MuiDivider,
   FormControl as MuiFormControl,
   Grid,
-  Menu,
-  MenuItem,
   Input,
   InputLabel,
   Link,
@@ -46,16 +44,8 @@ const CenteredContent = styled.div`
   text-align: center;
 `;
 
-const SmallText = styled.div`
-  font-size: 12px;
-`;
-
 const Lefted = styled.div`
   text-align: left;
-`;
-
-const Righted = styled.div`
-  text-align: right;
 `;
 
 const BigAvatar = styled(Avatar)`
@@ -77,8 +67,7 @@ function Public(props) {
               <InputLabel htmlFor="username">Username</InputLabel>
               <Input
                 id="username"
-                value={props.username}
-                onChange={(e) => props.onChangeUsername(e.target.value)}
+                defaultValue="Username (if we choose to have one)"
               />
             </FormControl>
             <FormControl fullWidth mb={3}>
@@ -91,7 +80,7 @@ function Public(props) {
                 defaultValue={"I am a BCS student. More about me will go here."}
               />
             </FormControl>
-            <FormControl fullWidth mb={3}>
+            {/* <FormControl fullWidth mb={3}>
               <Lefted>
                 <SmallText>
                   <p>Courses taken</p>
@@ -108,14 +97,11 @@ function Public(props) {
                   );
                 })}
               </Lefted>
-            </FormControl>
+            </FormControl> */}
           </Grid>
           <Grid item md={4}>
             <CenteredContent>
-              <BigAvatar
-                alt="Remy Sharp"
-                src="/static/img/avatars/avatar-1.jpg"
-              />
+              <BigAvatar alt="User display picture" src={props.picture} />
               <input
                 accept="image/*"
                 style={{ display: "none" }}
@@ -189,45 +175,36 @@ function Private(props) {
 }
 
 function Settings() {
-  const [userId, setUserId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [courses, setCourses] = useState([]);
+  const [picture, setPicture] = useState("");
 
-  const handleChange = (userSelected) => {
-    setUserId(userSelected._id);
-    setFirstName(userSelected.firstName);
-    setLastName(userSelected.lastName);
-    setUsername(userSelected.username);
-    setEmail(userSelected.email);
-    setCourses(userSelected.courses);
-  };
+  useEffect(() => {
+    axios("http://localhost:3000/userdata")
+      .then((res) => {
+        setFirstName(res.data.user.given_name);
+        setLastName(res.data.user.family_name);
+        setEmail(res.data.user.email);
+        setPicture(res.data.user.picture);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
 
   const handleClick = () => {
-    if (userId !== "") {
-      const user = {
-        userId: userId,
-        firstName: firstName,
-        lastName: lastName,
-        username: username,
-        email: email,
-        courses: courses,
-      };
-
-      axios
-        .post("http://localhost:5000/users/update/" + userId, user)
-        .then((res) => {
-          console.log(res.data);
-          alert("Record updated.");
-        })
-        .catch((err) =>
-          alert(
-            "Changes were not saved. Make sure all the fields are filled out!"
-          )
-        );
-    }
+    const user = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email
+    };
+    alert(
+      `User wants to change fields to:
+      First Name: ${user.firstName}
+      Last Name: ${user.lastName}
+      Email: ${user.email}`
+    );
   };
 
   return (
@@ -247,20 +224,12 @@ function Settings() {
             <Typography>Account Settings</Typography>
           </Breadcrumbs>
         </Grid>
-        <Grid item md={6}>
-          <SimpleMenu action={handleChange} />
-        </Grid>
       </Grid>
       <Divider my={6} />
 
       <Grid container spacing={6}>
         <Grid item xs={12}>
-          <Public
-            username={username}
-            courses={courses}
-            onChangeUsername={setUsername}
-            onChangeCourses={setCourses}
-          />
+          <Public picture={picture} />
           <Private
             firstName={firstName}
             lastName={lastName}
@@ -275,68 +244,6 @@ function Settings() {
         </Grid>
       </Grid>
     </React.Fragment>
-  );
-}
-
-function SimpleMenu(props) {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [userList, setUserList] = useState([]);
-
-  // to only run useEffect hook once (infinite loop otherwise):
-  //         https://css-tricks.com/run-useeffect-only-once/
-  //         https://www.robinwieruch.de/react-hooks-fetch-data
-
-  useEffect(() => {
-    axios("http://localhost:5000/users/")
-      .then((response) => {
-        setUserList(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = (e, val) => {
-    e.preventDefault();
-    if (val !== "backdropClick") {
-      props.action(val);
-    }
-    setAnchorEl(null);
-  };
-
-  return (
-    <Righted>
-      <Button
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        Choose User (for testing)
-      </Button>
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        {userList.map((user) => {
-          return (
-            <MenuItem
-              key={user._id}
-              value={user.username}
-              onClick={(e) => handleClose(e, user)}
-            >
-              {user.firstName + " " + user.lastName}
-            </MenuItem>
-          );
-        })}
-      </Menu>
-    </Righted>
   );
 }
 
