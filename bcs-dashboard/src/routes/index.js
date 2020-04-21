@@ -24,6 +24,9 @@ import { GolfCourse, Directions, Dashboard, Settings as SettingsIcon } from "@ma
 // Landing page component
 const LandingPage = async(() => import("../pages/landingpage/LandingPage"));
 
+// Degree progress components
+const DegreeProgress = async(() => import("../pages/degreeprogress/DegreeProgress"));
+
 // Auth components
 const SignIn = async(() => import("../pages/auth/SignIn"));
 const SignUp = async(() => import("../pages/auth/SignUp"));
@@ -126,7 +129,7 @@ const degreeProgressRoutes = {
   id: "Degree Progress",
   path: "/degreeprogress",
   icon: <Directions />,
-  component: Projects,
+  component: DegreeProgress,
 }
 
 const myCoursesRoutes = {
