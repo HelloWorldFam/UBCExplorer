@@ -115,13 +115,6 @@ const dashboardsRoutes = {
   // ]
 };
 
-const timeTableRoutes = {
-  id: "Timetable",
-  path: "/timetable",
-  icon: <CalendarIcon />,
-  component: Default,
-}
-
 const courseSelectorRoutes = {
   id: "Course Selector",
   path: "/courseselector",
@@ -133,7 +126,7 @@ const degreeProgressRoutes = {
   id: "Degree Progress",
   path: "/degreeprogress",
   icon: <Directions />,
-  component: Default,
+  component: Projects,
 }
 
 const myCoursesRoutes = {
@@ -456,7 +449,6 @@ export const landing = [landingPageRoutes];
 
 export const dashboard = [
   dashboardsRoutes,
-  timeTableRoutes,
   courseSelectorRoutes,
   degreeProgressRoutes,
   myCoursesRoutes,
@@ -484,7 +476,6 @@ export const auth = [authRoutes];
 
 export default [
   dashboardsRoutes,
-  timeTableRoutes,
   courseSelectorRoutes,
   degreeProgressRoutes,
   myCoursesRoutes,
