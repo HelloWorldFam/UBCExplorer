@@ -28,9 +28,6 @@ connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 })
 
-// const usersRouter = require('./routes/users');
-// app.use('/users', usersRouter);
-
 const { Schema } = mongoose;
 const UsersSchema = new Schema({
   email: String,
@@ -133,16 +130,6 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-// Secret route (only if you are authenticated)
-app.get('/secret', isUserAuthenticated, (req, res) => {
-  res.send('You have reached the secret route');
-});
-
-// // Dashboard route (only if you are authenticated)
-// app.get('/dashboard', isUserAuthenticated, (req, res) => {
-//   res.send('You have reached the dashboard route');
-// });
-
 // Nodemon success message
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
@@ -160,11 +147,3 @@ app.get('/', (req, res) => {
 app.get('/*', isUserAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'))
 });
-
-
-// // only show if user is authenticated
-// app.get('/dashboard', isUserAuthenticated, (req, res) => {
-//   console.log("Successfully logged into dashboard");
-//   // res.set({userData: req.user}); //fails here
-//   // res.sendFile(path.join(__dirname, '../build/index.html'))
-// });
