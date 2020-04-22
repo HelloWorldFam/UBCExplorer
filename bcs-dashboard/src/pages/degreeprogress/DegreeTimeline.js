@@ -38,7 +38,16 @@ function Timeline(props) {
                     Timeline
                 </Typography>
                 <VerticalTimeline>
-                    {props.courseResult.map((item, index) => {
+                    {props.courseResult.map((item, index, array) => {
+                        if (array.length === 1) {
+                            return (
+                                <VerticalTimelineElement
+                                    className="vertical-timeline-element"
+                                    iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }} >
+                                    <h3>You have not added any courses!</h3>
+                                </VerticalTimelineElement>
+                            )
+                        }
                         if (index !== 0) {
                             return (
                                 <VerticalTimelineElement
