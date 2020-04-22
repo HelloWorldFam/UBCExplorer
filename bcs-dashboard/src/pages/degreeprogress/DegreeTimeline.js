@@ -41,8 +41,6 @@ function Timeline() {
                     <VerticalTimelineElement
                         className="vertical-timeline-element"
                         date="2019 Winter Term 1"
-                        // contentStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}        // Changes card style
-                        // contentArrowStyle={{ borderRight: '7px solid  rgb(33, 150, 243)' }}      // Changes arrow style
                         iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }} >
                         <h3 className="vertical-timeline-element-title">
                             Course Name:
@@ -64,7 +62,7 @@ function Timeline() {
     );
 }
 
-function DegreeProgress() {
+function DegreeTimeline() {
     return (
         <React.Fragment>
             <Helmet title="Degree Progress" />
@@ -92,4 +90,4 @@ function DegreeProgress() {
     );
 }
 
-export default DegreeProgress;
+export default DegreeTimeline;

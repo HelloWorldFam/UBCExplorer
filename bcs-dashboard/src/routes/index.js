@@ -25,7 +25,7 @@ import { GolfCourse, Directions, Dashboard, Settings as SettingsIcon } from "@ma
 const LandingPage = async(() => import("../pages/landingpage/LandingPage"));
 
 // Degree progress components
-const DegreeProgress = async(() => import("../pages/degreeprogress/DegreeProgress"));
+const DegreeTimeline = async(() => import("../pages/degreeprogress/DegreeTimeline"));
 
 // Auth components
 const SignIn = async(() => import("../pages/auth/SignIn"));
@@ -129,7 +129,18 @@ const degreeProgressRoutes = {
   id: "Degree Progress",
   path: "/degreeprogress",
   icon: <Directions />,
-  component: DegreeProgress,
+  children: [
+    {
+      path: "/degreeprogress/overview",
+      name: "Overview",
+      component: DegreeTimeline,
+    },
+    {
+      path: "/degreeprogress/timeline",
+      name: "Timeline",
+      component: DegreeTimeline
+    }
+  ]
 }
 
 const myCoursesRoutes = {
