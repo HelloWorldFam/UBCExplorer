@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from 'react'
 import styled from "styled-components";
 import { NavLink as RouterNavLink } from "react-router-dom";
 
@@ -30,7 +30,7 @@ const Divider = styled(MuiDivider)(spacing);
 
 const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
-function Timeline() {
+function Timeline(props) {
     return (
         <Card style={{ backgroundColor: "#e3e3e3" }} mb={6}>
             <CardContent>
@@ -38,24 +38,27 @@ function Timeline() {
                     Timeline
                 </Typography>
                 <VerticalTimeline>
-                    <VerticalTimelineElement
-                        className="vertical-timeline-element"
-                        date="2019 Winter Term 1"
-                        iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }} >
-                        <h3 className="vertical-timeline-element-title">
-                            Course Name:
-                        </h3>
-                        <h4 className="vertical-timeline-element-subtitle">
-                            CPSC 110
-                        </h4>
-                        <br />
-                        <h3 className="vertical-timeline-element-title">
-                            Course Name:
-                        </h3>
-                        <h4 className="vertical-timeline-element-subtitle">
-                            CPSC 121
-                        </h4>
-                    </VerticalTimelineElement>
+                    {props.courseResult.map((item, index) => {
+                        if (index !== 0) {
+                            return (
+                                <VerticalTimelineElement
+                                    className="vertical-timeline-element"
+                                    date={item.Name}
+                                    iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }} >
+                                    {item.Courses.map((course) => (
+                                        <>
+                                            <h3 className="vertical-timeline-element-title">
+                                                Course Name:
+                                            </h3>
+                                            <h4 className="vertical-timeline-element-subtitle">
+                                                {course}
+                                            </h4>
+                                        </>
+                                    ))}
+                                </VerticalTimelineElement>
+                            )
+                        }
+                    })}
                 </VerticalTimeline>
             </CardContent>
         </Card>
@@ -63,6 +66,23 @@ function Timeline() {
 }
 
 function DegreeTimeline() {
+    // Commented out temporarily
+    // useEffect(() => {
+    //     const courseResult = () => {
+    //         fetch('/getcourses')
+    //             .then(response => response.json())
+    //             .then(json => {
+    //                 return json // access json.body here
+    //             });
+    //     }
+    // });
+
+    const courseResult = [{ "Courses": ["MATH 180", "STAT 200"], "Name": "Exemptions" },
+    { "Courses": ["CPSC 110", "CPSC 121"], "Name": "2020W1" },
+    { "Courses": ["CPSC 210", "STAT 302"], "Name": "2020W2" }];
+
+
+
     return (
         <React.Fragment>
             <Helmet title="Degree Progress" />
@@ -83,7 +103,7 @@ function DegreeTimeline() {
 
             <Grid container spacing={6}>
                 <Grid item xs={12}>
-                    <Timeline />
+                    <Timeline courseResult={courseResult} />
                 </Grid>
             </Grid>
         </React.Fragment>
