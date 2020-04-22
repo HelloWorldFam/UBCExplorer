@@ -4,7 +4,7 @@ import { NavLink as RouterNavLink } from "react-router-dom";
 
 // Vertical Timeline (Scrolling) component
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
-import './style.min.css';
+import 'react-vertical-timeline-component/style.min.css';
 
 import Helmet from 'react-helmet';
 
