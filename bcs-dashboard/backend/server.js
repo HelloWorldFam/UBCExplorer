@@ -28,14 +28,12 @@ connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 })
 
-// const usersRouter = require('./routes/users');
-// app.use('/users', usersRouter);
-
 const { Schema } = mongoose;
 const UsersSchema = new Schema({
   email: String,
   firstName: String,
   lastName: String,
+  courses: Array,
 }).plugin(findOrCreate);
 const Users = mongoose.model('Users', UsersSchema);
 
@@ -60,13 +58,16 @@ app.use(passport.session()); // Used to persist login sessions
 //     })
 //   }));
 
+let userData;
+
 passport.use(new GoogleOauth20Strategy({
   clientID: '610240877212-muh7g8rvb1pficemikp3r3vdfaobgo9f.apps.googleusercontent.com',
   clientSecret: 'MpRbTT5AssctwpN0Id0GHIwe',
   callbackURL: 'http://localhost:3000/auth/google/callback'
 },
   function (accessToken, refreshToken, profile, done) {
-    console.log(profile); 
+    console.log(profile);
+    userData = profile;
     Users.findOrCreate({ email: profile.emails[0].value }, { firstName: profile.name.givenName, lastName: profile.name.familyName }, function (err, user) {
       return done(err, user);
     })
@@ -112,7 +113,11 @@ app.get('/auth/google', passport.authenticate('google', {
 app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
   console.log("Successfully logged in");
   res.redirect('/dashboard');
-  // res.redirect('/');
+});
+
+// Ask about this - using this to retrieve user data from the Passport 'profile' object
+app.get('/userdata', isUserAuthenticated, (req, res) => {
+  res.send({ user: userData._json });
 });
 
 // Secret route
@@ -125,16 +130,6 @@ app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
-
-// Secret route (only if you are authenticated)
-app.get('/secret', isUserAuthenticated, (req, res) => {
-  res.send('You have reached the secret route');
-});
-
-// // Dashboard route (only if you are authenticated)
-// app.get('/dashboard', isUserAuthenticated, (req, res) => {
-//   res.send('You have reached the dashboard route');
-// });
 
 // Nodemon success message
 app.listen(port, () => {
@@ -150,14 +145,16 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'))
 });
 
+app.get('/getCourses', (req, res) => {
+  if (!req.user) {
+    res.send("You are not authenticated.");
+  } else {
+    Users.find({ 'email': req.user.email }, function (err, result) {
+      res.send(result[0].courses);
+    })
+  }
+})
+
 app.get('/*', isUserAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'))
 });
-
-
-// // only show if user is authenticated
-// app.get('/dashboard', isUserAuthenticated, (req, res) => {
-//   console.log("Successfully logged into dashboard");
-//   // res.set({userData: req.user}); //fails here
-//   // res.sendFile(path.join(__dirname, '../build/index.html'))
-// });

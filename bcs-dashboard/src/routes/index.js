@@ -24,6 +24,9 @@ import { GolfCourse, Directions, Dashboard, Settings as SettingsIcon } from "@ma
 // Landing page component
 const LandingPage = async(() => import("../pages/landingpage/LandingPage"));
 
+// Degree progress components
+const DegreeTimeline = async(() => import("../pages/degreeprogress/DegreeTimeline"));
+
 // Auth components
 const SignIn = async(() => import("../pages/auth/SignIn"));
 const SignUp = async(() => import("../pages/auth/SignUp"));
@@ -115,13 +118,6 @@ const dashboardsRoutes = {
   // ]
 };
 
-const timeTableRoutes = {
-  id: "Timetable",
-  path: "/timetable",
-  icon: <CalendarIcon />,
-  component: Default,
-}
-
 const courseSelectorRoutes = {
   id: "Course Selector",
   path: "/courseselector",
@@ -133,7 +129,18 @@ const degreeProgressRoutes = {
   id: "Degree Progress",
   path: "/degreeprogress",
   icon: <Directions />,
-  component: Default,
+  children: [
+    {
+      path: "/degreeprogress/overview",
+      name: "Overview",
+      component: DegreeTimeline,
+    },
+    {
+      path: "/degreeprogress/timeline",
+      name: "Timeline",
+      component: DegreeTimeline
+    }
+  ]
 }
 
 const myCoursesRoutes = {
@@ -456,7 +463,6 @@ export const landing = [landingPageRoutes];
 
 export const dashboard = [
   dashboardsRoutes,
-  timeTableRoutes,
   courseSelectorRoutes,
   degreeProgressRoutes,
   myCoursesRoutes,
@@ -484,7 +490,6 @@ export const auth = [authRoutes];
 
 export default [
   dashboardsRoutes,
-  timeTableRoutes,
   courseSelectorRoutes,
   degreeProgressRoutes,
   myCoursesRoutes,
