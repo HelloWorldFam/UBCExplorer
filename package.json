@@ -1,0 +1,20 @@
+{
+  "name": "bcs-course-selector",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "cd bcs-dashboard && npm i && cd .. && cd bcs-landing-page && npm i && cd .. && cd dashboard-template && npm i"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrBenC88/BCS-Course-Selector.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MrBenC88/BCS-Course-Selector/issues"
+  },
+  "homepage": "https://github.com/MrBenC88/BCS-Course-Selector#readme"
+}
