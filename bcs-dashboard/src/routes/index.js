@@ -26,6 +26,7 @@ const LandingPage = async(() => import("../pages/landingpage/LandingPage"));
 
 // Degree progress components
 const DegreeTimeline = async(() => import("../pages/degreeprogress/DegreeTimeline"));
+const DegreeOverview = async(() => import("../pages/degreeprogress/DegreeOverview"));
 
 // Auth components
 const SignIn = async(() => import("../pages/auth/SignIn"));
@@ -133,7 +134,7 @@ const degreeProgressRoutes = {
     {
       path: "/degreeprogress/overview",
       name: "Overview",
-      component: DegreeTimeline,
+      component: DegreeOverview,
     },
     {
       path: "/degreeprogress/timeline",
