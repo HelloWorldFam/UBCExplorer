@@ -31,8 +31,12 @@ function Overview() {
     return (
         <Card style={{ backgroundColor: "#e3e3e3" }} mb={6}>
             <CardContent>
-                <Typography variant="h6" paragraph >
+                <Typography variant="h3" paragraph >
                     Overview
+                </Typography>
+
+                <Typography variant="h6" paragraph >
+                    Overall progress through BCS Degree:
                 </Typography>
                 
             </CardContent>

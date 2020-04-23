@@ -34,7 +34,7 @@ function Timeline(props) {
     return (
         <Card style={{ backgroundColor: "#e3e3e3" }} mb={6}>
             <CardContent>
-                <Typography variant="h6" paragraph >
+                <Typography variant="h3" paragraph >
                     Timeline
                 </Typography>
                 <VerticalTimeline>
