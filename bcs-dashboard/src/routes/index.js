@@ -34,6 +34,11 @@ const DegreeTimeline = async(() =>
   import("../pages/degreeprogress/DegreeTimeline")
 );
 
+//Course Selector Components
+const CourseSelector = async(() =>
+  import("../pages/courseselector/CourseSelector")
+);
+
 // Auth components
 const SignIn = async(() => import("../pages/auth/SignIn"));
 const SignUp = async(() => import("../pages/auth/SignUp"));
@@ -129,7 +134,7 @@ const courseSelectorRoutes = {
   id: "Course Selector",
   path: "/courseselector",
   icon: <GolfCourse />,
-  component: Default,
+  component: CourseSelector,
 };
 
 const degreeProgressRoutes = {
