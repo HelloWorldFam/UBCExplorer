@@ -136,7 +136,7 @@ class CourseSelector extends React.Component {
       <Grid container spacing={6}>
         <Grid item xs={12} lg={6} xl={3}>
           <Lane
-            title="Upcoming"
+            title="Search"
             description="Nam pretium turpis et arcu. Duis arcu."
             onContainerLoaded={this.onContainerReady}
           >
@@ -149,7 +149,7 @@ class CourseSelector extends React.Component {
         </Grid>
         <Grid item xs={12} lg={6} xl={3}>
           <Lane
-            title="In Progress"
+            title="Prerequisite / Corequisite Courses"
             description="Nam pretium turpis et arcu. Duis arcu."
             onContainerLoaded={this.onContainerReady}
           >
@@ -160,7 +160,7 @@ class CourseSelector extends React.Component {
         </Grid>
         <Grid item xs={12} lg={6} xl={3}>
           <Lane
-            title="On Hold"
+            title="Dependent Courses"
             description="Nam pretium turpis et arcu. Duis arcu."
             onContainerLoaded={this.onContainerReady}
           >
@@ -172,7 +172,7 @@ class CourseSelector extends React.Component {
         </Grid>
         <Grid item xs={12} lg={6} xl={3}>
           <Lane
-            title="Completed"
+            title="Your Degree"
             description="Nam pretium turpis et arcu. Duis arcu."
             onContainerLoaded={this.onContainerReady}
           >
