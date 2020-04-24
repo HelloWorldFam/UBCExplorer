@@ -67,7 +67,7 @@ const RedText = styled.span`
 
 const PieChart = ({ theme }) => {
   const data = {
-    labels: ["Social", "Search Engines", "Other"],
+    labels: ["Core CPSC Credits", "Bridging Module Credits", "Remaining Credits"],
     datasets: [
       {
         data: [coreCredits, bridgingCredits, creditsRemaining],
