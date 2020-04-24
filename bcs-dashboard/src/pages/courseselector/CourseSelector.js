@@ -14,10 +14,16 @@ import {
   CardContent,
   Chip as MuiChip,
   Divider as MuiDivider,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
   Grid,
   Link,
+  TextField as MuiTextField,
   Typography as MuiTypography,
 } from "@material-ui/core";
+
+import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 
 import { Done as DoneIcon } from "@material-ui/icons";
 
@@ -28,6 +34,12 @@ import dragula from "react-dragula";
 const NavLink = React.forwardRef((props, ref) => (
   <RouterNavLink innerRef={ref} {...props} />
 ));
+
+const TextFieldSpacing = styled(MuiTextField)(spacing);
+
+const TextField = styled(TextFieldSpacing)`
+  width: 200px;
+`;
 
 const Chip = styled(MuiChip)(spacing);
 
@@ -42,6 +54,12 @@ const TaskWrapper = styled(Card)`
   background: ${(props) => props.theme.body.background};
   margin-bottom: ${(props) => props.theme.spacing(4)}px;
   cursor: grab;
+`;
+
+const SearchWrapper = styled(Card)`
+  border: 1px solid ${(props) => props.theme.palette.grey[300]};
+  background: ${(props) => props.theme.body.background};
+  margin-bottom: ${(props) => props.theme.spacing(4)}px;
 `;
 
 const Centered = styled.div`
@@ -126,6 +144,90 @@ const courseNamae = ["Systematic Program Design"];
 const dependencies = ["CPSC210"];
 const coreqs = ["CPSC121"];
 
+function SearchCard({}) {
+  return (
+    <SearchWrapper mb={4}>
+      <TaskWrapperContent>
+        <Typography variant="body2" mb={3}>
+          <div className="container">
+            <TextField
+              id="standard-dense"
+              // onChange={this.handleChange("age")}
+              label="Department"
+              margin="dense"
+              m={2}
+            />
+
+            <TextField
+              id="standard-dense"
+              label="Course Code"
+              margin="dense"
+              m={2}
+            />
+          </div>
+        </Typography>
+        <Centered>
+          <Button mr={2} variant="contained" color="primary">
+            Search
+          </Button>
+        </Centered>
+        <br />
+        <Card mb={6}>
+          <Typography color="textSecondary" gutterBottom>
+            {description}
+          </Typography>
+        </Card>
+
+        <TextField id="standard-dense" label="Credits" margin="dense" m={2} />
+        <br />
+
+        <Chip label="Core Courses" component="a" href="#chip" clickable m={1} />
+        <Chip
+          label="Bridging Module"
+          component="a"
+          href="#chip"
+          clickable
+          m={1}
+        />
+        <Chip
+          label="CPSC Upper Level"
+          component="a"
+          href="#chip"
+          clickable
+          m={1}
+        />
+
+        <br />
+        <Centered>
+          <Button mr={2} variant="contained" color="primary">
+            Add to Degree
+          </Button>
+        </Centered>
+      </TaskWrapperContent>
+    </SearchWrapper>
+  );
+}
+
+function YourDegreeCard({ courseList }) {
+  return (
+    <TaskWrapper mb={4}>
+      <TaskWrapperContent>
+        <ExpansionPanel
+        // expanded={expanded === "panel1"}
+        // onChange={this.handleChange("panel1")}
+        >
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>2019W1</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>{courseList}</ExpansionPanelDetails>
+        </ExpansionPanel>
+      </TaskWrapperContent>
+    </TaskWrapper>
+  );
+}
+
+const courseList = ["CPSC 110"];
+
 const description = [
   "Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada.",
   "Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum.",
@@ -172,7 +274,7 @@ class CourseSelector extends React.Component {
             description="Nam pretium turpis et arcu. Duis arcu."
             onContainerLoaded={this.onContainerReady}
           >
-            {/* INSERT SEARCH COMPONENT HERE /> */}
+            <SearchCard />
           </Lane>
         </Grid>
         <Grid item xs={12} lg={6} xl={3}>
@@ -227,7 +329,7 @@ class CourseSelector extends React.Component {
             description="Nam pretium turpis et arcu. Duis arcu."
             onContainerLoaded={this.onContainerReady}
           >
-            {/* INSERT COMPONENT FOR YOUR DEGREE /> */}
+            <YourDegreeCard courseList={courseList[0]} />
           </Lane>
         </Grid>
       </Grid>
