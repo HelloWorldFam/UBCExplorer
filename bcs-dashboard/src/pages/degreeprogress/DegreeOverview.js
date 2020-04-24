@@ -79,6 +79,12 @@ function Overview(props) {
                     </Typography>
                     {/* Used Progress bar #1 */}
                     <Progress percent={corePercentComplete} />
+
+                    
+                    <Typography variant="h7" paragraph >
+                        Credits Completed: {coreCredits} <br />
+                        Credits Remaining: {coreCreditsRemaining}
+                    </Typography>
                     
                 {/* Text for credits 
                     <Grid container alignItems="center">
@@ -103,6 +109,11 @@ function Overview(props) {
                 {/* Used Progress bar #1 */}
                     <Progress percent={bridgingPercentComplete} />
 
+                    <Typography variant="h7" paragraph >
+                        Credits Completed: {bridgingCredits} <br />
+                        Credits Remaining: {bridgingCreditsRemaining}
+                    </Typography>
+
                 {/* Text for credits 
                     <Grid container alignItems="center">
                         <Grid item xs>
@@ -125,6 +136,10 @@ function Overview(props) {
                     </Typography>
                 {/* Used Progress bar #1 */}
                     <Progress percent={exemptionPercentComplete} />
+                    <Typography variant="h7" paragraph >
+                        Credits Completed: {exemptionCreditsComplete} <br />
+                        Credits Remaining: {exemptionCreditsRemaining}
+                    </Typography>
                     <ExemptionTable />
                 <Divider my={6} />
 
