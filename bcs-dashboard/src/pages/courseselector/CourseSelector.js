@@ -367,25 +367,21 @@ function YourDegreeCard({ courseList }) {
 const courseList = ["CPSC 110"];
 
 function PrerequisiteCard(props) {
+  const prereqs = props.course.preq;
+  const coreqs = props.course.creq;
+  const prereqDescription = props.course.prer;
+  const courseDescription = props.course.desc;
+
+  const title = props.course.code;
+  const name = props.course.name;
+  const desc = props.course.desc;
+
   return (
     <div>
-      <CourseCard
-        courseCode={props.code}
-        courseName={props.name}
-        dependencies={dependencies[0]}
-        coreqs={coreqs[0]}
-      />
-      <CourseCard
-        courseCode={courseCode[0]}
-        courseName={courseNamae[0]}
-        dependencies={dependencies[0]}
-        coreqs={coreqs[0]}
-      />
-      <CourseCard
-        courseCode={courseCode[0]}
-        courseName={courseNamae[0]}
-        dependencies={dependencies[0]}
-        coreqs={coreqs[0]}
+      <SearchResultCard
+        title={title}
+        name={name}
+        desc={desc}
       />
     </div>
   );
