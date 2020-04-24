@@ -194,7 +194,7 @@ function SearchCard({}) {
   };
 
   return (
-    <SearchWrapper mb={4}>
+    <SearchWrapper mb={4}> 
       <TaskWrapperContent>
         <form>
           <Typography variant="body2" mb={3}>
@@ -337,7 +337,7 @@ function TermDropDown() {
           <MenuItem value='2021W2'>2021W2</MenuItem>
           <MenuItem value='2021S'>2021S</MenuItem>
         </Select>
-        <FormHelperText>Select the term in which you will take this course</FormHelperText>
+        <FormHelperText>Select the term you want to take this course</FormHelperText>
       </FormControl>
   )
 }
