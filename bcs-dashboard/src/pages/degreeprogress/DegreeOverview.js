@@ -40,30 +40,59 @@ const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
 
 function Overview(props) {
-
-    // NEED:
-    // Core CPSC courses
-    // Addt'l CPSC courses
-    // Bridging Module courses
-    // Exemption courses
-    const coreCPSC = [];
-    const completedCoreCPSC = [];
-    const addlCPSC = [];
-    const completedAddlCPSC = [];
-    const bridgMod = [];
-    const completedBridgMod = [];
-    const exemptions = [];
-    const exemptionReplacement = [];
-    const completedExemptionReplacement = [];
+    const coreCPSC = {
+        "completed": [],
+        "inProgress": [],
+        "remaining": [],
+        "required": ["CPSC 110", "CPSC 121", "CPSC 210", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
+    };
+    const addlCPSC = {
+        "completed": [],
+        "inProgress": [],
+        "remaining": [],
+    };
+    const bridgMod = {
+        "completed": [],
+        "inProgress": [],
+        "remaining": [],
+    };
+    const exemptions = {
+        "completed": [],
+        "inProgress": [],
+        "remaining": null,
+    };
+    const exemptionReplacement = {
+        "completed": [],
+        "inProgress": [],
+        "remaining": [],
+    };
     const sortCourses = () => {
         props.courseResult.map((term) => {
             if (term.name === "Exemptions") {
-                exemptions = term.courses;
+                exemptions.completed = term.courses;
             } else {
-                
+                const progress = () => {
+                    if (getRelativeProgress(term.name) == -1) return "completed";
+                    else if (getRelativeProgress(term.name) == 0) return "inProgress";
+                    else return "remaining";
+                }
+                term.courses.map((course) => {
+                    if (coreCPSC.required.includes(course.code)) coreCPSC[progress()].push(course.code);
+                    else if (course.code.substring(0, 4) === "CPSC") addlCPSC[progress()].push(course.code);
+                    /**
+                     * Note: the following implementation is incomplete. We must find a way to
+                     *       distinguish between courses used for bridging modules and for 
+                     *       exemption replacements.
+                     *       - JH
+                     */
+                    else exemptionReplacement[[progress()]].push(course.code);
+                })
             }
         });
     }
+    useEffect(() => {
+        sortCourses(props.courseResult);
+    });
 
     /**
      * 
