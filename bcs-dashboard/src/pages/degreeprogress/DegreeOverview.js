@@ -41,6 +41,30 @@ const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
 function Overview(props) {
 
+    // NEED:
+    // Core CPSC courses
+    // Addt'l CPSC courses
+    // Bridging Module courses
+    // Exemption courses
+    const coreCPSC = [];
+    const completedCoreCPSC = [];
+    const addlCPSC = [];
+    const completedAddlCPSC = [];
+    const bridgMod = [];
+    const completedBridgMod = [];
+    const exemptions = [];
+    const exemptionReplacement = [];
+    const completedExemptionReplacement = [];
+    const sortCourses = () => {
+        props.courseResult.map((term) => {
+            if (term.name === "Exemptions") {
+                exemptions = term.courses;
+            } else {
+                
+            }
+        });
+    }
+
     const coreCredits = 30;
     const bridgingCredits = 15;
     const bridgingCreditsTotal = 15;
@@ -74,18 +98,18 @@ function Overview(props) {
                 <DoughnutChart />
 
                 <Divider my={6} />
-                    <Typography variant="h6" paragraph >
-                        Core CPSC course progress:
+                <Typography variant="h6" paragraph >
+                    Core CPSC course progress:
                     </Typography>
-                    {/* Used Progress bar #1 */}
-                    <Progress percent={corePercentComplete} />
+                {/* Used Progress bar #1 */}
+                <Progress percent={corePercentComplete} />
 
-                    
-                    <Typography variant="h7" paragraph >
-                        Credits Completed: {coreCredits} <br />
+
+                <Typography variant="h7" paragraph >
+                    Credits Completed: {coreCredits} <br />
                         Credits Remaining: {coreCreditsRemaining}
-                    </Typography>
-                    
+                </Typography>
+
                 {/* Text for credits 
                     <Grid container alignItems="center">
                         <Grid item xs>
@@ -100,19 +124,19 @@ function Overview(props) {
                         </Grid>
                     </Grid> */}
 
-                    <CoreTable />
+                <CoreTable />
 
                 <Divider variant="middle" my={6} />
-                    <Typography variant="h6" paragraph >
-                        Bridging Module course progress:
+                <Typography variant="h6" paragraph >
+                    Bridging Module course progress:
                     </Typography>
                 {/* Used Progress bar #1 */}
-                    <Progress percent={bridgingPercentComplete} />
+                <Progress percent={bridgingPercentComplete} />
 
-                    <Typography variant="h7" paragraph >
-                        Credits Completed: {bridgingCredits} <br />
+                <Typography variant="h7" paragraph >
+                    Credits Completed: {bridgingCredits} <br />
                         Credits Remaining: {bridgingCreditsRemaining}
-                    </Typography>
+                </Typography>
 
                 {/* Text for credits 
                     <Grid container alignItems="center">
@@ -128,19 +152,19 @@ function Overview(props) {
                         </Grid>
                     </Grid> */}
 
-                    <BridgingTable />
+                <BridgingTable />
 
                 <Divider variant="middle" my={6} />
-                    <Typography variant="h6" paragraph >
-                        Exemption replacement progress:
+                <Typography variant="h6" paragraph >
+                    Exemption replacement progress:
                     </Typography>
                 {/* Used Progress bar #1 */}
-                    <Progress percent={exemptionPercentComplete} />
-                    <Typography variant="h7" paragraph >
-                        Credits Completed: {exemptionCreditsComplete} <br />
+                <Progress percent={exemptionPercentComplete} />
+                <Typography variant="h7" paragraph >
+                    Credits Completed: {exemptionCreditsComplete} <br />
                         Credits Remaining: {exemptionCreditsRemaining}
-                    </Typography>
-                    <ExemptionTable />
+                </Typography>
+                <ExemptionTable />
                 <Divider my={6} />
 
 
@@ -157,7 +181,7 @@ function Overview(props) {
                 </Typography>
                 <Progress percent={percentComplete} />
                 {/* Text for credits */}
-                                <Grid container alignItems="center">
+                <Grid container alignItems="center">
                     <Grid item xs>
                         <Typography gutterBottom variant="h8">
                             Completed credits: {credits} (placeholder)
@@ -185,7 +209,7 @@ function Overview(props) {
                     ]}
                 />
                 {/* Text for credits */}
-                                <Grid container alignItems="center">
+                <Grid container alignItems="center">
                     <Grid item xs>
                         <Typography gutterBottom variant="h8">
                             Completed credits: {credits} (placeholder)
@@ -233,10 +257,95 @@ function Overview(props) {
 
 
 function DegreeProgress() {
+    // Commented out temporarily
+    // const [courseResult, setCourseResult] = React.useState([]);
+    //
+    // useEffect(() => {
+    //     setCourseResult(() => {
+    //         fetch('/getcourses')
+    //             .then(response => response.json())
+    //             .then(json => {
+    //                 return json // access json.body here
+    //             });
+    //     });
+    // });
 
-    const courseResult = [{ "Courses": ["MATH 180", "STAT 200"], "Name": "Exemptions" },
-    { "Courses": ["CPSC 110", "CPSC 121"], "Name": "2020W1" },
-    { "Courses": ["CPSC 210", "STAT 302"], "Name": "2020W2" }];
+    const courseResult = [{
+        "name": "Exemptions",
+        "courses": []
+    }, {
+        "name": "2019W1",
+        "courses": [
+            {
+                "dept": "CPSC",
+                "code": "CPSC 121",
+                "name": "Models of Computation",
+                "cred": {
+                    "$numberInt": "4"
+                },
+                "desc": "Physical and mathematical structures of computation.  Boolean algebra and combinations logic circuits; proof techniques; functions and sequential circuits; sets and relations; finite state machines; sequential instruction execution. [3-2-1]",
+                "prer": "Principles of Mathematics 12 or Pre-calculus 12.",
+                "preq": "Principles of Mathematics 12 or Pre-calculus 12",
+                "crer": "One of CPSC 107, CPSC 110.",
+                "creq": "CPSC 107 or CPSC 110"
+            },
+            {
+                "dept": "CPSC",
+                "code": "CPSC 110",
+                "name": "Computation, Programs, and Programming",
+                "cred": {
+                    "$numberInt": "4"
+                },
+                "desc": "Fundamental program and computation structures. Introductory programming skills. Computation as a tool for information processing, simulation and modelling, and interacting with the world. [3-3-0]"
+            },
+            {
+                "dept": "MATH",
+                "code": "MATH 200",
+                "name": "Calculus III",
+                "cred": {
+                    "$numberInt": "3"
+                },
+                "desc": "Analytic geometry in 2 and 3 dimensions, partial and directional derivatives, chain rule, maxima and minima, second derivative test, Lagrange multipliers, multiple integrals with applications. Please consult the Faculty of Science Credit Exclusion List: www.calendar.ubc.ca/vancouver/index.cfm?tree=12,215,410,414. [3-0-0]",
+                "prer": "One of MATH 101, MATH 103, MATH 105, MATH 121, SCIE 001.",
+                "preq": "MATH 101 or MATH 103 or MATH 105 or MATH 121 or SCIE 001"
+            }
+        ]
+    }, {
+        "name": "2019W2",
+        "courses": [
+            {
+                "dept": "CPSC",
+                "code": "CPSC 210",
+                "name": "Software Construction",
+                "cred": {
+                    "$numberInt": "4"
+                },
+                "desc": "Design, development, and analysis of robust software components. Topics such as software design, computational models, data structures, debugging, and testing. [3-2-0]",
+                "prer": "One of CPSC 107, CPSC 110.",
+                "preq": "CPSC 107 or CPSC 110"
+            },
+            {
+                "dept": "STAT",
+                "code": "STAT 302",
+                "name": "Introduction to Probability",
+                "cred": {
+                    "$numberInt": "3"
+                },
+                "desc": "Basic notions of probability, random variables, expectation and conditional expectation, limit theorems. (Consult the Credit Exclusion list within the Faculty of Science section in the Calendar.) [3-0-0]",
+                "prer": "One of MATH 200, MATH 226, MATH 217, MATH 253, MATH 254.",
+                "preq": "MATH 200 or MATH 226 or MATH 217 or MATH 253 or MATH 254"
+            },
+            {
+                "dept": "ENGL",
+                "code": "ENGL 110",
+                "name": "Approaches to Literature",
+                "cred": {
+                    "$numberInt": "3"
+                },
+                "desc": "Study of selected examples of poetry, fiction, and drama. Essays are required."
+            }
+        ]
+    }];
 
     return (
         <React.Fragment>
@@ -261,7 +370,7 @@ function DegreeProgress() {
 
             <Grid container spacing={6}>
                 <Grid item xs={12}>
-                    <Overview />
+                    <Overview courseResult={courseResult} />
                 </Grid>
             </Grid>
         </React.Fragment>
