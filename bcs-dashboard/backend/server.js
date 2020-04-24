@@ -1,16 +1,17 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const Courses = require("./models/courses.model");
 
-const passport = require('passport');
-const cookieSession = require('cookie-session');
-const findOrCreate = require('mongoose-findorcreate');
-const FacebookStrategy = require('passport-facebook');
-const GoogleOauth20Strategy = require('passport-google-oauth20');
-const TwitterStrategy = require('passport-twitter');
+const passport = require("passport");
+const cookieSession = require("cookie-session");
+const findOrCreate = require("mongoose-findorcreate");
+const FacebookStrategy = require("passport-facebook");
+const GoogleOauth20Strategy = require("passport-google-oauth20");
+const TwitterStrategy = require("passport-twitter");
 const path = require("path");
 
-require('dotenv').config();
+require("dotenv").config();
 
 // server settings - make sure that your port doesn't conflict with the React port!
 const app = express();
@@ -21,12 +22,16 @@ app.use(express.json());
 
 // MongoDB configuration
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect(uri, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useCreateIndex: true,
+});
 
 const connection = mongoose.connection;
-connection.once('open', () => {
+connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
-})
+});
 
 const { Schema } = mongoose;
 const UsersSchema = new Schema({
@@ -36,13 +41,15 @@ const UsersSchema = new Schema({
   picture: String,
   courses: Array,
 }).plugin(findOrCreate);
-const Users = mongoose.model('Users', UsersSchema);
+const Users = mongoose.model("Users", UsersSchema);
 
 // cookieSession config
-app.use(cookieSession({
-  maxAge: 24 * 60 * 60 * 1000, // One day in milliseconds
-  keys: ['SOME TEMP PLACEHOLDER']  // secret key to hash cookie ;)
-}));
+app.use(
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 1000, // One day in milliseconds
+    keys: ["SOME TEMP PLACEHOLDER"], // secret key to hash cookie ;)
+  })
+);
 
 app.use(passport.initialize()); // Used to initialize passport
 app.use(passport.session()); // Used to persist login sessions
@@ -59,17 +66,30 @@ app.use(passport.session()); // Used to persist login sessions
 //     })
 //   }));
 
-passport.use(new GoogleOauth20Strategy({
-  clientID: '610240877212-muh7g8rvb1pficemikp3r3vdfaobgo9f.apps.googleusercontent.com',
-  clientSecret: 'MpRbTT5AssctwpN0Id0GHIwe',
-  callbackURL: 'http://localhost:3000/auth/google/callback'
-},
-  function (accessToken, refreshToken, profile, done) {
-    console.log(profile);
-    Users.findOrCreate({ email: profile.emails[0].value }, { firstName: profile.name.givenName, lastName: profile.name.familyName, picture: profile._json.picture}, function (err, user) {
-      return done(err, user);
-    })
-  }));
+passport.use(
+  new GoogleOauth20Strategy(
+    {
+      clientID:
+        "610240877212-muh7g8rvb1pficemikp3r3vdfaobgo9f.apps.googleusercontent.com",
+      clientSecret: "MpRbTT5AssctwpN0Id0GHIwe",
+      callbackURL: "http://localhost:3000/auth/google/callback",
+    },
+    function (accessToken, refreshToken, profile, done) {
+      console.log(profile);
+      Users.findOrCreate(
+        { email: profile.emails[0].value },
+        {
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
+          picture: profile._json.picture,
+        },
+        function (err, user) {
+          return done(err, user);
+        }
+      );
+    }
+  )
+);
 
 // passport.use(new TwitterStrategy({
 //   clientID: 'must sign up with facebook for one',
@@ -97,38 +117,44 @@ function isUserAuthenticated(req, res, next) {
   if (req.user) {
     next();
   } else {
-    res.send('You must login!');
+    res.send("You must login!");
   }
 }
 
 // passport.authenticate middleware is used here to authenticate the request
-app.get('/auth/google', passport.authenticate('google', {
-  scope: ['profile', 'email'] // Used to specify the required data; we only want read-only access to public information
-}
-));
+app.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"], // Used to specify the required data; we only want read-only access to public information
+  })
+);
 
 // The middleware receives the data from Google and runs the function on Strategy config
-app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
-  console.log("Successfully logged in");
-  res.redirect('/dashboard');
-});
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google"),
+  (req, res) => {
+    console.log("Successfully logged in");
+    res.redirect("/dashboard");
+  }
+);
 
 // Ask about this - using this to retrieve user data from the Passport 'profile' object
-app.get('/userdata', isUserAuthenticated, (req, res) => {
-  Users.find({email: req.user.email}, function (err, result) {
+app.get("/userdata", isUserAuthenticated, (req, res) => {
+  Users.find({ email: req.user.email }, function (err, result) {
     res.send(result);
-  })
+  });
 });
 
 // Secret route
-app.get('/secret', isUserAuthenticated, (req, res) => {
-  res.send('You have reached the secret route');
+app.get("/secret", isUserAuthenticated, (req, res) => {
+  res.send("You have reached the secret route");
 });
 
 // Logout route
-app.get('/logout', (req, res) => {
+app.get("/logout", (req, res) => {
   req.logout();
-  res.redirect('/');
+  res.redirect("/");
 });
 
 // Nodemon success message
@@ -137,24 +163,34 @@ app.listen(port, () => {
 });
 
 // Serve static files from the React app
-app.use(express.static('../build/'));
+app.use(express.static("../build/"));
 
 //when connect to server, go up one directory into build folder
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   // send landing page
-  res.sendFile(path.join(__dirname, '../build/index.html'))
+  res.sendFile(path.join(__dirname, "../build/index.html"));
 });
 
-app.get('/getCourses', (req, res) => {
+app.get("/getCourses", (req, res) => {
   if (!req.user) {
     res.send("You are not authenticated.");
   } else {
-    Users.find({ 'email': req.user.email }, function (err, result) {
+    Users.find({ email: req.user.email }, function (err, result) {
       res.send(result[0].courses);
-    })
+    });
   }
-})
+});
 
-app.get('/*', isUserAuthenticated, (req, res) => {
-  res.sendFile(path.join(__dirname, '../build/index.html'))
+app.get("/getAllCourses", isUserAuthenticated, (req, res) => {
+  if (!req.user) {
+    res.send("You are not authenticated.");
+  } else {
+    Courses.find()
+      .then((courses) => res.send(courses))
+      .catch((err) => console.log(err));
+  }
+});
+
+app.get("/*", isUserAuthenticated, (req, res) => {
+  res.sendFile(path.join(__dirname, "../build/index.html"));
 });
