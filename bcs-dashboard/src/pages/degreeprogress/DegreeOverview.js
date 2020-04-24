@@ -65,6 +65,26 @@ function Overview(props) {
         });
     }
 
+    /**
+     * 
+     * @param {string} termName 
+     * @returns {number} :  -1 if course term is in the past
+     *                       0 if course term is current term
+     *                       1 if course term is future term
+     */
+    const getRelativeProgress = (termName) => {
+        var courseStartDate = parseInt(termName.substring(0, 4)) * 100;
+        if (termName.substring(4) === "W1") courseStartDate += 9;            // add 9 months ie. set month to September
+        else if (termName.substring(4) === "W2") courseStartDate += 101;     // add 13 months ie. set month to January
+        else if (termName.substring(4) === "S") courseStartDate += 5;        // add 5 months ie. set month to May
+        
+        var currentDate = new Date().getFullYear() * 100 + new Date().getMonth();
+
+        if (currentDate < courseStartDate) return 1;
+        else if (currentDate >= courseStartDate && currentDate <= courseStartDate+3) return 0;
+        else return -1;
+    }
+
     const coreCredits = 30;
     const bridgingCredits = 15;
     const bridgingCreditsTotal = 15;
