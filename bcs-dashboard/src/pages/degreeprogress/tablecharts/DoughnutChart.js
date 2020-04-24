@@ -22,12 +22,12 @@ import { Doughnut } from "react-chartjs-2";
 
 import { MoreVertical } from "react-feather";
 
-const coreCredits = 30;
-const bridgingCredits = 15;
-const credits = coreCredits + bridgingCredits;
-const minCredits = 63;
-const creditsRemaining = minCredits - credits;
-const percentComplete = Math.floor(credits / minCredits * 100);
+const coreCourses = 30;
+const bridgingCourses = 15;
+const courses = coreCourses + bridgingCourses;
+const minCourses = 63;
+const coursesRemaining = minCourses - courses;
+const percentComplete = Math.floor(courses / minCourses * 100);
 
 const Card = styled(MuiCard)(spacing);
 
@@ -70,7 +70,7 @@ const PieChart = ({ theme }) => {
     labels: ["Core CPSC Credits", "Bridging Module Credits", "Remaining Credits"],
     datasets: [
       {
-        data: [coreCredits, bridgingCredits, creditsRemaining],
+        data: [coreCourses, bridgingCourses, coursesRemaining],
         backgroundColor: [
           blue[500],
           green[500],
@@ -112,8 +112,8 @@ const PieChart = ({ theme }) => {
           <TableHead>
             <TableRow>
               <TableCell>Course Type</TableCell>
-              <TableCell align="right">Credits Completed</TableCell>
-              <TableCell align="right">Credits Remaining</TableCell>
+              <TableCell align="right">Courses Completed</TableCell>
+              <TableCell align="right">Courses Remaining</TableCell>
             </TableRow>
           </TableHead>
 
@@ -123,9 +123,9 @@ const PieChart = ({ theme }) => {
               <TableCell component="th" scope="row">
                 Corse CPSC
               </TableCell>
-              <TableCell align="right">{coreCredits}</TableCell>
+              <TableCell align="right">{coreCourses}</TableCell>
               <TableCell align="right">
-                {minCredits - 15 - coreCredits}
+                {minCourses - 15 - coreCourses}
               </TableCell>
             </TableRow>
 
@@ -133,9 +133,9 @@ const PieChart = ({ theme }) => {
               <TableCell component="th" scope="row">
                 Bridging Module
               </TableCell>
-              <TableCell align="right">{bridgingCredits}</TableCell>
+              <TableCell align="right">{bridgingCourses}</TableCell>
               <TableCell align="right">
-                {15 - bridgingCredits}
+                {15 - bridgingCourses}
               </TableCell>
             </TableRow>
 
@@ -143,9 +143,9 @@ const PieChart = ({ theme }) => {
               <TableCell component="th" scope="row">
                 Overall
               </TableCell>
-              <TableCell align="right"><GreenText>{credits}</GreenText></TableCell>
+              <TableCell align="right"><GreenText>{courses}</GreenText></TableCell>
               <TableCell align="right">
-                <RedText>{creditsRemaining}</RedText>
+                <RedText>{coursesRemaining}</RedText>
               </TableCell>
             </TableRow>
 
