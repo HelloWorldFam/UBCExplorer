@@ -7,11 +7,11 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Select from '@material-ui/core/Select';
+import { makeStyles } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Select from "@material-ui/core/Select";
 
 import Helmet from "react-helmet";
 
@@ -172,7 +172,7 @@ const courseNamae = ["Systematic Program Design"];
 const dependencies = ["CPSC210"];
 const coreqs = ["CPSC121"];
 
-function SearchCard({}) {
+function SearchCard(props) {
   const [dept, setDept] = useState("");
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
@@ -189,12 +189,13 @@ function SearchCard({}) {
         setCred(res.data.cred);
         setName(res.data.name);
         setTitle(`${dept} ${code}`);
+        props.onChange(res.data);
       })
       .catch((err) => console.log(err));
   };
 
   return (
-    <SearchWrapper mb={4}> 
+    <SearchWrapper mb={4}>
       <TaskWrapperContent>
         <form>
           <Typography variant="body2" mb={3}>
@@ -203,7 +204,8 @@ function SearchCard({}) {
               onChange={(e) => setDept(e.target.value)}
               label="Department"
               fullWidth
-            /><br/>
+            />
+            <br />
             <TextField
               value={code}
               onChange={(e) => setCode(e.target.value)}
@@ -300,46 +302,48 @@ const useStyles = makeStyles((theme) => ({
 
 function TermDropDown() {
   const classes = useStyles();
-  const [age, setAge] = React.useState('');
+  const [age, setAge] = React.useState("");
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
-  return(
-  <FormControl className={classes.formControl} fullWidth>
-        <InputLabel shrink id="demo-simple-select-placeholder-label-label">
-          Term
-        </InputLabel>
-        <Select
-          labelId="demo-simple-select-placeholder-label-label"
-          id="demo-simple-select-placeholder-label"
-          value={age}
-          onChange={handleChange}
-          displayEmpty
-          className={classes.selectEmpty}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value='2017W1'>2017W1</MenuItem>
-          <MenuItem value='2017W2'>2017W2</MenuItem>
-          <MenuItem value='2017S'>2017S</MenuItem>
-          <MenuItem value='2018W1'>2018W1</MenuItem>
-          <MenuItem value='2018W2'>2018W2</MenuItem>
-          <MenuItem value='2018S'>2018S</MenuItem>
-          <MenuItem value='2019W1'>2019W1</MenuItem>
-          <MenuItem value='2019W2'>2019W2</MenuItem>
-          <MenuItem value='2019S'>2019S</MenuItem>
-          <MenuItem value='2020W1'>2020W1</MenuItem>
-          <MenuItem value='2020W2'>2020W2</MenuItem>
-          <MenuItem value='2020S'>2020S</MenuItem>
-          <MenuItem value='2021W1'>2021W1</MenuItem>
-          <MenuItem value='2021W2'>2021W2</MenuItem>
-          <MenuItem value='2021S'>2021S</MenuItem>
-        </Select>
-        <FormHelperText>Select the term you want to take this course</FormHelperText>
-      </FormControl>
-  )
+  return (
+    <FormControl className={classes.formControl} fullWidth>
+      <InputLabel shrink id="demo-simple-select-placeholder-label-label">
+        Term
+      </InputLabel>
+      <Select
+        labelId="demo-simple-select-placeholder-label-label"
+        id="demo-simple-select-placeholder-label"
+        value={age}
+        onChange={handleChange}
+        displayEmpty
+        className={classes.selectEmpty}
+      >
+        <MenuItem value="">
+          <em>None</em>
+        </MenuItem>
+        <MenuItem value="2017W1">2017W1</MenuItem>
+        <MenuItem value="2017W2">2017W2</MenuItem>
+        <MenuItem value="2017S">2017S</MenuItem>
+        <MenuItem value="2018W1">2018W1</MenuItem>
+        <MenuItem value="2018W2">2018W2</MenuItem>
+        <MenuItem value="2018S">2018S</MenuItem>
+        <MenuItem value="2019W1">2019W1</MenuItem>
+        <MenuItem value="2019W2">2019W2</MenuItem>
+        <MenuItem value="2019S">2019S</MenuItem>
+        <MenuItem value="2020W1">2020W1</MenuItem>
+        <MenuItem value="2020W2">2020W2</MenuItem>
+        <MenuItem value="2020S">2020S</MenuItem>
+        <MenuItem value="2021W1">2021W1</MenuItem>
+        <MenuItem value="2021W2">2021W2</MenuItem>
+        <MenuItem value="2021S">2021S</MenuItem>
+      </Select>
+      <FormHelperText>
+        Select the term you want to take this course
+      </FormHelperText>
+    </FormControl>
+  );
 }
 
 function YourDegreeCard({ courseList }) {
@@ -362,8 +366,34 @@ function YourDegreeCard({ courseList }) {
 
 const courseList = ["CPSC 110"];
 
+function PrerequisiteCard(props) {
+  return (
+    <div>
+      <CourseCard
+        courseCode={props.code}
+        courseName={props.name}
+        dependencies={dependencies[0]}
+        coreqs={coreqs[0]}
+      />
+      <CourseCard
+        courseCode={courseCode[0]}
+        courseName={courseNamae[0]}
+        dependencies={dependencies[0]}
+        coreqs={coreqs[0]}
+      />
+      <CourseCard
+        courseCode={courseCode[0]}
+        courseName={courseNamae[0]}
+        dependencies={dependencies[0]}
+        coreqs={coreqs[0]}
+      />
+    </div>
+  );
+}
+
 function CourseSelector() {
   const [containers, setContainers] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState({});
 
   const onContainerReady = (container) => {
     setContainers(containers.push(container));
@@ -397,7 +427,7 @@ function CourseSelector() {
             description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
             onContainerLoaded={onContainerReady}
           >
-            <SearchCard />
+            <SearchCard onChange={setSelectedCourse} />
           </Lane>
         </Grid>
         <Grid item xs={12} lg={6} xl={3}>
@@ -406,24 +436,7 @@ function CourseSelector() {
             description="Below are the selected course prerequisites and corequisite."
             onContainerLoaded={onContainerReady}
           >
-            <CourseCard
-              courseCode={courseCode[0]}
-              courseName={courseNamae[0]}
-              dependencies={dependencies[0]}
-              coreqs={coreqs[0]}
-            />
-            <CourseCard
-              courseCode={courseCode[0]}
-              courseName={courseNamae[0]}
-              dependencies={dependencies[0]}
-              coreqs={coreqs[0]}
-            />
-            <CourseCard
-              courseCode={courseCode[0]}
-              courseName={courseNamae[0]}
-              dependencies={dependencies[0]}
-              coreqs={coreqs[0]}
-            />
+            <PrerequisiteCard course={selectedCourse} />
           </Lane>
         </Grid>
         <Grid item xs={12} lg={6} xl={3}>
