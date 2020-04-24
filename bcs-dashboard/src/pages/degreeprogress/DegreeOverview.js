@@ -106,11 +106,11 @@ function Overview(props) {
         if (termName.substring(4) === "W1") courseStartDate += 9;            // add 9 months ie. set month to September
         else if (termName.substring(4) === "W2") courseStartDate += 101;     // add 13 months ie. set month to January
         else if (termName.substring(4) === "S") courseStartDate += 5;        // add 5 months ie. set month to May
-        
+
         var currentDate = new Date().getFullYear() * 100 + new Date().getMonth();
 
         if (currentDate < courseStartDate) return 1;
-        else if (currentDate >= courseStartDate && currentDate <= courseStartDate+3) return 0;
+        else if (currentDate >= courseStartDate && currentDate <= courseStartDate + 3) return 0;
         else return -1;
     }
 
@@ -155,8 +155,8 @@ function Overview(props) {
 
 
                 <Typography variant="h7" paragraph >
-                    Credits Completed: {coreCredits} <br />
-                        Credits Remaining: {coreCreditsRemaining}
+                    Courses Completed: {coreCredits} <br />
+                        Courses Remaining: {coreCreditsRemaining}
                 </Typography>
 
                 {/* Text for credits 
@@ -183,8 +183,8 @@ function Overview(props) {
                 <Progress percent={bridgingPercentComplete} />
 
                 <Typography variant="h7" paragraph >
-                    Credits Completed: {bridgingCredits} <br />
-                        Credits Remaining: {bridgingCreditsRemaining}
+                    Courses Completed: {bridgingCredits} <br />
+                        Courses Remaining: {bridgingCreditsRemaining}
                 </Typography>
 
                 {/* Text for credits 
@@ -210,8 +210,8 @@ function Overview(props) {
                 {/* Used Progress bar #1 */}
                 <Progress percent={exemptionPercentComplete} />
                 <Typography variant="h7" paragraph >
-                    Credits Completed: {exemptionCreditsComplete} <br />
-                        Credits Remaining: {exemptionCreditsRemaining}
+                    Courses Completed: {exemptionCreditsComplete} <br />
+                        Courses Remaining: {exemptionCreditsRemaining}
                 </Typography>
                 <ExemptionTable />
                 <Divider my={6} />
