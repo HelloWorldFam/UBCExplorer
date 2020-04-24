@@ -178,7 +178,7 @@ function SearchCard({}) {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [cred, setCred] = useState("");
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState("Enter a search term to start");
 
   const handleClick = () => {
     const courseSearch = dept + " " + code;
