@@ -191,6 +191,18 @@ app.get("/getAllCourses", isUserAuthenticated, (req, res) => {
   }
 });
 
-app.get("/*", isUserAuthenticated, (req, res) => {
+// To query a specific course from courses database
+app.get("/getCourseInfo/:code", (req, res) => {
+  Courses.findOne({ code: req.params.code })
+    .then((course) => res.send(course))
+    .catch((err) => console.log(err)); 
+});
+
+// app.get("/*", isUserAuthenticated, (req, res) => {
+//   res.sendFile(path.join(__dirname, "../build/index.html"));
+// });
+
+// No authentication - for testing only!
+app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
 });

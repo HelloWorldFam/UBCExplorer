@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { NavLink as RouterNavLink } from "react-router-dom";
+import axios from "axios";
 
 import Helmet from "react-helmet";
 
@@ -139,46 +140,98 @@ function CourseCard({ courseCode, courseName, dependencies, coreqs }) {
   );
 }
 
+function SearchResultCard(props) {
+  return (
+    <Button>
+      <TaskWrapper mb={4}>
+        <TaskWrapperContent>
+          <p align="left">
+            {props.title}
+            <br />
+            {props.name}
+          </p>
+          <Typography variant="body2" mb={3}>
+            {<p align="left">{props.desc}</p>}
+          </Typography>
+        </TaskWrapperContent>
+      </TaskWrapper>
+    </Button>
+  );
+}
+
 const courseCode = ["CPSC110"];
 const courseNamae = ["Systematic Program Design"];
 const dependencies = ["CPSC210"];
 const coreqs = ["CPSC121"];
 
 function SearchCard({}) {
+  const [dept, setDept] = useState("");
+  const [code, setCode] = useState("");
+  const [name, setName] = useState("");
+  const [desc, setDesc] = useState("");
+  const [cred, setCred] = useState("");
+  const [title, setTitle] = useState("");
+
+  const handleClick = () => {
+    const courseSearch = dept + " " + code;
+    axios
+      .get("http://localhost:3000/getCourseInfo/" + courseSearch)
+      .then((res) => {
+        setDesc(res.data.desc);
+        setCred(res.data.cred);
+        setName(res.data.name);
+        setTitle(`${dept} ${code}`)
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <SearchWrapper mb={4}>
       <TaskWrapperContent>
-        <Typography variant="body2" mb={3}>
-          <div className="container">
-            <TextField
-              id="standard-dense"
-              // onChange={this.handleChange("age")}
-              label="Department"
-              margin="dense"
-              m={2}
-            />
-
-            <TextField
-              id="standard-dense"
-              label="Course Code"
-              margin="dense"
-              m={2}
-            />
-          </div>
-        </Typography>
-        <Centered>
-          <Button mr={2} variant="contained" color="primary">
-            Search
-          </Button>
-        </Centered>
-        <br />
-        <Card mb={6}>
-          <Typography color="textSecondary" gutterBottom>
-            {description}
+        <form>
+          <Typography variant="body2" mb={3}>
+            <div className="container">
+              <TextField
+                id="standard-dense"
+                value={dept}
+                onChange={(e) => setDept(e.target.value)}
+                label="Department"
+                margin="dense"
+                m={2}
+              />
+              <TextField
+                id="standard-dense"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                label="Course Code"
+                margin="dense"
+                m={2}
+              />
+            </div>
           </Typography>
-        </Card>
-
-        <TextField id="standard-dense" label="Credits" margin="dense" m={2} />
+          <Centered>
+            <Button
+              mr={2}
+              variant="contained"
+              color="primary"
+              onClick={handleClick}
+            >
+              Search
+            </Button>
+          </Centered>
+        </form>
+        <br />
+        <Centered>
+          <SearchResultCard title={title} name={name} desc={desc} />
+        </Centered>
+        <TextField
+          label="Credits"
+          id="standard-dense"
+          value={cred}
+          onChange={(e) => setCred(e.target.value)}
+          margin="dense"
+          m={2}
+        />
         <br />
 
         <Chip label="Core Courses" component="a" href="#chip" clickable m={1} />
@@ -235,22 +288,18 @@ const description = [
   "In hac habitasse platea dictumst. Curabitur at lacus ac velit ornare lobortis. Curabitur a felis tristique.",
 ];
 
-class CourseSelector extends React.Component {
-  constructor(props) {
-    super(props);
+function CourseSelector() {
+  const [containers, setContainers] = useState([]);
 
-    this.containers = [];
-  }
-
-  onContainerReady = (container) => {
-    this.containers.push(container);
+  const onContainerReady = (container) => {
+    setContainers(containers.push(container));
   };
 
-  componentDidMount() {
-    dragula(this.containers);
-  }
+  useEffect(() => {
+    dragula(containers);
+  }, []);
 
-  render = () => (
+  return (
     <React.Fragment>
       <Helmet title="Course Selector" />
       <Typography variant="h3" gutterBottom display="inline">
@@ -272,7 +321,7 @@ class CourseSelector extends React.Component {
           <Lane
             title="Search"
             description="Nam pretium turpis et arcu. Duis arcu."
-            onContainerLoaded={this.onContainerReady}
+            onContainerLoaded={onContainerReady}
           >
             <SearchCard />
           </Lane>
@@ -281,7 +330,7 @@ class CourseSelector extends React.Component {
           <Lane
             title="Prerequisite / Corequisite Courses"
             description="Below are the selected course prerequisites and corequisite."
-            onContainerLoaded={this.onContainerReady}
+            onContainerLoaded={onContainerReady}
           >
             <CourseCard
               courseCode={courseCode[0]}
@@ -307,7 +356,7 @@ class CourseSelector extends React.Component {
           <Lane
             title="Dependent Courses"
             description="Nam pretium turpis et arcu. Duis arcu."
-            onContainerLoaded={this.onContainerReady}
+            onContainerLoaded={onContainerReady}
           >
             <CourseCard
               courseCode={courseCode[0]}
@@ -327,7 +376,7 @@ class CourseSelector extends React.Component {
           <Lane
             title="Your Degree"
             description="Nam pretium turpis et arcu. Duis arcu."
-            onContainerLoaded={this.onContainerReady}
+            onContainerLoaded={onContainerReady}
           >
             <YourDegreeCard courseList={courseList[0]} />
           </Lane>
