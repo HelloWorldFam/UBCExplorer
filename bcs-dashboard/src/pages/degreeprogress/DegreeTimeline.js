@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import styled from "styled-components";
 import { NavLink as RouterNavLink } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
 
 // Vertical Timeline (Scrolling) component
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
@@ -15,10 +16,21 @@ import {
     Breadcrumbs as MuiBreadcrumbs,
     Card as MuiCard,
     Divider as MuiDivider,
-    Typography
+    Typography,
+    Tooltip,
+    Button
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
+
+const useStyles = makeStyles((theme) => ({
+    margin: {
+      margin: theme.spacing(1),
+    },
+    extendedIcon: {
+      marginRight: theme.spacing(1),
+    },
+  }));
 
 const NavLink = React.forwardRef((props, ref) => (
     <RouterNavLink innerRef={ref} {...props} />
@@ -31,6 +43,7 @@ const Divider = styled(MuiDivider)(spacing);
 const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
 function Timeline(props) {
+    const classes = useStyles();
     return (
         <Card style={{ backgroundColor: "#e3e3e3" }} mb={6}>
             <CardContent>
@@ -54,14 +67,17 @@ function Timeline(props) {
                                     className="vertical-timeline-element"
                                     date={item.Name}
                                     iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }} >
+                                        <h3 className="vertical-timeline-element-title">
+                                                Courses:
+                                        </h3>
                                     {item.Courses.map((course) => (
                                         <>
-                                            <h3 className="vertical-timeline-element-title">
-                                                Course Name:
-                                            </h3>
-                                            <h4 className="vertical-timeline-element-subtitle">
-                                                {course}
-                                            </h4>
+                                            <Tooltip title={tooltipText(course)} arrow>
+                                                <Button className="vertical-timeline-element-subtitle"
+                                                    variant="outlined" size="medium" className={classes.margin}>
+                                                    {course}
+                                                </Button>
+                                            </Tooltip>
                                         </>
                                     ))}
                                 </VerticalTimelineElement>
@@ -87,7 +103,7 @@ function DegreeTimeline() {
     // });
 
     const courseResult = [{ "Courses": ["MATH 180", "STAT 200"], "Name": "Exemptions" },
-    { "Courses": ["CPSC 110", "CPSC 121"], "Name": "2020W1" },
+    { "Courses": ["CPSC 110", "CPSC 121", "MATH 200", "STAT 200", "COMM 456"], "Name": "2020W1" },
     { "Courses": ["CPSC 210", "STAT 302"], "Name": "2020W2" }];
 
 
@@ -120,3 +136,10 @@ function DegreeTimeline() {
 }
 
 export default DegreeTimeline;
+
+function tooltipText(course) {
+    return (<><h3>Name: Data Structures and Algorithms</h3>
+        <h3>Credits: 4</h3>
+        <h3>Pre-reqs: .....</h3>
+        <h3>Co-reqs: .....</h3></>);
+}
