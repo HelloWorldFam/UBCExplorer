@@ -45,14 +45,14 @@ function createData(name, replacement, status) {
 //placeholder data --> createCourses should add to this array
 const rows = [
   createData(
-    "MATH 180",
-    "DSCI 100",
-    <Chip label="Complete" rgbcolor={green[500]} />
-  ),
-  createData(
     "STAT 200",
     "COGS 200",
     <Chip label="In Progress" rgbcolor={orange[500]} />
+  ),
+  createData(
+    "MATH 180",
+    "DSCI 100",
+    <Chip label="Incomplete" rgbcolor={red[500]} />
   )
 ];
 
