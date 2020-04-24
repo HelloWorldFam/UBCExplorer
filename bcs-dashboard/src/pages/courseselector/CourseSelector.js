@@ -12,11 +12,14 @@ import {
   Button,
   Card as MuiCard,
   CardContent,
+  Chip as MuiChip,
   Divider as MuiDivider,
   Grid,
   Link,
   Typography as MuiTypography,
 } from "@material-ui/core";
+
+import { Done as DoneIcon } from "@material-ui/icons";
 
 import { spacing } from "@material-ui/system";
 
@@ -25,6 +28,8 @@ import dragula from "react-dragula";
 const NavLink = React.forwardRef((props, ref) => (
   <RouterNavLink innerRef={ref} {...props} />
 ));
+
+const Chip = styled(MuiChip)(spacing);
 
 const Card = styled(MuiCard)(spacing);
 
@@ -37,6 +42,10 @@ const TaskWrapper = styled(Card)`
   background: ${(props) => props.theme.body.background};
   margin-bottom: ${(props) => props.theme.spacing(4)}px;
   cursor: grab;
+`;
+
+const Centered = styled.div`
+  text-align: center;
 `;
 
 const TaskWrapperContent = styled(CardContent)`
@@ -80,19 +89,42 @@ class Lane extends React.Component {
   }
 }
 
-function Task({ description, avatar }) {
+function CourseCard({ courseCode, courseName, dependencies, coreqs }) {
   return (
-    <TaskWrapper mb={4}>
-      <TaskWrapperContent>
-        <Button>
+    <Button>
+      <TaskWrapper mb={4}>
+        <TaskWrapperContent>
+          <p align="left">
+            {courseCode}:
+            <br />
+            {courseName}
+          </p>
           <Typography variant="body2" mb={3}>
-            {description}
+            {<p align="left">Dependent Courses</p>}
           </Typography>
-        </Button>
-      </TaskWrapperContent>
-    </TaskWrapper>
+
+          <Centered>
+            <Chip
+              size="small"
+              mr={1}
+              mb={1}
+              label={dependencies}
+              color="secondary"
+            />
+            <Chip size="small" mr={1} mb={1} label={dependencies} />
+            <Chip size="small" mr={1} mb={1} label={dependencies} />
+            <Chip size="small" mr={1} mb={1} label={coreqs} />
+          </Centered>
+        </TaskWrapperContent>
+      </TaskWrapper>
+    </Button>
   );
 }
+
+const courseCode = ["CPSC110"];
+const courseNamae = ["Systematic Program Design"];
+const dependencies = ["CPSC210"];
+const coreqs = ["CPSC121"];
 
 const description = [
   "Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada.",
@@ -140,22 +172,33 @@ class CourseSelector extends React.Component {
             description="Nam pretium turpis et arcu. Duis arcu."
             onContainerLoaded={this.onContainerReady}
           >
-            <Task description={description[0]} avatar={1} />
-            <Task description={description[1]} avatar={2} />
-            <Task description={description[2]} avatar={3} />
-            <Task description={description[3]} avatar={4} />
-            <Task description={description[1]} avatar={2} />
+            {/* INSERT SEARCH COMPONENT HERE /> */}
           </Lane>
         </Grid>
         <Grid item xs={12} lg={6} xl={3}>
           <Lane
             title="Prerequisite / Corequisite Courses"
-            description="Nam pretium turpis et arcu. Duis arcu."
+            description="Below are the selected course prerequisites and corequisite."
             onContainerLoaded={this.onContainerReady}
           >
-            <Task description={description[0]} avatar={1} />
-            <Task description={description[2]} avatar={3} />
-            <Task description={description[1]} avatar={2} />
+            <CourseCard
+              courseCode={courseCode[0]}
+              courseName={courseNamae[0]}
+              dependencies={dependencies[0]}
+              coreqs={coreqs[0]}
+            />
+            <CourseCard
+              courseCode={courseCode[0]}
+              courseName={courseNamae[0]}
+              dependencies={dependencies[0]}
+              coreqs={coreqs[0]}
+            />
+            <CourseCard
+              courseCode={courseCode[0]}
+              courseName={courseNamae[0]}
+              dependencies={dependencies[0]}
+              coreqs={coreqs[0]}
+            />
           </Lane>
         </Grid>
         <Grid item xs={12} lg={6} xl={3}>
@@ -164,10 +207,18 @@ class CourseSelector extends React.Component {
             description="Nam pretium turpis et arcu. Duis arcu."
             onContainerLoaded={this.onContainerReady}
           >
-            <Task description={description[3]} avatar={4} />
-            <Task description={description[2]} avatar={3} />
-            <Task description={description[1]} avatar={2} />
-            <Task description={description[0]} avatar={1} />
+            <CourseCard
+              courseCode={courseCode[0]}
+              courseName={courseNamae[0]}
+              dependencies={dependencies[0]}
+              coreqs={coreqs[0]}
+            />
+            <CourseCard
+              courseCode={courseCode[0]}
+              courseName={courseNamae[0]}
+              dependencies={dependencies[0]}
+              coreqs={coreqs[0]}
+            />
           </Lane>
         </Grid>
         <Grid item xs={12} lg={6} xl={3}>
@@ -176,11 +227,7 @@ class CourseSelector extends React.Component {
             description="Nam pretium turpis et arcu. Duis arcu."
             onContainerLoaded={this.onContainerReady}
           >
-            <Task description={description[1]} avatar={2} />
-            <Task description={description[2]} avatar={3} />
-            <Task description={description[3]} avatar={4} />
-            <Task description={description[0]} avatar={1} />
-            <Task description={description[3]} avatar={4} />
+            {/* INSERT COMPONENT FOR YOUR DEGREE /> */}
           </Lane>
         </Grid>
       </Grid>
