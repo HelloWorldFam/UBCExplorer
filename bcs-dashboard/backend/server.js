@@ -198,6 +198,7 @@ app.get("/getCourseInfo/:code", (req, res) => {
     .catch((err) => console.log(err)); 
 });
 
+// Commented out for testing
 // app.get("/*", isUserAuthenticated, (req, res) => {
 //   res.sendFile(path.join(__dirname, "../build/index.html"));
 // });

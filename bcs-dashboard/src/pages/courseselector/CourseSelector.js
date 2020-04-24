@@ -2,6 +2,16 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { NavLink as RouterNavLink } from "react-router-dom";
 import axios from "axios";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Select from '@material-ui/core/Select';
 
 import Helmet from "react-helmet";
 
@@ -142,20 +152,18 @@ function CourseCard({ courseCode, courseName, dependencies, coreqs }) {
 
 function SearchResultCard(props) {
   return (
-    <Button>
-      <TaskWrapper mb={4}>
-        <TaskWrapperContent>
-          <p align="left">
-            {props.title}
-            <br />
-            {props.name}
-          </p>
-          <Typography variant="body2" mb={3}>
-            {<p align="left">{props.desc}</p>}
-          </Typography>
-        </TaskWrapperContent>
-      </TaskWrapper>
-    </Button>
+    <TaskWrapper mb={4}>
+      <TaskWrapperContent>
+        <Typography variant="h6" align="left">
+          {props.title}
+          <br />
+          {props.name}
+        </Typography>
+        <Typography variant="body2" mb={3}>
+          {<p align="left">{props.desc}</p>}
+        </Typography>
+      </TaskWrapperContent>
+    </TaskWrapper>
   );
 }
 
@@ -180,7 +188,7 @@ function SearchCard({}) {
         setDesc(res.data.desc);
         setCred(res.data.cred);
         setName(res.data.name);
-        setTitle(`${dept} ${code}`)
+        setTitle(`${dept} ${code}`);
       })
       .catch((err) => console.log(err));
   };
@@ -190,24 +198,18 @@ function SearchCard({}) {
       <TaskWrapperContent>
         <form>
           <Typography variant="body2" mb={3}>
-            <div className="container">
-              <TextField
-                id="standard-dense"
-                value={dept}
-                onChange={(e) => setDept(e.target.value)}
-                label="Department"
-                margin="dense"
-                m={2}
-              />
-              <TextField
-                id="standard-dense"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                label="Course Code"
-                margin="dense"
-                m={2}
-              />
-            </div>
+            <TextField
+              value={dept}
+              onChange={(e) => setDept(e.target.value)}
+              label="Department"
+              fullWidth
+            /><br/>
+            <TextField
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              label="Course Code"
+              fullWidth
+            />
           </Typography>
           <Centered>
             <Button
@@ -233,32 +235,111 @@ function SearchCard({}) {
           m={2}
         />
         <br />
-
-        <Chip label="Core Courses" component="a" href="#chip" clickable m={1} />
-        <Chip
-          label="Bridging Module"
-          component="a"
-          href="#chip"
-          clickable
-          m={1}
-        />
-        <Chip
-          label="CPSC Upper Level"
-          component="a"
-          href="#chip"
-          clickable
-          m={1}
-        />
-
+        <br />
+        <RadioButtonsGroup />
+        <br />
+        <br />
+        <TermDropDown />
+        <br />
         <br />
         <Centered>
-          <Button mr={2} variant="contained" color="primary">
-            Add to Degree
+          <Button variant="contained" color="primary">
+            Add Course to Degree
           </Button>
         </Centered>
       </TaskWrapperContent>
     </SearchWrapper>
   );
+}
+
+function RadioButtonsGroup() {
+  const [value, setValue] = React.useState("Core Course");
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  return (
+    <FormControl component="fieldset">
+      <FormLabel component="legend">Requirement Tag</FormLabel>
+      <RadioGroup
+        aria-label="gender"
+        name="gender1"
+        value={value}
+        onChange={handleChange}
+      >
+        <FormControlLabel
+          value="Core Course"
+          control={<Radio />}
+          label="Core Course"
+        />
+        <FormControlLabel
+          value="Bridging Module"
+          control={<Radio />}
+          label="Bridging Module"
+        />
+        <FormControlLabel
+          value="Upper CPSC"
+          control={<Radio />}
+          label="Upper CPSC"
+        />
+      </RadioGroup>
+    </FormControl>
+  );
+}
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
+
+function TermDropDown() {
+  const classes = useStyles();
+  const [age, setAge] = React.useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+  return(
+  <FormControl className={classes.formControl} fullWidth>
+        <InputLabel shrink id="demo-simple-select-placeholder-label-label">
+          Term
+        </InputLabel>
+        <Select
+          labelId="demo-simple-select-placeholder-label-label"
+          id="demo-simple-select-placeholder-label"
+          value={age}
+          onChange={handleChange}
+          displayEmpty
+          className={classes.selectEmpty}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value='2017W1'>2017W1</MenuItem>
+          <MenuItem value='2017W2'>2017W2</MenuItem>
+          <MenuItem value='2017S'>2017S</MenuItem>
+          <MenuItem value='2018W1'>2018W1</MenuItem>
+          <MenuItem value='2018W2'>2018W2</MenuItem>
+          <MenuItem value='2018S'>2018S</MenuItem>
+          <MenuItem value='2019W1'>2019W1</MenuItem>
+          <MenuItem value='2019W2'>2019W2</MenuItem>
+          <MenuItem value='2019S'>2019S</MenuItem>
+          <MenuItem value='2020W1'>2020W1</MenuItem>
+          <MenuItem value='2020W2'>2020W2</MenuItem>
+          <MenuItem value='2020S'>2020S</MenuItem>
+          <MenuItem value='2021W1'>2021W1</MenuItem>
+          <MenuItem value='2021W2'>2021W2</MenuItem>
+          <MenuItem value='2021S'>2021S</MenuItem>
+        </Select>
+        <FormHelperText>Select the term in which you will take this course</FormHelperText>
+      </FormControl>
+  )
 }
 
 function YourDegreeCard({ courseList }) {
@@ -280,13 +361,6 @@ function YourDegreeCard({ courseList }) {
 }
 
 const courseList = ["CPSC 110"];
-
-const description = [
-  "Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada.",
-  "Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum.",
-  "Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis.",
-  "In hac habitasse platea dictumst. Curabitur at lacus ac velit ornare lobortis. Curabitur a felis tristique.",
-];
 
 function CourseSelector() {
   const [containers, setContainers] = useState([]);
@@ -320,7 +394,7 @@ function CourseSelector() {
         <Grid item xs={12} lg={6} xl={3}>
           <Lane
             title="Search"
-            description="Nam pretium turpis et arcu. Duis arcu."
+            description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
             onContainerLoaded={onContainerReady}
           >
             <SearchCard />
