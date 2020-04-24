@@ -31,7 +31,7 @@ function Default({ theme }) {
   useEffect(() => {
     axios("http://localhost:3000/userdata")
       .then((res) => {
-        setFirstName(res.data.user.given_name);
+        setFirstName(res.data[0].firstName);
       })
       .catch(function (error) {
         console.log(error);

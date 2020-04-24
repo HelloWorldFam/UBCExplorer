@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { rgba } from "polished";
+import axios from 'axios';
 
 import { NavLink as RouterNavLink, withRouter } from "react-router-dom";
 import { darken } from "polished";
@@ -278,7 +279,24 @@ function SidebarLink({ name, to, badge }) {
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      firstName: "",
+      lastName: "",
+      picture: ""
+    };
+  }
+
+  componentDidMount() {
+    axios.get("http://localhost:3000/userdata")
+      .then(res => {
+        console.log(res)
+        this.setState({
+          firstName: res.data[0].firstName,
+          lastName: res.data[0].lastName,
+          picture: res.data[0].picture
+        })
+      })
+      .catch(err => console.log(err));
   }
 
   toggle = index => {
@@ -384,15 +402,15 @@ class Sidebar extends React.Component {
                 }}
                 variant="dot"
               >
-                <Avatar alt="Lucy Lavender" src="/static/img/avatars/avatar-1.jpg" />
+                <Avatar alt="Lucy Lavender" src={this.state.picture} />
               </StyledBadge>
             </Grid>
             <Grid item>
               <SidebarFooterText variant="body2">
-                Lucy Lavender
+                {this.state.firstName} {this.state.lastName}
               </SidebarFooterText>
               <SidebarFooterSubText variant="caption">
-                UX Designer
+                BCS Student
               </SidebarFooterSubText>
             </Grid>
           </Grid>
