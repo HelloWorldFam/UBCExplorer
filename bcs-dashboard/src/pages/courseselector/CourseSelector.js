@@ -496,29 +496,6 @@ function CourseSelector() {
     // alert(courseToAdd.term);
   }, [courseToAdd]);
 
-  // let termObject = {};
-
-  // let termExists = false;
-  // for (let termExistingObject of termObjectArray) {
-  //   //search through termObjectArray for the courseObject.term
-  //   // if matches then we can check if course is in it or not
-  //   if (termObject.name === termExistingObject.name) {
-  //     termExists = true;
-  //   }
-  //   if (termExists) {
-  //     if (!termObject.coursesInTerm.includes(courseObject)) {
-  //       termObject.coursesInTerm.push(courseObject);
-  //     }
-  //   } else {
-  //     // else we can make new term object and push to the termObjectArray and then push the course into that new object
-  //     // create new term object
-  //     // set fields of new object
-  //     // push to termObjectArray
-  //     // add course to termObjectArray
-  //     termObjectArray.push(termObject.coursesInTerm.push(courseObject));
-  //   }
-  // }
-
   return (
     <React.Fragment>
       <Helmet title="Course Selector" />
