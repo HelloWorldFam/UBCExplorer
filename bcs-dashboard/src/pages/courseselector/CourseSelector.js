@@ -168,7 +168,7 @@ function SearchResultCard(props) {
 }
 
 const courseCode = ["CPSC110"];
-const courseNamae = ["Systematic Program Design"];
+const courseName = ["Systematic Program Design"];
 const dependencies = ["CPSC210"];
 const coreqs = ["CPSC121"];
 
@@ -192,27 +192,6 @@ function SearchCard(props) {
         props.onChange(res.data);
       })
       .catch((err) => console.log(err));
-
-    let termExists = false;
-    for (let termExistingObject of termObjectArray) {
-      //search through termObjectArray for the courseObject.term
-      // if matches then we can check if course is in it or not
-      if (termObject.name === termExistingObject.name) {
-        termExists = true;
-      }
-      if (termExists) {
-        if (!termObject.coursesInTerm.includes(courseObject)) {
-          termObject.coursesInTerm.push(courseObject);
-        }
-      } else {
-        // else we can make new term object and push to the termObjectArray and then push the course into that new object
-        // create new term object
-        // set fields of new object
-        // push to termObjectArray
-        // add course to termObjectArray
-        termObjectArray.push(termObject.coursesInTerm.push(courseObject));
-      }
-    }
   };
 
   return (
@@ -471,9 +450,44 @@ function CourseSelector() {
     setContainers(containers.push(container));
   };
 
+  let termObjectArray;
+
+  //TODO: axios get request for user data
   useEffect(() => {
+    axios
+      .get("http://localhost:3000/userdata")
+      .then((res) => {
+        termObjectArray = res.data;
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     dragula(containers);
   }, []);
+
+  // let termObject = {};
+
+  // let termExists = false;
+  // for (let termExistingObject of termObjectArray) {
+  //   //search through termObjectArray for the courseObject.term
+  //   // if matches then we can check if course is in it or not
+  //   if (termObject.name === termExistingObject.name) {
+  //     termExists = true;
+  //   }
+  //   if (termExists) {
+  //     if (!termObject.coursesInTerm.includes(courseObject)) {
+  //       termObject.coursesInTerm.push(courseObject);
+  //     }
+  //   } else {
+  //     // else we can make new term object and push to the termObjectArray and then push the course into that new object
+  //     // create new term object
+  //     // set fields of new object
+  //     // push to termObjectArray
+  //     // add course to termObjectArray
+  //     termObjectArray.push(termObject.coursesInTerm.push(courseObject));
+  //   }
+  // }
 
   return (
     <React.Fragment>
@@ -521,13 +535,13 @@ function CourseSelector() {
           >
             <CourseCard
               courseCode={courseCode[0]}
-              courseName={courseNamae[0]}
+              courseName={courseName[0]}
               dependencies={dependencies[0]}
               coreqs={coreqs[0]}
             />
             <CourseCard
               courseCode={courseCode[0]}
-              courseName={courseNamae[0]}
+              courseName={courseName[0]}
               dependencies={dependencies[0]}
               coreqs={coreqs[0]}
             />
