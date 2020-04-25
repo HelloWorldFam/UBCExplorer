@@ -178,7 +178,9 @@ function SearchCard(props) {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [cred, setCred] = useState("");
-  const [title, setTitle] = useState("Enter search to start");
+  const [title, setTitle] = useState("Search results will appear here.");
+  const [tag, setTag] = useState("");
+  const [term, setTerm] = useState("");
 
   const handleClick = () => {
     const courseSearch = dept + " " + code;
@@ -186,12 +188,26 @@ function SearchCard(props) {
       .get("http://localhost:3000/getCourseInfo/" + courseSearch)
       .then((res) => {
         setDesc(res.data.desc);
+        setCred("");
         setCred(res.data.cred);
         setName(res.data.name);
         setTitle(`${dept} ${code}`);
         props.onChange(res.data);
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleSubmitCourse = () => {
+    const courseToSubmit = {
+      dept: dept,
+      code: code,
+      name: name,
+      desc: desc,
+      cred: cred,
+      tag: tag,
+      term: term,
+    };
+    props.onSubmitCourse(courseToSubmit);
   };
 
   return (
@@ -238,14 +254,18 @@ function SearchCard(props) {
         />
         <br />
         <br />
-        <RadioButtonsGroup />
+        <RadioButtonsGroup onChange={setTag} />
         <br />
         <br />
-        <TermDropDown />
+        <TermDropDown onChange={setTerm} />
         <br />
         <br />
         <Centered>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSubmitCourse}
+          >
             Add Course to Degree
           </Button>
         </Centered>
@@ -254,11 +274,12 @@ function SearchCard(props) {
   );
 }
 
-function RadioButtonsGroup() {
+function RadioButtonsGroup(props) {
   const [value, setValue] = React.useState("Core Course");
 
   const handleChange = (event) => {
     setValue(event.target.value);
+    props.onChange(value);
   };
 
   return (
@@ -300,12 +321,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function TermDropDown() {
+function TermDropDown(props) {
   const classes = useStyles();
-  const [age, setAge] = React.useState("");
+  const [term, setTerm] = React.useState("");
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setTerm(event.target.value);
+    props.onChange(event.target.value);
   };
   return (
     <FormControl className={classes.formControl} fullWidth>
@@ -315,7 +337,7 @@ function TermDropDown() {
       <Select
         labelId="demo-simple-select-placeholder-label-label"
         id="demo-simple-select-placeholder-label"
-        value={age}
+        value={term}
         onChange={handleChange}
         displayEmpty
         className={classes.selectEmpty}
@@ -323,6 +345,7 @@ function TermDropDown() {
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
+        <MenuItem value="Exemptions">Exemptions</MenuItem>
         <MenuItem value="2017W1">2017W1</MenuItem>
         <MenuItem value="2017W2">2017W2</MenuItem>
         <MenuItem value="2017S">2017S</MenuItem>
@@ -386,9 +409,11 @@ function PrerequisiteCard(props) {
               name: res.data.name,
               desc: res.data.desc,
             };
-            setCourseListToDisplay((courseListToDisplay) =>
-              courseListToDisplay.concat(courseToDisplay)
-            );
+            if (courseToDisplay.desc) {
+              setCourseListToDisplay((courseListToDisplay) =>
+                courseListToDisplay.concat(courseToDisplay)
+              );
+            }
           })
           .catch((err) => console.log(err));
       }
@@ -404,9 +429,11 @@ function PrerequisiteCard(props) {
               name: res.data.name,
               desc: res.data.desc,
             };
-            setCourseListToDisplay((courseListToDisplay) =>
-              courseListToDisplay.concat(courseToDisplay)
-            );
+            if (courseToDisplay.desc) {
+              setCourseListToDisplay((courseListToDisplay) =>
+                courseListToDisplay.concat(courseToDisplay)
+              );
+            }
           })
           .catch((err) => console.log(err));
       }
@@ -445,6 +472,7 @@ function PrerequisiteCard(props) {
 function CourseSelector() {
   const [containers, setContainers] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState({});
+  const [courseToAdd, setCourseToAdd] = useState({});
 
   const onContainerReady = (container) => {
     setContainers(containers.push(container));
@@ -452,19 +480,21 @@ function CourseSelector() {
 
   let termObjectArray;
 
-  //TODO: axios get request for user data
   useEffect(() => {
     axios
       .get("http://localhost:3000/userdata")
       .then((res) => {
-        termObjectArray = res.data;
-        console.log(res.data);
+        termObjectArray = res.data[0].courses;
+        console.log(termObjectArray);
       })
       .catch((err) => {
         console.log(err);
       });
-    dragula(containers);
   }, []);
+
+  useEffect(() => {
+    // alert(courseToAdd.term);
+  }, [courseToAdd]);
 
   // let termObject = {};
 
@@ -513,7 +543,10 @@ function CourseSelector() {
             description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
             onContainerLoaded={onContainerReady}
           >
-            <SearchCard onChange={setSelectedCourse} />
+            <SearchCard
+              onChange={setSelectedCourse}
+              onSubmitCourse={setCourseToAdd}
+            />
           </Lane>
         </Grid>
         <Grid item xs={12} lg={6} xl={3}>
