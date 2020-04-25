@@ -178,7 +178,7 @@ function SearchCard(props) {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [cred, setCred] = useState("");
-  const [title, setTitle] = useState("Enter a search term to start");
+  const [title, setTitle] = useState("Enter search to start");
 
   const handleClick = () => {
     const courseSearch = dept + " " + code;
@@ -367,22 +367,88 @@ function YourDegreeCard({ courseList }) {
 const courseList = ["CPSC 110"];
 
 function PrerequisiteCard(props) {
+  const [courseListToDisplay, setCourseListToDisplay] = useState([]);
+
   const prereqs = props.course.preq;
   const coreqs = props.course.creq;
   const prereqDescription = props.course.prer;
-  const courseDescription = props.course.desc;
+  const coreqDescription = props.course.crer;
 
-  const title = props.course.code;
-  const name = props.course.name;
-  const desc = props.course.desc;
+  // if (prereqs) {
+  //   for (let course of prereqs) {
+  //     axios
+  //       .get("http://localhost:3000/getCourseInfo/" + course)
+  //       .then((res) => {
+  //         let courseToDisplay = {
+  //           title: res.data.code,
+  //           name: res.data.name,
+  //           desc: res.data.desc,
+  //         };
+  //         setCourseListToDisplay(courseListToDisplay => courseListToDisplay.concat(courseToDisplay));
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // }
+
+  // if (coreqs) {
+  //   for (let course of coreqs) {
+  //     axios
+  //       .get("http://localhost:3000/getCourseInfo/" + course)
+  //       .then((res) => {
+  //         let courseToDisplay = {
+  //           title: res.data.code,
+  //           name: res.data.name,
+  //           desc: res.data.desc,
+  //         };
+  //         setCourseListToDisplay(courseListToDisplay => courseListToDisplay.concat(courseToDisplay));
+  //       })
+  //       .catch((err) => console.log(err));
+  //     }
+  // }
 
   return (
     <div>
-      <SearchResultCard
-        title={title}
-        name={name}
-        desc={desc}
-      />
+      {prereqDescription && (
+        <SearchResultCard
+          title="Prerequisite Information:"
+          name=""
+          desc={prereqDescription}
+        />
+      )}
+      {coreqDescription && (
+        <SearchResultCard
+          title="Corequisite Information:"
+          name=""
+          desc={coreqDescription}
+        />
+      )}
+      {/* {courseListToDisplay.map((course) => {
+        return (
+          <SearchResultCard
+            title={course.title}
+            name={course.name}
+            desc={course.desc}
+          />
+        );
+      })} */}
+      {prereqs && prereqs.map((course) => {
+        return (
+          <SearchResultCard
+            title={course}
+            name="Dummy name"
+            desc="Dummy desc"
+          />
+        );
+      })}
+      {coreqs && coreqs.map((course) => {
+        return (
+          <SearchResultCard
+            title={course}
+            name="Dummy name"
+            desc="Dummy desc"
+          />
+        );
+      })}
     </div>
   );
 }
@@ -432,7 +498,9 @@ function CourseSelector() {
             description="Below are the selected course prerequisites and corequisite."
             onContainerLoaded={onContainerReady}
           >
-            <PrerequisiteCard course={selectedCourse} />
+            <PrerequisiteCard
+              course={selectedCourse === undefined ? [] : selectedCourse}
+            />
           </Lane>
         </Grid>
         <Grid item xs={12} lg={6} xl={3}>

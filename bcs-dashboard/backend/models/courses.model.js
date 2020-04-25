@@ -7,7 +7,7 @@ const CoursesSchema = new Schema({
   cred: Number,
   desc: String,
   prer: String,
-  preq: String,
+  preq: Array,
   crer: String,
   creq: Array
 });
