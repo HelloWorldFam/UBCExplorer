@@ -85,7 +85,7 @@ function Overview(props) {
                      *       exemption replacements.
                      *       - JH
                      */
-                    else exemptionReplacement[[progress()]].push(course.code);
+                    else exemptionReplacement[progress()].push(course.code);
                 })
             }
         });
