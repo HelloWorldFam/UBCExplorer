@@ -374,37 +374,44 @@ function PrerequisiteCard(props) {
   const prereqDescription = props.course.prer;
   const coreqDescription = props.course.crer;
 
-  // if (prereqs) {
-  //   for (let course of prereqs) {
-  //     axios
-  //       .get("http://localhost:3000/getCourseInfo/" + course)
-  //       .then((res) => {
-  //         let courseToDisplay = {
-  //           title: res.data.code,
-  //           name: res.data.name,
-  //           desc: res.data.desc,
-  //         };
-  //         setCourseListToDisplay(courseListToDisplay => courseListToDisplay.concat(courseToDisplay));
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // }
+  useEffect(() => {
+    setCourseListToDisplay([]);
+    if (prereqs) {
+      for (let course of prereqs) {
+        axios
+          .get("http://localhost:3000/getCourseInfo/" + course)
+          .then((res) => {
+            let courseToDisplay = {
+              title: res.data.code,
+              name: res.data.name,
+              desc: res.data.desc,
+            };
+            setCourseListToDisplay((courseListToDisplay) =>
+              courseListToDisplay.concat(courseToDisplay)
+            );
+          })
+          .catch((err) => console.log(err));
+      }
+    }
 
-  // if (coreqs) {
-  //   for (let course of coreqs) {
-  //     axios
-  //       .get("http://localhost:3000/getCourseInfo/" + course)
-  //       .then((res) => {
-  //         let courseToDisplay = {
-  //           title: res.data.code,
-  //           name: res.data.name,
-  //           desc: res.data.desc,
-  //         };
-  //         setCourseListToDisplay(courseListToDisplay => courseListToDisplay.concat(courseToDisplay));
-  //       })
-  //       .catch((err) => console.log(err));
-  //     }
-  // }
+    if (coreqs) {
+      for (let course of coreqs) {
+        axios
+          .get("http://localhost:3000/getCourseInfo/" + course)
+          .then((res) => {
+            let courseToDisplay = {
+              title: res.data.code,
+              name: res.data.name,
+              desc: res.data.desc,
+            };
+            setCourseListToDisplay((courseListToDisplay) =>
+              courseListToDisplay.concat(courseToDisplay)
+            );
+          })
+          .catch((err) => console.log(err));
+      }
+    }
+  }, [prereqs]);
 
   return (
     <div>
@@ -422,30 +429,12 @@ function PrerequisiteCard(props) {
           desc={coreqDescription}
         />
       )}
-      {/* {courseListToDisplay.map((course) => {
+      {courseListToDisplay.map((course) => {
         return (
           <SearchResultCard
             title={course.title}
             name={course.name}
             desc={course.desc}
-          />
-        );
-      })} */}
-      {prereqs && prereqs.map((course) => {
-        return (
-          <SearchResultCard
-            title={course}
-            name="Dummy name"
-            desc="Dummy desc"
-          />
-        );
-      })}
-      {coreqs && coreqs.map((course) => {
-        return (
-          <SearchResultCard
-            title={course}
-            name="Dummy name"
-            desc="Dummy desc"
           />
         );
       })}
