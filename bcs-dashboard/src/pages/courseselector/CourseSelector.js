@@ -468,6 +468,57 @@ function PrerequisiteCard(props) {
     </div>
   );
 }
+// let termObject = {
+//   name: "",
+//   coursesInTerm: [],
+// };
+
+// let courseObject = {
+//   dept: selectedCourse.dept,
+//   code: selectedCourse.code,
+//   name: selectedCourse.name,
+//   desc: selectedCourse.desc,
+//   cred: selectedCourse.cred, //,
+//   // tag: tag,
+// };
+// console.log("TERMEXISTS IS TRUE" + courseObject, termObject, termObjectArray);
+
+const termObjectArray = []; // this is harded code term Object Array which is from MONGODB
+
+const addToDegreeFunction = (courseToAddterm) => {
+  // courseToAddterm is the term object passed on button click
+  let termExists = false;
+  let courseArray;
+
+  for (let termExistingObject of termObjectArray) {
+    //search through termObjectArray for the courseObject.term
+    // if matches then we can check if course is in it or not
+
+    if (courseToAddterm.name === termExistingObject.name) {
+      termExists = true;
+      courseArray = termExistingObject.courses;
+
+      console.log("TERMEXISTS IS TRUE" + courseToAddterm.name);
+      break;
+    }
+  }
+
+  if (termExists) {
+    // if the term exists!
+    for (let coursesInTerm of courseArray) {
+      if (coursesInTerm.code === courseToAddterm.code) {
+        alert("You have already added this!"); //term exists, but course is in term - so do nothing send alert
+      } else {
+        // term exists, but course is not in term - add course to term
+        courseArray.push(courseToAddterm.code);
+      }
+    }
+  } else {
+    // term does not exist- so create new term with the course.
+    termObjectArray.push(courseToAddterm);
+    console.log(courseToAddterm.code);
+  }
+};
 
 function CourseSelector() {
   const [containers, setContainers] = useState([]);
@@ -494,6 +545,7 @@ function CourseSelector() {
 
   useEffect(() => {
     // alert(courseToAdd.term);
+    addToDegreeFunction(courseToAdd); // passing the term object
   }, [courseToAdd]);
 
   // let termObject = {};
