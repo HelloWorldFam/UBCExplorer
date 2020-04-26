@@ -9,7 +9,8 @@ const CoursesSchema = new Schema({
   prer: String,
   preq: Array,
   crer: String,
-  creq: Array
+  creq: Array,
+  depn: Array
 });
 const Courses = mongoose.model('Courses', CoursesSchema);
 module.exports = Courses;

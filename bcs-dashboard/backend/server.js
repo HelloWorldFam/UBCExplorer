@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const Courses = require("./models/courses.model");
-
+const Departments = require("./models/departments.model");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const findOrCreate = require("mongoose-findorcreate");
@@ -186,6 +186,16 @@ app.get("/getAllCourses", isUserAuthenticated, (req, res) => {
     res.send("You are not authenticated.");
   } else {
     Courses.find()
+      .then((courses) => res.send(courses))
+      .catch((err) => console.log(err));
+  }
+});
+
+app.get("/getDepartments", isUserAuthenticated, (req, res) => {
+  if (!req.user) {
+    res.send("You are not authenticated.");
+  } else {
+    Departments.find()
       .then((courses) => res.send(courses))
       .catch((err) => console.log(err));
   }

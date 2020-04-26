@@ -491,7 +491,6 @@ function DependenciesCard(props) {
     }
   }, [dependencies])
 
-
   return (
     <div>
       {courseListToDisplay.map((course) => {
