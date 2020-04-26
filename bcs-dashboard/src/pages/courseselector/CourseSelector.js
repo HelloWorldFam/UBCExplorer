@@ -199,14 +199,14 @@ function SearchCard(props) {
       <TaskWrapperContent>
         <form>
           <Typography variant="body2" mb={3}>
-            <AutoCompleteBox
+            <TextField
               value={dept}
               onChange={(e) => setDept(e.target.value)}
               label="Department"
               fullWidth
             />
             <br />
-            <AutoCompleteBox
+            <TextField
               value={code}
               onChange={(e) => setCode(e.target.value)}
               label="Course Code"
