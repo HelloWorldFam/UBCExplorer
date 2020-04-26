@@ -453,7 +453,7 @@ function DependenciesCard(props) {
           .catch((err) => console.log(err));
       }
     }
-  }, [dependencies])
+  }, [dependencies]);
 
   return (
     <div>
@@ -470,75 +470,86 @@ function DependenciesCard(props) {
   );
 }
 
-// let termObject = {
-//   name: "",
-//   coursesInTerm: [],
-// };
+/**
+ *  Adds a course to the degree of the current user with the selected term name.
+ *  If the term already exists, it adds the course to the already existing term.
+ *  @param courseToAdd : Object
+ *  @param usersCourseArray :  Array
+ */
 
-// let courseObject = {
-//   dept: selectedCourse.dept,
-//   code: selectedCourse.code,
-//   name: selectedCourse.name,
-//   desc: selectedCourse.desc,
-//   cred: selectedCourse.cred, //,
-//   // tag: tag,
-// };
-// console.log("TERMEXISTS IS TRUE" + courseObject, termObject, termObjectArray);
-
-const termObjectArray = []; // this is harded code term Object Array which is from MONGODB
-
-const addToDegreeFunction = (courseToAddterm) => {
-  // courseToAddterm is the term object passed on button click
+const addToDegreeFunction = (
+  courseToAdd,
+  usersCourseArray,
+  setUsersCourseArray
+) => {
+  // courseToAdd is the course object passed on button click
+  // usersCourseArray is the term array from the MONGODB database
   let termExists = false;
   let courseArray;
 
-  for (let termExistingObject of termObjectArray) {
+  for (let term of usersCourseArray) {
     //search through termObjectArray for the courseObject.term
     // if matches then we can check if course is in it or not
 
-    if (courseToAddterm.name === termExistingObject.name) {
+    if (courseToAdd.term === term.name) {
+      // courseToAdd is the course the user selected
+      // if the term selected by user exists already in the user's work list
       termExists = true;
-      courseArray = termExistingObject.courses;
-
-      console.log("TERMEXISTS IS TRUE" + courseToAddterm.name);
+      courseArray = term.courses; // variable to keep track of the courses in the existing term object
       break;
     }
   }
 
   if (termExists) {
     // if the term exists!
+
+    let isInCourseArray = false;
     for (let coursesInTerm of courseArray) {
-      if (coursesInTerm.code === courseToAddterm.code) {
-        alert("You have already added this!"); //term exists, but course is in term - so do nothing send alert
-      } else {
-        // term exists, but course is not in term - add course to term
-        courseArray.push(courseToAddterm.code);
+      if (coursesInTerm.code === courseToAdd.code) {
+        //term exists, but course is in term - so do nothing send alert
+        alert("You have already added this!");
+        isInCourseArray = true;
+        break;
       }
     }
+
+    if (!isInCourseArray) {
+      // term exists, but course is not in term - add course to term
+      courseArray.push(courseToAdd);
+    }
   } else {
-    // term does not exist- so create new term with the course.
-    termObjectArray.push(courseToAddterm);
-    console.log(courseToAddterm.code);
+    // term does not exist- so create new term object with the course added.
+    usersCourseArray.push({ name: courseToAdd.term, courses: [courseToAdd] });
   }
+  console.log(usersCourseArray);
+  setUsersCourseArray(Array.from(usersCourseArray));
 };
 
 function CourseSelector() {
   const [containers, setContainers] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState({});
   const [courseToAdd, setCourseToAdd] = useState({});
+  const [usersCourseArray, setUsersCourseArray] = useState([-1]);
 
   const onContainerReady = (container) => {
     setContainers(containers.push(container));
   };
 
-  let termObjectArray;
+  useEffect(() => {
+    console.log("usersCourseArray: " + usersCourseArray[0]);
+    if (usersCourseArray[0] !== -1) {
+      axios.post("/updateUserWorkList", usersCourseArray).then(() => {
+        console.log(usersCourseArray);
+      });
+    }
+  }, [usersCourseArray]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/userdata")
+      .get("/userdata")
       .then((res) => {
-        termObjectArray = res.data[0].courses;
-        console.log(termObjectArray);
+        setUsersCourseArray(res.data[0].courses);
+        console.log(res.data[0].courses);
       })
       .catch((err) => {
         console.log(err);
@@ -546,8 +557,9 @@ function CourseSelector() {
   }, []);
 
   useEffect(() => {
-    // alert(courseToAdd.term);
-    addToDegreeFunction(courseToAdd); // passing the term object
+    if (courseToAdd.code != null) {
+      addToDegreeFunction(courseToAdd, usersCourseArray, setUsersCourseArray); // passing the term object
+    }
   }, [courseToAdd]);
 
   return (

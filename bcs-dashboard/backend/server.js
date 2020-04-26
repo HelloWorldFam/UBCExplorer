@@ -205,7 +205,16 @@ app.get("/getDepartments", isUserAuthenticated, (req, res) => {
 app.get("/getCourseInfo/:code", (req, res) => {
   Courses.findOne({ code: req.params.code })
     .then((course) => res.send(course))
-    .catch((err) => console.log(err)); 
+    .catch((err) => console.log(err));
+});
+
+//Update course worklist/array of the term objects which was selected in course selector
+app.post("/updateUserWorkList", isUserAuthenticated, (req, res) => {
+  Users.find({ email: req.user.email }).then((user) => {
+    console.log(req.body);
+    user.courses = req.body;
+  });
+  res.sendStatus(200);
 });
 
 // Commented out for testing
