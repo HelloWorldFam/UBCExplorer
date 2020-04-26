@@ -167,11 +167,6 @@ function SearchResultCard(props) {
   );
 }
 
-const courseCode = ["CPSC110"];
-const courseName = ["Systematic Program Design"];
-const dependencies = ["CPSC210"];
-const coreqs = ["CPSC121"];
-
 function SearchCard(props) {
   const [dept, setDept] = useState("");
   const [code, setCode] = useState("");
@@ -389,7 +384,7 @@ function YourDegreeCard({ courseList }) {
 
 const courseList = ["CPSC 110"];
 
-function PrerequisiteCard(props) {
+function PrerequisitesCard(props) {
   const [courseListToDisplay, setCourseListToDisplay] = useState([]);
 
   const prereqs = props.course.preq;
@@ -468,6 +463,50 @@ function PrerequisiteCard(props) {
     </div>
   );
 }
+
+function DependenciesCard(props) {
+  const [courseListToDisplay, setCourseListToDisplay] = useState([]);
+  let dependencies = props.course.depn;
+
+  useEffect(() => {
+    setCourseListToDisplay([]);
+    if (dependencies) {
+      for (let course of dependencies) {
+        axios
+          .get("http://localhost:3000/getCourseInfo/" + course)
+          .then((res) => {
+            let courseToDisplay = {
+              title: res.data.code,
+              name: res.data.name,
+              desc: res.data.desc,
+            };
+            if (courseToDisplay.desc) {
+              setCourseListToDisplay((courseListToDisplay) =>
+                courseListToDisplay.concat(courseToDisplay)
+              );
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    }
+  }, [dependencies])
+
+
+  return (
+    <div>
+      {courseListToDisplay.map((course) => {
+        return (
+          <SearchResultCard
+            title={course.title}
+            name={course.name}
+            desc={course.desc}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
 // let termObject = {
 //   name: "",
 //   coursesInTerm: [],
@@ -581,10 +620,10 @@ function CourseSelector() {
         <Grid item xs={12} lg={6} xl={3}>
           <Lane
             title="Prerequisite / Corequisite Courses"
-            description="Below are the selected course prerequisites and corequisite."
+            description="Selected course's prerequisites and corequisites."
             onContainerLoaded={onContainerReady}
           >
-            <PrerequisiteCard
+            <PrerequisitesCard
               course={selectedCourse === undefined ? [] : selectedCourse}
             />
           </Lane>
@@ -592,20 +631,11 @@ function CourseSelector() {
         <Grid item xs={12} lg={6} xl={3}>
           <Lane
             title="Dependent Courses"
-            description="Nam pretium turpis et arcu. Duis arcu."
+            description="Courses that list this course as a direct prerequisite."
             onContainerLoaded={onContainerReady}
           >
-            <CourseCard
-              courseCode={courseCode[0]}
-              courseName={courseName[0]}
-              dependencies={dependencies[0]}
-              coreqs={coreqs[0]}
-            />
-            <CourseCard
-              courseCode={courseCode[0]}
-              courseName={courseName[0]}
-              dependencies={dependencies[0]}
-              coreqs={coreqs[0]}
+            <DependenciesCard
+              course={selectedCourse === undefined ? [] : selectedCourse}
             />
           </Lane>
         </Grid>
