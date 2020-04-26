@@ -12,8 +12,9 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select";
-
 import Helmet from "react-helmet";
+
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import "react-dragula/dist/dragula.css";
 
@@ -131,6 +132,30 @@ function SearchResultCard(props) {
   );
 }
 
+const hardcodedData = [
+  { dept: "ARTS" },
+  { dept: "BUSINESS" },
+  { dept: "dasd" },
+  { dept: "eeee" },
+  { dept: "f" },
+  { dept: "ghfas" },
+  { dept: "ARasdasdTS" },
+];
+
+function AutoCompleteBox(props) {
+  return (
+    <Autocomplete
+      id={props.value}
+      options={hardcodedData}
+      getOptionLabel={(option) => option.dept}
+      style={{ width: 300 }}
+      renderInput={(params) => (
+        <TextField {...params} label={props.label} variant="outlined" />
+      )}
+    />
+  );
+}
+
 function SearchCard(props) {
   const [dept, setDept] = useState("");
   const [code, setCode] = useState("");
@@ -174,14 +199,14 @@ function SearchCard(props) {
       <TaskWrapperContent>
         <form>
           <Typography variant="body2" mb={3}>
-            <TextField
+            <AutoCompleteBox
               value={dept}
               onChange={(e) => setDept(e.target.value)}
               label="Department"
               fullWidth
             />
             <br />
-            <TextField
+            <AutoCompleteBox
               value={code}
               onChange={(e) => setCode(e.target.value)}
               label="Course Code"
@@ -234,10 +259,14 @@ function SearchCard(props) {
 }
 
 function RadioButtonsGroup(props) {
-  const [value, setValue] = React.useState("Core Course");
+  const [value, setValue] = useState("Core Course");
+
+  useEffect(() => {
+    props.onChange(value);
+  }, []);
 
   const handleChange = (event) => {
-    setValue(event.target.value);
+    setValue(event);
     props.onChange(value);
   };
 
@@ -245,10 +274,10 @@ function RadioButtonsGroup(props) {
     <FormControl component="fieldset">
       <FormLabel component="legend">Requirement Tag</FormLabel>
       <RadioGroup
-        aria-label="gender"
-        name="gender1"
+        aria-label="tag"
+        name="tag"
         value={value}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e.target.value)}
       >
         <FormControlLabel
           value="Core Course"
@@ -328,25 +357,40 @@ function TermDropDown(props) {
   );
 }
 
-function YourDegreeCard({ courseList }) {
-  return (
-    <TaskWrapper mb={4}>
-      <TaskWrapperContent>
-        <ExpansionPanel
-        // expanded={expanded === "panel1"}
-        // onChange={this.handleChange("panel1")}
-        >
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>2019W1</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>{courseList}</ExpansionPanelDetails>
-        </ExpansionPanel>
-      </TaskWrapperContent>
-    </TaskWrapper>
-  );
+function YourDegreeCard({ usersCourseArray }) {
+  if (usersCourseArray != null) {
+    usersCourseArray.map((term) => {
+      return (
+        <>
+          <TaskWrapper mb={4}>
+            <TaskWrapperContent>
+              <ExpansionPanel
+              // expanded={expanded === "panel1"}
+              // onChange={this.handleChange("panel1")}
+              >
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography>{term.name}</Typography>
+                </ExpansionPanelSummary>
+                {term.courses.map((course) => {
+                  return (
+                    <ExpansionPanelDetails>{course.code}</ExpansionPanelDetails>
+                  );
+                })}
+              </ExpansionPanel>
+            </TaskWrapperContent>
+          </TaskWrapper>
+        </>
+      );
+    });
+  } else
+    return (
+      <>
+        <Divider></Divider>
+        <br />
+        <Typography>You have no courses.</Typography>
+      </>
+    );
 }
-
-const courseList = ["CPSC 110"];
 
 function PrerequisitesCard(props) {
   const [courseListToDisplay, setCourseListToDisplay] = useState([]);
@@ -479,7 +523,7 @@ function DependenciesCard(props) {
 
 const addToDegreeFunction = (
   courseToAdd,
-  usersCourseArray,
+  usersCourseArray, // [-1]
   setUsersCourseArray
 ) => {
   // courseToAdd is the course object passed on button click
@@ -521,8 +565,7 @@ const addToDegreeFunction = (
     // term does not exist- so create new term object with the course added.
     usersCourseArray.push({ name: courseToAdd.term, courses: [courseToAdd] });
   }
-  console.log(usersCourseArray);
-  setUsersCourseArray(Array.from(usersCourseArray));
+  setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);
 };
 
 function CourseSelector() {
@@ -536,11 +579,8 @@ function CourseSelector() {
   };
 
   useEffect(() => {
-    console.log("usersCourseArray: " + usersCourseArray[0]);
     if (usersCourseArray[0] !== -1) {
-      axios.post("/updateUserWorkList", usersCourseArray).then(() => {
-        console.log(usersCourseArray);
-      });
+      axios.post("/updateUserWorkList", usersCourseArray).then(() => {});
     }
   }, [usersCourseArray]);
 
@@ -549,7 +589,6 @@ function CourseSelector() {
       .get("/userdata")
       .then((res) => {
         setUsersCourseArray(res.data[0].courses);
-        console.log(res.data[0].courses);
       })
       .catch((err) => {
         console.log(err);
@@ -617,10 +656,10 @@ function CourseSelector() {
         <Grid item xs={12} lg={6} xl={3}>
           <Lane
             title="Your Degree"
-            description="Nam pretium turpis et arcu. Duis arcu."
+            description="The courses that you have added to your worklist."
             onContainerLoaded={onContainerReady}
           >
-            <YourDegreeCard courseList={courseList[0]} />
+            <YourDegreeCard courseList={usersCourseArray} />
           </Lane>
         </Grid>
       </Grid>

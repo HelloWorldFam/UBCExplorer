@@ -213,6 +213,11 @@ app.post("/updateUserWorkList", isUserAuthenticated, (req, res) => {
   Users.find({ email: req.user.email }).then((user) => {
     console.log(req.body);
     user.courses = req.body;
+
+    user
+      .save()
+      .then(() => res.json("Worklist updated for user!"))
+      .catch((err) => res.status(400).json("ErrorMsg" + err));
   });
   res.sendStatus(200);
 });
