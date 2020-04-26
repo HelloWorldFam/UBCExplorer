@@ -36,11 +36,7 @@ import {
 
 import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 
-import { Done as DoneIcon } from "@material-ui/icons";
-
 import { spacing } from "@material-ui/system";
-
-import dragula from "react-dragula";
 
 const NavLink = React.forwardRef((props, ref) => (
   <RouterNavLink innerRef={ref} {...props} />
@@ -116,38 +112,6 @@ class Lane extends React.Component {
       </Card>
     );
   }
-}
-
-function CourseCard({ courseCode, courseName, dependencies, coreqs }) {
-  return (
-    <Button>
-      <TaskWrapper mb={4}>
-        <TaskWrapperContent>
-          <p align="left">
-            {courseCode}:
-            <br />
-            {courseName}
-          </p>
-          <Typography variant="body2" mb={3}>
-            {<p align="left">Dependent Courses</p>}
-          </Typography>
-
-          <Centered>
-            <Chip
-              size="small"
-              mr={1}
-              mb={1}
-              label={dependencies}
-              color="secondary"
-            />
-            <Chip size="small" mr={1} mb={1} label={dependencies} />
-            <Chip size="small" mr={1} mb={1} label={dependencies} />
-            <Chip size="small" mr={1} mb={1} label={coreqs} />
-          </Centered>
-        </TaskWrapperContent>
-      </TaskWrapper>
-    </Button>
-  );
 }
 
 function SearchResultCard(props) {
