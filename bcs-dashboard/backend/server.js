@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const Courses = require("./models/courses.model");
 const Departments = require("./models/departments.model");
+const CourseCodes = require("./models/course_codes.model");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const findOrCreate = require("mongoose-findorcreate");
