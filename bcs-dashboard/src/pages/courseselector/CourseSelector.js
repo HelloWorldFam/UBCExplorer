@@ -287,7 +287,7 @@ function RadioButtonsGroup(props) {
 
   const handleChange = (event) => {
     setValue(event);
-    props.onChange(value);
+    props.onChange(event);
   };
 
   return (
