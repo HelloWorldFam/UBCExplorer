@@ -182,16 +182,24 @@ function SearchCard(props) {
   };
 
   const handleSubmitCourse = () => {
-    const courseToSubmit = {
-      dept: dept,
-      code: code,
-      name: name,
-      desc: desc,
-      cred: cred,
-      tag: tag,
-      term: term,
-    };
-    props.onSubmitCourse(courseToSubmit);
+    if (code === "" || code === undefined) {
+      alert("Please select a course.");
+    } else if (cred === "" || cred === undefined) {
+      alert("Please enter the number of credits you expect to receive for this course. Credit information was not available");
+    } else if (term === "" || term === undefined) {
+      alert("Please select the term you expect to take this course.");
+    } else {
+      const courseToSubmit = {
+        dept: dept,
+        code: code,
+        name: name,
+        desc: desc,
+        cred: cred,
+        tag: tag,
+        term: term,
+      };
+      props.onSubmitCourse(courseToSubmit);
+    }
   };
 
   return (
@@ -223,36 +231,36 @@ function SearchCard(props) {
               Search
             </Button>
           </Centered>
+          <br />
+          <Centered>
+            <SearchResultCard title={title} name={name} desc={desc} />
+          </Centered>
+          <TextField
+            label="Credits"
+            id="standard-dense"
+            value={cred}
+            onChange={(e) => setCred(e.target.value)}
+            margin="dense"
+            m={2}
+          />
+          <br />
+          <br />
+          <RadioButtonsGroup onChange={setTag} />
+          <br />
+          <br />
+          <TermDropDown onChange={setTerm} />
+          <br />
+          <br />
+          <Centered>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmitCourse}
+            >
+              Add Course to Degree
+            </Button>
+          </Centered>
         </form>
-        <br />
-        <Centered>
-          <SearchResultCard title={title} name={name} desc={desc} />
-        </Centered>
-        <TextField
-          label="Credits"
-          id="standard-dense"
-          value={cred}
-          onChange={(e) => setCred(e.target.value)}
-          margin="dense"
-          m={2}
-        />
-        <br />
-        <br />
-        <RadioButtonsGroup onChange={setTag} />
-        <br />
-        <br />
-        <TermDropDown onChange={setTerm} />
-        <br />
-        <br />
-        <Centered>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSubmitCourse}
-          >
-            Add Course to Degree
-          </Button>
-        </Centered>
       </TaskWrapperContent>
     </SearchWrapper>
   );
@@ -555,6 +563,17 @@ const addToDegreeFunction = (
     // term does not exist- so create new term object with the course added.
     usersCourseArray.push({ name: courseToAdd.term, courses: [courseToAdd] });
   }
+
+  function sortByKey(array, key) {
+    return array.sort(function (a, b) {
+      let x = a[key];
+      let y = b[key];
+      return x < y ? -1 : x > y ? 1 : 0;
+    });
+  }
+
+  sortByKey(usersCourseArray, "name");
+
   setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);
 };
 
