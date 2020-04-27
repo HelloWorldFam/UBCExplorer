@@ -220,15 +220,13 @@ function SearchCard(props) {
             autoHighlight
             autoSelect
             autoComplete
-            // value={code}
             onChange={(e) => handleChange(e.target.value)}
-            //getOptionLabel={(e) => setCode(e)}
             renderInput={(params) => (
               <TextField
                 {...params}
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                label="Course Code"
+                label={"Course Code"}
                 margin="normal"
                 variant="outlined"
                 margin="normal"
