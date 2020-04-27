@@ -214,10 +214,10 @@ app.post("/updateUserWorkList", isUserAuthenticated, (req, res) => {
     console.log(req.body);
     user.courses = req.body;
 
-    user
+    /*user
       .save()
       .then(() => res.json("Worklist updated for user!"))
-      .catch((err) => res.status(400).json("ErrorMsg" + err));
+      .catch((err) => res.status(400).json("ErrorMsg" + err));*/
   });
   res.sendStatus(200);
 });

@@ -14,7 +14,9 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select";
 import Helmet from "react-helmet";
 
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import Autocomplete, {
+  createFilterOptions,
+} from "@material-ui/lab/Autocomplete";
 
 import "react-dragula/dist/dragula.css";
 
@@ -132,32 +134,23 @@ function SearchResultCard(props) {
   );
 }
 
-const hardcodedData = [
-  { dept: "ARTS" },
-  { dept: "BUSINESS" },
-  { dept: "dasd" },
-  { dept: "eeee" },
-  { dept: "f" },
-  { dept: "ghfas" },
-  { dept: "ARasdasdTS" },
+const source = [
+  { code: "FNEL 112" },
+  { code: "CPSC 110" },
+  { code: "CPSC 210" },
+  { code: "MATH 100" },
+  { code: "STAT 300" },
+  { code: "STAT 302" },
+  { code: "ENGL 112" },
+  { code: "CPSC 310" },
+  { code: "CPSC 340" },
+  { code: "CPSC 110" },
+  { code: "COGS 200" },
+  { code: "COGS 300" },
 ];
 
-function AutoCompleteBox(props) {
-  return (
-    <Autocomplete
-      id={props.value}
-      options={hardcodedData}
-      getOptionLabel={(option) => option.dept}
-      style={{ width: 300 }}
-      renderInput={(params) => (
-        <TextField {...params} label={props.label} variant="outlined" />
-      )}
-    />
-  );
-}
-
 function SearchCard(props) {
-  const [dept, setDept] = useState("");
+  // const [dept, setDept] = useState("");
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
@@ -167,7 +160,7 @@ function SearchCard(props) {
   const [term, setTerm] = useState("");
 
   const handleClick = () => {
-    const courseSearch = dept + " " + code;
+    const courseSearch = /*dept + " " +*/ code;
     axios
       .get("http://localhost:3000/getCourseInfo/" + courseSearch)
       .then((res) => {
@@ -175,7 +168,7 @@ function SearchCard(props) {
         setCred("");
         setCred(res.data.cred);
         setName(res.data.name);
-        setTitle(`${dept} ${code}`);
+        setTitle(`${code}`);
         props.onChange(res.data);
       })
       .catch((err) => console.log(err));
@@ -183,7 +176,7 @@ function SearchCard(props) {
 
   const handleSubmitCourse = () => {
     const courseToSubmit = {
-      dept: dept,
+      // dept: dept,
       code: code,
       name: name,
       desc: desc,
@@ -194,25 +187,54 @@ function SearchCard(props) {
     props.onSubmitCourse(courseToSubmit);
   };
 
+  const handleChange = (newValue) => {
+    setCode(newValue);
+  };
+
+  const filter = createFilterOptions();
+  const defaultProps = {
+    options: source,
+    getOptionLabel: (option) => option.code,
+  };
+
   return (
     <SearchWrapper mb={4}>
       <TaskWrapperContent>
         <form>
           <Typography variant="body2" mb={3}>
-            <TextField
+            {/* <TextField
               value={dept}
               onChange={(e) => setDept(e.target.value)}
               label="Department"
               fullWidth
             />
-            <br />
-            <TextField
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              label="Course Code"
-              fullWidth
-            />
+            <br /> */}
           </Typography>
+          <Autocomplete
+            {...defaultProps}
+            freeSolo
+            //options={source.map((option) => option.code)}
+            id="autocomplete-textfield"
+            // selectOnFocus
+            // clearOnBlur
+            autoHighlight
+            autoSelect
+            autoComplete
+            // value={code}
+            onChange={(e) => handleChange(e.target.value)}
+            //getOptionLabel={(e) => setCode(e)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                label="Course Code"
+                margin="normal"
+                variant="outlined"
+                margin="normal"
+              />
+            )}
+          />
           <Centered>
             <Button
               mr={2}
