@@ -404,44 +404,34 @@ function PrerequisitesCard(props) {
     setCourseListToDisplay([]);
     if (prereqs) {
       for (let course of prereqs) {
-        axios
-          .get("http://localhost:3000/getCourseInfo/" + course)
-          .then((res) => {
-            let courseToDisplay = {
-              title: res.data.code,
-              name: res.data.name,
-              desc: res.data.desc,
-            };
-            if (courseToDisplay.desc) {
-              setCourseListToDisplay((courseListToDisplay) =>
-                courseListToDisplay.concat(courseToDisplay)
-              );
-            }
-          })
-          .catch((err) => console.log(err));
+        getCourseInfo(course);
       }
     }
 
     if (coreqs) {
       for (let course of coreqs) {
-        axios
-          .get("http://localhost:3000/getCourseInfo/" + course)
-          .then((res) => {
-            let courseToDisplay = {
-              title: res.data.code,
-              name: res.data.name,
-              desc: res.data.desc,
-            };
-            if (courseToDisplay.desc) {
-              setCourseListToDisplay((courseListToDisplay) =>
-                courseListToDisplay.concat(courseToDisplay)
-              );
-            }
-          })
-          .catch((err) => console.log(err));
+        getCourseInfo(course);
       }
     }
   }, [prereqs]);
+
+  const getCourseInfo = (course) => {
+    axios
+      .get("http://localhost:3000/getCourseInfo/" + course)
+      .then((res) => {
+        let courseToDisplay = {
+          title: res.data.code,
+          name: res.data.name,
+          desc: res.data.desc,
+        };
+        if (courseToDisplay.desc) {
+          setCourseListToDisplay((courseListToDisplay) =>
+            courseListToDisplay.concat(courseToDisplay)
+          );
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div>
