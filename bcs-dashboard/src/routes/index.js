@@ -33,6 +33,9 @@ const LandingPage = async(() => import("../pages/landingpage/LandingPage"));
 const DegreeTimeline = async(() => import("../pages/degreeprogress/DegreeTimeline"));
 const DegreeOverview = async(() => import("../pages/degreeprogress/DegreeOverview"));
 
+//Course Selector Components
+const CourseSelector = async(() => import("../pages/courseselector/CourseSelector"));
+
 // Auth components
 const SignIn = async(() => import("../pages/auth/SignIn"));
 const SignUp = async(() => import("../pages/auth/SignUp"));

@@ -16,6 +16,7 @@ import Helmet from "react-helmet";
 
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
+import dragula from "react-dragula";
 import "react-dragula/dist/dragula.css";
 
 import {
@@ -358,30 +359,54 @@ function TermDropDown(props) {
 }
 
 function YourDegreeCard({ usersCourseArray }) {
-  if (usersCourseArray != null) {
-    usersCourseArray.map((term) => {
-      return (
-        <>
-          <TaskWrapper mb={4}>
-            <TaskWrapperContent>
-              <ExpansionPanel
-              // expanded={expanded === "panel1"}
-              // onChange={this.handleChange("panel1")}
-              >
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography>{term.name}</Typography>
-                </ExpansionPanelSummary>
-                {term.courses.map((course) => {
-                  return (
-                    <ExpansionPanelDetails>{course.code}</ExpansionPanelDetails>
-                  );
-                })}
-              </ExpansionPanel>
-            </TaskWrapperContent>
-          </TaskWrapper>
-        </>
-      );
-    });
+  const [containers, setContainers] = useState([]);
+  
+  const onContainerReady = container => {
+    containers.push(container);
+  };
+
+  useEffect(() => {
+    setContainers(containers => [...containers]);
+  }, [])
+
+  useEffect(() => {
+    dragula(containers);
+  }, [containers])
+  
+  if (usersCourseArray[0] != -1) {
+    return (
+      <>
+        {usersCourseArray.map((term) => {
+          return (
+            <>
+              <TaskWrapper mb={4}>
+                <TaskWrapperContent>
+                  <Lane
+                    title={term.name}
+                    description=""
+                    onContainerLoaded={onContainerReady}
+                  >
+                    {term.courses.map((course) => {
+                      return (
+                        <Card style={{
+                          margin: "5px 5px 5px 0",
+                          padding: "10px",
+                          display: "inline-block",
+                          backgroundColor: "#e6e6e6",
+                        }
+                        }>
+                          {course.code}
+                        </Card>
+                      );
+                    })}
+                  </Lane>
+                </TaskWrapperContent>
+              </TaskWrapper>
+            </>
+          );
+        })}
+      </>
+    );
   } else
     return (
       <>
@@ -568,22 +593,94 @@ function CourseSelector() {
     setContainers(containers.push(container));
   };
 
+  //temp for testing
+  useEffect(() => {
+    setUsersCourseArray([{
+      "name": "Exemptions",
+      "courses": [{ "code": "ENGL 110" }]
+    }, {
+      "name": "2019W1",
+      "courses": [{
+        "dept": "CPSC",
+        "code": "CPSC 121",
+        "name": "Models of Computation",
+        "cred": {
+          "$numberInt": "4"
+        },
+        "desc": "Physical and mathematical structures of computation.  Boolean algebra and combinations logic circuits; proof techniques; functions and sequential circuits; sets and relations; finite state machines; sequential instruction execution. [3-2-1]",
+        "prer": "Principles of Mathematics 12 or Pre-calculus 12.",
+        "preq": "Principles of Mathematics 12 or Pre-calculus 12",
+        "crer": "One of CPSC 107, CPSC 110.",
+        "creq": "CPSC 107 or CPSC 110"
+      }, {
+        "dept": "CPSC",
+        "code": "CPSC 110",
+        "name": "Computation, Programs, and Programming",
+        "cred": {
+          "$numberInt": "4"
+        },
+        "desc": "Fundamental program and computation structures. Introductory programming skills. Computation as a tool for information processing, simulation and modelling, and interacting with the world. [3-3-0]"
+      }, {
+        "dept": "MATH",
+        "code": "MATH 200",
+        "name": "Calculus III",
+        "cred": {
+          "$numberInt": "3"
+        },
+        "desc": "Analytic geometry in 2 and 3 dimensions, partial and directional derivatives, chain rule, maxima and minima, second derivative test, Lagrange multipliers, multiple integrals with applications. Please consult the Faculty of Science Credit Exclusion List: www.calendar.ubc.ca/vancouver/index.cfm?tree=12,215,410,414. [3-0-0]",
+        "prer": "One of MATH 101, MATH 103, MATH 105, MATH 121, SCIE 001.",
+        "preq": "MATH 101 or MATH 103 or MATH 105 or MATH 121 or SCIE 001"
+      }]
+    }, {
+      "name": "2019W2",
+      "courses": [{
+        "dept": "CPSC",
+        "code": "CPSC 210",
+        "name": "Software Construction",
+        "cred": {
+          "$numberInt": "4"
+        },
+        "desc": "Design, development, and analysis of robust software components. Topics such as software design, computational models, data structures, debugging, and testing. [3-2-0]",
+        "prer": "One of CPSC 107, CPSC 110.",
+        "preq": "CPSC 107 or CPSC 110"
+      }, {
+        "dept": "STAT",
+        "code": "STAT 302",
+        "name": "Introduction to Probability",
+        "cred": {
+          "$numberInt": "3"
+        },
+        "desc": "Basic notions of probability, random variables, expectation and conditional expectation, limit theorems. (Consult the Credit Exclusion list within the Faculty of Science section in the Calendar.) [3-0-0]",
+        "prer": "One of MATH 200, MATH 226, MATH 217, MATH 253, MATH 254.",
+        "preq": "MATH 200 or MATH 226 or MATH 217 or MATH 253 or MATH 254"
+      }, {
+        "dept": "ENGL",
+        "code": "ENGL 110",
+        "name": "Approaches to Literature",
+        "cred": {
+          "$numberInt": "3"
+        },
+        "desc": "Study of selected examples of poetry, fiction, and drama. Essays are required."
+      }]
+    }]);
+  }, [1]);
+  /*
   useEffect(() => {
     if (usersCourseArray[0] !== -1) {
       axios.post("/updateUserWorkList", usersCourseArray).then(() => {});
     }
   }, [usersCourseArray]);
-
   useEffect(() => {
     axios
-      .get("/userdata")
-      .then((res) => {
-        setUsersCourseArray(res.data[0].courses);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    .get("/userdata")
+    .then((res) => {
+      setUsersCourseArray(res.data[0].courses);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }, []);
+*/
 
   useEffect(() => {
     if (courseToAdd.code != null) {
@@ -649,7 +746,7 @@ function CourseSelector() {
             description="The courses that you have added to your worklist."
             onContainerLoaded={onContainerReady}
           >
-            <YourDegreeCard courseList={usersCourseArray} />
+            <YourDegreeCard usersCourseArray={usersCourseArray} />
           </Lane>
         </Grid>
       </Grid>
