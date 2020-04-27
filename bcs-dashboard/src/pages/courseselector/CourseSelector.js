@@ -361,18 +361,16 @@ function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
     drake.on('drop', function (el, container) {
       el.style.backgroundColor = '#e6e6e6';
       var newCourse;
-      const removeCourse = () => {
-        usersCourseArray.map((term) => {
-          if (term.name === el.getAttribute("term")) {
-            term.courses.map((course, courseIndex) => {
-              if (el.getAttribute("courseid") === course.code) {
-                newCourse = term.courses.splice(courseIndex, 1);
-              }
-            })
-          }
-        })
-      };
-      removeCourse();
+      usersCourseArray.map((term) => {
+        if (term.name === el.getAttribute("term")) {
+          term.courses.map((course, courseIndex) => {
+            if (el.getAttribute("courseid") === course.code) {
+              newCourse = term.courses.splice(courseIndex, 1);
+            }
+          })
+        }
+      });
+
       usersCourseArray[container.getAttribute("termid")].courses.push(newCourse[0]);
       drake.cancel(true);
       setUsersCourseArray(usersCourseArray => [...usersCourseArray]);
@@ -414,9 +412,9 @@ function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
                               color: "#bf0a0a",
                               padding: "0",
                             }}
-                              onClick={() => { 
+                              onClick={() => {
                                 term.courses.splice(courseIndex, 1);
-                                setUsersCourseArray(usersCourseArray => [...usersCourseArray])  
+                                setUsersCourseArray(usersCourseArray => [...usersCourseArray])
                               }}
                             >
                               x
@@ -632,19 +630,19 @@ function CourseSelector() {
 
   useEffect(() => {
     if (usersCourseArray[0] !== -1) {
-      axios.post("/updateUserWorkList", usersCourseArray).then(() => {});
+      axios.post("/updateUserWorkList", usersCourseArray).then(() => { });
     }
   }, [usersCourseArray]);
-  
+
   useEffect(() => {
     axios
-    .get("/userdata")
-    .then((res) => {
-      setUsersCourseArray(res.data[0].courses);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .get("/userdata")
+      .then((res) => {
+        setUsersCourseArray(res.data[0].courses);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   useEffect(() => {
