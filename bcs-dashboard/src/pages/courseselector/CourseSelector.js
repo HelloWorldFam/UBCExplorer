@@ -14,7 +14,9 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select";
 import Helmet from "react-helmet";
 
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import Autocomplete, {
+  createFilterOptions,
+} from "@material-ui/lab/Autocomplete";
 
 import dragula from "react-dragula";
 import "react-dragula/dist/dragula.css";
@@ -47,7 +49,9 @@ const NavLink = React.forwardRef((props, ref) => (
 const TextFieldSpacing = styled(MuiTextField)(spacing);
 
 const TextField = styled(TextFieldSpacing)`
-  width: 200px;
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
 `;
 
 const Chip = styled(MuiChip)(spacing);
@@ -133,30 +137,6 @@ function SearchResultCard(props) {
   );
 }
 
-const hardcodedData = [
-  { dept: "ARTS" },
-  { dept: "BUSINESS" },
-  { dept: "dasd" },
-  { dept: "eeee" },
-  { dept: "f" },
-  { dept: "ghfas" },
-  { dept: "ARasdasdTS" },
-];
-
-function AutoCompleteBox(props) {
-  return (
-    <Autocomplete
-      id={props.value}
-      options={hardcodedData}
-      getOptionLabel={(option) => option.dept}
-      style={{ width: 300 }}
-      renderInput={(params) => (
-        <TextField {...params} label={props.label} variant="outlined" />
-      )}
-    />
-  );
-}
-
 function SearchCard(props) {
   const [dept, setDept] = useState("");
   const [code, setCode] = useState("");
@@ -183,16 +163,26 @@ function SearchCard(props) {
   };
 
   const handleSubmitCourse = () => {
-    const courseToSubmit = {
-      dept: dept,
-      code: code,
-      name: name,
-      desc: desc,
-      cred: cred,
-      tag: tag,
-      term: term,
-    };
-    props.onSubmitCourse(courseToSubmit);
+    if (code === "" || code === undefined) {
+      alert("Please select a course.");
+    } else if (cred === "" || cred === undefined) {
+      alert(
+        "Please enter the number of credits you expect to receive for this course. Credit information was not available"
+      );
+    } else if (term === "" || term === undefined) {
+      alert("Please select the term you expect to take this course.");
+    } else {
+      const courseToSubmit = {
+        dept: dept,
+        code: dept + " " + code,
+        name: name,
+        desc: desc,
+        cred: cred,
+        tag: tag,
+        term: term,
+      };
+      props.onSubmitCourse(courseToSubmit);
+    }
   };
 
   return (
@@ -224,36 +214,33 @@ function SearchCard(props) {
               Search
             </Button>
           </Centered>
+          <br />
+          <Centered>
+            <SearchResultCard title={title} name={name} desc={desc} />
+          </Centered>
+          <TextField
+            label="Credits"
+            value={cred}
+            onChange={(e) => setCred(e.target.value)}
+          />
+          <br />
+          <br />
+          <RadioButtonsGroup onChange={setTag} />
+          <br />
+          <br />
+          <TermDropDown onChange={setTerm} />
+          <br />
+          <br />
+          <Centered>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmitCourse}
+            >
+              Add Course to Degree
+            </Button>
+          </Centered>
         </form>
-        <br />
-        <Centered>
-          <SearchResultCard title={title} name={name} desc={desc} />
-        </Centered>
-        <TextField
-          label="Credits"
-          id="standard-dense"
-          value={cred}
-          onChange={(e) => setCred(e.target.value)}
-          margin="dense"
-          m={2}
-        />
-        <br />
-        <br />
-        <RadioButtonsGroup onChange={setTag} />
-        <br />
-        <br />
-        <TermDropDown onChange={setTerm} />
-        <br />
-        <br />
-        <Centered>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSubmitCourse}
-          >
-            Add Course to Degree
-          </Button>
-        </Centered>
       </TaskWrapperContent>
     </SearchWrapper>
   );
@@ -268,7 +255,7 @@ function RadioButtonsGroup(props) {
 
   const handleChange = (event) => {
     setValue(event);
-    props.onChange(value);
+    props.onChange(event);
   };
 
   return (
@@ -619,6 +606,17 @@ const addToDegreeFunction = (
     // term does not exist- so create new term object with the course added.
     usersCourseArray.push({ name: courseToAdd.term, courses: [courseToAdd] });
   }
+
+  function sortByKey(array, key) {
+    return array.sort(function (a, b) {
+      let x = a[key];
+      let y = b[key];
+      return x < y ? -1 : x > y ? 1 : 0;
+    });
+  }
+
+  sortByKey(usersCourseArray, "name");
+
   setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);
 };
 

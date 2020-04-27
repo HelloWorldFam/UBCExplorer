@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const Courses = require("./models/courses.model");
 const Departments = require("./models/departments.model");
+const CourseCodes = require("./models/course_codes.model");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const findOrCreate = require("mongoose-findorcreate");
@@ -191,14 +192,17 @@ app.get("/getAllCourses", isUserAuthenticated, (req, res) => {
   }
 });
 
-app.get("/getDepartments", isUserAuthenticated, (req, res) => {
-  if (!req.user) {
-    res.send("You are not authenticated.");
-  } else {
-    Departments.find()
-      .then((courses) => res.send(courses))
-      .catch((err) => console.log(err));
-  }
+app.get("/getDepartments", (req, res) => {
+  Departments.find()
+    .then((courses) => res.send(courses))
+    .catch((err) => console.log(err));
+});
+
+// Get all course codes from database
+app.get("/getAllCourseCodes", isUserAuthenticated, (req, res) => {
+  CourseCodes.find()
+    .then((courses) => res.send(courses))
+    .catch((err) => console.log(err));
 });
 
 // To query a specific course from courses database
@@ -208,18 +212,23 @@ app.get("/getCourseInfo/:code", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-//Update course worklist/array of the term objects which was selected in course selector
-app.post("/updateUserWorkList", isUserAuthenticated, (req, res) => {
-  Users.find({ email: req.user.email }).then((user) => {
-    console.log(req.body);
-    user.courses = req.body;
-
-    user
-      .save()
-      .then(() => res.json("Worklist updated for user!"))
-      .catch((err) => res.status(400).json("ErrorMsg" + err));
-  });
-  res.sendStatus(200);
+// Update course worklist/array of the term objects which was selected in course selector
+app.post("/updateUserWorkList", (req, res) => {
+  Users.findOne({ email: req.user.email })
+    .then((user) => {
+      user.courses = req.body;
+      user
+        .save()
+        .then(() => res.sendStatus(200))
+        .catch((err) => {
+          console.log(err);
+          res.sendStatus(400);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(400);
+    });
 });
 
 // Commented out for testing
