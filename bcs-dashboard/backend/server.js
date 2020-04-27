@@ -192,14 +192,17 @@ app.get("/getAllCourses", isUserAuthenticated, (req, res) => {
   }
 });
 
-app.get("/getDepartments", isUserAuthenticated, (req, res) => {
-  if (!req.user) {
-    res.send("You are not authenticated.");
-  } else {
-    Departments.find()
-      .then((courses) => res.send(courses))
-      .catch((err) => console.log(err));
-  }
+app.get("/getDepartments", (req, res) => {
+  Departments.find()
+    .then((courses) => res.send(courses))
+    .catch((err) => console.log(err));
+});
+
+// Get all course codes from database
+app.get("/getAllCourseCodes", isUserAuthenticated, (req, res) => {
+  CourseCodes.find()
+    .then((courses) => res.send(courses))
+    .catch((err) => console.log(err));
 });
 
 // To query a specific course from courses database
@@ -210,7 +213,7 @@ app.get("/getCourseInfo/:code", (req, res) => {
 });
 
 // Update course worklist/array of the term objects which was selected in course selector
-app.post("/updateUserWorkList", isUserAuthenticated, (req, res) => {
+app.post("/updateUserWorkList", (req, res) => {
   Users.findOne({ email: req.user.email })
     .then((user) => {
       user.courses = req.body;

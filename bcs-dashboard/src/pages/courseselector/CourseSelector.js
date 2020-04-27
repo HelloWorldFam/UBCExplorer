@@ -48,7 +48,9 @@ const NavLink = React.forwardRef((props, ref) => (
 const TextFieldSpacing = styled(MuiTextField)(spacing);
 
 const TextField = styled(TextFieldSpacing)`
-  width: 200px;
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
 `;
 
 const Chip = styled(MuiChip)(spacing);
@@ -134,22 +136,8 @@ function SearchResultCard(props) {
   );
 }
 
-const source = [
-  { code: "FNEL 112" },
-  { code: "CPSC 110" },
-  { code: "CPSC 210" },
-  { code: "MATH 100" },
-  { code: "STAT 300" },
-  { code: "STAT 302" },
-  { code: "ENGL 112" },
-  { code: "CPSC 310" },
-  { code: "CPSC 340" },
-  { code: "CPSC 110" },
-  { code: "COGS 200" },
-  { code: "COGS 300" },
-];
-
 function SearchCard(props) {
+  const [dept, setDept] = useState("");
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
@@ -159,7 +147,7 @@ function SearchCard(props) {
   const [term, setTerm] = useState("");
 
   const handleClick = () => {
-    const courseSearch = /*dept + " " +*/ code;
+    const courseSearch = dept + " " + code;
     axios
       .get("http://localhost:3000/getCourseInfo/" + courseSearch)
       .then((res) => {
@@ -167,7 +155,7 @@ function SearchCard(props) {
         setCred("");
         setCred(res.data.cred);
         setName(res.data.name);
-        setTitle(`${code}`);
+        setTitle(`${dept} ${code}`);
         props.onChange(res.data);
       })
       .catch((err) => console.log(err));
@@ -184,7 +172,8 @@ function SearchCard(props) {
       alert("Please select the term you expect to take this course.");
     } else {
       const courseToSubmit = {
-        code: code,
+        dept: dept,
+        code: dept + " " + code,
         name: name,
         desc: desc,
         cred: cred,
@@ -195,52 +184,25 @@ function SearchCard(props) {
     }
   };
 
-  const handleChange = (newValue) => {
-    setCode(newValue);
-  };
-
-  const filter = createFilterOptions();
-  const defaultProps = {
-    options: source,
-    getOptionLabel: (option) => option.code,
-  };
-
   return (
     <SearchWrapper mb={4}>
       <TaskWrapperContent>
         <form>
           <Typography variant="body2" mb={3}>
-            {/* <TextField
+            <TextField
               value={dept}
               onChange={(e) => setDept(e.target.value)}
               label="Department"
               fullWidth
             />
-            <br /> */}
+            <br />
+            <TextField
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              label="Course Code"
+              fullWidth
+            />
           </Typography>
-          <Autocomplete
-            {...defaultProps}
-            freeSolo
-            //options={source.map((option) => option.code)}
-            id="autocomplete-textfield"
-            // selectOnFocus
-            // clearOnBlur
-            autoHighlight
-            autoSelect
-            autoComplete
-            onChange={(e) => handleChange(e.target.value)}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                label={"Course Code"}
-                margin="normal"
-                variant="outlined"
-                margin="normal"
-              />
-            )}
-          />
           <Centered>
             <Button
               mr={2}
@@ -257,11 +219,8 @@ function SearchCard(props) {
           </Centered>
           <TextField
             label="Credits"
-            id="standard-dense"
             value={cred}
             onChange={(e) => setCred(e.target.value)}
-            margin="dense"
-            m={2}
           />
           <br />
           <br />
