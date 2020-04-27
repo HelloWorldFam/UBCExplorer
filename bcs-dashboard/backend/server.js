@@ -210,6 +210,7 @@ app.get("/getCourseInfo/:code", (req, res) => {
 
 // Update course worklist/array of the term objects which was selected in course selector
 app.post("/updateUserWorkList", isUserAuthenticated, (req, res) => {
+<<<<<<< HEAD
   Users.findOne({ email: req.user.email })
     .then((user) => {
       user.courses = req.body;
@@ -225,6 +226,18 @@ app.post("/updateUserWorkList", isUserAuthenticated, (req, res) => {
       console.log(err);
       res.sendStatus(400);
     });
+=======
+  Users.find({ email: req.user.email }).then((user) => {
+    console.log(req.body);
+    user.courses = req.body;
+
+    /*user
+      .save()
+      .then(() => res.json("Worklist updated for user!"))
+      .catch((err) => res.status(400).json("ErrorMsg" + err));*/
+  });
+  res.sendStatus(200);
+>>>>>>> 178501bb22b16dbff20897d2706a26bfccddd601
 });
 
 // Commented out for testing
