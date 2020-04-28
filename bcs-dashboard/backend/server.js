@@ -82,10 +82,13 @@ passport.use(
         {
           firstName: profile.name.givenName,
           lastName: profile.name.familyName,
-          picture: profile._json.picture,
           courses: [],
         },
         function (err, user) {
+          // Updates user picture upon each auth session
+          user.picture = profile._json.picture;
+          user.save();
+          // auth complete
           return done(err, user);
         }
       );
