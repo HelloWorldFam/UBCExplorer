@@ -360,24 +360,23 @@ function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
     const drake = dragula(containers);
     drake.on('drop', function (el, container) {
       el.style.backgroundColor = '#e6e6e6';
-      var newCourse;
       usersCourseArray.map((term) => {
         if (term.name === el.getAttribute("term")) {
           term.courses.map((course, courseIndex) => {
             if (el.getAttribute("courseid") === course.code) {
-              newCourse = term.courses.splice(courseIndex, 1);
+              var newCourse = term.courses.splice(courseIndex, 1);
+              usersCourseArray[container.getAttribute("termid")].courses.push(newCourse[0]);
             }
           })
         }
       });
 
-      usersCourseArray[container.getAttribute("termid")].courses.push(newCourse[0]);
       drake.cancel(true);
       setUsersCourseArray(usersCourseArray => [...usersCourseArray]);
     })
   }, [usersCourseArray]);
 
-  if (usersCourseArray[0] != -1) {
+  if (usersCourseArray && usersCourseArray[0] && usersCourseArray[0].courses) {
     return (
       <>
         {usersCourseArray.map((term, termIndex) => {
@@ -629,7 +628,7 @@ function CourseSelector() {
   };
 
   useEffect(() => {
-    if (usersCourseArray[0] !== -1) {
+    if (usersCourseArray && usersCourseArray[0] !== -1) {
       axios.post("/updateUserWorkList", usersCourseArray).then(() => { });
     }
   }, [usersCourseArray]);
