@@ -365,30 +365,25 @@ function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
 
   useEffect(() => {
     const drake = dragula(containers);
-    drake.on("drop", function (el, container) {
-      el.style.backgroundColor = "#e6e6e6";
-      var newCourse;
-      const removeCourse = () => {
-        usersCourseArray.map((term) => {
-          if (term.name === el.getAttribute("term")) {
-            term.courses.map((course, courseIndex) => {
-              if (el.getAttribute("courseid") === course.code) {
-                newCourse = term.courses.splice(courseIndex, 1);
-              }
-            });
-          }
-        });
-      };
-      removeCourse();
-      usersCourseArray[container.getAttribute("termid")].courses.push(
-        newCourse[0]
-      );
+    drake.on('drop', function (el, container) {
+      el.style.backgroundColor = '#e6e6e6';
+      usersCourseArray.map((term) => {
+        if (term.name === el.getAttribute("term")) {
+          term.courses.map((course, courseIndex) => {
+            if (el.getAttribute("courseid") === course.code) {
+              var newCourse = term.courses.splice(courseIndex, 1);
+              usersCourseArray[container.getAttribute("termid")].courses.push(newCourse[0]);
+            }
+          })
+        }
+      });
+
       drake.cancel(true);
       setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);
     });
   }, [usersCourseArray]);
 
-  if (usersCourseArray[0] != -1) {
+  if (usersCourseArray && usersCourseArray[0] && usersCourseArray[0].courses) {
     return (
       <>
         {usersCourseArray.map((term, termIndex) => {
@@ -418,17 +413,14 @@ function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
                             key={`${termIndex}_${courseIndex}`}
                           >
                             {course.code}
-                            <Button
-                              style={{
-                                minWidth: "30px",
-                                color: "#bf0a0a",
-                                padding: "0",
-                              }}
+                            <Button style={{
+                              minWidth: "30px",
+                              color: "#bf0a0a",
+                              padding: "0",
+                            }}
                               onClick={() => {
                                 term.courses.splice(courseIndex, 1);
-                                setUsersCourseArray((usersCourseArray) => [
-                                  ...usersCourseArray,
-                                ]);
+                                setUsersCourseArray(usersCourseArray => [...usersCourseArray])
                               }}
                             >
                               x
@@ -643,8 +635,8 @@ function CourseSelector() {
   };
 
   useEffect(() => {
-    if (usersCourseArray[0] !== -1) {
-      axios.post("/updateUserWorkList", usersCourseArray).then(() => {});
+    if (usersCourseArray && usersCourseArray[0] !== -1) {
+      axios.post("/updateUserWorkList", usersCourseArray).then(() => { });
     }
   }, [usersCourseArray]);
 

@@ -192,8 +192,11 @@ function DegreeTimeline() {
                 <Link component={NavLink} exact to="/dashboard">
                     Dashboard
                 </Link>
+                <Link component={NavLink} exact to="/degreeprogress/overview">
+                    Degree Overview
+                </Link>
                 <Typography>
-                    Degree Progress
+                    Degree Timeline
                 </Typography>
             </Breadcrumbs>
 
