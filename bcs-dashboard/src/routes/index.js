@@ -30,11 +30,17 @@ import {
 const LandingPage = async(() => import("../pages/landingpage/LandingPage"));
 
 // Degree progress components
-const DegreeTimeline = async(() => import("../pages/degreeprogress/DegreeTimeline"));
-const DegreeOverview = async(() => import("../pages/degreeprogress/DegreeOverview"));
+const DegreeTimeline = async(() =>
+  import("../pages/degreeprogress/DegreeTimeline")
+);
+const DegreeOverview = async(() =>
+  import("../pages/degreeprogress/DegreeOverview")
+);
 
 //Course Selector Components
-const CourseSelector = async(() => import("../pages/courseselector/CourseSelector"));
+const CourseSelector = async(() =>
+  import("../pages/courseselector/CourseSelector")
+);
 
 // Auth components
 const SignIn = async(() => import("../pages/auth/SignIn"));
@@ -240,6 +246,15 @@ const calendarRoutes = {
   path: "/calendar",
   icon: <CalendarIcon />,
   component: Calendar,
+  children: null,
+};
+
+//Added routes for MainSearchPage
+
+const mainSearchRoutes = {
+  id: "mainSearchRoutes",
+  path: "/mainSearch",
+  component: Blank,
   children: null,
 };
 
@@ -497,9 +512,11 @@ export const dashboard = [
 ];
 
 export const auth = [authRoutes];
+export const mainSearch = [mainSearchRoutes];
 
 export default [
   dashboardsRoutes,
+  mainSearchRoutes,
   courseSelectorRoutes,
   degreeProgressRoutes,
   myCoursesRoutes,

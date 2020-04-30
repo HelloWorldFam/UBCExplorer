@@ -14,6 +14,13 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select";
 import Helmet from "react-helmet";
 
+//added
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+
 import Autocomplete, {
   createFilterOptions,
 } from "@material-ui/lab/Autocomplete";
@@ -224,20 +231,20 @@ function SearchCard(props) {
           />
           <br />
           <br />
-          <RadioButtonsGroup onChange={setTag} />
+          {/* <RadioButtonsGroup onChange={setTag} />
           <br />
           <br />
-          <TermDropDown onChange={setTerm} />
+          <TermDropDown onChange={setTerm} /> */}
           <br />
           <br />
           <Centered>
-            <Button
+            {/* <Button
               variant="contained"
               color="primary"
               onClick={handleSubmitCourse}
             >
               Add Course to Degree
-            </Button>
+            </Button> */}
           </Centered>
         </form>
       </TaskWrapperContent>
@@ -293,6 +300,18 @@ const useStyles = makeStyles((theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+  },
+}));
+
+const navBarStyle = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
   },
 }));
 
@@ -556,7 +575,7 @@ const addToDegreeFunction = (
   setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);
 };
 
-function CourseSelector() {
+function MainSearchPage() {
   const [containers, setContainers] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState({});
   const [courseToAdd, setCourseToAdd] = useState({});
@@ -589,11 +608,13 @@ function CourseSelector() {
     }
   }, [courseToAdd]);
 
+  const classes2 = navBarStyle();
+
   return (
     <React.Fragment>
-      <Helmet title="Course Selector" />
+      {/* <Helmet title="Course Search" />
       <Typography variant="h3" gutterBottom display="inline">
-        Course Selector
+        Course Search
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
@@ -601,12 +622,78 @@ function CourseSelector() {
           Dashboard
         </Link>
 
-        <Typography>Course Selector</Typography>
-      </Breadcrumbs>
+        <Typography>Course Search</Typography>
+      </Breadcrumbs> */}
+
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            edge="start"
+            className={classes2.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
+            {/* logo here*/}
+          </IconButton>
+          <Typography variant="h6" className={classes2.title}>
+            UBC Explorer
+          </Typography>
+          <Button color="inherit">About</Button>
+          <Button color="inherit">Dashboard</Button>
+          <Button color="inherit">Feedback</Button>
+          <Button color="inherit">Contact</Button>
+          <Button color="inherit">Login/Register</Button>
+        </Toolbar>
+      </AppBar>
 
       <Divider my={6} />
-
       <Grid container spacing={6}>
+        <Grid item xs={12} lg={6} xl={3}>
+          <Lane
+            title="UBC Explorer Course Search"
+            description=""
+            onContainerLoaded={onContainerReady}
+          >
+            <SearchWrapper mb={4}>
+              <TaskWrapperContent>
+                <Typography>
+                  <b>Welcome to the UBC Explorer - Course Search</b>
+                  <br />
+                  The course search tool is created to enable a seamless, fast
+                  course search experience for the end user. <br />
+                  <br />
+                  <b>Getting Started</b>
+                  <br />
+                  To get started, input the department and course code and
+                  select search. The credit amount will automatically be
+                  populated. A list of prerequisites/corequisites and dependent
+                  courses will also be shown in the two right lanes.
+                  <br />
+                  <br />
+                  <b>About</b>
+                  <br />
+                  Want to know more about the team behind the project? Check out
+                  our about page.
+                  <br />
+                  <br />
+                  <b>BCS Dashboard</b>
+                  <br />
+                  In addition to the UBC Explorer, we have currently deployed a
+                  degree progress dashboard with advanced features such as
+                  worklists, and degree progress tracking. Note: It is currently
+                  in beta and bugs may be experienced.
+                  <br />
+                  <br />
+                  <b>Feedback / Bugs</b>
+                  <br />
+                  If you notice any bugs or have any feedback, feel free to send
+                  an email to : email here
+                </Typography>
+              </TaskWrapperContent>
+            </SearchWrapper>
+          </Lane>
+        </Grid>
+
         <Grid item xs={12} lg={6} xl={3}>
           <Lane
             title="Search"
@@ -641,18 +728,9 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3}>
-          <Lane
-            title="Your Degree"
-            description="The courses that you have added to your worklist."
-            onContainerLoaded={onContainerReady}
-          >
-            <YourDegreeCard courseList={usersCourseArray} />
-          </Lane>
-        </Grid>
       </Grid>
     </React.Fragment>
   );
 }
 
-export default CourseSelector;
+export default MainSearchPage;
