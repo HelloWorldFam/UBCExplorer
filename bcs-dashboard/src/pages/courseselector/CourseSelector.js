@@ -113,7 +113,14 @@ class Lane extends React.Component {
           <Typography variant="body2" mb={4}>
             {description}
           </Typography>
-          <div className={title} termid={this.props.termId} style={{ minHeight: "20px" }} ref={this.handleContainerLoaded}>{children}</div>
+          <div
+            className={title}
+            termid={this.props.termId}
+            style={{ minHeight: "20px" }}
+            ref={this.handleContainerLoaded}
+          >
+            {children}
+          </div>
         </CardContent>
       </Card>
     );
@@ -348,12 +355,12 @@ function TermDropDown(props) {
 function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
   const [containers, setContainers] = useState([]);
 
-  const onContainerReady = container => {
+  const onContainerReady = (container) => {
     containers.push(container);
   };
 
   useEffect(() => {
-    setContainers(containers => [...containers]);
+    setContainers((containers) => [...containers]);
   }, []);
 
   useEffect(() => {
@@ -372,8 +379,8 @@ function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
       });
 
       drake.cancel(true);
-      setUsersCourseArray(usersCourseArray => [...usersCourseArray]);
-    })
+      setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);
+    });
   }, [usersCourseArray]);
 
   if (usersCourseArray && usersCourseArray[0] && usersCourseArray[0].courses) {
@@ -708,7 +715,10 @@ function CourseSelector() {
             description="The courses that you have added to your worklist."
             onContainerLoaded={onContainerReady}
           >
-            <YourDegreeCard usersCourseArray={usersCourseArray} setUsersCourseArray={setUsersCourseArray} />
+            <YourDegreeCard
+              usersCourseArray={usersCourseArray}
+              setUsersCourseArray={setUsersCourseArray}
+            />
           </Lane>
         </Grid>
       </Grid>
