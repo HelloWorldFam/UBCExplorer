@@ -625,7 +625,7 @@ function MainSearchPage() {
         <Typography>Course Search</Typography>
       </Breadcrumbs> */}
 
-      <AppBar position="static">
+      <AppBar position="sticky">
         <Toolbar>
           <IconButton
             edge="start"
@@ -638,10 +638,7 @@ function MainSearchPage() {
           <Typography variant="h6" className={classes2.title}>
             UBC Explorer
           </Typography>
-          <Button color="inherit">About</Button>
-          <Button color="inherit">Dashboard</Button>
-          <Button color="inherit">Feedback</Button>
-          <Button color="inherit">Contact</Button>
+
           <Button color="inherit">Login/Register</Button>
         </Toolbar>
       </AppBar>
