@@ -113,7 +113,14 @@ class Lane extends React.Component {
           <Typography variant="body2" mb={4}>
             {description}
           </Typography>
-          <div className={title} termid={this.props.termId} style={{ minHeight: "20px" }} ref={this.handleContainerLoaded}>{children}</div>
+          <div
+            className={title}
+            termid={this.props.termId}
+            style={{ minHeight: "20px" }}
+            ref={this.handleContainerLoaded}
+          >
+            {children}
+          </div>
         </CardContent>
       </Card>
     );
@@ -348,18 +355,18 @@ function TermDropDown(props) {
 function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
   const [containers, setContainers] = useState([]);
 
-  const onContainerReady = container => {
+  const onContainerReady = (container) => {
     containers.push(container);
   };
 
   useEffect(() => {
-    setContainers(containers => [...containers]);
+    setContainers((containers) => [...containers]);
   }, []);
 
   useEffect(() => {
     const drake = dragula(containers);
-    drake.on('drop', function (el, container) {
-      el.style.backgroundColor = '#e6e6e6';
+    drake.on("drop", function (el, container) {
+      el.style.backgroundColor = "#e6e6e6";
       var newCourse;
       const removeCourse = () => {
         usersCourseArray.map((term) => {
@@ -368,15 +375,17 @@ function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
               if (el.getAttribute("courseid") === course.code) {
                 newCourse = term.courses.splice(courseIndex, 1);
               }
-            })
+            });
           }
-        })
+        });
       };
       removeCourse();
-      usersCourseArray[container.getAttribute("termid")].courses.push(newCourse[0]);
+      usersCourseArray[container.getAttribute("termid")].courses.push(
+        newCourse[0]
+      );
       drake.cancel(true);
-      setUsersCourseArray(usersCourseArray => [...usersCourseArray]);
-    })
+      setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);
+    });
   }, [usersCourseArray]);
 
   if (usersCourseArray[0] != -1) {
@@ -409,14 +418,17 @@ function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
                             key={`${termIndex}_${courseIndex}`}
                           >
                             {course.code}
-                            <Button style={{
-                              minWidth: "30px",
-                              color: "#bf0a0a",
-                              padding: "0",
-                            }}
-                              onClick={() => { 
+                            <Button
+                              style={{
+                                minWidth: "30px",
+                                color: "#bf0a0a",
+                                padding: "0",
+                              }}
+                              onClick={() => {
                                 term.courses.splice(courseIndex, 1);
-                                setUsersCourseArray(usersCourseArray => [...usersCourseArray])  
+                                setUsersCourseArray((usersCourseArray) => [
+                                  ...usersCourseArray,
+                                ]);
                               }}
                             >
                               x
@@ -635,16 +647,16 @@ function CourseSelector() {
       axios.post("/updateUserWorkList", usersCourseArray).then(() => {});
     }
   }, [usersCourseArray]);
-  
+
   useEffect(() => {
     axios
-    .get("/userdata")
-    .then((res) => {
-      setUsersCourseArray(res.data[0].courses);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .get("/userdata")
+      .then((res) => {
+        setUsersCourseArray(res.data[0].courses);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   useEffect(() => {
@@ -711,7 +723,10 @@ function CourseSelector() {
             description="The courses that you have added to your worklist."
             onContainerLoaded={onContainerReady}
           >
-            <YourDegreeCard usersCourseArray={usersCourseArray} setUsersCourseArray={setUsersCourseArray} />
+            <YourDegreeCard
+              usersCourseArray={usersCourseArray}
+              setUsersCourseArray={setUsersCourseArray}
+            />
           </Lane>
         </Grid>
       </Grid>
