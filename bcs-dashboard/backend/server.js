@@ -212,8 +212,14 @@ app.get("/getAllCourseCodes", isUserAuthenticated, (req, res) => {
 // To query a specific course from courses database
 app.get("/getCourseInfo/:code", (req, res) => {
   Courses.findOne({ code: req.params.code })
-    .then((course) => res.send(course))
-    .catch((err) => console.log(err));
+    .then((course) => {
+      if (course === null) res.send("Course not found");
+      else res.send(course);
+    })
+    .catch((err) => {
+      res.send("An error has occurred: " + err);
+      console.log(err)
+    });
 });
 
 // Update course worklist/array of the term objects which was selected in course selector
