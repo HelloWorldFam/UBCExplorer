@@ -11,21 +11,13 @@ import {
     Breadcrumbs as MuiBreadcrumbs,
     Card as MuiCard,
     Divider as MuiDivider,
-    Typography,
-    LinearProgress
+    Typography
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
-
-import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
 
-import ProgressLine from './progressline/ProgressLine';
 import DegreeTable from './tablecharts/DegreeTable';
-import CoreTable from './tablecharts/CoreTable';
-import BridgingTable from './tablecharts/BridgingTable';
-import DoughnutChart from './tablecharts/DoughnutChart';
-import ExemptionTable from './tablecharts/ExemptionTable';
 
 const NavLink = React.forwardRef((props, ref) => (
     <RouterNavLink innerRef={ref} {...props} />
@@ -135,177 +127,15 @@ function Overview(props) {
     return (
         <Card>
             <CardContent mb={5}>
-                <Typography variant="h3" paragraph >
-                    Overview
-                </Typography>
-
-                <Typography variant="h6" paragraph >
-                    Overall progress through BCS Degree:
-                </Typography>
-
-                {/* This is using @material-ui*/}
-                <DoughnutChart />
-
-                <Divider my={6} />
-                <Typography variant="h6" paragraph >
-                    Core CPSC course progress:
-                    </Typography>
-                {/* Used Progress bar #1 */}
-                <Progress percent={corePercentComplete} />
-
-
-                <Typography variant="h7" paragraph >
-                    Courses Completed: {coreCredits} <br />
-                        Courses Remaining: {coreCreditsRemaining}
-                </Typography>
-
-                {/* Text for credits 
-                    <Grid container alignItems="center">
-                        <Grid item xs>
-                            <Typography gutterBottom variant="h8">
-                                Completed credits: {coreCredits}
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography gutterBottom variant="h8">
-                                Credits remaining: {coreCreditsRemaining}
-                            </Typography>
-                        </Grid>
-                    </Grid> */}
-
-                <CoreTable />
-
-                <Divider my={6} />
-                <Typography variant="h6" paragraph >
-                    Bridging Module course progress:
-                    </Typography>
-                {/* Used Progress bar #1 */}
-                <Progress percent={bridgingPercentComplete} />
-
-                <Typography variant="h7" paragraph >
-                    Courses Completed: {bridgingCredits} <br />
-                        Courses Remaining: {bridgingCreditsRemaining}
-                </Typography>
-
-                {/* Text for credits 
-                    <Grid container alignItems="center">
-                        <Grid item xs>
-                            <Typography gutterBottom variant="h8">
-                                Completed credits: {bridgingCredits}
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography gutterBottom variant="h8">
-                                Credits remaining: {bridgingCreditsRemaining}
-                            </Typography>
-                        </Grid>
-                    </Grid> */}
-
-                <BridgingTable />
-
-                <Divider my={6} />
-                <Typography variant="h6" paragraph >
-                    Exemption replacement progress:
-                    </Typography>
-                {/* Used Progress bar #1 */}
-                <Progress percent={exemptionPercentComplete} />
-                <Typography variant="h7" paragraph >
-                    Courses Completed: {exemptionCreditsComplete} <br />
-                        Courses Remaining: {exemptionCreditsRemaining}
-                </Typography>
-                <ExemptionTable />
-                {/* <Divider my={6} /> */}
-
-
-                {/* MISC STUFF BELOW - 
-                Types of progress bars and potential transcript table */}
-
-                {/* <Typography variant="h6" paragraph >
-                    Types of Progress Bars we could use:
-                </Typography> */}
-
-                {/* Progress bar #1 - This is using the sweet-react-progress component */}
-                {/* <Typography variant="h7" paragraph >
-                    Progress bar #1
-                </Typography>
-                <Progress percent={percentComplete} /> */}
-                {/* Text for credits */}
-                {/* <Grid container alignItems="center">
-                    <Grid item xs>
-                        <Typography gutterBottom variant="h8">
-                            Completed credits: {credits} (placeholder)
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography gutterBottom variant="h8">
-                            Credits remaining: {creditsRemaining} (placeholder)
-                        </Typography>
-                    </Grid>
-                </Grid>
-                <Divider my={6} /> */}
-
-                {/* Progress bar #2 - This is using https://medium.com/@bruno.raljic/animated-multi-part-progress-bar-made-from-scratch-with-reactjs-and-css-9c1d6a4dbef7*/}
-                {/* <Typography variant="h7" paragraph >
-                    Progress bar #2
-                </Typography>
-                <ProgressLine label=""
-                    backgroundColor="lightpink"
-                    visualParts={[
-                        {
-                            percentage: "75%",
-                            color: "dodgerblue"
-                        }
-                    ]}
-                /> */}
-                {/* Text for credits */}
-                {/* <Grid container alignItems="center">
-                    <Grid item xs>
-                        <Typography gutterBottom variant="h8">
-                            Completed credits: {credits} (placeholder)
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography gutterBottom variant="h8">
-                            Credits remaining: {creditsRemaining} (placeholder)
-                        </Typography>
-                    </Grid>
-                </Grid>
-                <Divider my={6} /> */}
-
-                {/* Progress bar #3 - This is using @material-ui*/}
-                {/* <Typography variant="h7" paragraph >
-                    Progress bar #3
-                </Typography>
-                <LinearProgress variant="determinate" value={percentComplete} /> */}
-
-                {/* Text for credits */}
-                {/* <Grid container alignItems="center">
-                    <Grid item xs>
-                        <Typography gutterBottom variant="h8">
-                            Completed credits: {credits} (placeholder)
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography gutterBottom variant="h8">
-                            Credits remaining: {creditsRemaining} (placeholder)
-                        </Typography>
-                    </Grid>
-                </Grid> */}
-
-
-                {/* <Divider my={6} /> */}
-
                 {/* Transcript table mock up */}
-                {/* <DegreeTable /> */}
-
+                <DegreeTable />
             </CardContent>
         </Card>
-
     );
 }
 
 
-function DegreeOverview() {
+function DegreeTranscript() {
     // Commented out temporarily
     // const [courseResult, setCourseResult] = React.useState([]);
     //
@@ -407,12 +237,15 @@ function DegreeOverview() {
                 <Link component={NavLink} exact to="/dashboard">
                     Dashboard
             </Link>
-                <Typography>
+            <Link component={NavLink} exact to="/degreeprogress/overview">
                     Degree Overview
-            </Typography>
-                <Link component={NavLink} exact to="/degreeprogress/timeline">
+            </Link>
+            <Link component={NavLink} exact to="/degreeprogress/timeline">
                     Degree Timeline
             </Link>
+            <Typography>
+                    Degree Transcript
+            </Typography>
             </Breadcrumbs>
 
             <Divider my={6} />
@@ -426,4 +259,4 @@ function DegreeOverview() {
     );
 }
 
-export default DegreeOverview;
+export default DegreeTranscript;
