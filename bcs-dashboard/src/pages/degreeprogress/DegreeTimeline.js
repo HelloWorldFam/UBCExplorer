@@ -62,11 +62,11 @@ function Timeline(props) {
                         : props.courseResult.map((item, index, array) => (
                             <VerticalTimelineElement
                                 className="vertical-timeline-element"
-                                date={item.Name}
+                                date={item.name}
                                 iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }} >
                                 <h3 className="vertical-timeline-element-title">
                                     Courses:
-                                        </h3>
+                                </h3>
                                 {item.courses.map((course) => (
                                     <>
                                         <Tooltip title={tooltipText(course)} arrow>
@@ -86,7 +86,29 @@ function Timeline(props) {
 }
 
 function DegreeTimeline() {
-    const [courseResult, setCourseResult] = React.useState([]);
+    const [courseResult, setCourseResult] = React.useState([{
+        "name": "2019W1",
+        "courses": [{
+            "dept": "CPSC",
+            "code": "CPSC 110",
+            "name": "Computation, Programs, and Programming",
+            "desc": "Fundamental program and computation structures. Introductory programming skills. Computation as a tool for information processing, simulation and modelling, and interacting with the world. [3-3-0]",
+            "cred": 4,
+            "tag": "Core Course",
+            "term": "2019W1"
+        }]
+    }, {
+        "name": "Exemptions",
+        "courses": [{
+            "dept": "ENGL",
+            "code": "ENGL 110",
+            "name": "Approaches to Literature",
+            "desc": "Study of selected examples of poetry, fiction, and drama. Essays are required.",
+            "cred": 3,
+            "tag": "Core Course",
+            "term": "Exemptions"
+        }]
+    }]);
 
     useEffect(() => {
         fetch('/getcourses')
@@ -132,7 +154,7 @@ function tooltipText(course) {
     return (
         <>
             <h3>Name: {course.name}</h3>
-            <h3>Credits: {course.cred.$numberInt}</h3>
+            <h3>Credits: {course.cred}</h3>
             <h3>Pre-reqs: {course.prer}</h3>
             <h3>Co-reqs: {course.crer}</h3>
         </>
