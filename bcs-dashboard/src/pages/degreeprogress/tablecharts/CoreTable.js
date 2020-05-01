@@ -39,7 +39,7 @@ const TableWrapper = styled.div`
 let id = 0;
 function createData(name, status) {
   id += 1;
-  return { id, name, status};
+  return { id, name, status };
 }
 
 //placeholder data --> createCourses should add to this array
@@ -67,35 +67,39 @@ const rows = [
 ];
 
 //function that creates the data for the rows in the table
-const createCourse = (someData) => {
+const createCourse = (coreCPSCComplete) => {
   //stub
 };
 
-const CoreTable = () => (
-  <Card mb={6}>
-    <Paper>
-      <TableWrapper>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Course Name</TableCell>
-              <TableCell>Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(row => (
-              <TableRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell>{row.status}</TableCell>
+const CoreTable = (props) => {
+  createCourse(props.courseBaskets?.coreCPSC);
+  console.log(props.courseBaskets?.coreCPSC);
+  return (
+    <Card mb={6}>
+      <Paper>
+        <TableWrapper>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Course Name</TableCell>
+                <TableCell>Status</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableWrapper>
-    </Paper>
-  </Card>
-);
+            </TableHead>
+            <TableBody>
+              {rows.map(row => (
+                <TableRow key={row.id}>
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell>{row.status}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableWrapper>
+      </Paper>
+    </Card>
+  );
+}
 
 export default CoreTable;
