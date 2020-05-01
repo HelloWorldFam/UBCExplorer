@@ -51,39 +51,34 @@ function Timeline(props) {
                     Timeline
                 </Typography>
                 <VerticalTimeline>
-                    {props.courseResult.map((item, index, array) => {
-                        if (array.length === 1) {
-                            return (
-                                <VerticalTimelineElement
-                                    className="vertical-timeline-element"
-                                    iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }} >
-                                    <h3>You have not added any courses!</h3>
-                                </VerticalTimelineElement>
-                            )
-                        }
-                        if (index !== 0) {
-                            return (
-                                <VerticalTimelineElement
-                                    className="vertical-timeline-element"
-                                    date={item.Name}
-                                    iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }} >
-                                    <h3 className="vertical-timeline-element-title">
-                                        Courses:
+                    {props.courseResult.length === 0
+                        ? (
+                            <VerticalTimelineElement
+                                className="vertical-timeline-element"
+                                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }} >
+                                <h3>You have not added any courses!</h3>
+                            </VerticalTimelineElement>
+                        )
+                        : props.courseResult.map((item, index, array) => (
+                            <VerticalTimelineElement
+                                className="vertical-timeline-element"
+                                date={item.Name}
+                                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }} >
+                                <h3 className="vertical-timeline-element-title">
+                                    Courses:
                                         </h3>
-                                    {item.courses.map((course) => (
-                                        <>
-                                            <Tooltip title={tooltipText(course)} arrow>
-                                                <Button className="vertical-timeline-element-subtitle"
-                                                    variant="outlined" size="medium" className={classes.margin}>
-                                                    {course.code}
-                                                </Button>
-                                            </Tooltip>
-                                        </>
-                                    ))}
-                                </VerticalTimelineElement>
-                            )
-                        }
-                    })}
+                                {item.courses.map((course) => (
+                                    <>
+                                        <Tooltip title={tooltipText(course)} arrow>
+                                            <Button className="vertical-timeline-element-subtitle"
+                                                variant="outlined" size="medium" className={classes.margin}>
+                                                {course.code}
+                                            </Button>
+                                        </Tooltip>
+                                    </>
+                                ))}
+                            </VerticalTimelineElement>
+                        ))}
                 </VerticalTimeline>
             </CardContent>
         </Card>
@@ -100,9 +95,6 @@ function DegreeTimeline() {
                 setCourseResult(json); // access json.body here
             });
     });
-
-
-
 
     return (
         <React.Fragment>
