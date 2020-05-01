@@ -544,10 +544,10 @@ function Profile() {
   useEffect(() => {
     axios("http://localhost:3000/userdata")
       .then((res) => {
-        setFirstName(res.data.user.given_name);
-        setLastName(res.data.user.family_name);
-        setEmail(res.data.user.email);
-        setPicture(res.data.user.picture);
+        setFirstName(res.data[0].firstName);
+        setLastName(res.data[0].lastName);
+        setEmail(res.data[0].email);
+        setPicture(res.data[0].picture);
       })
       .catch(function (error) {
         console.log(error);

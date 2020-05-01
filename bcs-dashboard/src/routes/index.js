@@ -17,12 +17,30 @@ import {
   PieChart,
   Sliders,
   User,
-  Users
+  Users,
 } from "react-feather";
-import { GolfCourse, Directions, Dashboard, Settings as SettingsIcon } from "@material-ui/icons";
+import {
+  GolfCourse,
+  Directions,
+  Dashboard,
+  Settings as SettingsIcon,
+} from "@material-ui/icons";
 
 // Landing page component
 const LandingPage = async(() => import("../pages/landingpage/LandingPage"));
+
+// Degree progress components
+const DegreeTimeline = async(() =>
+  import("../pages/degreeprogress/DegreeTimeline")
+);
+const DegreeOverview = async(() =>
+  import("../pages/degreeprogress/DegreeOverview")
+);
+
+//Course Selector Components
+const CourseSelector = async(() =>
+  import("../pages/courseselector/CourseSelector")
+);
 
 // Auth components
 const SignIn = async(() => import("../pages/auth/SignIn"));
@@ -89,8 +107,8 @@ const landingPageRoutes = {
   id: "Landing Page",
   path: "/",
   component: LandingPage,
-  children: null
-}
+  children: null,
+};
 
 const dashboardsRoutes = {
   id: "Dashboard",
@@ -115,40 +133,44 @@ const dashboardsRoutes = {
   // ]
 };
 
-const timeTableRoutes = {
-  id: "Timetable",
-  path: "/timetable",
-  icon: <CalendarIcon />,
-  component: Default,
-}
-
 const courseSelectorRoutes = {
   id: "Course Selector",
   path: "/courseselector",
   icon: <GolfCourse />,
-  component: Default,
-}
+  component: CourseSelector,
+};
 
 const degreeProgressRoutes = {
   id: "Degree Progress",
   path: "/degreeprogress",
   icon: <Directions />,
-  component: Default,
-}
+  children: [
+    {
+      path: "/degreeprogress/overview",
+      name: "Overview",
+      component: DegreeOverview,
+    },
+    {
+      path: "/degreeprogress/timeline",
+      name: "Timeline",
+      component: DegreeTimeline,
+    },
+  ],
+};
 
 const myCoursesRoutes = {
   id: "My Courses",
   path: "/mycourses",
   icon: <Dashboard />,
   component: Default,
-}
+};
 
 const myToDosRoutes = {
   id: "My ToDo's",
   path: "/mytodos",
   icon: <CheckSquare />,
-  component: Default,
-}
+  component: Tasks,
+};
 
 // these Profile and Settings are kinda similar, going to work on Settings for now. SK
 const profileRoutes = {
@@ -156,7 +178,7 @@ const profileRoutes = {
   path: "/profile",
   icon: <User />,
   component: Profile,
-  children: null
+  children: null,
 };
 
 const settingsRoutes = {
@@ -165,31 +187,32 @@ const settingsRoutes = {
   name: "Settings",
   icon: <SettingsIcon />,
   children: null,
-  component: Settings
-}
+  component: Settings,
+};
 
 const pagesRoutes = {
   id: "Pages",
   path: "/pages",
-  header: "Everything below this will be removed later. It is just for inspiration",
+  header:
+    "Everything below this will be removed later. It is just for inspiration",
   icon: <Layout />,
   children: [
     {
       path: "/pages/settings",
       name: "Settings",
-      component: Settings
+      component: Settings,
     },
     {
       path: "/pages/pricing",
       name: "Pricing",
-      component: Pricing
+      component: Pricing,
     },
     {
       path: "/pages/blank",
       name: "Blank Page",
-      component: Blank
-    }
-  ]
+      component: Blank,
+    },
+  ],
 };
 
 const projectsRoutes = {
@@ -198,7 +221,7 @@ const projectsRoutes = {
   icon: <Briefcase />,
   badge: "8",
   component: Projects,
-  children: null
+  children: null,
 };
 
 const invoiceRoutes = {
@@ -206,7 +229,7 @@ const invoiceRoutes = {
   path: "/invoice",
   icon: <CreditCard />,
   component: Invoice,
-  children: null
+  children: null,
 };
 
 const tasksRoutes = {
@@ -215,7 +238,7 @@ const tasksRoutes = {
   icon: <CheckSquare />,
   badge: "17",
   component: Tasks,
-  children: null
+  children: null,
 };
 
 const calendarRoutes = {
@@ -223,7 +246,16 @@ const calendarRoutes = {
   path: "/calendar",
   icon: <CalendarIcon />,
   component: Calendar,
-  children: null
+  children: null,
+};
+
+//Added routes for MainSearchPage
+
+const mainSearchRoutes = {
+  id: "mainSearchRoutes",
+  path: "/mainSearch",
+  component: Blank,
+  children: null,
 };
 
 const authRoutes = {
@@ -234,29 +266,29 @@ const authRoutes = {
     {
       path: "/auth/sign-in",
       name: "Sign In",
-      component: SignIn
+      component: SignIn,
     },
     {
       path: "/auth/sign-up",
       name: "Sign Up",
-      component: SignUp
+      component: SignUp,
     },
     {
       path: "/auth/reset-password",
       name: "Reset Password",
-      component: ResetPassword
+      component: ResetPassword,
     },
     {
       path: "/auth/404",
       name: "404 Page",
-      component: Page404
+      component: Page404,
     },
     {
       path: "/auth/500",
       name: "500 Page",
-      component: Page500
-    }
-  ]
+      component: Page500,
+    },
+  ],
 };
 
 const componentsRoutes = {
@@ -268,64 +300,64 @@ const componentsRoutes = {
     {
       path: "/components/avatars",
       name: "Avatars",
-      component: Avatars
+      component: Avatars,
     },
     {
       path: "/components/badges",
       name: "Badges",
-      component: Badges
+      component: Badges,
     },
     {
       path: "/components/buttons",
       name: "Buttons",
-      component: Buttons
+      component: Buttons,
     },
     {
       path: "/components/cards",
       name: "Cards",
-      component: Cards
+      component: Cards,
     },
     {
       path: "/components/chips",
       name: "Chips",
-      component: Chips
+      component: Chips,
     },
     {
       path: "/components/dialogs",
       name: "Dialogs",
-      component: Dialogs
+      component: Dialogs,
     },
     {
       path: "/components/expansion-panels",
       name: "Expansion Panels",
-      component: ExpPanels
+      component: ExpPanels,
     },
     {
       path: "/components/lists",
       name: "Lists",
-      component: Lists
+      component: Lists,
     },
     {
       path: "/components/menus",
       name: "Menus",
-      component: Menus
+      component: Menus,
     },
     {
       path: "/components/progress",
       name: "Progress",
-      component: Progress
+      component: Progress,
     },
     {
       path: "/components/snackbars",
       name: "Snackbars",
-      component: Snackbars
+      component: Snackbars,
     },
     {
       path: "/components/tooltips",
       name: "Tooltips",
-      component: Tooltips
-    }
-  ]
+      component: Tooltips,
+    },
+  ],
 };
 
 const formsRoutes = {
@@ -336,24 +368,24 @@ const formsRoutes = {
     {
       path: "/forms/pickers",
       name: "Pickers",
-      component: Pickers
+      component: Pickers,
     },
     {
       path: "/forms/selection-controls",
       name: "Selection Controls",
-      component: SelectionCtrls
+      component: SelectionCtrls,
     },
     {
       path: "/forms/selects",
       name: "Selects",
-      component: Selects
+      component: Selects,
     },
     {
       path: "/forms/text-fields",
       name: "Text Fields",
-      component: TextFields
-    }
-  ]
+      component: TextFields,
+    },
+  ],
 };
 
 const tablesRoutes = {
@@ -364,14 +396,14 @@ const tablesRoutes = {
     {
       path: "/tables/simple-table",
       name: "Simple Table",
-      component: SimpleTable
+      component: SimpleTable,
     },
     {
       path: "/tables/advanced-table",
       name: "Advanced Table",
-      component: AdvancedTable
-    }
-  ]
+      component: AdvancedTable,
+    },
+  ],
 };
 
 const iconsRoutes = {
@@ -382,14 +414,14 @@ const iconsRoutes = {
     {
       path: "/icons/material-icons",
       name: "Material Icons",
-      component: MaterialIcons
+      component: MaterialIcons,
     },
     {
       path: "/icons/feather-icons",
       name: "Feather Icons",
-      component: FeatherIcons
-    }
-  ]
+      component: FeatherIcons,
+    },
+  ],
 };
 
 const chartRoutes = {
@@ -397,7 +429,7 @@ const chartRoutes = {
   path: "/charts",
   icon: <PieChart />,
   component: Chartjs,
-  children: null
+  children: null,
 };
 
 const mapsRoutes = {
@@ -408,14 +440,14 @@ const mapsRoutes = {
     {
       path: "/maps/google-maps",
       name: "Google Maps",
-      component: GoogleMaps
+      component: GoogleMaps,
     },
     {
       path: "/maps/vector-maps",
       name: "Vector Maps",
-      component: VectorMaps
-    }
-  ]
+      component: VectorMaps,
+    },
+  ],
 };
 
 const presentationRoutes = {
@@ -424,7 +456,7 @@ const presentationRoutes = {
   header: "Docs",
   icon: <Monitor />,
   component: Presentation,
-  children: null
+  children: null,
 };
 
 const documentationRoutes = {
@@ -432,7 +464,7 @@ const documentationRoutes = {
   path: "/documentation",
   icon: <BookOpen />,
   component: Docs,
-  children: null
+  children: null,
 };
 
 const changelogRoutes = {
@@ -441,7 +473,7 @@ const changelogRoutes = {
   badge: "v1.0.7",
   icon: <List />,
   component: Changelog,
-  children: null
+  children: null,
 };
 
 // This route is not visisble in the sidebar
@@ -449,14 +481,13 @@ const privateRoutes = {
   id: "Private",
   path: "/private",
   component: Blank,
-  children: null
+  children: null,
 };
 
 export const landing = [landingPageRoutes];
 
 export const dashboard = [
   dashboardsRoutes,
-  timeTableRoutes,
   courseSelectorRoutes,
   degreeProgressRoutes,
   myCoursesRoutes,
@@ -477,14 +508,15 @@ export const dashboard = [
   presentationRoutes,
   documentationRoutes,
   changelogRoutes,
-  privateRoutes
+  privateRoutes,
 ];
 
 export const auth = [authRoutes];
+export const mainSearch = [mainSearchRoutes];
 
 export default [
   dashboardsRoutes,
-  timeTableRoutes,
+  mainSearchRoutes,
   courseSelectorRoutes,
   degreeProgressRoutes,
   myCoursesRoutes,
@@ -505,5 +537,5 @@ export default [
   mapsRoutes,
   presentationRoutes,
   documentationRoutes,
-  changelogRoutes
+  changelogRoutes,
 ];
