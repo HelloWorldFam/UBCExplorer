@@ -40,32 +40,34 @@ const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
 
 function Overview(props) {
+    const [courseBaskets, updateCourseBaskets] = React.useState([]);
     const coreCPSC = {
         "completed": [],
         "inProgress": [],
-        "remaining": [],
+        "incomplete": [],
         "required": ["CPSC 110", "CPSC 121", "CPSC 210", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
     };
     const addlCPSC = {
         "completed": [],
         "inProgress": [],
-        "remaining": [],
+        "incomplete": [],
     };
     const bridgMod = {
         "completed": [],
         "inProgress": [],
-        "remaining": [],
+        "incomplete": [],
     };
     const exemptions = {
         "completed": [],
         "inProgress": [],
-        "remaining": null,
+        "incomplete": null,
     };
     const exemptionReplacement = {
         "completed": [],
         "inProgress": [],
-        "remaining": [],
+        "incomplete": [],
     };
+
     const sortCourses = () => {
         props.courseResult.map((term) => {
             if (term.name === "Exemptions") {
@@ -74,7 +76,7 @@ function Overview(props) {
                 const progress = () => {
                     if (getRelativeProgress(term.name) == -1) return "completed";
                     else if (getRelativeProgress(term.name) == 0) return "inProgress";
-                    else return "remaining";
+                    else return "incomplete";
                 }
                 term.courses.map((course) => {
                     if (coreCPSC.required.includes(course.code)) coreCPSC[progress()].push(course.code);
@@ -89,6 +91,13 @@ function Overview(props) {
                 })
             }
         });
+        // updateCourseBaskets({ 
+        //     "coreCPSC": coreCPSC, 
+        //     "addlCPSC": addlCPSC, 
+        //     "bridgMod": bridgMod, 
+        //     "exemptions": exemptions, 
+        //     "exemptionReplacement": exemptionReplacement 
+        // })
     }
     useEffect(() => {
         sortCourses(props.courseResult);
@@ -114,23 +123,23 @@ function Overview(props) {
         else return -1;
     }
 
-    const coreCredits = 30;
-    const bridgingCredits = 15;
-    const bridgingCreditsTotal = 15;
-    const credits = coreCredits + bridgingCredits;
-    const minCredits = 63;
-    const creditsRemaining = minCredits - credits;
-    const coreCreditTotal = minCredits - bridgingCreditsTotal;
-    const corePercentComplete = Math.floor(coreCredits / coreCreditTotal * 100);
-    const bridgingCreditsRemaining = bridgingCreditsTotal - bridgingCredits;
-    const coreCreditsRemaining = coreCreditTotal - coreCredits;
-    const bridgingPercentComplete = Math.floor(bridgingCredits / bridgingCreditsTotal * 100);
-    const percentComplete = Math.floor(credits / minCredits * 100);
+    const coreCourses = 30;
+    const bridgingCourses = 15;
+    const bridgingCoursesTotal = 15;
+    const courses = coreCourses + bridgingCourses;
+    const minCourses = 63;
+    const coursesRemaining = minCourses - courses;
+    const coreCoursesTotal = minCourses - bridgingCoursesTotal;
+    const corePercentComplete = Math.floor(coreCourses / coreCoursesTotal * 100);
+    const bridgingCoursesRemaining = bridgingCoursesTotal - bridgingCourses;
+    const coreCoursesRemaining = coreCoursesTotal - coreCourses;
+    const bridgingPercentComplete = Math.floor(bridgingCourses / bridgingCoursesTotal * 100);
+    const percentComplete = Math.floor(courses / minCourses * 100);
 
-    const exemptionCredits = 6;
-    const exemptionCreditsComplete = 0;
-    const exemptionCreditsRemaining = exemptionCredits - exemptionCreditsComplete;
-    const exemptionPercentComplete = Math.floor(exemptionCreditsComplete / exemptionCredits * 100);
+    const exemptionCourses = 6;
+    const exemptionCoursesComplete = 0;
+    const exemptionCoursesRemaining = exemptionCourses - exemptionCoursesComplete;
+    const exemptionPercentComplete = Math.floor(exemptionCoursesComplete / exemptionCourses * 100);
 
     return (
         <Card>
@@ -155,27 +164,27 @@ function Overview(props) {
 
 
                 <Typography variant="h7" paragraph >
-                    Courses Completed: {coreCredits} <br />
-                        Courses Remaining: {coreCreditsRemaining}
+                    Courses Completed: {coreCourses} <br />
+                        Courses Remaining: {coreCoursesRemaining}
                 </Typography>
 
-                {/* Text for credits 
+                {/* Text for courses 
                     <Grid container alignItems="center">
                         <Grid item xs>
                             <Typography gutterBottom variant="h8">
-                                Completed credits: {coreCredits}
+                                Completed courses: {coreCourses}
                             </Typography>
                         </Grid>
                         <Grid item>
                             <Typography gutterBottom variant="h8">
-                                Credits remaining: {coreCreditsRemaining}
+                                courses remaining: {coreCoursesRemaining}
                             </Typography>
                         </Grid>
                     </Grid> */}
 
-                <CoreTable />
+                <CoreTable coreCPSC={courseBaskets.coreCPSC} />
 
-                <Divider variant="middle" my={6} />
+                <Divider my={6} />
                 <Typography variant="h6" paragraph >
                     Bridging Module course progress:
                     </Typography>
@@ -183,69 +192,69 @@ function Overview(props) {
                 <Progress percent={bridgingPercentComplete} />
 
                 <Typography variant="h7" paragraph >
-                    Courses Completed: {bridgingCredits} <br />
-                        Courses Remaining: {bridgingCreditsRemaining}
+                    Courses Completed: {bridgingCourses} <br />
+                        Courses Remaining: {bridgingCoursesRemaining}
                 </Typography>
 
-                {/* Text for credits 
+                {/* Text for courses 
                     <Grid container alignItems="center">
                         <Grid item xs>
                             <Typography gutterBottom variant="h8">
-                                Completed credits: {bridgingCredits}
+                                Completed courses: {bridgingCourses}
                             </Typography>
                         </Grid>
                         <Grid item>
                             <Typography gutterBottom variant="h8">
-                                Credits remaining: {bridgingCreditsRemaining}
+                                courses remaining: {bridgingCoursesRemaining}
                             </Typography>
                         </Grid>
                     </Grid> */}
 
                 <BridgingTable />
 
-                <Divider variant="middle" my={6} />
+                <Divider my={6} />
                 <Typography variant="h6" paragraph >
                     Exemption replacement progress:
                     </Typography>
                 {/* Used Progress bar #1 */}
                 <Progress percent={exemptionPercentComplete} />
                 <Typography variant="h7" paragraph >
-                    Courses Completed: {exemptionCreditsComplete} <br />
-                        Courses Remaining: {exemptionCreditsRemaining}
+                    Courses Completed: {exemptionCoursesComplete} <br />
+                        Courses Remaining: {exemptionCoursesRemaining}
                 </Typography>
                 <ExemptionTable />
-                <Divider my={6} />
+                {/* <Divider my={6} /> */}
 
 
                 {/* MISC STUFF BELOW - 
                 Types of progress bars and potential transcript table */}
 
-                <Typography variant="h6" paragraph >
+                {/* <Typography variant="h6" paragraph >
                     Types of Progress Bars we could use:
-                </Typography>
+                </Typography> */}
 
                 {/* Progress bar #1 - This is using the sweet-react-progress component */}
-                <Typography variant="h7" paragraph >
+                {/* <Typography variant="h7" paragraph >
                     Progress bar #1
                 </Typography>
-                <Progress percent={percentComplete} />
-                {/* Text for credits */}
-                <Grid container alignItems="center">
+                <Progress percent={percentComplete} /> */}
+                {/* Text for courses */}
+                {/* <Grid container alignItems="center">
                     <Grid item xs>
                         <Typography gutterBottom variant="h8">
-                            Completed credits: {credits} (placeholder)
+                            Completed courses: {courses} (placeholder)
                         </Typography>
                     </Grid>
                     <Grid item>
                         <Typography gutterBottom variant="h8">
-                            Credits remaining: {creditsRemaining} (placeholder)
+                            courses remaining: {coursesRemaining} (placeholder)
                         </Typography>
                     </Grid>
                 </Grid>
-                <Divider my={6} />
+                <Divider my={6} /> */}
 
                 {/* Progress bar #2 - This is using https://medium.com/@bruno.raljic/animated-multi-part-progress-bar-made-from-scratch-with-reactjs-and-css-9c1d6a4dbef7*/}
-                <Typography variant="h7" paragraph >
+                {/* <Typography variant="h7" paragraph >
                     Progress bar #2
                 </Typography>
                 <ProgressLine label=""
@@ -256,47 +265,47 @@ function Overview(props) {
                             color: "dodgerblue"
                         }
                     ]}
-                />
-                {/* Text for credits */}
-                <Grid container alignItems="center">
+                /> */}
+                {/* Text for courses */}
+                {/* <Grid container alignItems="center">
                     <Grid item xs>
                         <Typography gutterBottom variant="h8">
-                            Completed credits: {credits} (placeholder)
+                            Completed courses: {courses} (placeholder)
                         </Typography>
                     </Grid>
                     <Grid item>
                         <Typography gutterBottom variant="h8">
-                            Credits remaining: {creditsRemaining} (placeholder)
+                            courses remaining: {coursesRemaining} (placeholder)
                         </Typography>
                     </Grid>
                 </Grid>
-                <Divider my={6} />
+                <Divider my={6} /> */}
 
                 {/* Progress bar #3 - This is using @material-ui*/}
-                <Typography variant="h7" paragraph >
+                {/* <Typography variant="h7" paragraph >
                     Progress bar #3
                 </Typography>
-                <LinearProgress variant="determinate" value={percentComplete} />
+                <LinearProgress variant="determinate" value={percentComplete} /> */}
 
-                {/* Text for credits */}
-                <Grid container alignItems="center">
+                {/* Text for courses */}
+                {/* <Grid container alignItems="center">
                     <Grid item xs>
                         <Typography gutterBottom variant="h8">
-                            Completed credits: {credits} (placeholder)
+                            Completed courses: {courses} (placeholder)
                         </Typography>
                     </Grid>
                     <Grid item>
                         <Typography gutterBottom variant="h8">
-                            Credits remaining: {creditsRemaining} (placeholder)
+                            courses remaining: {coursesRemaining} (placeholder)
                         </Typography>
                     </Grid>
-                </Grid>
+                </Grid> */}
 
 
-                <Divider my={6} />
+                {/* <Divider my={6} /> */}
 
                 {/* Transcript table mock up */}
-                <DegreeTable />
+                {/* <DegreeTable /> */}
 
             </CardContent>
         </Card>
@@ -305,7 +314,7 @@ function Overview(props) {
 }
 
 
-function DegreeProgress() {
+function DegreeOverview() {
     // Commented out temporarily
     // const [courseResult, setCourseResult] = React.useState([]);
     //
@@ -314,7 +323,7 @@ function DegreeProgress() {
     //         fetch('/getcourses')
     //             .then(response => response.json())
     //             .then(json => {
-    //                 return json // access json.body here
+    //                 return setCourseResult(json) // access json.body here
     //             });
     //     });
     // });
@@ -426,4 +435,4 @@ function DegreeProgress() {
     );
 }
 
-export default DegreeProgress;
+export default DegreeOverview;

@@ -30,12 +30,9 @@ import {
 const LandingPage = async(() => import("../pages/landingpage/LandingPage"));
 
 // Degree progress components
-const DegreeTimeline = async(() =>
-  import("../pages/degreeprogress/DegreeTimeline")
-);
-const DegreeOverview = async(() =>
-  import("../pages/degreeprogress/DegreeOverview")
-);
+const DegreeTimeline = async(() => import("../pages/degreeprogress/DegreeTimeline"));
+const DegreeOverview = async(() => import("../pages/degreeprogress/DegreeOverview"));
+const DegreeTranscript = async(() => import("../pages/degreeprogress/DegreeTranscript"));
 
 //Course Selector Components
 const CourseSelector = async(() =>
@@ -154,6 +151,11 @@ const degreeProgressRoutes = {
       path: "/degreeprogress/timeline",
       name: "Timeline",
       component: DegreeTimeline,
+    },
+    {
+      path: "/degreeprogress/transcript",
+      name: "Transcript",
+      component: DegreeTranscript,
     },
   ],
 };
