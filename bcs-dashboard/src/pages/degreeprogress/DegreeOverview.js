@@ -26,6 +26,7 @@ import CoreTable from './tablecharts/CoreTable';
 import BridgingTable from './tablecharts/BridgingTable';
 import DoughnutChart from './tablecharts/DoughnutChart';
 import ExemptionTable from './tablecharts/ExemptionTable';
+import UpperCPSCTable from './tablecharts/UpperCPSCTable';
 
 const NavLink = React.forwardRef((props, ref) => (
     <RouterNavLink innerRef={ref} {...props} />
@@ -40,8 +41,8 @@ const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
 
 function Overview(props) {
-    const [courseBaskets, updateCourseBaskets] = React.useState([]);
-    const coreCPSC = {
+    const [courseBaskets, updateCourseBaskets] = React.useState({});
+    const coreBCS = {
         "completed": [],
         "inProgress": [],
         "incomplete": [],
@@ -79,7 +80,7 @@ function Overview(props) {
                     else return "incomplete";
                 }
                 term.courses.map((course) => {
-                    if (coreCPSC.required.includes(course.code)) coreCPSC[progress()].push(course.code);
+                    if (coreBCS.required.includes(course.code)) coreBCS[progress()].push(course.code);
                     else if (course.code.substring(0, 4) === "CPSC") addlCPSC[progress()].push(course.code);
                     /**
                      * Note: the following implementation is incomplete. We must find a way to
@@ -91,17 +92,17 @@ function Overview(props) {
                 })
             }
         });
-        // updateCourseBaskets({ 
-        //     "coreCPSC": coreCPSC, 
-        //     "addlCPSC": addlCPSC, 
-        //     "bridgMod": bridgMod, 
-        //     "exemptions": exemptions, 
-        //     "exemptionReplacement": exemptionReplacement 
-        // })
+        updateCourseBaskets({
+            "coreBCS": coreBCS,
+            "addlCPSC": addlCPSC,
+            "bridgMod": bridgMod,
+            "exemptions": exemptions,
+            "exemptionReplacement": exemptionReplacement
+        })
     }
     useEffect(() => {
         sortCourses(props.courseResult);
-    });
+    }, []);
 
     /**
      * 
@@ -136,6 +137,11 @@ function Overview(props) {
     const bridgingPercentComplete = Math.floor(bridgingCourses / bridgingCoursesTotal * 100);
     const percentComplete = Math.floor(courses / minCourses * 100);
 
+    const upperCPSCCoursesCompleted = 1;
+    const upperCPSCCoursesTotal = 4;
+    const upperCPSCCoursesRemaining = upperCPSCCoursesTotal - upperCPSCCoursesCompleted;
+    const upperCPSCPercentComplete = Math.floor(upperCPSCCoursesCompleted / upperCPSCCoursesTotal * 100);
+
     const exemptionCourses = 6;
     const exemptionCoursesComplete = 0;
     const exemptionCoursesRemaining = exemptionCourses - exemptionCoursesComplete;
@@ -157,7 +163,7 @@ function Overview(props) {
 
                 <Divider my={6} />
                 <Typography variant="h6" paragraph >
-                    Core CPSC course progress:
+                    Core BCS course progress:
                     </Typography>
                 {/* Used Progress bar #1 */}
                 <Progress percent={corePercentComplete} />
@@ -165,7 +171,7 @@ function Overview(props) {
 
                 <Typography variant="h7" paragraph >
                     Courses Completed: {coreCourses} <br />
-                        Courses Remaining: {coreCoursesRemaining}
+                    Courses Remaining: {coreCoursesRemaining}
                 </Typography>
 
                 {/* Text for courses 
@@ -182,7 +188,7 @@ function Overview(props) {
                         </Grid>
                     </Grid> */}
 
-                <CoreTable coreCPSC={courseBaskets.coreCPSC} />
+                <CoreTable coreBCS={courseBaskets.coreBCS} />
 
                 <Divider my={6} />
                 <Typography variant="h6" paragraph >
@@ -193,7 +199,7 @@ function Overview(props) {
 
                 <Typography variant="h7" paragraph >
                     Courses Completed: {bridgingCourses} <br />
-                        Courses Remaining: {bridgingCoursesRemaining}
+                    Courses Remaining: {bridgingCoursesRemaining}
                 </Typography>
 
                 {/* Text for courses 
@@ -213,6 +219,37 @@ function Overview(props) {
                 <BridgingTable />
 
                 <Divider my={6} />
+
+                <Typography variant="h6" paragraph >
+                    Upper CPSC course progress:
+                    </Typography>
+                {/* Used Progress bar #1 */}
+                <Progress percent={upperCPSCPercentComplete} />
+
+
+                <Typography variant="h7" paragraph >
+                    Courses Completed: {upperCPSCCoursesCompleted} <br />
+                    Courses Remaining: {upperCPSCCoursesRemaining}
+                </Typography>
+
+                {/* Text for courses 
+                    <Grid container alignItems="center">
+                        <Grid item xs>
+                            <Typography gutterBottom variant="h8">
+                                Completed courses: {coreCourses}
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography gutterBottom variant="h8">
+                                courses remaining: {coreCoursesRemaining}
+                            </Typography>
+                        </Grid>
+                    </Grid> */}
+
+                <UpperCPSCTable />
+
+                <Divider my={6} />
+
                 <Typography variant="h6" paragraph >
                     Exemption replacement progress:
                     </Typography>
@@ -220,7 +257,7 @@ function Overview(props) {
                 <Progress percent={exemptionPercentComplete} />
                 <Typography variant="h7" paragraph >
                     Courses Completed: {exemptionCoursesComplete} <br />
-                        Courses Remaining: {exemptionCoursesRemaining}
+                    Courses Remaining: {exemptionCoursesRemaining}
                 </Typography>
                 <ExemptionTable />
                 {/* <Divider my={6} /> */}
@@ -317,92 +354,48 @@ function Overview(props) {
 function DegreeOverview() {
     // Commented out temporarily
     // const [courseResult, setCourseResult] = React.useState([]);
-    //
+
     // useEffect(() => {
     //     setCourseResult(() => {
     //         fetch('/getcourses')
-    //             .then(response => response.json())
+    //             .then(response => {
+    //                 if (!response) {
+    //                     throw new Error("404: Could not fetch from '/getcourses'")
+    //                 } else {
+    //                     response.json()
+    //                 }
+    //             })
     //             .then(json => {
     //                 return setCourseResult(json) // access json.body here
+    //             })
+    //             .catch((err) => {
+    //                 console.log(err);
     //             });
     //     });
     // });
 
     const courseResult = [{
-        "name": "Exemptions",
-        "courses": []
-    }, {
         "name": "2019W1",
-        "courses": [
-            {
-                "dept": "CPSC",
-                "code": "CPSC 121",
-                "name": "Models of Computation",
-                "cred": {
-                    "$numberInt": "4"
-                },
-                "desc": "Physical and mathematical structures of computation.  Boolean algebra and combinations logic circuits; proof techniques; functions and sequential circuits; sets and relations; finite state machines; sequential instruction execution. [3-2-1]",
-                "prer": "Principles of Mathematics 12 or Pre-calculus 12.",
-                "preq": "Principles of Mathematics 12 or Pre-calculus 12",
-                "crer": "One of CPSC 107, CPSC 110.",
-                "creq": "CPSC 107 or CPSC 110"
-            },
-            {
-                "dept": "CPSC",
-                "code": "CPSC 110",
-                "name": "Computation, Programs, and Programming",
-                "cred": {
-                    "$numberInt": "4"
-                },
-                "desc": "Fundamental program and computation structures. Introductory programming skills. Computation as a tool for information processing, simulation and modelling, and interacting with the world. [3-3-0]"
-            },
-            {
-                "dept": "MATH",
-                "code": "MATH 200",
-                "name": "Calculus III",
-                "cred": {
-                    "$numberInt": "3"
-                },
-                "desc": "Analytic geometry in 2 and 3 dimensions, partial and directional derivatives, chain rule, maxima and minima, second derivative test, Lagrange multipliers, multiple integrals with applications. Please consult the Faculty of Science Credit Exclusion List: www.calendar.ubc.ca/vancouver/index.cfm?tree=12,215,410,414. [3-0-0]",
-                "prer": "One of MATH 101, MATH 103, MATH 105, MATH 121, SCIE 001.",
-                "preq": "MATH 101 or MATH 103 or MATH 105 or MATH 121 or SCIE 001"
-            }
-        ]
+        "courses": [{
+            "dept": "CPSC",
+            "code": "CPSC 110",
+            "name": "Computation, Programs, and Programming",
+            "desc": "Fundamental program and computation structures. Introductory programming skills. Computation as a tool for information processing, simulation and modelling, and interacting with the world. [3-3-0]",
+            "cred": 4,
+            "tag": "Core Course",
+            "term": "2019W1"
+        }]
     }, {
-        "name": "2019W2",
-        "courses": [
-            {
-                "dept": "CPSC",
-                "code": "CPSC 210",
-                "name": "Software Construction",
-                "cred": {
-                    "$numberInt": "4"
-                },
-                "desc": "Design, development, and analysis of robust software components. Topics such as software design, computational models, data structures, debugging, and testing. [3-2-0]",
-                "prer": "One of CPSC 107, CPSC 110.",
-                "preq": "CPSC 107 or CPSC 110"
-            },
-            {
-                "dept": "STAT",
-                "code": "STAT 302",
-                "name": "Introduction to Probability",
-                "cred": {
-                    "$numberInt": "3"
-                },
-                "desc": "Basic notions of probability, random variables, expectation and conditional expectation, limit theorems. (Consult the Credit Exclusion list within the Faculty of Science section in the Calendar.) [3-0-0]",
-                "prer": "One of MATH 200, MATH 226, MATH 217, MATH 253, MATH 254.",
-                "preq": "MATH 200 or MATH 226 or MATH 217 or MATH 253 or MATH 254"
-            },
-            {
-                "dept": "ENGL",
-                "code": "ENGL 110",
-                "name": "Approaches to Literature",
-                "cred": {
-                    "$numberInt": "3"
-                },
-                "desc": "Study of selected examples of poetry, fiction, and drama. Essays are required."
-            }
-        ]
+        "name": "Exemptions",
+        "courses": [{
+            "dept": "ENGL",
+            "code": "ENGL 110",
+            "name": "Approaches to Literature",
+            "desc": "Study of selected examples of poetry, fiction, and drama. Essays are required.",
+            "cred": 3,
+            "tag": "Core Course",
+            "term": "Exemptions"
+        }]
     }];
 
     return (
