@@ -44,36 +44,75 @@ function createData(name, status) {
 
 //placeholder data --> createCourses should add to this array
 const rows = [
-  createData(
-    "CPSC 110",
-    <Chip label="Complete" rgbcolor={green[500]} />,
-  ),
-  createData(
-    "CPSC 121",
-    <Chip label="Complete" rgbcolor={green[500]} />
-  ),
-  createData(
-    "CPSC 210",
-    <Chip label="Complete" rgbcolor={green[500]} />,
-  ),
-  createData(
-    "CPSC 221",
-    <Chip label="Incomplete" rgbcolor={red[500]} />
-  ),
-  createData(
-    "CPSC 310",
-    <Chip label="Incomplete" rgbcolor={red[500]} />
-  ),
+  // createData(
+  //   "CPSC 110",
+  //   <Chip label="Complete" rgbcolor={green[500]} />,
+  // ),
+  // createData(
+  //   "CPSC 121",
+  //   <Chip label="Complete" rgbcolor={green[500]} />
+  // ),
+  // createData(
+  //   "CPSC 210",
+  //   <Chip label="Complete" rgbcolor={green[500]} />,
+  // ),
+  // createData(
+  //   "CPSC 221",
+  //   <Chip label="Incomplete" rgbcolor={red[500]} />
+  // ),
+  // createData(
+  //   "CPSC 310",
+  //   <Chip label="Incomplete" rgbcolor={red[500]} />
+  // ),
 ];
 
 //function that creates the data for the rows in the table
-const createCourse = (coreCPSCComplete) => {
-  //stub
+const createCourse = (coreBCS) => {
+  console.log(coreBCS);
+  if (coreBCS) {
+    coreBCS.completed.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Complete" rgbcolor={green[500]} />
+      )
+      )
+    })
+
+    coreBCS.inProgress.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Inprogress" rgbcolor={orange[500]} />
+      )
+      )
+    })
+
+    coreBCS.incomplete.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Incomplete" rgbcolor={red[500]} />
+      )
+      )
+    })
+
+    // required.forEach(element => {
+    //   rows.push(createData(
+    //     element,
+    //     <Chip label="Required" rgbcolor={red[200]} />
+    //   )
+    //   )
+    // })
+  }
 };
 
 const CoreTable = (props) => {
-  createCourse(props.courseBaskets?.coreCPSC);
-  console.log(props.courseBaskets?.coreCPSC);
+  // console.log(props.courseBaskets?.coreBCS?.completed);
+  // createCourse(props.courseBaskets?.coreBCS?.completed,
+  //   props.courseBaskets?.coreBCS?.inProgress,
+  //   props.courseBaskets?.coreBCS?.incomplete,
+  //   props.courseBaskets?.coreBCS?.required);
+  createCourse(props.coreBCS);
+
+  // console.log(props.courseBaskets?.coreBCS);
   return (
     <Card mb={6}>
       <Paper>
