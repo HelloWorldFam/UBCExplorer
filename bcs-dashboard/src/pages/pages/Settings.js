@@ -7,6 +7,7 @@ import Helmet from "react-helmet";
 import {
   Avatar,
   Breadcrumbs as MuiBreadcrumbs,
+  Box,
   Button,
   Card as MuiCard,
   Chip as MuiChip,
@@ -17,19 +18,16 @@ import {
   Input,
   InputLabel,
   Link,
-  TextField,
+  List,
+  ListItem,
+  ListItemText,
   Typography,
 } from "@material-ui/core";
-
-import { CloudUpload as MuiCloudUpload } from "@material-ui/icons";
-
 import { spacing } from "@material-ui/system";
 
 const NavLink = React.forwardRef((props, ref) => (
   <RouterNavLink innerRef={ref} {...props} />
 ));
-
-const Chip = styled(MuiChip)(spacing);
 
 const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
@@ -38,15 +36,6 @@ const Card = styled(MuiCard)(spacing);
 const Divider = styled(MuiDivider)(spacing);
 
 const FormControl = styled(MuiFormControl)(spacing);
-const CloudUpload = styled(MuiCloudUpload)(spacing);
-
-const CenteredContent = styled.div`
-  text-align: center;
-`;
-
-const Lefted = styled.div`
-  text-align: left;
-`;
 
 const BigAvatar = styled(Avatar)`
   width: 120px;
@@ -54,84 +43,63 @@ const BigAvatar = styled(Avatar)`
   margin: 0 auto ${(props) => props.theme.spacing(2)}px;
 `;
 
-function Public(props) {
+const Spacer = styled.div(spacing);
+
+const Centered = styled.div`
+  text-align: center;
+`;
+
+function Details(props) {
   return (
     <Card mb={6}>
       <CardContent>
         <Typography variant="h6" gutterBottom>
-          Public info
+          Account
         </Typography>
-        <Grid container spacing={6}>
-          <Grid item md={8}>
-            <FormControl fullWidth mb={3}>
-              <InputLabel htmlFor="username">Username</InputLabel>
-              <Input
-                id="username"
-                defaultValue="Username (if we choose to have one)"
-              />
-            </FormControl>
-            <FormControl fullWidth mb={3}>
-              <TextField
-                label="Biography"
-                id="biography"
-                multiline={true}
-                rows={1}
-                rowsMax={5}
-                defaultValue={"I am a BCS student. More about me will go here."}
-              />
-            </FormControl>
-            {/* <FormControl fullWidth mb={3}>
-              <Lefted>
-                <SmallText>
-                  <p>Courses taken</p>
-                </SmallText>
-                {props.courses.map((course) => {
-                  return (
-                    <Chip
-                      key={course}
-                      size="small"
-                      mr={1}
-                      mb={1}
-                      label={course}
-                    />
-                  );
-                })}
-              </Lefted>
-            </FormControl> */}
-          </Grid>
-          <Grid item md={4}>
-            <CenteredContent>
-              <BigAvatar alt="User display picture" src={props.picture} />
-              <input
-                accept="image/*"
-                style={{ display: "none" }}
-                id="raised-button-file"
-                multiple
-                type="file"
-              />
-              <label htmlFor="raised-button-file">
-                <Button variant="contained" color="primary" component="span">
-                  <CloudUpload mr={2} /> Upload
-                </Button>
-                <Typography variant="caption" display="block" gutterBottom>
-                  For best results, use an image at least 128px by 128px in .jpg
-                  format
-                </Typography>
-              </label>
-            </CenteredContent>
-          </Grid>
-        </Grid>
+
+        <Spacer mb={4} />
+
+        <Centered>
+          <BigAvatar alt="Lucy Lavender" src={props.picture} />
+          <Typography variant="body2" component="div" gutterBottom>
+            <Box fontWeight="fontWeightMedium">
+              {props.firstName ? props.firstName : "firstName"}{" "}
+              {props.lastName ? props.lastName : "lastName"}
+            </Box>
+            <Box fontWeight="fontWeightRegular">
+              {props.email ? props.email : "email"}
+            </Box>
+          </Typography>
+        </Centered>
       </CardContent>
     </Card>
   );
 }
 
-function Private(props) {
+function Personal(props) {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleClick = () => {
+    const user = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+    };
+    alert(
+      `User wants to change fields to:
+      First Name: ${user.firstName}
+      Last Name: ${user.lastName}
+      Email: ${user.email}`
+    );
+  };
+
   return (
     <Card mb={6}>
       <CardContent>
         <Typography variant="h6" gutterBottom>
-          Private info
+          Personal Info
         </Typography>
 
         <Grid container spacing={6}>
@@ -158,7 +126,7 @@ function Private(props) {
             </FormControl>
           </Grid>
         </Grid>
-
+        <Spacer mb={2} />
         <FormControl fullWidth mb={3}>
           <InputLabel htmlFor="email">Email</InputLabel>
           <Input
@@ -169,7 +137,32 @@ function Private(props) {
             placeholder="Email"
           />
         </FormControl>
+        <Spacer mb={6} />
+        <Button variant="contained" color="primary" onClick={handleClick}>
+          Save changes
+        </Button>
       </CardContent>
+    </Card>
+  );
+}
+
+function SimpleList() {
+  return (
+    <Card mb={6}>
+        <List component="nav">
+          <ListItem button>
+            <ListItemText primary="Export User Data (JSON Format)" />
+          </ListItem>
+          <ListItem button>
+            <ListItemText primary="Tell us what you think!" />
+          </ListItem>
+        </List>
+        <Divider />
+        <List component="nav">
+          <ListItem button>
+            <ListItemText primary="Delete Account" style={{ color: "red" }} />
+          </ListItem>
+        </List>
     </Card>
   );
 }
@@ -194,20 +187,6 @@ function Settings() {
       });
   }, []);
 
-  const handleClick = () => {
-    const user = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email
-    };
-    alert(
-      `User wants to change fields to:
-      First Name: ${user.firstName}
-      Last Name: ${user.lastName}
-      Email: ${user.email}`
-    );
-  };
-
   return (
     <React.Fragment>
       <Helmet title="Settings" />
@@ -229,9 +208,16 @@ function Settings() {
       <Divider my={6} />
 
       <Grid container spacing={6}>
-        <Grid item xs={12}>
-          <Public picture={picture} />
-          <Private
+        <Grid item xs={12} lg={12} xl={3}>
+          <Details
+            firstName={firstName}
+            lastName={lastName}
+            email={email}
+            picture={picture}
+          />
+        </Grid>
+        <Grid item xs={12} xl={9}>
+          <Personal
             firstName={firstName}
             lastName={lastName}
             email={email}
@@ -239,9 +225,9 @@ function Settings() {
             onChangeLastName={setLastName}
             onChangeEmail={setEmail}
           />
-          <Button variant="contained" color="primary" onClick={handleClick}>
-            Save changes
-          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <SimpleList />
         </Grid>
       </Grid>
     </React.Fragment>
