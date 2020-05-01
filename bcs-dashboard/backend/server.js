@@ -222,6 +222,19 @@ app.get("/getCourseInfo/:code", (req, res) => {
     });
 });
 
+// Search courses
+app.get("/searchAny/:code", (req, res) => {
+  Courses.find({ code: { $regex: req.params.code, $options: 'i' } })
+    .then((course) => {
+      if (course.length === 0) res.send("Course not found");
+      else res.send(course.splice(0, 3));
+    })
+    .catch((err) => {
+      res.send("An error has occurred: " + err);
+      console.log(err)
+    });
+});
+
 // Update course worklist/array of the term objects which was selected in course selector
 app.post("/updateUserWorkList", (req, res) => {
   Users.findOne({ email: req.user.email })
