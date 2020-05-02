@@ -18,7 +18,13 @@ import {
 
 import { spacing } from "@material-ui/system";
 
-const Card = styled(MuiCard)(spacing);
+/**
+ * Note: The Card for MainSearchPage has overflow set to visible.
+ *       This is due to the reduced height of the search card on this page.
+ */
+const Card = styled(MuiCard)`
+overflow:visible;
+`;
 
 const Spacer = styled.div(spacing);
 
