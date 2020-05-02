@@ -9,7 +9,10 @@ export default function SearchComponent(props) {
   const [results, setResults] = useState([]);
   const [value, setValue] = useState("");
 
-  const handleResultSelect = (e, { result }) => setValue(result.code);
+  const handleResultSelect = (e, { result }) => {
+    setValue(result.title);
+    props.onChange(result.title);
+  }
 
   const handleSearchChange = (e, { value }) => {
     setisLoading(true);
@@ -25,6 +28,11 @@ export default function SearchComponent(props) {
       axios
         .get("http://localhost:3000/searchAny/" + value)
         .then((res) => {
+          if (!(res.data instanceof Array)) {
+            setisLoading(false);
+            setResults([]);
+            return;
+          }
           setisLoading(false);
           let array = [];
           for (let object of res.data) {

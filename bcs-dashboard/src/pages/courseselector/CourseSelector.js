@@ -15,7 +15,7 @@ import Select from "@material-ui/core/Select";
 import Helmet from "react-helmet";
 import dragula from "react-dragula";
 import "react-dragula/dist/dragula.css";
-import SearchComponent from './SearchComponent';
+import SearchComponent from "./SearchComponent";
 
 import {
   Avatar as MuiAvatar,
@@ -37,7 +37,7 @@ import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 
 import { spacing } from "@material-ui/system";
 
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const NavLink = React.forwardRef((props, ref) => (
   <RouterNavLink innerRef={ref} {...props} />
@@ -140,7 +140,6 @@ function SearchResultCard(props) {
 }
 
 function SearchCard(props) {
-  const [dept, setDept] = useState("");
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
@@ -149,16 +148,16 @@ function SearchCard(props) {
   const [tag, setTag] = useState("");
   const [term, setTerm] = useState("");
 
-  const handleClick = () => {
-    const courseSearch = dept + " " + code;
+  const handleClick = (courseInfo) => {
     axios
-      .get("http://localhost:3000/getCourseInfo/" + courseSearch)
+      .get("http://localhost:3000/getCourseInfo/" + courseInfo)
       .then((res) => {
+        setCode(courseInfo);
         setDesc(res.data.desc);
         setCred("");
         setCred(res.data.cred);
         setName(res.data.name);
-        setTitle(`${dept} ${code}`);
+        setTitle(courseInfo);
         props.onChange(res.data);
       })
       .catch((err) => console.log(err));
@@ -175,8 +174,7 @@ function SearchCard(props) {
       alert("Please select the term you expect to take this course.");
     } else {
       const courseToSubmit = {
-        dept: dept,
-        code: dept + " " + code,
+        code: code,
         name: name,
         desc: desc,
         cred: cred,
@@ -191,32 +189,7 @@ function SearchCard(props) {
     <SearchWrapper mb={4}>
       <TaskWrapperContent>
         <form>
-          <Typography variant="body2" mb={3}>
-            <SearchComponent />
-            <TextField
-              value={dept}
-              onChange={(e) => setDept(e.target.value)}
-              label="Department"
-              fullWidth
-            />
-            <br />
-            <TextField
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              label="Course Code"
-              fullWidth
-            />
-          </Typography>
-          <Centered>
-            <Button
-              mr={2}
-              variant="contained"
-              color="primary"
-              onClick={handleClick}
-            >
-              Search
-            </Button>
-          </Centered>
+          <SearchComponent onChange={handleClick} />
           <br />
           <Centered>
             <SearchResultCard title={title} name={name} desc={desc} />
@@ -393,8 +366,8 @@ function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
 
   /**
    * Returns a delete button for each term so that user can remove term from worklist
-   * @param {String} name 
-   * @param {Number} index 
+   * @param {String} name
+   * @param {Number} index
    */
   const getLaneTitle = (name, index) => {
     return (
@@ -409,18 +382,19 @@ function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
           }}
           onClick={() => {
             usersCourseArray.splice(index, 1);
-            setUsersCourseArray((usersCourseArray) => [
-              ...usersCourseArray,
-            ]);
-          }} >
-          <DeleteIcon style={{
-            width: ".7em",
-            height: ".7em",
-          }} />
+            setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);
+          }}
+        >
+          <DeleteIcon
+            style={{
+              width: ".7em",
+              height: ".7em",
+            }}
+          />
         </Button>
       </>
-    )
-  }
+    );
+  };
 
   if (usersCourseArray[0] != -1) {
     return (
@@ -678,7 +652,7 @@ function CourseSelector() {
 
   useEffect(() => {
     if (usersCourseArray && usersCourseArray[0] !== -1) {
-      axios.post("/updateUserWorkList", usersCourseArray).then(() => { });
+      axios.post("/updateUserWorkList", usersCourseArray).then(() => {});
     }
   }, [usersCourseArray]);
 
