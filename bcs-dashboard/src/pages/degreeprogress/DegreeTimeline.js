@@ -51,41 +51,6 @@ function Timeline(props) {
                     Timeline
                 </Typography>
                 <VerticalTimeline>
-<<<<<<< HEAD
-                    {props.courseResult.map((item, index, array) => {
-                        if (array.length === 1) {
-                            return (
-                                <VerticalTimelineElement
-                                    className="vertical-timeline-element"
-                                    iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }} >
-                                    <h3>You have not added any courses!</h3>
-                                </VerticalTimelineElement>
-                            )
-                        }
-                        if (index !== 0) {
-                            return (
-                                <VerticalTimelineElement
-                                    className="vertical-timeline-element"
-                                    date={item.Name}
-                                    iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }} >
-                                        <h3 className="vertical-timeline-element-title">
-                                                Courses:
-                                        </h3>
-                                    {item.Courses.map((course) => (
-                                        <>
-                                            <Tooltip title={tooltipText(course)} arrow>
-                                                <Button className="vertical-timeline-element-subtitle"
-                                                    variant="outlined" size="medium" className={classes.margin}>
-                                                    {course}
-                                                </Button>
-                                            </Tooltip>
-                                        </>
-                                    ))}
-                                </VerticalTimelineElement>
-                            )
-                        }
-                    })}
-=======
                     {props.courseResult.length === 0
                         ? (
                             <VerticalTimelineElement
@@ -114,7 +79,6 @@ function Timeline(props) {
                                 ))}
                             </VerticalTimelineElement>
                         ))}
->>>>>>> degree-progress
                 </VerticalTimeline>
             </CardContent>
         </Card>
@@ -122,24 +86,6 @@ function Timeline(props) {
 }
 
 function DegreeTimeline() {
-<<<<<<< HEAD
-    // Commented out temporarily
-    // useEffect(() => {
-    //     const courseResult = () => {
-    //         fetch('/getcourses')
-    //             .then(response => response.json())
-    //             .then(json => {
-    //                 return json // access json.body here
-    //             });
-    //     }
-    // });
-
-    const courseResult = [{ "Courses": ["MATH 180", "STAT 200"], "Name": "Exemptions" },
-    { "Courses": ["CPSC 110", "CPSC 121", "MATH 200", "STAT 200", "COMM 456"], "Name": "2020W1" },
-    { "Courses": ["CPSC 210", "STAT 302"], "Name": "2020W2" }];
-
-
-=======
     const [courseResult, setCourseResult] = React.useState([{
         "name": "2019W1",
         "courses": [{
@@ -171,7 +117,6 @@ function DegreeTimeline() {
                 setCourseResult(json); // access json.body here
             });
     });
->>>>>>> degree-progress
 
     return (
         <React.Fragment>
@@ -206,12 +151,6 @@ function DegreeTimeline() {
 export default DegreeTimeline;
 
 function tooltipText(course) {
-<<<<<<< HEAD
-    return (<><h3>Name: Data Structures and Algorithms</h3>
-        <h3>Credits: 4</h3>
-        <h3>Pre-reqs: .....</h3>
-        <h3>Co-reqs: .....</h3></>);
-=======
     return (
         <>
             <h3>Name: {course.name}</h3>
@@ -220,5 +159,4 @@ function tooltipText(course) {
             <h3>Co-reqs: {course.crer}</h3>
         </>
     );
->>>>>>> degree-progress
 }
