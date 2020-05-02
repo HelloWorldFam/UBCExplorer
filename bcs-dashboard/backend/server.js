@@ -2,8 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const Courses = require("./models/courses.model");
-const Departments = require("./models/departments.model");
-const CourseCodes = require("./models/course_codes.model");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const findOrCreate = require("mongoose-findorcreate");
@@ -73,7 +71,7 @@ passport.use(
       clientID:
         "610240877212-muh7g8rvb1pficemikp3r3vdfaobgo9f.apps.googleusercontent.com",
       clientSecret: "MpRbTT5AssctwpN0Id0GHIwe",
-      callbackURL: "http://localhost:3000/auth/google/callback",
+      callbackURL: "https://ubcexplorer.io/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
       console.log(profile);
@@ -176,35 +174,24 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
 });
 
-app.get("/getCourses", (req, res) => {
-  if (!req.user) {
-    res.send("You are not authenticated.");
-  } else {
-    Users.find({ email: req.user.email }, function (err, result) {
-      res.send(result[0].courses);
-    });
-  }
+app.get("/bcs", (req, res) => {
+  // send landing page
+  res.sendFile(path.join(__dirname, "../build/index.html"));
+});
+
+app.get("/about", (req, res) => {
+  // send landing page
+  res.sendFile(path.join(__dirname, "../build/index.html"));
+});
+
+app.get("/getCourses", isUserAuthenticated, (req, res) => {
+  Users.find({ email: req.user.email }, function (err, result) {
+    res.send(result[0].courses);
+  });
 });
 
 app.get("/getAllCourses", isUserAuthenticated, (req, res) => {
-  if (!req.user) {
-    res.send("You are not authenticated.");
-  } else {
-    Courses.find()
-      .then((courses) => res.send(courses))
-      .catch((err) => console.log(err));
-  }
-});
-
-app.get("/getDepartments", (req, res) => {
-  Departments.find()
-    .then((courses) => res.send(courses))
-    .catch((err) => console.log(err));
-});
-
-// Get all course codes from database
-app.get("/getAllCourseCodes", isUserAuthenticated, (req, res) => {
-  CourseCodes.find()
+  Courses.find()
     .then((courses) => res.send(courses))
     .catch((err) => console.log(err));
 });
@@ -227,7 +214,7 @@ app.get("/searchAny/:code", (req, res) => {
   Courses.find({ code: { $regex: req.params.code, $options: "i" } })
     .then((course) => {
       if (course.length === 0) res.send("Course not found");
-      else res.send(course.slice(0, 5));
+      else res.send(course.slice(0, 8));
     })
     .catch((err) => {
       res.send("An error has occurred: " + err);
@@ -236,7 +223,7 @@ app.get("/searchAny/:code", (req, res) => {
 });
 
 // Update course worklist/array of the term objects which was selected in course selector
-app.post("/updateUserWorkList", (req, res) => {
+app.post("/updateUserWorkList", isUserAuthenticated, (req, res) => {
   Users.findOne({ email: req.user.email })
     .then((user) => {
       user.courses = req.body;
@@ -255,11 +242,11 @@ app.post("/updateUserWorkList", (req, res) => {
 });
 
 // Commented out for testing
-// app.get("/*", isUserAuthenticated, (req, res) => {
-//   res.sendFile(path.join(__dirname, "../build/index.html"));
-// });
-
-// No authentication - for testing only!
-app.get("/*", (req, res) => {
+app.get("/*", isUserAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
 });
+
+// // No authentication - for testing only!
+// app.get("/*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../build/index.html"));
+// });

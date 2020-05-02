@@ -24,16 +24,11 @@ import {
   Card as MuiCard,
   CardContent,
   Divider as MuiDivider,
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
   Grid,
   Link,
   TextField as MuiTextField,
   Typography as MuiTypography,
 } from "@material-ui/core";
-
-import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 
 import { spacing } from "@material-ui/system";
 
@@ -51,7 +46,9 @@ const TextField = styled(TextFieldSpacing)`
   padding-bottom: 5px;
 `;
 
-const Card = styled(MuiCard)(spacing);
+const Card = styled(MuiCard)`
+  overflow: visible;
+`;
 
 const Divider = styled(MuiDivider)(spacing);
 
@@ -657,7 +654,7 @@ function CourseSelector() {
 
   useEffect(() => {
     if (usersCourseArray && usersCourseArray[0] !== -1) {
-      axios.post("/updateUserWorkList", usersCourseArray).then(() => {});
+      axios.post("/updateUserWorkList", usersCourseArray).then(() => { });
     }
   }, [usersCourseArray]);
 

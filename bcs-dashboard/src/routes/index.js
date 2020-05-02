@@ -102,14 +102,14 @@ const Presentation = async(() => import("../pages/docs/Presentation"));
 
 const landingPageRoutes = {
   id: "Landing Page",
-  path: "/",
+  path: "/bcs",
   component: LandingPage,
   children: null,
 };
 
 const dashboardsRoutes = {
   id: "Dashboard",
-  path: "/dashboard",
+  path: "/bcs/dashboard",
   icon: <Sliders />,
   containsHome: true,
   component: Default,
@@ -255,7 +255,7 @@ const calendarRoutes = {
 
 const mainSearchRoutes = {
   id: "mainSearchRoutes",
-  path: "/mainSearch",
+  path: "/",
   component: Blank,
   children: null,
 };
