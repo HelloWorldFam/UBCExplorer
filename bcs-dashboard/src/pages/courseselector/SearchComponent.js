@@ -11,10 +11,6 @@ export default function SearchComponent(props) {
 
   const handleResultSelect = (e, { result }) => setValue(result.code);
 
-  useEffect(() => {
-    console.log(results);
-  },[results]);
-
   const handleSearchChange = (e, { value }) => {
     setisLoading(true);
     setValue(value);
