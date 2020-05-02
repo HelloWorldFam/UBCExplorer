@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "cd bcs-dashboard && npm i && cd .. && cd bcs-landing-page && npm i && cd .. && cd dashboard-template && npm i"
+    "install": "cd bcs-dashboard && npm i && cd .. && cd bcs-landing-page && npm i && cd .. && cd dashboard-template && npm i",
+    "heroku-postbuild": "cd bcs-dashboard && npm i && npm run build && cd backend && npm i && node server.js"
   },
   "repository": {
     "type": "git",
