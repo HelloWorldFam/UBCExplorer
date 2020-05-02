@@ -11,16 +11,12 @@ export default function SearchComponent(props) {
 
   const handleResultSelect = (e, { result }) => setValue(result.code);
 
-  useEffect(() => {
-    console.log(results);
-  },[results]);
-
   const handleSearchChange = (e, { value }) => {
     setisLoading(true);
     setValue(value);
 
     setTimeout(() => {
-      if (value.length < 1) {
+      if (value.length < 3) {
         setisLoading(false);
         setResults([]);
         setValue("");
@@ -30,6 +26,7 @@ export default function SearchComponent(props) {
       axios
         .get("http://localhost:3000/searchAny/" + value)
         .then((res) => {
+          setisLoading(false);
           let array = [];
           for (let object of res.data) {
             let newObject = {
@@ -38,11 +35,10 @@ export default function SearchComponent(props) {
             }
             array.push(newObject);
           }
-          setisLoading(false);
           setResults(array);
         })
         .catch((err) => console.log(err));
-    }, 400);
+    }, 300);
 
   };
   return (
