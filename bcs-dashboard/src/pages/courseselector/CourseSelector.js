@@ -258,6 +258,11 @@ function RadioButtonsGroup(props) {
           control={<Radio />}
           label="Upper CPSC"
         />
+        <FormControlLabel
+          value="Exemption"
+          control={<Radio />}
+          label="Exemption"
+        />
       </RadioGroup>
     </FormControl>
   );
