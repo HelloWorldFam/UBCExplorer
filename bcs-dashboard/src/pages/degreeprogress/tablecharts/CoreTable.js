@@ -43,7 +43,7 @@ function createData(name, status) {
 }
 
 //placeholder data --> createCourses should add to this array
-const rows = [
+//let rows = [
   // createData(
   //   "CPSC 110",
   //   <Chip label="Complete" rgbcolor={green[500]} />,
@@ -64,10 +64,10 @@ const rows = [
   //   "CPSC 310",
   //   <Chip label="Incomplete" rgbcolor={red[500]} />
   // ),
-];
+//];
 
 //function that creates the data for the rows in the table
-const createCourse = (coreBCS) => {
+/* let createCourse = (coreBCS) => {
   console.log(coreBCS);
   if (coreBCS) {
     coreBCS.completed.forEach(element => {
@@ -95,9 +95,36 @@ const createCourse = (coreBCS) => {
     })
   }
 };
-
+ */
 const CoreTable = (props) => {
-  createCourse(props.coreBCS);
+  let rows = [];
+
+  console.log(props.coreBCS);
+  if (props.coreBCS) {
+    props.coreBCS.completed.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Complete" rgbcolor={green[500]} />
+      )
+      )
+    })
+
+    props.coreBCS.inProgress.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Inprogress" rgbcolor={orange[500]} />
+      )
+      )
+    })
+
+    props.coreBCS.incomplete.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Incomplete" rgbcolor={red[500]} />
+      )
+      )
+    })
+  }
 
   // console.log(props.courseBaskets?.coreBCS);
   return (
