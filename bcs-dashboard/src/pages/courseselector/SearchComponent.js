@@ -30,12 +30,19 @@ export default function SearchComponent(props) {
       axios
         .get("http://localhost:3000/searchAny/" + value)
         .then((res) => {
+          let array = [];
+          for (let object of res.data) {
+            let newObject = {
+              title: object.code,
+              description: object.name
+            }
+            array.push(newObject);
+          }
           setisLoading(false);
-          setResults((results) => [...res.data]);
-          console.log(res.data);
+          setResults(array);
         })
         .catch((err) => console.log(err));
-    }, 300);
+    }, 400);
 
   };
   return (
