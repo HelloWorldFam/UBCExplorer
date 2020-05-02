@@ -44,24 +44,61 @@ function createData(name, replacement, status) {
 
 //placeholder data --> createCourses should add to this array
 const rows = [
-  createData(
-    "STAT 200",
-    "COGS 200",
-    <Chip label="In Progress" rgbcolor={orange[500]} />
-  ),
-  createData(
-    "MATH 180",
-    "DSCI 100",
-    <Chip label="Incomplete" rgbcolor={red[500]} />
-  )
+    createData(
+     "STAT 200",
+      "COGS 200",
+      <Chip label="In Progress" rgbcolor={orange[500]} />
+   ),
+   createData(
+     "MATH 180",
+     "DSCI 100",
+     <Chip label="Incomplete" rgbcolor={red[500]} />
+   )
 ];
 
 //function that creates the data for the rows in the table
-const createCourse = (someData) => {
-  //stub
+const createCourse = (exemptions, replacements) => {
+  // const exLength = exemptions.length;
+  // const replLength = replacements.length;
+
+  // if (exLength = replLength && replLength === 0) {
+  //   replacements.completed.forEach(element => {
+  //     rows.push(createData(
+  //       exemptions[0],
+  //       element,
+  //       <Chip label="Complete" rgbcolor={green[500]} />
+  //     )
+  //     ) 
+  //     exemptions.shift();
+  //   })
+
+  //   replacements.inProgress.forEach(element => {
+  //     rows.push(createData(
+  //       exemptions[0],
+  //       element,
+  //       <Chip label="Inprogress" rgbcolor={orange[500]} />
+  //     )
+  //     )
+  //     exemptions.shift();
+  //   })
+
+  //   replacements.incomplete.forEach(element => {
+  //     rows.push(createData(
+  //       exemptions[0],
+  //       element,
+  //       <Chip label="Incomplete" rgbcolor={red[500]} />
+  //     )
+  //     )
+  //     exemptions.shift();
+  //   })
+  // }
 };
 
-const ExemptionTable = () => (
+const ExemptionTable = (props) => {
+
+  // createCourse(props.exemptions, props.replacements);
+
+  return (
   <Card mb={6}>
     <Paper>
       <TableWrapper>
@@ -88,6 +125,8 @@ const ExemptionTable = () => (
       </TableWrapper>
     </Paper>
   </Card>
-);
+  )
+            
+};
 
 export default ExemptionTable;

@@ -93,23 +93,10 @@ const createCourse = (coreBCS) => {
       )
       )
     })
-
-    // required.forEach(element => {
-    //   rows.push(createData(
-    //     element,
-    //     <Chip label="Required" rgbcolor={red[200]} />
-    //   )
-    //   )
-    // })
   }
 };
 
 const CoreTable = (props) => {
-  // console.log(props.courseBaskets?.coreBCS?.completed);
-  // createCourse(props.courseBaskets?.coreBCS?.completed,
-  //   props.courseBaskets?.coreBCS?.inProgress,
-  //   props.courseBaskets?.coreBCS?.incomplete,
-  //   props.courseBaskets?.coreBCS?.required);
   createCourse(props.coreBCS);
 
   // console.log(props.courseBaskets?.coreBCS);

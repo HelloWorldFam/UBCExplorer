@@ -44,46 +44,75 @@ function createData(name, status) {
 
 //placeholder data --> createCourses should add to this array
 const rows = [
-  createData(
-    "COGS 300",
-    <Chip label="Complete" rgbcolor={green[500]} />
-  ),
-  createData(
-    "COGS 303",
-    <Chip label="Complete" rgbcolor={green[500]} />
-  )
+  // createData(
+  //   "COGS 300",
+  //   <Chip label="Complete" rgbcolor={green[500]} />
+  // ),
+  // createData(
+  //   "COGS 303",
+  //   <Chip label="Complete" rgbcolor={green[500]} />
+  // )
 ];
 
 //function that creates the data for the rows in the table
-const createCourse = (someData) => {
-  //stub
+const createCourse = (bridgMod) => {
+  console.log(bridgMod);
+  if (bridgMod) {
+    bridgMod.completed.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Complete" rgbcolor={green[500]} />
+      )
+      )
+    })
+
+    bridgMod.inProgress.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Inprogress" rgbcolor={orange[500]} />
+      )
+      )
+    })
+
+    bridgMod.incomplete.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Incomplete" rgbcolor={red[500]} />
+      )
+      )
+    })
+  }
 };
 
-const BridgingTable = () => (
-  <Card mb={6}>
-    <Paper>
-      <TableWrapper>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Course Name</TableCell>
-              <TableCell>Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(row => (
-              <TableRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell>{row.status}</TableCell>
+const BridgingTable = (props) => {
+  createCourse(props.bridgMod);
+
+  return (
+    <Card mb={6}>
+      <Paper>
+        <TableWrapper>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Course Name</TableCell>
+                <TableCell>Status</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableWrapper>
-    </Paper>
-  </Card>
-);
+            </TableHead>
+            <TableBody>
+              {rows.map(row => (
+                <TableRow key={row.id}>
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell>{row.status}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableWrapper>
+      </Paper>
+    </Card>
+  );
+}
 
 export default BridgingTable;
