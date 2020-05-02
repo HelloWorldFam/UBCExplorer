@@ -1,23 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import { Search } from "semantic-ui-react";
-import faker from "faker";
-import './semantic.css';
-
-const source = _.times(5, () => ({
-  title: faker.company.companyName(),
-  description: faker.company.catchPhrase()
-}));
+import "./semantic.css";
+import axios from "axios";
 
 export default function SearchComponent(props) {
   const [isLoading, setisLoading] = useState(false);
   const [results, setResults] = useState([]);
   const [value, setValue] = useState("");
 
-  const handleResultSelect = (e, { result }) => setValue(result.title);
+  const handleResultSelect = (e, { result }) => setValue(result.code);
+
   useEffect(() => {
-    console.log(source);
-  },[]);
+    console.log(results);
+  },[results]);
 
   const handleSearchChange = (e, { value }) => {
     setisLoading(true);
@@ -31,12 +27,23 @@ export default function SearchComponent(props) {
         return;
       }
 
-      const re = new RegExp(_.escapeRegExp(value), "i");
-      const isMatch = (result) => re.test(result.title);
-
-      setisLoading(false);
-      setResults((results) => [..._.filter(source, isMatch)]);
+      axios
+        .get("http://localhost:3000/searchAny/" + value)
+        .then((res) => {
+          setisLoading(false);
+          let array = [];
+          for (let object of res.data) {
+            let course = {
+              code: object.code,
+              desc: object.desc
+            }
+            array.push(course);
+          }
+          setResults((results) => [...array]);
+        })
+        .catch((err) => console.log(err));
     }, 300);
+
   };
   return (
     <div>
