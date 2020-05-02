@@ -20,10 +20,9 @@ export default function SearchComponent(props) {
     setValue(value);
 
     setTimeout(() => {
-      if (value.length < 1) {
+      if (value.length < 3) {
         setisLoading(false);
         setResults([]);
-        setValue("");
         return;
       }
 
