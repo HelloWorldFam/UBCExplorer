@@ -44,46 +44,75 @@ function createData(name, status) {
 
 //placeholder data --> createCourses should add to this array
 const rows = [
-  createData(
-    "COGS 300",
-    <Chip label="Complete" rgbcolor={green[500]} />
-  ),
-  createData(
-    "COGS 303",
-    <Chip label="Complete" rgbcolor={green[500]} />
-  )
+  // createData(
+  //   "COGS 300",
+  //   <Chip label="Complete" rgbcolor={green[500]} />
+  // ),
+  // createData(
+  //   "COGS 303",
+  //   <Chip label="Complete" rgbcolor={green[500]} />
+  // )
 ];
 
 //function that creates the data for the rows in the table
-const createCourse = (someData) => {
-  //stub
+const createCourse = (upperCPSC) => {
+  console.log(upperCPSC);
+  if (upperCPSC) {
+    upperCPSC.completed.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Complete" rgbcolor={green[500]} />
+      )
+      )
+    })
+
+    upperCPSC.inProgress.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Inprogress" rgbcolor={orange[500]} />
+      )
+      )
+    })
+
+    upperCPSC.incomplete.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Incomplete" rgbcolor={red[500]} />
+      )
+      )
+    })
+  }
 };
 
-const UpperCPSCTable = () => (
-  <Card mb={6}>
-    <Paper>
-      <TableWrapper>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Course Name</TableCell>
-              <TableCell>Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(row => (
-              <TableRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell>{row.status}</TableCell>
+const UpperCPSCTable = (props) => {
+  createCourse(props.upperCPSC);
+
+  return (
+    <Card mb={6}>
+      <Paper>
+        <TableWrapper>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Course Name</TableCell>
+                <TableCell>Status</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableWrapper>
-    </Paper>
-  </Card>
-);
+            </TableHead>
+            <TableBody>
+              {rows.map(row => (
+                <TableRow key={row.id}>
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell>{row.status}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableWrapper>
+      </Paper>
+    </Card>
+  );
+}
 
 export default UpperCPSCTable;

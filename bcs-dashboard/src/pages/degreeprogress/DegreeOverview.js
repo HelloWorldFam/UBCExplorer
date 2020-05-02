@@ -48,7 +48,7 @@ function Overview(props) {
         "incomplete": [],
         "required": ["CPSC 110", "CPSC 121", "CPSC 210", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
     };
-    const addlCPSC = {
+    const upperCPSC = {
         "completed": [],
         "inProgress": [],
         "incomplete": [],
@@ -60,7 +60,7 @@ function Overview(props) {
     };
     const exemptions = {
         "completed": [],
-        "inProgress": [],
+        "inProgress": null,
         "incomplete": null,
     };
     const exemptionReplacement = {
@@ -69,6 +69,7 @@ function Overview(props) {
         "incomplete": [],
     };
 
+  
     const sortCourses = () => {
         props.courseResult.map((term) => {
             if (term.name === "Exemptions") {
@@ -80,8 +81,11 @@ function Overview(props) {
                     else return "incomplete";
                 }
                 term.courses.map((course) => {
-                    if (coreBCS.required.includes(course.code)) coreBCS[progress()].push(course.code);
-                    else if (course.code.substring(0, 4) === "CPSC") addlCPSC[progress()].push(course.code);
+                    // if (coreBCS.required.includes(course.code)) coreBCS[progress()].push(course.code);
+                    if (course.tag === "Core Course") coreBCS[progress()].push(course.code);
+                    else if (course.tag === "Upper CPSC") upperCPSC[progress()].push(course.code);
+                    else if (course.tag === "Bridging Module") bridgMod[progress()].push(course.code);
+                    // else if (course.code.substring(0, 4) === "CPSC") upperCPSC[progress()].push(course.code);
                     /**
                      * Note: the following implementation is incomplete. We must find a way to
                      *       distinguish between courses used for bridging modules and for 
@@ -92,9 +96,10 @@ function Overview(props) {
                 })
             }
         });
+       
         updateCourseBaskets({
             "coreBCS": coreBCS,
-            "addlCPSC": addlCPSC,
+            "upperCPSC": upperCPSC,
             "bridgMod": bridgMod,
             "exemptions": exemptions,
             "exemptionReplacement": exemptionReplacement
@@ -123,18 +128,27 @@ function Overview(props) {
         else if (currentDate >= courseStartDate && currentDate <= courseStartDate + 3) return 0;
         else return -1;
     }
-
-    const coreCourses = 30;
-    const bridgingCourses = 15;
-    const bridgingCoursesTotal = 15;
-    const courses = coreCourses + bridgingCourses;
+    
+    const coreCoursesCompleted = () => {
+        if (courseBaskets.coreBCS.completed.length === undefined) {
+            console.log("returned 0");
+            return 0;
+        } else {
+            console.log("returned " + courseBaskets.coreBCS.completed.length);
+            return courseBaskets.coreBCS.completed.length;
+        }
+    };
+    
+    const bridgingCoursesCompleted = 15;
+    const bridgingCoursesCompletedTotal = 15;
+    const courses = coreCoursesCompleted + bridgingCoursesCompleted;
     const minCourses = 63;
     const coursesRemaining = minCourses - courses;
-    const coreCoursesTotal = minCourses - bridgingCoursesTotal;
-    const corePercentComplete = Math.floor(coreCourses / coreCoursesTotal * 100);
-    const bridgingCoursesRemaining = bridgingCoursesTotal - bridgingCourses;
-    const coreCoursesRemaining = coreCoursesTotal - coreCourses;
-    const bridgingPercentComplete = Math.floor(bridgingCourses / bridgingCoursesTotal * 100);
+    const coreCoursesTotal = minCourses - bridgingCoursesCompletedTotal;
+    const corePercentComplete = Math.floor(coreCoursesCompleted / coreCoursesTotal * 100);
+    const bridgingCoursesCompletedRemaining = bridgingCoursesCompletedTotal - bridgingCoursesCompleted;
+    const coreCoursesRemaining = coreCoursesTotal - coreCoursesCompleted;
+    const bridgingPercentComplete = Math.floor(bridgingCoursesCompleted / bridgingCoursesCompletedTotal * 100);
     const percentComplete = Math.floor(courses / minCourses * 100);
 
     const upperCPSCCoursesCompleted = 1;
@@ -170,23 +184,10 @@ function Overview(props) {
 
 
                 <Typography variant="h7" paragraph >
-                    Courses Completed: {coreCourses} <br />
+                    Courses Completed: {coreCoursesCompleted
+            } <br />
                     Courses Remaining: {coreCoursesRemaining}
                 </Typography>
-
-                {/* Text for courses 
-                    <Grid container alignItems="center">
-                        <Grid item xs>
-                            <Typography gutterBottom variant="h8">
-                                Completed courses: {coreCourses}
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography gutterBottom variant="h8">
-                                courses remaining: {coreCoursesRemaining}
-                            </Typography>
-                        </Grid>
-                    </Grid> */}
 
                 <CoreTable coreBCS={courseBaskets.coreBCS} />
 
@@ -198,25 +199,11 @@ function Overview(props) {
                 <Progress percent={bridgingPercentComplete} />
 
                 <Typography variant="h7" paragraph >
-                    Courses Completed: {bridgingCourses} <br />
-                    Courses Remaining: {bridgingCoursesRemaining}
+                    Courses Completed: {bridgingCoursesCompleted} <br />
+                    Courses Remaining: {bridgingCoursesCompletedRemaining}
                 </Typography>
 
-                {/* Text for courses 
-                    <Grid container alignItems="center">
-                        <Grid item xs>
-                            <Typography gutterBottom variant="h8">
-                                Completed courses: {bridgingCourses}
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography gutterBottom variant="h8">
-                                courses remaining: {bridgingCoursesRemaining}
-                            </Typography>
-                        </Grid>
-                    </Grid> */}
-
-                <BridgingTable />
+                <BridgingTable bridgMod={courseBaskets.bridgMod} />
 
                 <Divider my={6} />
 
@@ -232,21 +219,7 @@ function Overview(props) {
                     Courses Remaining: {upperCPSCCoursesRemaining}
                 </Typography>
 
-                {/* Text for courses 
-                    <Grid container alignItems="center">
-                        <Grid item xs>
-                            <Typography gutterBottom variant="h8">
-                                Completed courses: {coreCourses}
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography gutterBottom variant="h8">
-                                courses remaining: {coreCoursesRemaining}
-                            </Typography>
-                        </Grid>
-                    </Grid> */}
-
-                <UpperCPSCTable />
+                <UpperCPSCTable upperCPSC={courseBaskets.upperCPSC} />
 
                 <Divider my={6} />
 
@@ -259,7 +232,146 @@ function Overview(props) {
                     Courses Completed: {exemptionCoursesComplete} <br />
                     Courses Remaining: {exemptionCoursesRemaining}
                 </Typography>
-                <ExemptionTable />
+
+                <ExemptionTable exemptions={courseBaskets.exemptions} replacements={courseBaskets.exemptionReplacement} />
+
+            </CardContent>
+        </Card>
+
+    );
+}
+
+
+function DegreeOverview() {
+    // Commented out temporarily
+    // const [courseResult, setCourseResult] = React.useState([]);
+
+    // useEffect(() => {
+    //     setCourseResult(() => {
+    //         fetch('/getcourses')
+    //             .then(response => {
+    //                 if (!response) {
+    //                     throw new Error("404: Could not fetch from '/getcourses'")
+    //                 } else {
+    //                     response.json()
+    //                 }
+    //             })
+    //             .then(json => {
+    //                 return setCourseResult(json) // access json.body here
+    //             })
+    //             .catch((err) => {
+    //                 console.log(err);
+    //             });
+    //     });
+    // });
+
+    const courseResult = [{
+        "name": "2019W1",
+        "courses": [{
+            "dept": "CPSC",
+            "code": "CPSC 110",
+            "name": "Computation, Programs, and Programming",
+            "desc": "Fundamental program and computation structures. Introductory programming skills. Computation as a tool for information processing, simulation and modelling, and interacting with the world. [3-3-0]",
+            "cred": 4,
+            "tag": "Core Course",
+            "term": "2019W1"
+        }, {
+            "dept": "COGS",
+            "code": "COGS 300",
+            "name": "Understanding and Designing Cognitive Systems",
+            "desc": "Theory and methods for integrating diverse disciplinary content in cognitive systems.",
+            "cred": 3,
+            "tag": "Bridging Module",
+            "term": "2019W1"
+        }]
+    }, {
+        "name": "2020W2",
+        "courses": [{
+            "dept": "CPSC",
+            "code": "CPSC 121",
+            "name": "Models of Computation",
+            "desc": "Physical and mathematical structures of computation. Boolean algebra and combinations logic circuits; proof techniques; functions and sequential circuits; sets and relations; finite state machines; sequential instruction execution.",
+            "cred": 4,
+            "tag": "Core Course",
+            "term": "2020W2"
+        }, {
+            "dept": "COGS",
+            "code": "COGS 303 ",
+            "name": "Research Methods in Cognitive Systems",
+            "desc": "Examination and comparison of the research methodologies of different disciplines relevant to cognitive systems.",
+            "cred": 3,
+            "tag": "Bridging Module",
+            "term": "2020W2"
+        }]
+    }, {
+        "name": "2020W1",
+        "courses": [{
+            "dept": "CPSC",
+            "code": "CPSC 310",
+            "name": "Introduction to Software Engineering",
+            "desc": "Specification, design, validation, evolution and construction of modern software systems, within the context of socially and professionally relevant domains such as ethics, intellectual property, and information security.",
+            "cred": 4,
+            "tag": "Upper CPSC",
+            "term": "2020W1"
+        },
+        {
+            "dept": "ENGL",
+            "code": "ENGL 301",
+            "name": "Technical Writing",
+            "desc": "Study of the principles of written communication in general business and professional activities, and practice in the preparation of abstracts, proposals, reports, and correspondence. Not for credit towards the English Major or Minor.",
+            "cred": 3,
+            "tag": "Core Course",
+            "term": "2020W1"
+        }]
+    }, {
+        "name": "Exemptions",
+        "courses": [{
+            "dept": "ENGL",
+            "code": "ENGL 110",
+            "name": "Approaches to Literature",
+            "desc": "Study of selected examples of poetry, fiction, and drama. Essays are required.",
+            "cred": 3,
+            "tag": "Core Course",
+            "term": "Exemptions"
+        }]
+    }];
+
+    return (
+        <React.Fragment>
+            <Helmet title="Degree Overview" />
+            <Typography variant="h3" gutterBottom display="inline">
+                Degree Overview
+        </Typography>
+
+            <Breadcrumbs aria-label="Breadcrumb" mt={2}>
+                <Link component={NavLink} exact to="/dashboard">
+                    Dashboard
+            </Link>
+                <Typography>
+                    Degree Overview
+            </Typography>
+                <Link component={NavLink} exact to="/degreeprogress/timeline">
+                    Degree Timeline
+            </Link>
+            </Breadcrumbs>
+
+            <Divider my={6} />
+
+            <Grid container spacing={6}>
+                <Grid item xs={12}>
+                    <Overview courseResult={courseResult} />
+                </Grid>
+            </Grid>
+        </React.Fragment>
+    );
+}
+
+export default DegreeOverview;
+
+
+
+
+
                 {/* <Divider my={6} /> */}
 
 
@@ -343,89 +455,3 @@ function Overview(props) {
 
                 {/* Transcript table mock up */}
                 {/* <DegreeTable /> */}
-
-            </CardContent>
-        </Card>
-
-    );
-}
-
-
-function DegreeOverview() {
-    // Commented out temporarily
-    // const [courseResult, setCourseResult] = React.useState([]);
-
-    // useEffect(() => {
-    //     setCourseResult(() => {
-    //         fetch('/getcourses')
-    //             .then(response => {
-    //                 if (!response) {
-    //                     throw new Error("404: Could not fetch from '/getcourses'")
-    //                 } else {
-    //                     response.json()
-    //                 }
-    //             })
-    //             .then(json => {
-    //                 return setCourseResult(json) // access json.body here
-    //             })
-    //             .catch((err) => {
-    //                 console.log(err);
-    //             });
-    //     });
-    // });
-
-    const courseResult = [{
-        "name": "2019W1",
-        "courses": [{
-            "dept": "CPSC",
-            "code": "CPSC 110",
-            "name": "Computation, Programs, and Programming",
-            "desc": "Fundamental program and computation structures. Introductory programming skills. Computation as a tool for information processing, simulation and modelling, and interacting with the world. [3-3-0]",
-            "cred": 4,
-            "tag": "Core Course",
-            "term": "2019W1"
-        }]
-    }, {
-        "name": "Exemptions",
-        "courses": [{
-            "dept": "ENGL",
-            "code": "ENGL 110",
-            "name": "Approaches to Literature",
-            "desc": "Study of selected examples of poetry, fiction, and drama. Essays are required.",
-            "cred": 3,
-            "tag": "Core Course",
-            "term": "Exemptions"
-        }]
-    }];
-
-    return (
-        <React.Fragment>
-            <Helmet title="Degree Overview" />
-            <Typography variant="h3" gutterBottom display="inline">
-                Degree Overview
-        </Typography>
-
-            <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-                <Link component={NavLink} exact to="/dashboard">
-                    Dashboard
-            </Link>
-                <Typography>
-                    Degree Overview
-            </Typography>
-                <Link component={NavLink} exact to="/degreeprogress/timeline">
-                    Degree Timeline
-            </Link>
-            </Breadcrumbs>
-
-            <Divider my={6} />
-
-            <Grid container spacing={6}>
-                <Grid item xs={12}>
-                    <Overview courseResult={courseResult} />
-                </Grid>
-            </Grid>
-        </React.Fragment>
-    );
-}
-
-export default DegreeOverview;
