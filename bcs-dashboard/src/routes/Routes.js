@@ -1,10 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { dashboard as dashboardRoutes, auth as authRoutes, landing as landingRoutes } from "./index";
+import { dashboard as dashboardRoutes, auth as authRoutes, landing as landingRoutes, contact as contactRoutes } from "./index";
 
 import DashboardLayout from "../layouts/Dashboard";
 import AuthLayout from "../layouts/Auth";
 import LandingLayout from '../layouts/Landing';
+import ContactLayout from '../layouts/Contact';
 import Page404 from "../pages/auth/Page404";
 
 
@@ -45,6 +46,7 @@ const Routes = () => (
       {childRoutes(DashboardLayout, dashboardRoutes)}
       {childRoutes(AuthLayout, authRoutes)}
       {childRoutes(LandingLayout, landingRoutes)}
+      {childRoutes(ContactLayout, contactRoutes)}
       <Route
         render={() => (
           <AuthLayout>

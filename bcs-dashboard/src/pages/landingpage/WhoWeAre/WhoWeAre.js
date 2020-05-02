@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import '../../../../node_modules/materialize-css/dist/css/materialize.min.css';
 import Pic3 from '../Pictures/gg.jpg';
 import './Gallery.css';

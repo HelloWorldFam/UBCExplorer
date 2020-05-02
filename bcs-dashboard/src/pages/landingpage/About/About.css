@@ -11,3 +11,8 @@
 .subtletoppadding {
     padding-top: 55px;
 }
+
+img {
+    width: auto;
+    height: 100%;
+  }

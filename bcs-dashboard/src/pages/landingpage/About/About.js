@@ -5,6 +5,7 @@ import Pic3 from "../Pictures/yes1.jpg";
 import Pic4 from "../Pictures/1324.jpg";
 import { HashLink as Link } from "react-router-hash-link";
 import "./About.css";
+import DescriptionCards from "./DescriptionCards";
 
 export default class About extends Component {
   render() {
@@ -120,53 +121,9 @@ export default class About extends Component {
 
           <div className="subtletoppadding"></div>
           <div className="divider"></div>
-
-          <div className="container">
-            <div className="toppadding">
-              <div className="row">
-                <div className="col s12 m6">
-                  <div className="white center">
-                    <img src={Pic4} alt="placeholderpic1" />
-                    {/* <span class="material-icons">mail</span>
-                                        <h4>Email</h4> */}
-                    {/* <p>Please email us for any questions:_____ @gmail.com</p> */}
-                  </div>
-                </div>
-                <div className="col s12 m6">
-                  <div className="card-panel white center">
-                    {/* <i class="material-icons">account_box</i> */}
-                    <h4>Description</h4>
-
-                    <p>description to be added</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="betweencardpadding">
-            <div className="container">
-              <div className="row">
-                <div className="col s12 m6">
-                  <div className="card-panel white center">
-                    {/* <span class="material-icons">mail</span> */}
-                    <h4>Description</h4>
-                    <p>description to be added</p>
-                  </div>
-                </div>
-                <div className="col s12 m6">
-                  <div className="white center">
-                    {/* <i class="material-icons">account_box</i> */}
-                    <img src={Pic4} alt="placeholderpic2" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="divider"></div>
+          <DescriptionCards/>
         </div>
       </section>
-    );
+    )
   }
 }

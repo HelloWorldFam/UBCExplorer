@@ -22,7 +22,7 @@ export default function Banner() {
           <Caption placement="right">
             <h2>BCS Course Selector App</h2>
             <h5 className="">Welcome to your journey at UBC</h5>
-            <Link to="#" className="btn btn-large blue">
+            <Link to="/auth/google" className="btn btn-large blue">
               Get Started
             </Link>
           </Caption>
@@ -31,7 +31,7 @@ export default function Banner() {
           <Caption placement="left">
             <h2>Course Schedule</h2>
             <h5 className="">Plan your degree</h5>
-            <Link to="#" className="btn btn-large blue">
+            <Link to="/auth/google" className="btn btn-large blue">
               Explore Now
             </Link>
           </Caption>
@@ -40,7 +40,7 @@ export default function Banner() {
           <Caption placement="right">
             <h2>Find your classmates</h2>
             <h5 className="">Connect with peers and alumni</h5>
-            <Link to="#" className="btn btn-large blue">
+            <Link to="/auth/google" className="btn btn-large blue">
               Find Out More
             </Link>
           </Caption>
