@@ -25,6 +25,11 @@ export default function SearchComponent(props) {
       axios
         .get("http://localhost:3000/searchAny/" + value)
         .then((res) => {
+          if (!(res.data instanceof Array)) {
+            setisLoading(false);
+            setResults([]);
+            return
+          }
           let array = [];
           for (let object of res.data) {
             let newObject = {
