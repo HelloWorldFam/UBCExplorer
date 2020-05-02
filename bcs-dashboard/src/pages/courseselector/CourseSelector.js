@@ -13,6 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select";
 import Helmet from "react-helmet";
+import dragula from "react-dragula";
 import "react-dragula/dist/dragula.css";
 import SearchComponent from './SearchComponent';
 
@@ -105,7 +106,14 @@ class Lane extends React.Component {
           <Typography variant="body2" mb={4}>
             {description}
           </Typography>
-          <div ref={this.handleContainerLoaded}>{children}</div>
+          <div
+            className={title}
+            termid={this.props.termId}
+            style={{ minHeight: "20px" }}
+            ref={this.handleContainerLoaded}
+          >
+            {children}
+          </div>
         </CardContent>
       </Card>
     );
@@ -338,31 +346,99 @@ function TermDropDown(props) {
   );
 }
 
-function YourDegreeCard({ usersCourseArray }) {
-  if (usersCourseArray != null) {
-    usersCourseArray.map((term) => {
-      return (
-        <>
-          <TaskWrapper mb={4}>
-            <TaskWrapperContent>
-              <ExpansionPanel
-              // expanded={expanded === "panel1"}
-              // onChange={this.handleChange("panel1")}
-              >
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography>{term.name}</Typography>
-                </ExpansionPanelSummary>
-                {term.courses.map((course) => {
-                  return (
-                    <ExpansionPanelDetails>{course.code}</ExpansionPanelDetails>
-                  );
-                })}
-              </ExpansionPanel>
-            </TaskWrapperContent>
-          </TaskWrapper>
-        </>
+function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
+  const [containers, setContainers] = useState([]);
+
+  const onContainerReady = (container) => {
+    containers.push(container);
+  };
+
+  useEffect(() => {
+    setContainers((containers) => [...containers]);
+  }, []);
+
+  useEffect(() => {
+    const drake = dragula(containers);
+    drake.on("drop", function (el, container) {
+      el.style.backgroundColor = "#e6e6e6";
+      var newCourse;
+      const removeCourse = () => {
+        usersCourseArray.map((term) => {
+          if (term.name === el.getAttribute("term")) {
+            term.courses.map((course, courseIndex) => {
+              if (el.getAttribute("courseid") === course.code) {
+                newCourse = term.courses.splice(courseIndex, 1);
+              }
+            });
+          }
+        });
+      };
+      removeCourse();
+      usersCourseArray[container.getAttribute("termid")].courses.push(
+        newCourse[0]
       );
+      drake.cancel(true);
+      setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);
     });
+  }, [usersCourseArray]);
+
+  if (usersCourseArray[0] != -1) {
+    return (
+      <>
+        {usersCourseArray.map((term, termIndex) => {
+          return (
+            <>
+              <TaskWrapper mb={4}>
+                <TaskWrapperContent>
+                  <Lane
+                    title={term.name}
+                    className={term.name}
+                    termId={termIndex}
+                    description=""
+                    onContainerLoaded={onContainerReady}
+                  >
+                    {term.courses.map((course, courseIndex) => {
+                      return (
+                        <>
+                          <Card
+                            style={{
+                              margin: "5px 5px 5px 0",
+                              padding: "10px",
+                              display: "inline-block",
+                              backgroundColor: "#e6e6e6",
+                            }}
+                            courseid={course.code}
+                            term={term.name}
+                            key={`${termIndex}_${courseIndex}`}
+                          >
+                            {course.code}
+                            <Button
+                              style={{
+                                minWidth: "30px",
+                                color: "#bf0a0a",
+                                padding: "0",
+                              }}
+                              onClick={() => {
+                                term.courses.splice(courseIndex, 1);
+                                setUsersCourseArray((usersCourseArray) => [
+                                  ...usersCourseArray,
+                                ]);
+                              }}
+                            >
+                              x
+                            </Button>
+                          </Card>
+                        </>
+                      );
+                    })}
+                  </Lane>
+                </TaskWrapperContent>
+              </TaskWrapper>
+            </>
+          );
+        })}
+      </>
+    );
   } else
     return (
       <>
@@ -561,7 +637,7 @@ function CourseSelector() {
   };
 
   useEffect(() => {
-    if (usersCourseArray[0] !== -1) {
+    if (usersCourseArray && usersCourseArray[0] !== -1) {
       axios.post("/updateUserWorkList", usersCourseArray).then(() => {});
     }
   }, [usersCourseArray]);
@@ -641,7 +717,10 @@ function CourseSelector() {
             description="The courses that you have added to your worklist."
             onContainerLoaded={onContainerReady}
           >
-            <YourDegreeCard courseList={usersCourseArray} />
+            <YourDegreeCard
+              usersCourseArray={usersCourseArray}
+              setUsersCourseArray={setUsersCourseArray}
+            />
           </Lane>
         </Grid>
       </Grid>
