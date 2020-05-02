@@ -24,16 +24,11 @@ import {
   Card as MuiCard,
   CardContent,
   Divider as MuiDivider,
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
   Grid,
   Link,
   TextField as MuiTextField,
   Typography as MuiTypography,
 } from "@material-ui/core";
-
-import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 
 import { spacing } from "@material-ui/system";
 
