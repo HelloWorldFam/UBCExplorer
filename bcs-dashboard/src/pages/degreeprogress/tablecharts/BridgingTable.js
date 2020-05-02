@@ -43,7 +43,7 @@ function createData(name, status) {
 }
 
 //placeholder data --> createCourses should add to this array
-const rows = [
+/* const rows = [
   // createData(
   //   "COGS 300",
   //   <Chip label="Complete" rgbcolor={green[500]} />
@@ -82,10 +82,37 @@ const createCourse = (bridgMod) => {
       )
     })
   }
-};
+}; */
 
 const BridgingTable = (props) => {
-  createCourse(props.bridgMod);
+  let rows = [];
+  
+  console.log(props.bridgMod);
+  if (props.bridgMod) {
+    props.bridgMod.completed.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Complete" rgbcolor={green[500]} />
+      )
+      )
+    })
+
+    props.bridgMod.inProgress.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Inprogress" rgbcolor={orange[500]} />
+      )
+      )
+    })
+
+    props.bridgMod.incomplete.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Incomplete" rgbcolor={red[500]} />
+      )
+      )
+    })
+  }
 
   return (
     <Card mb={6}>

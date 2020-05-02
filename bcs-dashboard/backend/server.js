@@ -44,6 +44,14 @@ const UsersSchema = new Schema({
 }).plugin(findOrCreate);
 const Users = mongoose.model("Users", UsersSchema);
 
+const CourseSchema = new Schema({
+  code: String,
+  name: String,
+  cred: String,
+  desc: String
+}).plugin(findOrCreate);
+const Courses = mongoose.model('Courses', CourseSchema);
+
 // cookieSession config
 app.use(
   cookieSession({
@@ -149,6 +157,12 @@ app.get("/userdata", isUserAuthenticated, (req, res) => {
   Users.find({ email: req.user.email }, function (err, result) {
     res.send(result);
   });
+});
+
+app.get('/coursedata', (req, res) => {
+  Courses.find({code: req.params.code}, function (err, result) {
+    res.send(result);
+  })
 });
 
 // Secret route

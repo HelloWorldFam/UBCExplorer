@@ -43,7 +43,7 @@ function createData(name, status) {
 }
 
 //placeholder data --> createCourses should add to this array
-const rows = [
+/* const rows = [
   // createData(
   //   "COGS 300",
   //   <Chip label="Complete" rgbcolor={green[500]} />
@@ -82,10 +82,37 @@ const createCourse = (upperCPSC) => {
       )
     })
   }
-};
+}; */
 
 const UpperCPSCTable = (props) => {
-  createCourse(props.upperCPSC);
+  let rows = [];
+
+  console.log(props.upperCPSC);
+  if (props.upperCPSC) {
+    props.upperCPSC.completed.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Complete" rgbcolor={green[500]} />
+      )
+      )
+    })
+
+    props.upperCPSC.inProgress.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Inprogress" rgbcolor={orange[500]} />
+      )
+      )
+    })
+
+    props.upperCPSC.incomplete.forEach(element => {
+      rows.push(createData(
+        element,
+        <Chip label="Incomplete" rgbcolor={red[500]} />
+      )
+      )
+    })
+  }
 
   return (
     <Card mb={6}>
