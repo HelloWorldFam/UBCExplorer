@@ -32,7 +32,6 @@ const TaskWrapper = styled(Card)`
   border: 1px solid ${(props) => props.theme.palette.grey[300]};
   background: ${(props) => props.theme.body.background};
   margin-bottom: ${(props) => props.theme.spacing(4)}px;
-  cursor: grab;
 `;
 
 const SearchWrapper = styled(Card)`
@@ -127,25 +126,6 @@ function SearchCard(props) {
         <Centered>
           <SearchResultCard title={title} name={name} desc={desc} cred={cred} />
         </Centered>
-        {/* <Typography>
-          <b>Welcome to the UBC Explorer - Course Search</b>
-          <br />
-          The course search tool is created to enable a seamless, fast course
-          search experience. 
-          <br />
-          <br />
-          <b>Getting Started</b>
-          <br />
-          To get started, input the department and course code and select
-          search. A list of prerequisites/corequisites and dependent courses
-          will also be shown in the two right lanes.
-          <br />
-          <br />
-          <b>Feedback / Bugs</b>
-          <br />
-          If you notice any bugs or have any feedback, feel free to send an
-          email to : email here
-        </Typography> */}
       </TaskWrapperContent>
     </SearchWrapper>
   );
@@ -295,10 +275,20 @@ const NavBarTheme = createMuiTheme({
 function MainSearchPage() {
   const [containers, setContainers] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState({});
+  const [windowHeight, setWindowHeight] = useState(0);
 
   const onContainerReady = (container) => {
     setContainers(containers.push(container));
   };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateWindowDimensions);
+    updateWindowDimensions();
+  },[])
+
+  const updateWindowDimensions = () => {
+    setWindowHeight(window.innerHeight);
+  }
 
   const classes2 = navBarStyle();
 
@@ -331,7 +321,7 @@ function MainSearchPage() {
             <SearchCard onChange={setSelectedCourse} />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3}>
+        <Grid item xs={12} lg={6} xl={3} style={{maxHeight: windowHeight - 95, overflow: 'auto'}}>
           <Lane
             title="Prerequisite / Corequisite Courses"
             description="Selected course's prerequisites and corequisites."
@@ -342,7 +332,7 @@ function MainSearchPage() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3}>
+        <Grid item xs={12} lg={6} xl={3} style={{maxHeight: windowHeight - 95, overflow: 'auto'}}>
           <Lane
             title="Dependent Courses"
             description="Courses that list this course as a direct prerequisite."
