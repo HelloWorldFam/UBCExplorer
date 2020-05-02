@@ -19,7 +19,6 @@ export default function SearchComponent(props) {
       if (value.length < 3) {
         setisLoading(false);
         setResults([]);
-        setValue("");
         return;
       }
 
