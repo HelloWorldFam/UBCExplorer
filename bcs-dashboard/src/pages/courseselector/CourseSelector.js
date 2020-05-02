@@ -14,6 +14,11 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select";
 import Helmet from "react-helmet";
 
+// For Search
+import _ from "lodash";
+import { Search } from "semantic-ui-react";
+import faker from "faker";
+
 import Autocomplete, {
   createFilterOptions,
 } from "@material-ui/lab/Autocomplete";
@@ -119,6 +124,58 @@ class Lane extends React.Component {
   }
 }
 
+const source = _.times(5, () => ({
+  title: faker.company.companyName(),
+  description: faker.company.catchPhrase(),
+  image: faker.internet.avatar(),
+  price: faker.finance.amount(0, 100, 2, "$"),
+}));
+
+function SearchExampleStandard(props) {
+  const [isLoading, setisLoading] = useState(false);
+  const [results, setResults] = useState([]);
+  const [value, setValue] = useState("");
+
+  const handleResultSelect = (e, { result }) => setValue(result.title);
+  useEffect(() => {
+    console.log(source);
+  },[]);
+
+  const handleSearchChange = (e, { value }) => {
+    setisLoading(true);
+    setValue(value);
+
+    setTimeout(() => {
+      if (value.length < 1) {
+        setisLoading(false);
+        setResults([]);
+        setValue("");
+        return;
+      }
+
+      const re = new RegExp(_.escapeRegExp(value), "i");
+      const isMatch = (result) => re.test(result.title);
+
+      setisLoading(false);
+      setResults((results) => [..._.filter(source, isMatch)]);
+    }, 300);
+  };
+  return (
+    <div>
+      <Search
+        loading={isLoading}
+        onResultSelect={handleResultSelect}
+        onSearchChange={_.debounce(handleSearchChange, 500, {
+          leading: true,
+        })}
+        results={results}
+        value={value}
+        {...props}
+      />
+    </div>
+  );
+}
+
 function SearchResultCard(props) {
   return (
     <TaskWrapper mb={4}>
@@ -189,6 +246,7 @@ function SearchCard(props) {
       <TaskWrapperContent>
         <form>
           <Typography variant="body2" mb={3}>
+            <SearchExampleStandard />
             <TextField
               value={dept}
               onChange={(e) => setDept(e.target.value)}
