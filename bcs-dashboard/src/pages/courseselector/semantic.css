@@ -12,6 +12,16 @@
   color: rgba(0, 0, 0, 0.87);
 }
 
+/*--------------------
+        Fluid
+---------------------*/
+
+.ui.icon.input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .ui.input > input {
   margin: 0em;
   max-width: 100%;
