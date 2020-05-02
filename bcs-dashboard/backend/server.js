@@ -204,7 +204,7 @@ app.get("/searchAny/:code", (req, res) => {
   Courses.find({ code: { $regex: req.params.code, $options: "i" } })
     .then((course) => {
       if (course.length === 0) res.send("Course not found");
-      else res.send(course.slice(0, 5));
+      else res.send(course.slice(0, 8));
     })
     .catch((err) => {
       res.send("An error has occurred: " + err);

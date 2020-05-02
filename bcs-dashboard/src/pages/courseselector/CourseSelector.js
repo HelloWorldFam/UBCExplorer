@@ -46,7 +46,9 @@ const TextField = styled(TextFieldSpacing)`
   padding-bottom: 5px;
 `;
 
-const Card = styled(MuiCard)(spacing);
+const Card = styled(MuiCard)`
+  overflow: visible;
+`;
 
 const Divider = styled(MuiDivider)(spacing);
 
@@ -652,7 +654,7 @@ function CourseSelector() {
 
   useEffect(() => {
     if (usersCourseArray && usersCourseArray[0] !== -1) {
-      axios.post("/updateUserWorkList", usersCourseArray).then(() => {});
+      axios.post("/updateUserWorkList", usersCourseArray).then(() => { });
     }
   }, [usersCourseArray]);
 

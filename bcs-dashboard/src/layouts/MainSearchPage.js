@@ -19,10 +19,6 @@ import {
 
 import { spacing } from "@material-ui/system";
 
-/**
- * Note: The Card for MainSearchPage has overflow set to visible.
- *       This is due to the reduced height of the search card on this page.
- */
 const Card = styled(MuiCard)`
 overflow:visible;
 `;
@@ -285,7 +281,7 @@ function MainSearchPage() {
   useEffect(() => {
     window.addEventListener('resize', updateWindowDimensions);
     updateWindowDimensions();
-  },[])
+  }, [])
 
   const updateWindowDimensions = () => {
     setWindowHeight(window.innerHeight);
@@ -322,7 +318,7 @@ function MainSearchPage() {
             <SearchCard onChange={setSelectedCourse} />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3} style={{maxHeight: windowHeight - 95, overflow: 'auto'}}>
+        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: windowHeight - 95, overflow: 'auto' }}>
           <Lane
             title="Prerequisite / Corequisite Courses"
             description="Selected course's prerequisites and corequisites."
@@ -333,7 +329,7 @@ function MainSearchPage() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3} style={{maxHeight: windowHeight - 95, overflow: 'auto'}}>
+        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: windowHeight - 95, overflow: 'auto' }}>
           <Lane
             title="Dependent Courses"
             description="Courses that list this course as a direct prerequisite."
