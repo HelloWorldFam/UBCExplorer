@@ -9,6 +9,10 @@ import IconButton from "@material-ui/core/IconButton";
 import { blue } from "@material-ui/core/colors";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
+// Google Analytics 
+// https://levelup.gitconnected.com/using-google-analytics-with-react-3d98d709399b
+import ReactGA from 'react-ga';
+
 import {
   Card as MuiCard,
   CardContent,
@@ -18,6 +22,8 @@ import {
 
 import { spacing } from "@material-ui/system";
 
+const trackingId = "UA-165369624-1"; // Tracking ID paired to helloworlddevteam@gmail.com (Google Analytics dashboard is already set up)
+ReactGA.initialize(trackingId);
 /**
  * Note: The Card for MainSearchPage has overflow set to visible.
  *       This is due to the reduced height of the search card on this page.
