@@ -2,8 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const Courses = require("./models/courses.model");
-const Departments = require("./models/departments.model");
-const CourseCodes = require("./models/course_codes.model");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const findOrCreate = require("mongoose-findorcreate");
@@ -176,35 +174,14 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
 });
 
-app.get("/getCourses", (req, res) => {
-  if (!req.user) {
-    res.send("You are not authenticated.");
-  } else {
-    Users.find({ email: req.user.email }, function (err, result) {
-      res.send(result[0].courses);
-    });
-  }
+app.get("/getCourses", isUserAuthenticated, (req, res) => {
+  Users.find({ email: req.user.email }, function (err, result) {
+    res.send(result[0].courses);
+  });
 });
 
 app.get("/getAllCourses", isUserAuthenticated, (req, res) => {
-  if (!req.user) {
-    res.send("You are not authenticated.");
-  } else {
-    Courses.find()
-      .then((courses) => res.send(courses))
-      .catch((err) => console.log(err));
-  }
-});
-
-app.get("/getDepartments", (req, res) => {
-  Departments.find()
-    .then((courses) => res.send(courses))
-    .catch((err) => console.log(err));
-});
-
-// Get all course codes from database
-app.get("/getAllCourseCodes", isUserAuthenticated, (req, res) => {
-  CourseCodes.find()
+  Courses.find()
     .then((courses) => res.send(courses))
     .catch((err) => console.log(err));
 });
@@ -236,7 +213,7 @@ app.get("/searchAny/:code", (req, res) => {
 });
 
 // Update course worklist/array of the term objects which was selected in course selector
-app.post("/updateUserWorkList", (req, res) => {
+app.post("/updateUserWorkList", isUserAuthenticated, (req, res) => {
   Users.findOne({ email: req.user.email })
     .then((user) => {
       user.courses = req.body;
@@ -255,11 +232,11 @@ app.post("/updateUserWorkList", (req, res) => {
 });
 
 // Commented out for testing
-// app.get("/*", isUserAuthenticated, (req, res) => {
-//   res.sendFile(path.join(__dirname, "../build/index.html"));
-// });
-
-// No authentication - for testing only!
-app.get("/*", (req, res) => {
+app.get("/*", isUserAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
 });
+
+// // No authentication - for testing only!
+// app.get("/*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../build/index.html"));
+// });

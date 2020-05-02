@@ -107,7 +107,7 @@ function SearchCard(props) {
 
   const handleClick = (courseInfo) => {
     axios
-      .get("http://localhost:3000/getCourseInfo/" + courseInfo)
+      .get("/getCourseInfo/" + courseInfo)
       .then((res) => {
         setDesc(res.data.desc);
         setCred("");
@@ -157,7 +157,7 @@ function PrerequisitesCard(props) {
 
   const getCourseInfo = (course) => {
     axios
-      .get("http://localhost:3000/getCourseInfo/" + course)
+      .get("/getCourseInfo/" + course)
       .then((res) => {
         let courseToDisplay = {
           title: res.data.code,
@@ -213,7 +213,7 @@ function DependenciesCard(props) {
     if (dependencies) {
       for (let course of dependencies) {
         axios
-          .get("http://localhost:3000/getCourseInfo/" + course)
+          .get("/getCourseInfo/" + course)
           .then((res) => {
             let courseToDisplay = {
               title: res.data.code,
@@ -378,7 +378,7 @@ function MainSearchPage() {
                   worklists, and degree progress tracking.
                   <br />
                   <br /> */}
-                  <b>Feedback / Bugs</b>
+                  <a href="https://ubc.ca1.qualtrics.com/jfe/form/SV_enyfh63H9Euj8UJ" target="_blank"><b>Feedback / Bugs</b></a>
                   <br />
                   If you notice any bugs or have any feedback, feel free to send
                   an email to : email here
