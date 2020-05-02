@@ -24,12 +24,6 @@ import { spacing } from "@material-ui/system";
 
 const trackingId = "UA-165369624-1"; // Tracking ID paired to helloworlddevteam@gmail.com (Google Analytics dashboard is already set up)
 ReactGA.initialize(trackingId);
-ReactGA.set({
-  userId: auth.currentUserId(),
-  // any data that is relevant to the user session
-  // that you would like to track with google analytics
-})
-
 /**
  * Note: The Card for MainSearchPage has overflow set to visible.
  *       This is due to the reduced height of the search card on this page.
