@@ -31,15 +31,8 @@ export default function SearchComponent(props) {
         .get("http://localhost:3000/searchAny/" + value)
         .then((res) => {
           setisLoading(false);
-          let array = [];
-          for (let object of res.data) {
-            let course = {
-              code: object.code,
-              desc: object.desc
-            }
-            array.push(course);
-          }
-          setResults((results) => [...array]);
+          setResults((results) => [...res.data]);
+          console.log(res.data);
         })
         .catch((err) => console.log(err));
     }, 300);
