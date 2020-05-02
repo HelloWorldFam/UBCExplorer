@@ -13,17 +13,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select";
 import Helmet from "react-helmet";
-
-// For Search
-import _ from "lodash";
-import { Search } from "semantic-ui-react";
-import faker from "faker";
-
-import Autocomplete, {
-  createFilterOptions,
-} from "@material-ui/lab/Autocomplete";
-
 import "react-dragula/dist/dragula.css";
+import SearchComponent from './SearchComponent';
 
 import {
   Avatar as MuiAvatar,
@@ -31,7 +22,6 @@ import {
   Button,
   Card as MuiCard,
   CardContent,
-  Chip as MuiChip,
   Divider as MuiDivider,
   ExpansionPanel,
   ExpansionPanelDetails,
@@ -57,8 +47,6 @@ const TextField = styled(TextFieldSpacing)`
   padding-top: 5px;
   padding-bottom: 5px;
 `;
-
-const Chip = styled(MuiChip)(spacing);
 
 const Card = styled(MuiCard)(spacing);
 
@@ -122,58 +110,6 @@ class Lane extends React.Component {
       </Card>
     );
   }
-}
-
-const source = _.times(5, () => ({
-  title: faker.company.companyName(),
-  description: faker.company.catchPhrase(),
-  image: faker.internet.avatar(),
-  price: faker.finance.amount(0, 100, 2, "$"),
-}));
-
-function SearchExampleStandard(props) {
-  const [isLoading, setisLoading] = useState(false);
-  const [results, setResults] = useState([]);
-  const [value, setValue] = useState("");
-
-  const handleResultSelect = (e, { result }) => setValue(result.title);
-  useEffect(() => {
-    console.log(source);
-  },[]);
-
-  const handleSearchChange = (e, { value }) => {
-    setisLoading(true);
-    setValue(value);
-
-    setTimeout(() => {
-      if (value.length < 1) {
-        setisLoading(false);
-        setResults([]);
-        setValue("");
-        return;
-      }
-
-      const re = new RegExp(_.escapeRegExp(value), "i");
-      const isMatch = (result) => re.test(result.title);
-
-      setisLoading(false);
-      setResults((results) => [..._.filter(source, isMatch)]);
-    }, 300);
-  };
-  return (
-    <div>
-      <Search
-        loading={isLoading}
-        onResultSelect={handleResultSelect}
-        onSearchChange={_.debounce(handleSearchChange, 500, {
-          leading: true,
-        })}
-        results={results}
-        value={value}
-        {...props}
-      />
-    </div>
-  );
 }
 
 function SearchResultCard(props) {
@@ -246,7 +182,7 @@ function SearchCard(props) {
       <TaskWrapperContent>
         <form>
           <Typography variant="body2" mb={3}>
-            <SearchExampleStandard />
+            <SearchComponent />
             <TextField
               value={dept}
               onChange={(e) => setDept(e.target.value)}
