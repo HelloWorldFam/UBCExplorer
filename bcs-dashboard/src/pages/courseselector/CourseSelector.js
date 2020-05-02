@@ -37,6 +37,8 @@ import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 
 import { spacing } from "@material-ui/system";
 
+import DeleteIcon from '@material-ui/icons/Delete';
+
 const NavLink = React.forwardRef((props, ref) => (
   <RouterNavLink innerRef={ref} {...props} />
 ));
@@ -347,8 +349,15 @@ function TermDropDown(props) {
 }
 
 function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
+  /**
+   * Use containers state to keep track of the terms
+   */
   const [containers, setContainers] = useState([]);
 
+  /**
+   * Helper function to push container to containers state
+   * @param {Object} container - used by Dragula to define "baskets" in which to contain courses
+   */
   const onContainerReady = (container) => {
     containers.push(container);
   };
@@ -382,6 +391,37 @@ function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
     });
   }, [usersCourseArray]);
 
+  /**
+   * Returns a delete button for each term so that user can remove term from worklist
+   * @param {String} name 
+   * @param {Number} index 
+   */
+  const getLaneTitle = (name, index) => {
+    return (
+      <>
+        {name}
+        <Button
+          style={{
+            minWidth: "30px",
+            color: "#bf0a0a",
+            padding: "0",
+            float: "right",
+          }}
+          onClick={() => {
+            usersCourseArray.splice(index, 1);
+            setUsersCourseArray((usersCourseArray) => [
+              ...usersCourseArray,
+            ]);
+          }} >
+          <DeleteIcon style={{
+            width: ".7em",
+            height: ".7em",
+          }} />
+        </Button>
+      </>
+    )
+  }
+
   if (usersCourseArray[0] != -1) {
     return (
       <>
@@ -391,7 +431,7 @@ function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
               <TaskWrapper mb={4}>
                 <TaskWrapperContent>
                   <Lane
-                    title={term.name}
+                    title={getLaneTitle(term.name, termIndex)}
                     className={term.name}
                     termId={termIndex}
                     description=""
@@ -638,7 +678,7 @@ function CourseSelector() {
 
   useEffect(() => {
     if (usersCourseArray && usersCourseArray[0] !== -1) {
-      axios.post("/updateUserWorkList", usersCourseArray).then(() => {});
+      axios.post("/updateUserWorkList", usersCourseArray).then(() => { });
     }
   }, [usersCourseArray]);
 
