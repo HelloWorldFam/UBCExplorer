@@ -71,7 +71,7 @@ passport.use(
       clientID:
         "610240877212-muh7g8rvb1pficemikp3r3vdfaobgo9f.apps.googleusercontent.com",
       clientSecret: "MpRbTT5AssctwpN0Id0GHIwe",
-      callbackURL: "http://localhost:3000/auth/google/callback",
+      callbackURL: "https://ubcexplorer.io/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
       console.log(profile);
@@ -170,6 +170,16 @@ app.use(express.static("../build/"));
 
 //when connect to server, go up one directory into build folder
 app.get("/", (req, res) => {
+  // send landing page
+  res.sendFile(path.join(__dirname, "../build/index.html"));
+});
+
+app.get("/bcs", (req, res) => {
+  // send landing page
+  res.sendFile(path.join(__dirname, "../build/index.html"));
+});
+
+app.get("/about", (req, res) => {
   // send landing page
   res.sendFile(path.join(__dirname, "../build/index.html"));
 });
