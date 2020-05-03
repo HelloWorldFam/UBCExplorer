@@ -117,6 +117,7 @@ passport.deserializeUser((user, done) => {
 
 // Middleware to check if the user is authenticated
 function isUserAuthenticated(req, res, next) {
+  console.log(req.route.path);
   if (req.user) {
     next();
   } else {
@@ -160,6 +161,13 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
+// Whitelists React app static assets. 
+// This is to get around isUserAuthenticated middleware on "/*" paths
+app.get("/static", (req, res) => {
+  // send landing page
+  res.redirect("/");
+});
+
 // Nodemon success message
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
@@ -172,13 +180,6 @@ app.use(express.static(path.join(__dirname, '..', 'build/')));
 app.get("/", (req, res) => {
   // send landing page
   res.sendFile(path.join(__dirname, "../build/index.html"));
-});
-
-// Whitelists React app static assets. 
-// This is to get around isUserAuthenticated middleware on "/*" paths
-app.get("/static/", (req, res) => {
-  // send landing page
-  res.redirect("/");
 });
 
 app.get("/bcs", (req, res) => {
