@@ -9,6 +9,7 @@ const FacebookStrategy = require("passport-facebook");
 const GoogleOauth20Strategy = require("passport-google-oauth20");
 const TwitterStrategy = require("passport-twitter");
 const path = require("path");
+const keepDynoAwake = require("./helpers/keepDynoAwake");
 
 require("dotenv").config();
 
@@ -179,6 +180,8 @@ app.get("/node_modules", (req, res) => {
 
 // Nodemon success message
 app.listen(port, () => {
+  console.log("keepDynoAwake is running");
+  keepDynoAwake("https://ubcexplorer.io/");
   console.log(`Server is running on port: ${port}`);
 });
 
