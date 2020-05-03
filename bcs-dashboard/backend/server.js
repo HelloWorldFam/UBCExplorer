@@ -42,13 +42,6 @@ const UsersSchema = new Schema({
 }).plugin(findOrCreate);
 const Users = mongoose.model("Users", UsersSchema);
 
-const CourseSchema = new Schema({
-  code: String,
-  name: String,
-  cred: String,
-  desc: String
-}).plugin(findOrCreate);
-
 // cookieSession config
 app.use(
   cookieSession({
