@@ -166,7 +166,7 @@ app.listen(port, () => {
 });
 
 // Serve static files from the React app
-app.use(express.static("../build/"));
+app.use(express.static(path.join(__dirname, '../build/')));
 
 //when connect to server, go up one directory into build folder
 app.get("/", (req, res) => {
