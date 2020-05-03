@@ -42,6 +42,7 @@
     "google-map-react": "1.1.6",
     "install": "^0.13.0",
     "jss": "10.0.4",
+    "link": "^0.1.5",
     "lodash": "^4.17.15",
     "material-components-web": "^5.1.0",
     "materialize-css": "^1.0.0-rc.2",
