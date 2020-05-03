@@ -166,6 +166,10 @@ app.get("/static", (req, res) => {
   // send landing page
   res.redirect("/");
 });
+app.get("/node_modules", (req, res) => {
+  // send landing page
+  res.redirect("/");
+});
 
 // Nodemon success message
 app.listen(port, () => {
