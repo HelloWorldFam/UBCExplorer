@@ -139,7 +139,7 @@ app.get(
   passport.authenticate("google"),
   (req, res) => {
     console.log("Successfully logged in");
-    res.redirect("/dashboard");
+    res.redirect("/bcs/dashboard");
   }
 );
 
