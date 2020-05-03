@@ -16,7 +16,7 @@ function Test({ theme }) {
   return (
     <React.Fragment>
       <Helmet
-        titleTemplate="%s | UBC Degree Planner"
+        titleTemplate="%s | BCS Degree Explorer"
         defaultTitle="UBC Course Explorer"
       />
       <StylesProvider injectFirst>
