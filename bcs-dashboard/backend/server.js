@@ -48,7 +48,6 @@ const CourseSchema = new Schema({
   cred: String,
   desc: String
 }).plugin(findOrCreate);
-const Courses = mongoose.model('Courses', CourseSchema);
 
 // cookieSession config
 app.use(
