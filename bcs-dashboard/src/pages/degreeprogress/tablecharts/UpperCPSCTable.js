@@ -87,7 +87,6 @@ const createCourse = (upperCPSC) => {
 const UpperCPSCTable = (props) => {
   let rows = [];
 
-  console.log(props.upperCPSC);
   if (props.upperCPSC) {
     props.upperCPSC.completed.forEach(element => {
       rows.push(createData(

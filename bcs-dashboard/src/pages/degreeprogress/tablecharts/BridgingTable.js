@@ -87,7 +87,6 @@ const createCourse = (bridgMod) => {
 const BridgingTable = (props) => {
   let rows = [];
   
-  console.log(props.bridgMod);
   if (props.bridgMod) {
     props.bridgMod.completed.forEach(element => {
       rows.push(createData(
