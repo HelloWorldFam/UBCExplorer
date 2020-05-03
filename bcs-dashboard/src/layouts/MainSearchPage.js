@@ -378,7 +378,7 @@ function MainSearchPage() {
                   <a href="https://ubc.ca1.qualtrics.com/jfe/form/SV_enyfh63H9Euj8UJ" target="_blank"><b>Feedback / Bugs</b></a>
                   <br />
                   If you notice any bugs or have any feedback, feel free to use the link above, or send
-                  an email to <Link to="mailto:hello@ubcexplorer.io">hello@ubcexplorer.io</Link>.
+                  an email to <a href="mailto:hello@ubcexplorer.io">hello@ubcexplorer.io</a>.
                 </Typography>
               </TaskWrapperContent>
             </SearchWrapper>
