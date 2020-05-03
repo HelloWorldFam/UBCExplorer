@@ -287,7 +287,7 @@ class Sidebar extends React.Component {
   }
 
   componentDidMount() {
-    axios.get("http://localhost:3000/userdata")
+    axios.get("/userdata")
       .then(res => {
         this.setState({
           firstName: res.data[0].firstName,

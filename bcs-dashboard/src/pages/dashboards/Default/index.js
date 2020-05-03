@@ -29,7 +29,7 @@ function Default({ theme }) {
   const [firstName, setFirstName] = useState("");
 
   useEffect(() => {
-    axios("http://localhost:3000/userdata")
+    axios("/userdata")
       .then((res) => {
         setFirstName(res.data[0].firstName);
       })
