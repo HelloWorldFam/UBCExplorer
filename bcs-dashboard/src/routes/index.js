@@ -251,15 +251,6 @@ const calendarRoutes = {
   children: null,
 };
 
-//Added routes for MainSearchPage
-
-const mainSearchRoutes = {
-  id: "mainSearchRoutes",
-  path: "/",
-  component: Blank,
-  children: null,
-};
-
 const authRoutes = {
   id: "Auth",
   path: "/auth",
@@ -518,7 +509,6 @@ export const mainSearch = [mainSearchRoutes];
 
 export default [
   dashboardsRoutes,
-  mainSearchRoutes,
   courseSelectorRoutes,
   degreeProgressRoutes,
   // myCoursesRoutes,
