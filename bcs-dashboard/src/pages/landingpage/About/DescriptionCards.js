@@ -18,7 +18,7 @@ export default class DescriptionCards extends Component {
                 <div className="row">
                     <div className="col s12 m6">
                         <div className="center">
-                            <img className="materialboxed responsive-img" src={Pic4} alt="placeholderpic1" />
+                            <img className="responsive-img" src={Pic4} alt="placeholderpic1" />
                         </div>
                     </div>
                     <div className="col s12 m6">
@@ -43,7 +43,7 @@ export default class DescriptionCards extends Component {
                         </div>
                         <div className="col s12 m6">
                             <div className="center">
-                                <img className="materialboxed responsive-img" src={Pic4} alt="placeholderpic2" />
+                                <img className="responsive-img" src={Pic4} alt="placeholderpic2" />
                             </div>
                         </div>
                     </div>

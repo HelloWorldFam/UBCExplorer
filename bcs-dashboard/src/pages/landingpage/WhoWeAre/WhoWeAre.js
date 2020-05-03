@@ -6,7 +6,7 @@ import './Gallery.css';
 const Photo = ({ img, alt }) => {
     return (
         <div className="col s12 m4 marg">
-            <img className="materialboxed responsive-img" src={img} alt={alt} />
+            <img className="responsive-img" src={img} alt={alt} />
         </div>
     )
 }

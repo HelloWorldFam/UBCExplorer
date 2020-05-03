@@ -21,7 +21,7 @@ const SmoothScroll = () => {
             </AnchorLink>
             <ul className="right hide-on-med-and-down">
               <li>
-                <NavItem href="./">Go Back to Main Page</NavItem>
+                <NavItem href="./">Back to Main Page</NavItem>
               </li>
             
               <li>
