@@ -69,7 +69,7 @@ function Overview(props) {
         "incomplete": [],
     };
 
-  
+    // tags: "Core Course", "Bridging Module", "Upper CPSC", "Exemption", "Exemption Replacement"
     const sortCourses = () => {
         props.courseResult.map((term) => {
             if (term.name === "Exemptions") {
@@ -82,7 +82,8 @@ function Overview(props) {
                 }
                 term.courses.map((course) => {
                     // if (coreBCS.required.includes(course.code)) coreBCS[progress()].push(course.code);
-                    if (course.tag === "Core Course") coreBCS[progress()].push(course.code);
+                    if (course.tag === "Exemption Replacement") exemptionReplacement[progress()].push(course.code);
+                    else if (course.tag === "Core Course") coreBCS[progress()].push(course.code);
                     else if (course.tag === "Upper CPSC") upperCPSC[progress()].push(course.code);
                     else if (course.tag === "Bridging Module") bridgMod[progress()].push(course.code);
                     // else if (course.code.substring(0, 4) === "CPSC") upperCPSC[progress()].push(course.code);
@@ -129,20 +130,12 @@ function Overview(props) {
         else return -1;
     }
     
-    const coreCoursesCompleted = () => {
-        if (courseBaskets.coreBCS.completed.length === undefined) {
-            console.log("returned 0");
-            return 0;
-        } else {
-            console.log("returned " + courseBaskets.coreBCS.completed.length);
-            return courseBaskets.coreBCS.completed.length;
-        }
-    };
+    const coreCoursesCompleted = courseBaskets.coreBCS?.completed?.length;
     
-    const bridgingCoursesCompleted = 15;
-    const bridgingCoursesCompletedTotal = 15;
+    const bridgingCoursesCompleted = courseBaskets.bridgMod?.completed?.length;
+    const bridgingCoursesCompletedTotal = 5;
     const courses = coreCoursesCompleted + bridgingCoursesCompleted;
-    const minCourses = 63;
+    const minCourses = 21;
     const coursesRemaining = minCourses - courses;
     const coreCoursesTotal = minCourses - bridgingCoursesCompletedTotal;
     const corePercentComplete = Math.floor(coreCoursesCompleted / coreCoursesTotal * 100);
@@ -151,19 +144,19 @@ function Overview(props) {
     const bridgingPercentComplete = Math.floor(bridgingCoursesCompleted / bridgingCoursesCompletedTotal * 100);
     const percentComplete = Math.floor(courses / minCourses * 100);
 
-    const upperCPSCCoursesCompleted = 1;
+    const upperCPSCCoursesCompleted = courseBaskets.upperCPSC?.completed?.length;
     const upperCPSCCoursesTotal = 4;
     const upperCPSCCoursesRemaining = upperCPSCCoursesTotal - upperCPSCCoursesCompleted;
     const upperCPSCPercentComplete = Math.floor(upperCPSCCoursesCompleted / upperCPSCCoursesTotal * 100);
 
-    const exemptionCourses = 6;
-    const exemptionCoursesComplete = 0;
+    const exemptionCourses = courseBaskets.exemptions?.completed?.length;
+    const exemptionCoursesComplete = courseBaskets.exemptionReplacement?.completed?.length;
     const exemptionCoursesRemaining = exemptionCourses - exemptionCoursesComplete;
     const exemptionPercentComplete = Math.floor(exemptionCoursesComplete / exemptionCourses * 100);
 
     return (
-        <Card>
-            <CardContent mb={5}>
+         <Card>
+             <CardContent mb={5}>
                 <Typography variant="h3" paragraph >
                     Overview
                 </Typography>
@@ -173,7 +166,16 @@ function Overview(props) {
                 </Typography>
 
                 {/* This is using @material-ui*/}
-                <DoughnutChart />
+                <DoughnutChart coreCoursesCompleted={coreCoursesCompleted}
+                                coreCoursesRemaining={coreCoursesRemaining}
+                                bridgingCoursesCompleted={bridgingCoursesCompleted}
+                                bridgingCoursesRemaining={bridgingCoursesCompletedRemaining}
+                                exemptionCoursesComplete={exemptionCoursesComplete}
+                                exemptionCoursesRemaining={exemptionCoursesRemaining}
+                                overallCourses={courses}
+                                overallCoursesRemaining={coursesRemaining}
+                                minCourses={minCourses}
+                                 />
 
                 <Divider my={6} />
                 <Typography variant="h6" paragraph >
@@ -184,8 +186,8 @@ function Overview(props) {
 
 
                 <Typography variant="h7" paragraph >
-                    Courses Completed: {coreCoursesCompleted
-            } <br />
+                    Courses Completed: {coreCoursesCompleted} 
+                    <br />
                     Courses Remaining: {coreCoursesRemaining}
                 </Typography>
 
@@ -199,7 +201,8 @@ function Overview(props) {
                 <Progress percent={bridgingPercentComplete} />
 
                 <Typography variant="h7" paragraph >
-                    Courses Completed: {bridgingCoursesCompleted} <br />
+                    Courses Completed: {bridgingCoursesCompleted} 
+                    <br />
                     Courses Remaining: {bridgingCoursesCompletedRemaining}
                 </Typography>
 
@@ -235,8 +238,8 @@ function Overview(props) {
 
                 <ExemptionTable exemptions={courseBaskets.exemptions} replacements={courseBaskets.exemptionReplacement} />
 
-            </CardContent>
-        </Card>
+             </CardContent>
+         </Card>
 
     );
 }
@@ -264,6 +267,7 @@ function DegreeOverview() {
     //             });
     //     });
     // });
+
 
     const courseResult = [{
         "name": "2019W1",

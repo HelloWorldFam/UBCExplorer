@@ -13,7 +13,7 @@ import {
   TableCell as MuiTableCell,
   TableHead,
   TableRow as MuiTableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
@@ -21,13 +21,6 @@ import { spacing } from "@material-ui/system";
 import { Doughnut } from "react-chartjs-2";
 
 import { MoreVertical } from "react-feather";
-
-const coreCourses = 30;
-const bridgingCourses = 15;
-const courses = coreCourses + bridgingCourses;
-const minCourses = 63;
-const coursesRemaining = minCourses - courses;
-const percentComplete = Math.floor(courses / minCourses * 100);
 
 const Card = styled(MuiCard)(spacing);
 
@@ -57,36 +50,54 @@ const TableCell = styled(MuiTableCell)`
 
 const GreenText = styled.span`
   color: ${() => green[400]};
-  font-weight: ${props => props.theme.typography.fontWeightMedium};
+  font-weight: ${(props) => props.theme.typography.fontWeightMedium};
 `;
 
 const RedText = styled.span`
   color: ${() => red[400]};
-  font-weight: ${props => props.theme.typography.fontWeightMedium};
+  font-weight: ${(props) => props.theme.typography.fontWeightMedium};
 `;
 
-const PieChart = ({ theme }) => {
+const PieChart = (props) => {
+  const coreCourses = props.coreCoursesCompleted;
+  const bridgingCourses = props.bridgingCoursesCompleted;
+  const courses = props.overallCourses;
+  const minCourses = props.minCourses;
+  const coursesRemaining = minCourses - courses;
+  const percentComplete = Math.floor((courses / minCourses) * 100);
+
   const data = {
-    labels: ["Core CPSC Credits", "Bridging Module Credits", "Remaining Credits"],
+    labels: [
+      "Core CPSC Courses",
+      "Bridging Module Courses",
+      "Exemption Replacement Courses",
+      "Remaining Courses",
+    ],
     datasets: [
       {
-        data: [coreCourses, bridgingCourses, coursesRemaining],
+        data: [
+          coreCourses,
+          bridgingCourses,
+          props.exemptionCoursesCompleted,
+          coursesRemaining,
+        ],
         backgroundColor: [
           blue[500],
           green[500],
-          theme.palette.grey[200]
+          orange[500],
+          props.theme.palette.grey[200],
         ],
-        borderWidth: 5
-      }
-    ]
+        borderWidth: 5,
+      },
+    ],
   };
 
   const options = {
     maintainAspectRatio: false,
     legend: {
-      display: false
+      display: false,
     },
-    cutoutPercentage: 80
+    cutoutPercentage: 80,
   };
 
   return (
@@ -118,15 +129,12 @@ const PieChart = ({ theme }) => {
           </TableHead>
 
           <TableBody>
-
             <TableRow>
               <TableCell component="th" scope="row">
                 Corse CPSC
               </TableCell>
               <TableCell align="right">{coreCourses}</TableCell>
-              <TableCell align="right">
-                {minCourses - 15 - coreCourses}
-              </TableCell>
+              <TableCell align="right">{props.coreCoursesRemaining}</TableCell>
             </TableRow>
 
             <TableRow>
@@ -135,20 +143,37 @@ const PieChart = ({ theme }) => {
               </TableCell>
               <TableCell align="right">{bridgingCourses}</TableCell>
               <TableCell align="right">
-                {15 - bridgingCourses}
+                {props.bridgingCoursesRemaining}
               </TableCell>
             </TableRow>
 
             <TableRow>
               <TableCell component="th" scope="row">
-                Overall
+                Exemption Replacements
               </TableCell>
-              <TableCell align="right"><GreenText>{courses}</GreenText></TableCell>
               <TableCell align="right">
-                <RedText>{coursesRemaining}</RedText>
+                {props.exemptionCoursesComplete}
+              </TableCell>
+              <TableCell align="right">
+                {props.exemptionCoursesRemaining}
               </TableCell>
             </TableRow>
 
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <strong>Total</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>
+                  <GreenText>{courses}</GreenText>
+                </strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>
+                  <RedText>{coursesRemaining}</RedText>
+                </strong>
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </CardContent>

@@ -108,7 +108,7 @@ class Dashboard extends React.Component {
           </MainContent>
           <Footer />
         </AppContent>
-        <Settings />
+        {/* <Settings /> */}
       </Root>
     );
   }
