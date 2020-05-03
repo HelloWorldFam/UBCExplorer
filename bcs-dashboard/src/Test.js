@@ -16,8 +16,8 @@ function Test({ theme }) {
   return (
     <React.Fragment>
       <Helmet
-        titleTemplate="%s | Material App"
-        defaultTitle="Material App - React Admin & Dashboard Template"
+        titleTemplate="%s | UBC Degree Planner"
+        defaultTitle="UBC Course Explorer"
       />
       <StylesProvider injectFirst>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
