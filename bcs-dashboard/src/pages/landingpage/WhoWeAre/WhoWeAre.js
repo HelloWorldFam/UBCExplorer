@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../../../../node_modules/materialize-css/dist/css/materialize.min.css';
 import Pic3 from '../Pictures/gg.jpg';
 import './Gallery.css';
+import "../LandingPage.css";
 
 const Photo = ({ img, alt }) => {
     return (
@@ -78,7 +79,7 @@ export default class WhoWeAre extends Component {
                 <div className="navbarpadding">
                     <div className="container">
                         <h4 className="center">
-                            <span className="blue-text text-darken-1">FOUNDERS</span> WHO WE ARE
+                            <span className="color">FOUNDERS</span> WHO WE ARE
 
                         <p className="sizeFont">
                                 We are a team of six, current BCS students

@@ -3,6 +3,8 @@ import 'materialize-css/dist/css/materialize.min.css';
 import WhoWeAre from '../WhoWeAre/WhoWeAre';
 import { Navbar, NavItem, Icon } from "react-materialize";
 import ContactNavBar from "./ContactNavBar";
+import "../LandingPage.css";
+
 
 export default class Contact extends Component {
     render() {
@@ -15,7 +17,7 @@ export default class Contact extends Component {
                           <WhoWeAre />
                     <div className="row">
                         <div className="col s12 m6">
-                            <div className="card-panel blue white-text center">
+                            <div className="card-panel themecolor white-text center">
                                 <span className="material-icons">mail</span>
                                 <h4>Email</h4>
                                 <p>Please email us for any questions: hello@ubcexplorer.io</p>

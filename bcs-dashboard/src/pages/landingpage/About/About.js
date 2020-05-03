@@ -6,6 +6,7 @@ import Pic4 from "../Pictures/1324.jpg";
 import { HashLink as Link } from "react-router-hash-link";
 import "./About.css";
 import DescriptionCards from "./DescriptionCards";
+import "../LandingPage.css";
 
 export default class About extends Component {
   render() {
@@ -15,7 +16,7 @@ export default class About extends Component {
           <div className="container">
             <div className="row">
               <h4 className="center">
-                <span className="blue-text darken-1">OUR</span> FEATURES
+                <span className="#232F32 darken-1">OUR</span> FEATURES
               </h4>
               <div className="col s12 m4">
                 <div className="card">
@@ -23,7 +24,7 @@ export default class About extends Component {
                     <img src={Pic1} alt="Schedule" />
                     <span className="card-title">Schedule</span>
                     <Link
-                      className="btn-floating activator halfway-fab waves-effect waves-light blue"
+                      className="btn-floating activator halfway-fab waves-effect waves-light blue-grey darken-4"
                       to={"#"}
                     >
                       <i className="material-icons">expand_less</i>
@@ -55,7 +56,7 @@ export default class About extends Component {
                     <img src={Pic2} alt="Course Finder" />
                     <span className="card-title">Course Finder</span>
                     <Link
-                      className="btn-floating activator halfway-fab waves-effect waves-light blue"
+                      className="btn-floating activator halfway-fab waves-effect waves-light blue-grey darken-4"
                       to={"#"}
                     >
                       <i className="material-icons">expand_less</i>
@@ -87,7 +88,7 @@ export default class About extends Component {
                     <img src={Pic3} alt="Discussion Forum" />
                     <span className="card-title">Discussion Forum</span>
                     <Link
-                      className="btn-floating activator halfway-fab waves-effect waves-light blue"
+                      className="btn-floating activator halfway-fab waves-effect waves-light blue-grey darken-4"
                       to={"#"}
                     >
                       <i className="material-icons">expand_less</i>

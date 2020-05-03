@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import "materialize-css/dist/css/materialize.min.css";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { Navbar, NavItem, Icon } from "react-materialize";
-
+import "../LandingPage.css";
 const SmoothScroll = () => {
   return (<section>
     <div className="navbar-fixed">
-      <nav className="blue">
+      <nav className="themecolor">
         <div className="container">
           <div className="nav-wrapper">
             <NavItem href="./" className="brand-logo">
