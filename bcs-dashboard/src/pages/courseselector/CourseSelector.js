@@ -683,7 +683,7 @@ function CourseSelector() {
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-        <Link component={NavLink} exact to="/">
+        <Link component={NavLink} exact to="/bcs/dashboard">
           Dashboard
         </Link>
 

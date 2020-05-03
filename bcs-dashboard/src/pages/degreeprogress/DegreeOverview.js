@@ -413,13 +413,13 @@ function DegreeOverview() {
         </Typography>
 
             <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-                <Link component={NavLink} exact to="/dashboard">
+                <Link component={NavLink} exact to="/bcs/dashboard">
                     Dashboard
             </Link>
                 <Typography>
                     Degree Overview
             </Typography>
-                <Link component={NavLink} exact to="/degreeprogress/timeline">
+                <Link component={NavLink} exact to="/bcs/degreeprogress/timeline">
                     Degree Timeline
             </Link>
             </Breadcrumbs>

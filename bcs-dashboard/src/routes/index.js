@@ -132,28 +132,28 @@ const dashboardsRoutes = {
 
 const courseSelectorRoutes = {
   id: "Course Selector",
-  path: "/courseselector",
+  path: "/bcs/courseselector",
   icon: <GolfCourse />,
   component: CourseSelector,
 };
 
 const degreeProgressRoutes = {
   id: "Degree Progress",
-  path: "/degreeprogress",
+  path: "/bcs/degreeprogress",
   icon: <Directions />,
   children: [
     {
-      path: "/degreeprogress/overview",
+      path: "/bcs/degreeprogress/overview",
       name: "Overview",
       component: DegreeOverview,
     },
     {
-      path: "/degreeprogress/timeline",
+      path: "/bcs/degreeprogress/timeline",
       name: "Timeline",
       component: DegreeTimeline,
     },
     {
-      path: "/degreeprogress/transcript",
+      path: "/bcs/degreeprogress/transcript",
       name: "Transcript",
       component: DegreeTranscript,
     },
@@ -162,14 +162,14 @@ const degreeProgressRoutes = {
 
 const myCoursesRoutes = {
   id: "My Courses",
-  path: "/mycourses",
+  path: "/bcs/mycourses",
   icon: <Dashboard />,
   component: Default,
 };
 
 const myToDosRoutes = {
   id: "My ToDo's",
-  path: "/mytodos",
+  path: "/bcs/mytodos",
   icon: <CheckSquare />,
   component: Tasks,
 };
@@ -185,7 +185,7 @@ const profileRoutes = {
 
 const settingsRoutes = {
   id: "Account Settings",
-  path: "/settings",
+  path: "/bcs/settings",
   name: "Account Settings",
   icon: <User />,
   children: null,

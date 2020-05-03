@@ -126,10 +126,10 @@ function DegreeTimeline() {
             </Typography>
 
             <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-                <Link component={NavLink} exact to="/dashboard">
+                <Link component={NavLink} exact to="/bcs/dashboard">
                     Dashboard
                 </Link>
-                <Link component={NavLink} exact to="/degreeprogress/overview">
+                <Link component={NavLink} exact to="/bcs/degreeprogress/overview">
                     Degree Overview
                 </Link>
                 <Typography>
