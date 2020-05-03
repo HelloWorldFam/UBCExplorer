@@ -13,12 +13,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select";
 import Helmet from "react-helmet";
-
-import Autocomplete, {
-  createFilterOptions,
-} from "@material-ui/lab/Autocomplete";
-
+import dragula from "react-dragula";
 import "react-dragula/dist/dragula.css";
+import SearchComponent from "./SearchComponent";
 
 import {
   Avatar as MuiAvatar,
@@ -26,20 +23,16 @@ import {
   Button,
   Card as MuiCard,
   CardContent,
-  Chip as MuiChip,
   Divider as MuiDivider,
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
   Grid,
   Link,
   TextField as MuiTextField,
   Typography as MuiTypography,
 } from "@material-ui/core";
 
-import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
-
 import { spacing } from "@material-ui/system";
+
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const NavLink = React.forwardRef((props, ref) => (
   <RouterNavLink innerRef={ref} {...props} />
@@ -53,9 +46,9 @@ const TextField = styled(TextFieldSpacing)`
   padding-bottom: 5px;
 `;
 
-const Chip = styled(MuiChip)(spacing);
-
-const Card = styled(MuiCard)(spacing);
+const Card = styled(MuiCard)`
+  overflow: visible;
+`;
 
 const Divider = styled(MuiDivider)(spacing);
 
@@ -112,7 +105,14 @@ class Lane extends React.Component {
           <Typography variant="body2" mb={4}>
             {description}
           </Typography>
-          <div ref={this.handleContainerLoaded}>{children}</div>
+          <div
+            className={title}
+            termid={this.props.termId}
+            style={{ minHeight: "20px" }}
+            ref={this.handleContainerLoaded}
+          >
+            {children}
+          </div>
         </CardContent>
       </Card>
     );
@@ -137,7 +137,6 @@ function SearchResultCard(props) {
 }
 
 function SearchCard(props) {
-  const [dept, setDept] = useState("");
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
@@ -146,16 +145,16 @@ function SearchCard(props) {
   const [tag, setTag] = useState("");
   const [term, setTerm] = useState("");
 
-  const handleClick = () => {
-    const courseSearch = dept + " " + code;
+  const handleClick = (courseInfo) => {
     axios
-      .get("http://localhost:3000/getCourseInfo/" + courseSearch)
+      .get("/getCourseInfo/" + courseInfo)
       .then((res) => {
+        setCode(courseInfo);
         setDesc(res.data.desc);
         setCred("");
         setCred(res.data.cred);
         setName(res.data.name);
-        setTitle(`${dept} ${code}`);
+        setTitle(courseInfo);
         props.onChange(res.data);
       })
       .catch((err) => console.log(err));
@@ -172,8 +171,7 @@ function SearchCard(props) {
       alert("Please select the term you expect to take this course.");
     } else {
       const courseToSubmit = {
-        dept: dept,
-        code: dept + " " + code,
+        code: code,
         name: name,
         desc: desc,
         cred: cred,
@@ -188,31 +186,7 @@ function SearchCard(props) {
     <SearchWrapper mb={4}>
       <TaskWrapperContent>
         <form>
-          <Typography variant="body2" mb={3}>
-            <TextField
-              value={dept}
-              onChange={(e) => setDept(e.target.value)}
-              label="Department"
-              fullWidth
-            />
-            <br />
-            <TextField
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              label="Course Code"
-              fullWidth
-            />
-          </Typography>
-          <Centered>
-            <Button
-              mr={2}
-              variant="contained"
-              color="primary"
-              onClick={handleClick}
-            >
-              Search
-            </Button>
-          </Centered>
+          <SearchComponent onChange={handleClick} />
           <br />
           <Centered>
             <SearchResultCard title={title} name={name} desc={desc} />
@@ -281,6 +255,11 @@ function RadioButtonsGroup(props) {
           control={<Radio />}
           label="Upper CPSC"
         />
+        <FormControlLabel
+          value="Exemption"
+          control={<Radio />}
+          label="Exemption"
+        />
       </RadioGroup>
     </FormControl>
   );
@@ -344,31 +323,138 @@ function TermDropDown(props) {
   );
 }
 
-function YourDegreeCard({ usersCourseArray }) {
-  if (usersCourseArray != null) {
-    usersCourseArray.map((term) => {
-      return (
-        <>
-          <TaskWrapper mb={4}>
-            <TaskWrapperContent>
-              <ExpansionPanel
-              // expanded={expanded === "panel1"}
-              // onChange={this.handleChange("panel1")}
-              >
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography>{term.name}</Typography>
-                </ExpansionPanelSummary>
-                {term.courses.map((course) => {
-                  return (
-                    <ExpansionPanelDetails>{course.code}</ExpansionPanelDetails>
-                  );
-                })}
-              </ExpansionPanel>
-            </TaskWrapperContent>
-          </TaskWrapper>
-        </>
+function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
+  /**
+   * Use containers state to keep track of the terms
+   */
+  const [containers, setContainers] = useState([]);
+
+  /**
+   * Helper function to push container to containers state
+   * @param {Object} container - used by Dragula to define "baskets" in which to contain courses
+   */
+  const onContainerReady = (container) => {
+    containers.push(container);
+  };
+
+  useEffect(() => {
+    setContainers((containers) => [...containers]);
+  }, []);
+
+  useEffect(() => {
+    const drake = dragula(containers);
+    drake.on("drop", function (el, container) {
+      el.style.backgroundColor = "#e6e6e6";
+      var newCourse;
+      const removeCourse = () => {
+        usersCourseArray.map((term) => {
+          if (term.name === el.getAttribute("term")) {
+            term.courses.map((course, courseIndex) => {
+              if (el.getAttribute("courseid") === course.code) {
+                newCourse = term.courses.splice(courseIndex, 1);
+              }
+            });
+          }
+        });
+      };
+      removeCourse();
+      usersCourseArray[container.getAttribute("termid")].courses.push(
+        newCourse[0]
       );
+      drake.cancel(true);
+      setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);
     });
+  }, [usersCourseArray]);
+
+  /**
+   * Returns a delete button for each term so that user can remove term from worklist
+   * @param {String} name
+   * @param {Number} index
+   */
+  const getLaneTitle = (name, index) => {
+    return (
+      <>
+        {name}
+        <Button
+          style={{
+            minWidth: "30px",
+            color: "#bf0a0a",
+            padding: "0",
+            float: "right",
+          }}
+          onClick={() => {
+            usersCourseArray.splice(index, 1);
+            setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);
+          }}
+        >
+          <DeleteIcon
+            style={{
+              width: ".7em",
+              height: ".7em",
+            }}
+          />
+        </Button>
+      </>
+    );
+  };
+
+  if (usersCourseArray[0] != -1) {
+    return (
+      <>
+        {usersCourseArray.map((term, termIndex) => {
+          return (
+            <>
+              <TaskWrapper mb={4}>
+                <TaskWrapperContent>
+                  <Lane
+                    title={getLaneTitle(term.name, termIndex)}
+                    className={term.name}
+                    termId={termIndex}
+                    description=""
+                    onContainerLoaded={onContainerReady}
+                  >
+                    {term.courses.map((course, courseIndex) => {
+                      return (
+                        <>
+                          <Card
+                            style={{
+                              margin: "5px 5px 5px 0",
+                              padding: "10px",
+                              display: "inline-block",
+                              backgroundColor: "#e6e6e6",
+                            }}
+                            courseid={course.code}
+                            term={term.name}
+                            key={`${termIndex}_${courseIndex}`}
+                          >
+                            {course.code}
+                            <Button
+                              style={{
+                                minWidth: "30px",
+                                color: "#bf0a0a",
+                                padding: "0",
+                              }}
+                              onClick={() => {
+                                term.courses.splice(courseIndex, 1);
+                                setUsersCourseArray((usersCourseArray) => [
+                                  ...usersCourseArray,
+                                ]);
+                              }}
+                            >
+                              x
+                            </Button>
+                          </Card>
+                        </>
+                      );
+                    })}
+                  </Lane>
+                </TaskWrapperContent>
+              </TaskWrapper>
+            </>
+          );
+        })}
+      </>
+    );
   } else
     return (
       <>
@@ -404,7 +490,7 @@ function PrerequisitesCard(props) {
 
   const getCourseInfo = (course) => {
     axios
-      .get("http://localhost:3000/getCourseInfo/" + course)
+      .get("/getCourseInfo/" + course)
       .then((res) => {
         let courseToDisplay = {
           title: res.data.code,
@@ -458,7 +544,7 @@ function DependenciesCard(props) {
     if (dependencies) {
       for (let course of dependencies) {
         axios
-          .get("http://localhost:3000/getCourseInfo/" + course)
+          .get("/getCourseInfo/" + course)
           .then((res) => {
             let courseToDisplay = {
               title: res.data.code,
@@ -567,8 +653,8 @@ function CourseSelector() {
   };
 
   useEffect(() => {
-    if (usersCourseArray[0] !== -1) {
-      axios.post("/updateUserWorkList", usersCourseArray).then(() => {});
+    if (usersCourseArray && usersCourseArray[0] !== -1) {
+      axios.post("/updateUserWorkList", usersCourseArray).then(() => { });
     }
   }, [usersCourseArray]);
 
@@ -597,7 +683,7 @@ function CourseSelector() {
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-        <Link component={NavLink} exact to="/">
+        <Link component={NavLink} exact to="/bcs/dashboard">
           Dashboard
         </Link>
 
@@ -647,7 +733,10 @@ function CourseSelector() {
             description="The courses that you have added to your worklist."
             onContainerLoaded={onContainerReady}
           >
-            <YourDegreeCard courseList={usersCourseArray} />
+            <YourDegreeCard
+              usersCourseArray={usersCourseArray}
+              setUsersCourseArray={setUsersCourseArray}
+            />
           </Lane>
         </Grid>
       </Grid>

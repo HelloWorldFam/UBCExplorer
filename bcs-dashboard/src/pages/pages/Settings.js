@@ -174,7 +174,7 @@ function Settings() {
   const [picture, setPicture] = useState("");
 
   useEffect(() => {
-    axios("http://localhost:3000/userdata")
+    axios("/userdata")
       .then((res) => {
         setFirstName(res.data[0].firstName);
         setLastName(res.data[0].lastName);
