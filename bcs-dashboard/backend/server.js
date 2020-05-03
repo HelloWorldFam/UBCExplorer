@@ -166,12 +166,19 @@ app.listen(port, () => {
 });
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../build/')));
+app.use(express.static(path.join(__dirname, '..', 'build/')));
 
 //when connect to server, go up one directory into build folder
 app.get("/", (req, res) => {
   // send landing page
   res.sendFile(path.join(__dirname, "../build/index.html"));
+});
+
+// Whitelists React app static assets. 
+// This is to get around isUserAuthenticated middleware on "/*" paths
+app.get("/static/", (req, res) => {
+  // send landing page
+  res.redirect("/");
 });
 
 app.get("/bcs", (req, res) => {
