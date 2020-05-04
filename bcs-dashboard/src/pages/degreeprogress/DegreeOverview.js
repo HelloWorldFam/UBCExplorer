@@ -87,13 +87,7 @@ function Overview(props) {
                     else if (course.tag === "Upper CPSC") upperCPSC[progress()].push(course.code);
                     else if (course.tag === "Bridging Module") bridgMod[progress()].push(course.code);
                     // else if (course.code.substring(0, 4) === "CPSC") upperCPSC[progress()].push(course.code);
-                    /**
-                     * Note: the following implementation is incomplete. We must find a way to
-                     *       distinguish between courses used for bridging modules and for 
-                     *       exemption replacements.
-                     *       - JH
-                     */
-                    else exemptionReplacement[progress()].push(course.code);
+                    // else exemptionReplacement[progress()].push(course.code);
                 })
             }
         });
@@ -134,7 +128,6 @@ function Overview(props) {
     
     const bridgingCoursesCompleted = courseBaskets.bridgMod?.completed?.length;
     const bridgingCoursesCompletedTotal = 5;
-    const courses = coreCoursesCompleted + bridgingCoursesCompleted;
     const minCourses = 21;
     const coursesRemaining = minCourses - courses;
     const coreCoursesTotal = minCourses - bridgingCoursesCompletedTotal;
@@ -153,6 +146,8 @@ function Overview(props) {
     const exemptionCoursesComplete = courseBaskets.exemptionReplacement?.completed?.length;
     const exemptionCoursesRemaining = exemptionCourses - exemptionCoursesComplete;
     const exemptionPercentComplete = Math.floor(exemptionCoursesComplete / exemptionCourses * 100);
+
+    const courses = coreCoursesCompleted + bridgingCoursesCompleted + exemptionCoursesComplete;
 
     return (
          <Card>
@@ -287,6 +282,22 @@ function DegreeOverview() {
             "cred": 3,
             "tag": "Bridging Module",
             "term": "2019W1"
+        }, {
+            "dept": "COGS",
+            "code": "COGS 300",
+            "name": "Understanding and Designing Cognitive Systems",
+            "desc": "Theory and methods for integrating diverse disciplinary content in cognitive systems.",
+            "cred": 3,
+            "tag": "Bridging Module",
+            "term": "2019W1"
+        }, {
+            "dept": "PSYC",
+            "code": "PSYC 100",
+            "name": "Understanding and Designing Cognitive Systems",
+            "desc": "Theory and methods for integrating diverse disciplinary content in cognitive systems.",
+            "cred": 3,
+            "tag": "Exemption Replacement",
+            "term": "2019W1"
         }]
     }, {
         "name": "2020W2",
@@ -306,7 +317,16 @@ function DegreeOverview() {
             "cred": 3,
             "tag": "Bridging Module",
             "term": "2020W2"
-        }]
+        }, {
+            "dept": "MICB",
+            "code": "MICB 100",
+            "name": "Understanding and Designing Cognitive Systems",
+            "desc": "Theory and methods for integrating diverse disciplinary content in cognitive systems.",
+            "cred": 3,
+            "tag": "Exemption Replacement",
+            "term": "2020W2"
+        }
+    ]
     }, {
         "name": "2020W1",
         "courses": [{
@@ -332,6 +352,14 @@ function DegreeOverview() {
         "courses": [{
             "dept": "ENGL",
             "code": "ENGL 110",
+            "name": "Approaches to Literature",
+            "desc": "Study of selected examples of poetry, fiction, and drama. Essays are required.",
+            "cred": 3,
+            "tag": "Core Course",
+            "term": "Exemptions"
+        }, {
+            "dept": "MATH 180",
+            "code": "MATH 180",
             "name": "Approaches to Literature",
             "desc": "Study of selected examples of poetry, fiction, and drama. Essays are required.",
             "cred": 3,
@@ -371,91 +399,3 @@ function DegreeOverview() {
 }
 
 export default DegreeOverview;
-
-
-
-
-
-                {/* <Divider my={6} /> */}
-
-
-                {/* MISC STUFF BELOW - 
-                Types of progress bars and potential transcript table */}
-
-                {/* <Typography variant="h6" paragraph >
-                    Types of Progress Bars we could use:
-                </Typography> */}
-
-                {/* Progress bar #1 - This is using the sweet-react-progress component */}
-                {/* <Typography variant="h7" paragraph >
-                    Progress bar #1
-                </Typography>
-                <Progress percent={percentComplete} /> */}
-                {/* Text for courses */}
-                {/* <Grid container alignItems="center">
-                    <Grid item xs>
-                        <Typography gutterBottom variant="h8">
-                            Completed courses: {courses} (placeholder)
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography gutterBottom variant="h8">
-                            courses remaining: {coursesRemaining} (placeholder)
-                        </Typography>
-                    </Grid>
-                </Grid>
-                <Divider my={6} /> */}
-
-                {/* Progress bar #2 - This is using https://medium.com/@bruno.raljic/animated-multi-part-progress-bar-made-from-scratch-with-reactjs-and-css-9c1d6a4dbef7*/}
-                {/* <Typography variant="h7" paragraph >
-                    Progress bar #2
-                </Typography>
-                <ProgressLine label=""
-                    backgroundColor="lightpink"
-                    visualParts={[
-                        {
-                            percentage: "75%",
-                            color: "dodgerblue"
-                        }
-                    ]}
-                /> */}
-                {/* Text for courses */}
-                {/* <Grid container alignItems="center">
-                    <Grid item xs>
-                        <Typography gutterBottom variant="h8">
-                            Completed courses: {courses} (placeholder)
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography gutterBottom variant="h8">
-                            courses remaining: {coursesRemaining} (placeholder)
-                        </Typography>
-                    </Grid>
-                </Grid>
-                <Divider my={6} /> */}
-
-                {/* Progress bar #3 - This is using @material-ui*/}
-                {/* <Typography variant="h7" paragraph >
-                    Progress bar #3
-                </Typography>
-                <LinearProgress variant="determinate" value={percentComplete} /> */}
-
-                {/* Text for courses */}
-                {/* <Grid container alignItems="center">
-                    <Grid item xs>
-                        <Typography gutterBottom variant="h8">
-                            Completed courses: {courses} (placeholder)
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography gutterBottom variant="h8">
-                            courses remaining: {coursesRemaining} (placeholder)
-                        </Typography>
-                    </Grid>
-                </Grid> */}
-
-
-                {/* <Divider my={6} /> */}
-
-                {/* Transcript table mock up */}
-                {/* <DegreeTable /> */}

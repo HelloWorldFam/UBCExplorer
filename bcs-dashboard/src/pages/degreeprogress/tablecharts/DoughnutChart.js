@@ -61,6 +61,8 @@ const RedText = styled.span`
 const PieChart = (props) => {
   const coreCourses = props.coreCoursesCompleted;
   const bridgingCourses = props.bridgingCoursesCompleted;
+  const exemptionCoursesComplete = props.exemptionCoursesComplete;
+  const exemptionCoursesRemaining = props.exemptionCoursesRemaining;
   const courses = props.overallCourses;
   const minCourses = props.minCourses;
   const coursesRemaining = minCourses - courses;
@@ -78,7 +80,7 @@ const PieChart = (props) => {
         data: [
           coreCourses,
           bridgingCourses,
-          props.exemptionCoursesCompleted,
+          exemptionCoursesComplete,
           coursesRemaining,
         ],
         backgroundColor: [
@@ -102,14 +104,6 @@ const PieChart = (props) => {
 
   return (
     <Card mb={3}>
-      {/* <CardHeader
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertical />
-          </IconButton>
-        }
-        title="Overall progress through BCS Degree:"
-      /> */}
 
       <CardContent>
         <ChartWrapper>
@@ -152,10 +146,10 @@ const PieChart = (props) => {
                 Exemption Replacements
               </TableCell>
               <TableCell align="right">
-                {props.exemptionCoursesComplete}
+                {exemptionCoursesComplete}
               </TableCell>
               <TableCell align="right">
-                {props.exemptionCoursesRemaining}
+                {exemptionCoursesRemaining}
               </TableCell>
             </TableRow>
 

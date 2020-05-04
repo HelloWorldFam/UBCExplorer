@@ -114,43 +114,152 @@ const ExemptionTable = (props) => {
     console.log("EXEMPTIONS: " + props.exemptions.completed?.length)
     console.log("REPLACEMENTS: " + replTotalLength)
 
-    const arrayCheck = (i) => {
-      return (props.replacements?.completed[i]?.code || "-");
+    const arrayCheck = (i, status) => {
+      if (status === "completed") {
+        return (props.replacements?.completed[i] || "-");
+      } else if (status === "inProgress") {
+        return (props.replacements?.inProgress[i] || "-");
+      } else if (status === "incomplete") {
+        return (props.replacements?.incomplete[i] || "-");
+      }
+    }
+
+    const arrayCheckExemptions = (i) => {
+        return (props.exemptions?.completed[i]?.code || "-");
+    }
+
+    const chipMaker = (boolean, status) => {
+      if (boolean === "-") {
+        return <Chip label="Incomplete" rgbcolor={red[500]} />;
+      } else {
+        if (status === "completed") {
+          return <Chip label="Complete" rgbcolor={green[500]} />;
+        } else if (status === "inProgress") {
+          return <Chip label="inProgress" rgbcolor={orange[500]} />;
+        } else if (status === "incomplete") {
+          return <Chip label="Incomplete" rgbcolor={red[500]} />;
+        }
+      }
+    }
+
+    if (exLength === replTotalLength) {
+      var j = 0;
+      //  console.log("props.replacements.completed.hasNext: " + j < exLength)
+      while (j < replCompletedLength) {
+        //    console.log("THE REPLACEMENT COURSE: " + props.exemptions.completed[j].code)
+        rows.push(createData(
+          props.exemptions.completed[j].code,
+          arrayCheck(j, "completed"),
+          chipMaker(arrayCheck(j, "completed"), "completed")
+          // <Chip label="Complete" rgbcolor={green[500]} />
+        ))
+        j++;
+      }
+
+      var j2 = 0;
+      while (j2 < replInprogressLength) {
+        rows.push(createData(
+          props.exemptions.completed[j].code,
+          arrayCheck(j2, "inProgress"),
+          chipMaker(arrayCheck(j2, "inProgress"), "inProgress")
+          // <Chip label="inProgress" rgbcolor={orange[500]} />
+        ))
+        j++;
+        j2++;
+      }
+
+      var j3 = 0;
+      while (j3 < replIncompleteLength) {
+        rows.push(createData(
+          props.exemptions.completed[j].code,
+          arrayCheck(j3, "incomplete"),
+          chipMaker(arrayCheck(j3, "incomplete"), "incomplete")
+          // <Chip label="Incomplete" rgbcolor={red[500]} />
+        ))
+        j++;
+        j3++;
+      }
     }
 
     if (exLength > replTotalLength) {
       var i = 0;
-      console.log("props.replacements.completed.hasNext: " + i < exLength)
+      // console.log("props.replacements.completed.hasNext: " + i < exLength)
       while (i < exLength) {
-        console.log("THE REPLACEMENT COURSE: " + props.exemptions.completed[i].code)
+        //  console.log("THE REPLACEMENT COURSE: " + props.exemptions.completed[i].code)
         rows.push(createData(
           props.exemptions.completed[i].code,
-          arrayCheck(i),
-          <Chip label="Complete" rgbcolor={green[500]} />
+          arrayCheck(i, "completed"),
+          chipMaker(arrayCheck(i, "completed"), "completed")
+          // <Chip label="Complete" rgbcolor={green[500]} />
         ))
         i++;
       }
 
-      //    replacements.inProgress.forEach(element => {
-      //      rows.push(createData(
-      //        exemptions[0],
-      //        element,
-      //        <Chip label="Inprogress" rgbcolor={orange[500]} />
-      //      )
-      //      )
-      //      exemptions.shift();
-      //    })
+      var i2 = 0;
+      while (i < exLength) {
+        rows.push(createData(
+          props.exemptions.completed[i].code,
+          arrayCheck(i2, "inProgress"),
+          chipMaker(arrayCheck(i2, "inProgress"), "inProgress")
+          // <Chip label="inProgress" rgbcolor={orange[500]} />
+        ))
+        i++;
+        i2++;
+      }
 
-      //    replacements.incomplete.forEach(element => {
-      //      rows.push(createData(
-      //        exemptions[0],
-      //        element,
-      //        <Chip label="Incomplete" rgbcolor={red[500]} />
-      //      )
-      //      )
-      //      exemptions.shift();
-      //    })
-      //  }
+      var i3 = 0;
+      while (i < exLength) {
+        rows.push(createData(
+          props.exemptions.completed[i].code,
+          arrayCheck(i3, "incomplete"),
+          chipMaker(arrayCheck(i3, "incomplete"), "incomplete")
+        //  <Chip label="Incomplete" rgbcolor={red[500]} />
+        ))
+        i++;
+        i3++;
+      }
+    }
+
+    if (exLength < replTotalLength) {
+      var k = 0;
+      //  console.log("props.replacements.completed.hasNext: " + j < exLength)
+      while (k < replCompletedLength) {
+        //    console.log("THE REPLACEMENT COURSE: " + props.exemptions.completed[j].code)
+        rows.push(createData(
+          arrayCheckExemptions(k),
+          // props.exemptions.completed[k].code,
+          arrayCheck(k, "completed"),
+          chipMaker(arrayCheck(k, "completed"), "completed")
+          // <Chip label="Complete" rgbcolor={green[500]} />
+        ))
+        k++;
+      }
+
+      var k2 = 0;
+      while (k2 < replInprogressLength) {
+        rows.push(createData(
+          arrayCheckExemptions(k),
+          // props.exemptions.completed[j].code,
+          arrayCheck(k2, "inProgress"),
+          chipMaker(arrayCheck(k2, "inProgress"), "inProgress")
+          // <Chip label="inProgress" rgbcolor={orange[500]} />
+        ))
+        k++;
+        k2++;
+      }
+
+      var k3 = 0;
+      while (k3 < replIncompleteLength) {
+        rows.push(createData(
+          arrayCheckExemptions(k),
+          // props.exemptions.completed[k].code,
+          arrayCheck(k3, "incomplete"),
+          chipMaker(arrayCheck(k3, "incomplete"), "incomplete")
+          // <Chip label="Incomplete" rgbcolor={red[500]} />
+        ))
+        k++;
+        k3++;
+      }
     }
   }
 
@@ -164,7 +273,7 @@ const ExemptionTable = (props) => {
               <TableRow>
                 <TableCell>Exempted Course Name</TableCell>
                 <TableCell>Replacement Course Name</TableCell>
-                <TableCell>Status</TableCell>
+                <TableCell>Replacement Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
