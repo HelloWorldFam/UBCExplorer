@@ -39,9 +39,11 @@ const TableWrapper = styled.div`
 
 // Data
 let id = 0;
-function createData(name, term, year, state, grade, credits) {
+// function createData(name, term, year, state, grade, credits) {
+  function createData(name, term, year, state, credits) {
   id += 1;
-  return { id, name, term, year, state, grade, credits};
+  // return { id, name, term, year, state, grade, credits};
+  return { id, name, term, year, state, credits};
 }
 
 //placeholder data --> createCourses should add to this array
@@ -112,12 +114,37 @@ const rows = [
   )
 ];
 
-//function that creates the data for the rows in the table
-const createCourse = (someData) => {
-  //stub
-};
+const DashboardTable = (props) => {
+  // let rows = [];
 
-const DashboardTable = () => (
+  // if (props.courseBaskets) {
+  //   props.courseBasekts.coreBCS.completed.forEach(element => {
+  //     rows.push(createData(
+  //       element,
+  //       <Chip label="Complete" rgbcolor={green[500]} />
+  //     )
+  //     )
+  //   })
+
+  //   props.courseBasekts.coreBCS.inProgress.forEach(element => {
+  //     rows.push(createData(
+  //       element,
+  //       <Chip label="Inprogress" rgbcolor={orange[500]} />
+  //     )
+  //     )
+  //   })
+
+  //   props.courseBasekets.coreBCS.incomplete.forEach(element => {
+  //     rows.push(createData(
+  //       element,
+  //       <Chip label="Incomplete" rgbcolor={red[500]} />
+  //     )
+  //     )
+  //   })
+  // }
+
+
+return (
   <Card mb={6}>
     <CardHeader
       action={
@@ -136,7 +163,7 @@ const DashboardTable = () => (
               <TableCell>Term</TableCell>
               <TableCell>Year</TableCell>
               <TableCell>State</TableCell>
-              <TableCell>Grade</TableCell>
+              {/* <TableCell>Grade</TableCell> */}
               <TableCell>Credits</TableCell>
             </TableRow>
           </TableHead>
@@ -149,7 +176,7 @@ const DashboardTable = () => (
                 <TableCell>{row.term}</TableCell>
                 <TableCell>{row.year}</TableCell>
                 <TableCell>{row.state}</TableCell>
-                <TableCell>{row.grade}</TableCell>
+                {/* <TableCell>{row.grade}</TableCell> */}
                 <TableCell>{row.credits}</TableCell>
               </TableRow>
             ))}
@@ -159,5 +186,6 @@ const DashboardTable = () => (
     </Paper>
   </Card>
 );
+            }
 
 export default DashboardTable;

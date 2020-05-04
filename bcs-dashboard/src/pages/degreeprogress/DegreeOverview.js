@@ -27,6 +27,7 @@ import BridgingTable from './tablecharts/BridgingTable';
 import DoughnutChart from './tablecharts/DoughnutChart';
 import ExemptionTable from './tablecharts/ExemptionTable';
 import UpperCPSCTable from './tablecharts/UpperCPSCTable';
+import CoopTable from './tablecharts/CoopTable';
 
 const NavLink = React.forwardRef((props, ref) => (
     <RouterNavLink innerRef={ref} {...props} />
@@ -67,6 +68,12 @@ function Overview(props) {
         "completed": [],
         "inProgress": [],
         "incomplete": [],
+    }
+    const coopTerms = {
+        "completed": [],
+        "inProgress": [],
+        "incomplete": [],
+        "required": ["CPSC 298", "CPSC 299", "CPSC 398", "CPSC 399"],
     };
 
     // tags: "Core Course", "Bridging Module", "Upper CPSC", "Exemption", "Exemption Replacement"
@@ -82,7 +89,8 @@ function Overview(props) {
                 }
                 term.courses.map((course) => {
                     // if (coreBCS.required.includes(course.code)) coreBCS[progress()].push(course.code);
-                    if (course.tag === "Exemption Replacement") exemptionReplacement[progress()].push(course.code);
+                    if (coopTerms.required.includes(course.code)) coopTerms[progress()].push(course.code);
+                    else if (course.tag === "Exemption Replacement") exemptionReplacement[progress()].push(course.code);
                     else if (course.tag === "Core Course") coreBCS[progress()].push(course.code);
                     else if (course.tag === "Upper CPSC") upperCPSC[progress()].push(course.code);
                     else if (course.tag === "Bridging Module") bridgMod[progress()].push(course.code);
@@ -148,6 +156,11 @@ function Overview(props) {
     const exemptionPercentComplete = Math.floor(exemptionCoursesComplete / exemptionCourses * 100);
 
     const courses = coreCoursesCompleted + bridgingCoursesCompleted + exemptionCoursesComplete;
+
+    const coopTermsTotal = 4;
+    const coopTermsCompleted = courseBaskets.coopTerms?.completed?.length;
+    const coopTermsRemaining = coopTermsTotal - coopTermsCompleted;
+    const coopPercent = Math.floor(coopTermsCompleted / coopTermsTotal * 100);
 
     return (
          <Card>
@@ -232,6 +245,23 @@ function Overview(props) {
                 </Typography>
 
                 <ExemptionTable exemptions={courseBaskets.exemptions} replacements={courseBaskets.exemptionReplacement} />
+
+                {/* below is for coop graph */}
+                {/* <Divider my={6} />
+                <Typography variant="h6" paragraph >
+                    Coop progress:
+                    </Typography>
+                <Progress percent={coopPercent} />
+
+                <Typography variant="h7" paragraph >
+                    Terms Completed: {coopTermsCompleted} 
+                    <br />
+                    Terms Remaining: {coopTermsRemaining}
+                </Typography>
+
+                <CoopTable coopCourses={courseBaskets.coopTerms} />
+
+                <Divider my={6} /> */}
 
              </CardContent>
          </Card>
@@ -341,6 +371,15 @@ function DegreeOverview() {
         {
             "dept": "ENGL",
             "code": "ENGL 301",
+            "name": "Technical Writing",
+            "desc": "Study of the principles of written communication in general business and professional activities, and practice in the preparation of abstracts, proposals, reports, and correspondence. Not for credit towards the English Major or Minor.",
+            "cred": 3,
+            "tag": "Core Course",
+            "term": "2020W1"
+        },
+        {
+            "dept": "CPSC",
+            "code": "CPSC 298",
             "name": "Technical Writing",
             "desc": "Study of the principles of written communication in general business and professional activities, and practice in the preparation of abstracts, proposals, reports, and correspondence. Not for credit towards the English Major or Minor.",
             "cred": 3,
