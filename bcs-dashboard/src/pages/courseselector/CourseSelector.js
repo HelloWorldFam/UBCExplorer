@@ -260,6 +260,11 @@ function RadioButtonsGroup(props) {
           control={<Radio />}
           label="Exemption"
         />
+        <FormControlLabel
+          value="Exemption Replacement"
+          control={<Radio />}
+          label="Exemption Replacement"
+        />
       </RadioGroup>
     </FormControl>
   );

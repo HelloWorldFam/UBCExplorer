@@ -99,7 +99,6 @@ function createData(name, status) {
 const CoreTable = (props) => {
   let rows = [];
 
-  console.log(props.coreBCS);
   if (props.coreBCS) {
     props.coreBCS.completed.forEach(element => {
       rows.push(createData(

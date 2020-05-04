@@ -137,6 +137,13 @@ const courseSelectorRoutes = {
   component: CourseSelector,
 };
 
+const degreeOverview = {
+  id: "Degree Overview",
+  path: "/bcs/degreeoverview",
+  icon: <GolfCourse />,
+  component: DegreeOverview,
+};
+
 const degreeProgressRoutes = {
   id: "Degree Progress",
   path: "/bcs/degreeprogress",
@@ -491,6 +498,7 @@ export const landing = [landingPageRoutes];
 export const dashboard = [
   dashboardsRoutes,
   courseSelectorRoutes,
+  degreeOverview,
   degreeProgressRoutes,
   // myCoursesRoutes,
   // myToDosRoutes,
@@ -519,6 +527,7 @@ export const mainSearch = [mainSearchRoutes];
 export default [
   dashboardsRoutes,
   courseSelectorRoutes,
+  degreeOverview,
   degreeProgressRoutes,
   // myCoursesRoutes,
   // myToDosRoutes,

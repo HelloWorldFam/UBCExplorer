@@ -16,8 +16,6 @@ import { red, green, orange } from "@material-ui/core/colors";
 
 import { spacing } from "@material-ui/system";
 
-import { MoreVertical } from "react-feather";
-
 const Card = styled(MuiCard)(spacing);
 
 const Chip = styled(MuiChip)`
@@ -42,53 +40,12 @@ function createData(name, status) {
   return { id, name, status};
 }
 
-//placeholder data --> createCourses should add to this array
-/* const rows = [
-  // createData(
-  //   "COGS 300",
-  //   <Chip label="Complete" rgbcolor={green[500]} />
-  // ),
-  // createData(
-  //   "COGS 303",
-  //   <Chip label="Complete" rgbcolor={green[500]} />
-  // )
-];
 
-//function that creates the data for the rows in the table
-const createCourse = (upperCPSC) => {
-  console.log(upperCPSC);
-  if (upperCPSC) {
-    upperCPSC.completed.forEach(element => {
-      rows.push(createData(
-        element,
-        <Chip label="Complete" rgbcolor={green[500]} />
-      )
-      )
-    })
-
-    upperCPSC.inProgress.forEach(element => {
-      rows.push(createData(
-        element,
-        <Chip label="Inprogress" rgbcolor={orange[500]} />
-      )
-      )
-    })
-
-    upperCPSC.incomplete.forEach(element => {
-      rows.push(createData(
-        element,
-        <Chip label="Incomplete" rgbcolor={red[500]} />
-      )
-      )
-    })
-  }
-}; */
-
-const UpperCPSCTable = (props) => {
+const CoopTable = (props) => {
   let rows = [];
-
-  if (props.upperCPSC) {
-    props.upperCPSC.completed.forEach(element => {
+  
+  if (props.coopCourses) {
+    props.coopCourses.completed.forEach(element => {
       rows.push(createData(
         element,
         <Chip label="Complete" rgbcolor={green[500]} />
@@ -96,7 +53,7 @@ const UpperCPSCTable = (props) => {
       )
     })
 
-    props.upperCPSC.inProgress.forEach(element => {
+    props.coopCourses.inProgress.forEach(element => {
       rows.push(createData(
         element,
         <Chip label="Inprogress" rgbcolor={orange[500]} />
@@ -104,7 +61,7 @@ const UpperCPSCTable = (props) => {
       )
     })
 
-    props.upperCPSC.incomplete.forEach(element => {
+    props.coopCourses.incomplete.forEach(element => {
       rows.push(createData(
         element,
         <Chip label="Incomplete" rgbcolor={red[500]} />
@@ -141,4 +98,4 @@ const UpperCPSCTable = (props) => {
   );
 }
 
-export default UpperCPSCTable;
+export default CoopTable;
