@@ -153,7 +153,7 @@ function Overview(props) {
     const exemptionCourses = courseBaskets.exemptions?.completed?.length;
     const exemptionCoursesComplete = courseBaskets.exemptionReplacement?.completed?.length;
     const exemptionCoursesRemaining = exemptionCourses - exemptionCoursesComplete;
-    const exemptionPercentComplete = Math.floor(exemptionCoursesComplete / exemptionCourses * 100);
+    const exemptionPercentComplete = Math.floor(exemptionCoursesComplete / exemptionCourses * 100) || 0;
 
     const courses = coreCoursesCompleted + bridgingCoursesCompleted + exemptionCoursesComplete;
 
@@ -271,141 +271,141 @@ function Overview(props) {
 
 
 function DegreeOverview() {
-    // Commented out temporarily
-    // const [courseResult, setCourseResult] = React.useState([]);
+    const [courseResult, setCourseResult] = React.useState([]);
 
-    // useEffect(() => {
-    //     setCourseResult(() => {
-    //         fetch('/getcourses')
-    //             .then(response => {
-    //                 if (!response) {
-    //                     throw new Error("404: Could not fetch from '/getcourses'")
-    //                 } else {
-    //                     response.json()
-    //                 }
-    //             })
-    //             .then(json => {
-    //                 return setCourseResult(json) // access json.body here
-    //             })
-    //             .catch((err) => {
-    //                 console.log(err);
-    //             });
-    //     });
-    // });
+    useEffect(() => {
+        setCourseResult(() => {
+            fetch('http://localhost:3000/getcourses')
+                .then(response => {
+                    console.log(response);
+                    if (!response) {
+                        throw new Error("404: Could not fetch from '/getcourses'")
+                    } else {
+                        response.json()
+                    }
+                })
+                .then(json => {
+                    return setCourseResult(json) // access json.body here
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        });
+    });
 
 
-    const courseResult = [{
-        "name": "2019W1",
-        "courses": [{
-            "dept": "CPSC",
-            "code": "CPSC 110",
-            "name": "Computation, Programs, and Programming",
-            "desc": "Fundamental program and computation structures. Introductory programming skills. Computation as a tool for information processing, simulation and modelling, and interacting with the world. [3-3-0]",
-            "cred": 4,
-            "tag": "Core Course",
-            "term": "2019W1"
-        }, {
-            "dept": "COGS",
-            "code": "COGS 300",
-            "name": "Understanding and Designing Cognitive Systems",
-            "desc": "Theory and methods for integrating diverse disciplinary content in cognitive systems.",
-            "cred": 3,
-            "tag": "Bridging Module",
-            "term": "2019W1"
-        }, {
-            "dept": "COGS",
-            "code": "COGS 300",
-            "name": "Understanding and Designing Cognitive Systems",
-            "desc": "Theory and methods for integrating diverse disciplinary content in cognitive systems.",
-            "cred": 3,
-            "tag": "Bridging Module",
-            "term": "2019W1"
-        }, {
-            "dept": "PSYC",
-            "code": "PSYC 100",
-            "name": "Understanding and Designing Cognitive Systems",
-            "desc": "Theory and methods for integrating diverse disciplinary content in cognitive systems.",
-            "cred": 3,
-            "tag": "Exemption Replacement",
-            "term": "2019W1"
-        }]
-    }, {
-        "name": "2020W2",
-        "courses": [{
-            "dept": "CPSC",
-            "code": "CPSC 121",
-            "name": "Models of Computation",
-            "desc": "Physical and mathematical structures of computation. Boolean algebra and combinations logic circuits; proof techniques; functions and sequential circuits; sets and relations; finite state machines; sequential instruction execution.",
-            "cred": 4,
-            "tag": "Core Course",
-            "term": "2020W2"
-        }, {
-            "dept": "COGS",
-            "code": "COGS 303 ",
-            "name": "Research Methods in Cognitive Systems",
-            "desc": "Examination and comparison of the research methodologies of different disciplines relevant to cognitive systems.",
-            "cred": 3,
-            "tag": "Bridging Module",
-            "term": "2020W2"
-        }, {
-            "dept": "MICB",
-            "code": "MICB 100",
-            "name": "Understanding and Designing Cognitive Systems",
-            "desc": "Theory and methods for integrating diverse disciplinary content in cognitive systems.",
-            "cred": 3,
-            "tag": "Exemption Replacement",
-            "term": "2020W2"
-        }
-    ]
-    }, {
-        "name": "2020W1",
-        "courses": [{
-            "dept": "CPSC",
-            "code": "CPSC 310",
-            "name": "Introduction to Software Engineering",
-            "desc": "Specification, design, validation, evolution and construction of modern software systems, within the context of socially and professionally relevant domains such as ethics, intellectual property, and information security.",
-            "cred": 4,
-            "tag": "Upper CPSC",
-            "term": "2020W1"
-        },
-        {
-            "dept": "ENGL",
-            "code": "ENGL 301",
-            "name": "Technical Writing",
-            "desc": "Study of the principles of written communication in general business and professional activities, and practice in the preparation of abstracts, proposals, reports, and correspondence. Not for credit towards the English Major or Minor.",
-            "cred": 3,
-            "tag": "Core Course",
-            "term": "2020W1"
-        },
-        {
-            "dept": "CPSC",
-            "code": "CPSC 298",
-            "name": "Technical Writing",
-            "desc": "Study of the principles of written communication in general business and professional activities, and practice in the preparation of abstracts, proposals, reports, and correspondence. Not for credit towards the English Major or Minor.",
-            "cred": 3,
-            "tag": "Core Course",
-            "term": "2020W1"
-        }]
-    }, {
-        "name": "Exemptions",
-        "courses": [{
-            "dept": "ENGL",
-            "code": "ENGL 110",
-            "name": "Approaches to Literature",
-            "desc": "Study of selected examples of poetry, fiction, and drama. Essays are required.",
-            "cred": 3,
-            "tag": "Core Course",
-            "term": "Exemptions"
-        }, {
-            "dept": "MATH 180",
-            "code": "MATH 180",
-            "name": "Approaches to Literature",
-            "desc": "Study of selected examples of poetry, fiction, and drama. Essays are required.",
-            "cred": 3,
-            "tag": "Core Course",
-            "term": "Exemptions"
-        }]
-    }];
+    // const courseResult = [{
+    //     "name": "2019W1",
+    //     "courses": [{
+    //         "dept": "CPSC",
+    //         "code": "CPSC 110",
+    //         "name": "Computation, Programs, and Programming",
+    //         "desc": "Fundamental program and computation structures. Introductory programming skills. Computation as a tool for information processing, simulation and modelling, and interacting with the world. [3-3-0]",
+    //         "cred": 4,
+    //         "tag": "Core Course",
+    //         "term": "2019W1"
+    //     }, {
+    //         "dept": "COGS",
+    //         "code": "COGS 300",
+    //         "name": "Understanding and Designing Cognitive Systems",
+    //         "desc": "Theory and methods for integrating diverse disciplinary content in cognitive systems.",
+    //         "cred": 3,
+    //         "tag": "Bridging Module",
+    //         "term": "2019W1"
+    //     }, {
+    //         "dept": "COGS",
+    //         "code": "COGS 300",
+    //         "name": "Understanding and Designing Cognitive Systems",
+    //         "desc": "Theory and methods for integrating diverse disciplinary content in cognitive systems.",
+    //         "cred": 3,
+    //         "tag": "Bridging Module",
+    //         "term": "2019W1"
+    //     }, {
+    //         "dept": "PSYC",
+    //         "code": "PSYC 100",
+    //         "name": "Understanding and Designing Cognitive Systems",
+    //         "desc": "Theory and methods for integrating diverse disciplinary content in cognitive systems.",
+    //         "cred": 3,
+    //         "tag": "Exemption Replacement",
+    //         "term": "2019W1"
+    //     }]
+    // }, {
+    //     "name": "2020W2",
+    //     "courses": [{
+    //         "dept": "CPSC",
+    //         "code": "CPSC 121",
+    //         "name": "Models of Computation",
+    //         "desc": "Physical and mathematical structures of computation. Boolean algebra and combinations logic circuits; proof techniques; functions and sequential circuits; sets and relations; finite state machines; sequential instruction execution.",
+    //         "cred": 4,
+    //         "tag": "Core Course",
+    //         "term": "2020W2"
+    //     }, {
+    //         "dept": "COGS",
+    //         "code": "COGS 303 ",
+    //         "name": "Research Methods in Cognitive Systems",
+    //         "desc": "Examination and comparison of the research methodologies of different disciplines relevant to cognitive systems.",
+    //         "cred": 3,
+    //         "tag": "Bridging Module",
+    //         "term": "2020W2"
+    //     }, {
+    //         "dept": "MICB",
+    //         "code": "MICB 100",
+    //         "name": "Understanding and Designing Cognitive Systems",
+    //         "desc": "Theory and methods for integrating diverse disciplinary content in cognitive systems.",
+    //         "cred": 3,
+    //         "tag": "Exemption Replacement",
+    //         "term": "2020W2"
+    //     }
+    // ]
+    // }, {
+    //     "name": "2020W1",
+    //     "courses": [{
+    //         "dept": "CPSC",
+    //         "code": "CPSC 310",
+    //         "name": "Introduction to Software Engineering",
+    //         "desc": "Specification, design, validation, evolution and construction of modern software systems, within the context of socially and professionally relevant domains such as ethics, intellectual property, and information security.",
+    //         "cred": 4,
+    //         "tag": "Upper CPSC",
+    //         "term": "2020W1"
+    //     },
+    //     {
+    //         "dept": "ENGL",
+    //         "code": "ENGL 301",
+    //         "name": "Technical Writing",
+    //         "desc": "Study of the principles of written communication in general business and professional activities, and practice in the preparation of abstracts, proposals, reports, and correspondence. Not for credit towards the English Major or Minor.",
+    //         "cred": 3,
+    //         "tag": "Core Course",
+    //         "term": "2020W1"
+    //     },
+    //     {
+    //         "dept": "CPSC",
+    //         "code": "CPSC 298",
+    //         "name": "Technical Writing",
+    //         "desc": "Study of the principles of written communication in general business and professional activities, and practice in the preparation of abstracts, proposals, reports, and correspondence. Not for credit towards the English Major or Minor.",
+    //         "cred": 3,
+    //         "tag": "Core Course",
+    //         "term": "2020W1"
+    //     }]
+    // }, {
+    //     "name": "Exemptions",
+    //     "courses": [{
+    //         "dept": "ENGL",
+    //         "code": "ENGL 110",
+    //         "name": "Approaches to Literature",
+    //         "desc": "Study of selected examples of poetry, fiction, and drama. Essays are required.",
+    //         "cred": 3,
+    //         "tag": "Core Course",
+    //         "term": "Exemptions"
+    //     }, {
+    //         "dept": "MATH 180",
+    //         "code": "MATH 180",
+    //         "name": "Approaches to Literature",
+    //         "desc": "Study of selected examples of poetry, fiction, and drama. Essays are required.",
+    //         "cred": 3,
+    //         "tag": "Core Course",
+    //         "term": "Exemptions"
+    //     }]
+    // }];
 
     return (
         <React.Fragment>
