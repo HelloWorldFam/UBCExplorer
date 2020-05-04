@@ -275,9 +275,8 @@ function DegreeOverview() {
 
     useEffect(() => {
         setCourseResult(() => {
-            fetch('http://localhost:3000/getcourses')
+            fetch('/getcourses')
                 .then(response => {
-                    console.log(response);
                     if (!response) {
                         throw new Error("404: Could not fetch from '/getcourses'")
                     } else {
