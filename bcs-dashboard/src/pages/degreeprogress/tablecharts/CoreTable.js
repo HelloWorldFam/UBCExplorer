@@ -83,14 +83,21 @@ const CoreTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map(row => (
-                <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell>{row.status}</TableCell>
-                </TableRow>
-              ))}
+              {rows.length > 0 ?
+                rows.map(row => (
+                  <TableRow key={row.id}>
+                    <TableCell component="th" scope="row">
+                      {row.name}
+                    </TableCell>
+                    <TableCell>{row.status}</TableCell>
+                  </TableRow>
+                )) :
+                (
+                  <TableRow key="no courses">
+                    <TableCell>You have no courses here.</TableCell>
+                    <TableCell>-</TableCell>
+                  </TableRow>
+                )}
             </TableBody>
           </Table>
         </TableWrapper>

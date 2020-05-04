@@ -53,9 +53,6 @@ const ExemptionTable = (props) => {
 
     const exLength = props.exemptions.completed?.length;
 
-    console.log("EXEMPTIONS: " + props.exemptions.completed?.length)
-    console.log("REPLACEMENTS: " + replTotalLength)
-
     const arrayCheck = (i, status) => {
       if (status === "completed") {
         return (props.replacements?.completed[i] || "-");
@@ -67,7 +64,7 @@ const ExemptionTable = (props) => {
     }
 
     const arrayCheckExemptions = (i) => {
-        return (props.exemptions?.completed[i]?.code || "-");
+      return (props.exemptions?.completed[i]?.code || "-");
     }
 
     const chipMaker = (boolean, status) => {
@@ -201,15 +198,23 @@ const ExemptionTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map(row => (
-                <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell>{row.replacement}</TableCell>
-                  <TableCell>{row.status}</TableCell>
-                </TableRow>
-              ))}
+              {rows.length > 0 ?
+                rows.map(row => (
+                  <TableRow key={row.id}>
+                    <TableCell component="th" scope="row">
+                      {row.name}
+                    </TableCell>
+                    <TableCell>{row.replacement}</TableCell>
+                    <TableCell>{row.status}</TableCell>
+                  </TableRow>
+                )) :
+                (
+                  <TableRow key="no courses">
+                    <TableCell>You have no courses here.</TableCell>
+                    <TableCell>-</TableCell>
+                    <TableCell>-</TableCell>
+                  </TableRow>
+                )}
             </TableBody>
           </Table>
         </TableWrapper>
