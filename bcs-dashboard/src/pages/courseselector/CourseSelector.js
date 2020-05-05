@@ -57,7 +57,6 @@ export const TaskWrapper = styled(Card)`
   border: 1px solid ${(props) => props.theme.palette.grey[300]};
   background: ${(props) => props.theme.body.background};
   margin-bottom: ${(props) => props.theme.spacing(4)}px;
-  cursor: grab;
 `;
 
 const SearchWrapper = styled(Card)`
@@ -510,6 +509,7 @@ function CourseSelector() {
   const [courseToAdd, setCourseToAdd] = useState({});
   const [usersCourseArray, setUsersCourseArray] = useState([-1]);
   const [windowHeight, setWindowHeight] = useState(0);
+  const MAX_HEIGHT = windowHeight - 230;
 
   const onContainerReady = (container) => {
     setContainers(containers.push(container));
@@ -562,7 +562,7 @@ function CourseSelector() {
       <Divider my={6} />
 
       <Grid container spacing={6}>
-        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: windowHeight - 225, overflow: 'auto' }}>
+        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: MAX_HEIGHT, overflow: 'auto' }}>
           <Lane
             title="Search"
             description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
@@ -574,7 +574,7 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: windowHeight - 225, overflow: 'auto' }}>
+        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: MAX_HEIGHT, overflow: 'auto' }}>
           <Lane
             title="Prerequisite / Corequisite Courses"
             description="Selected course's prerequisites and corequisites."
@@ -585,7 +585,7 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: windowHeight - 225, overflow: 'auto' }}>
+        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: MAX_HEIGHT, overflow: 'auto' }}>
           <Lane
             title="Dependent Courses"
             description="Courses that list this course as a direct prerequisite."
@@ -596,7 +596,7 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: windowHeight - 95, overflow: 'auto' }}>
+        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: MAX_HEIGHT, overflow: 'auto' }}>
           <Lane
             title="Your Degree"
             description="The courses that you have added to your worklist."
