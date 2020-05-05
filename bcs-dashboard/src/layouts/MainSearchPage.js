@@ -113,7 +113,7 @@ function SearchResultCard(props) {
     <TaskWrapper mb={4}>
       <Tooltip
         title={tooltipText(props.course, average)}
-        placement="right"
+        placement="right-start"
         arrow
       >
         <TaskWrapperContent>
@@ -412,9 +412,14 @@ function MainSearchPage() {
                   <b>Welcome to the UBC Explorer - Course Search</b>
                   <br />
                   The course search tool is created to enable a seamless, fast
-                  course search experience. <b>Desktop users: </b>Hover over a
-                  course to see information about prerequisites and historical
-                  grade averages. <b>Mobile users: </b>
+                  course search experience.
+                  <br />
+                  <br />
+                  <b>Desktop users:</b> Hover over a course to see information
+                  about prerequisites and historical grade averages.
+                  <br />
+                  <br />
+                  <b>Mobile users: </b>
                   press and hold on a course to see the same information. <br />
                   <br />
                   <b>Getting Started</b>
