@@ -170,7 +170,7 @@ function SearchCard(props) {
 
   const handleClick = (courseInfo) => {
     axios
-      .get("http://localhost:3000/getCourseInfo/" + courseInfo)
+      .get("/getCourseInfo/" + courseInfo)
       .then((res) => {
         setDesc(res.data.desc);
         setCred("");
@@ -227,7 +227,7 @@ function PrerequisitesCard(props) {
 
   const getCourseInfo = (course) => {
     axios
-      .get("http://localhost:3000/getCourseInfo/" + course)
+      .get("/getCourseInfo/" + course)
       .then((res) => {
         if (res.data.desc) {
           setCourseListToDisplay((courseListToDisplay) =>
@@ -270,7 +270,7 @@ function DependenciesCard(props) {
     if (dependencies) {
       for (let course of dependencies) {
         axios
-          .get("http://localhost:3000/getCourseInfo/" + course)
+          .get("/getCourseInfo/" + course)
           .then((res) => {
             if (res.data.desc) {
               setCourseListToDisplay((courseListToDisplay) =>
