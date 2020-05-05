@@ -13,9 +13,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Select from "@material-ui/core/Select";
 import Helmet from "react-helmet";
-import dragula from "react-dragula";
 import "react-dragula/dist/dragula.css";
 import SearchComponent from "./SearchComponent";
+import { YourDegreeCard } from "./components/YourDegreeCard";
 
 import {
   Breadcrumbs as MuiBreadcrumbs,
@@ -31,7 +31,6 @@ import {
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
-import DeleteIcon from "@material-ui/icons/Delete";
 
 const NavLink = React.forwardRef((props, ref) => (
   <RouterNavLink innerRef={ref} {...props} />
@@ -45,15 +44,15 @@ const TextField = styled(TextFieldSpacing)`
   padding-bottom: 5px;
 `;
 
-const Card = styled(MuiCard)`
+export const Card = styled(MuiCard)`
   overflow: visible;
 `;
 
-const Divider = styled(MuiDivider)(spacing);
+export const Divider = styled(MuiDivider)(spacing);
 
 const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
-const TaskWrapper = styled(Card)`
+export const TaskWrapper = styled(Card)`
   border: 1px solid ${(props) => props.theme.palette.grey[300]};
   background: ${(props) => props.theme.body.background};
   margin-bottom: ${(props) => props.theme.spacing(4)}px;
@@ -69,15 +68,22 @@ const Centered = styled.div`
   text-align: center;
 `;
 
-const TaskWrapperContent = styled(CardContent)`
+export const TaskWrapperContent = styled(CardContent)`
   &:last-child {
     padding-bottom: ${(props) => props.theme.spacing(4)}px;
   }
 `;
 
-const Typography = styled(MuiTypography)(spacing);
+export const Typography = styled(MuiTypography)(spacing);
 
-class Lane extends React.Component {
+const Avatar = styled(MuiAvatar)`
+  float: right;
+  margin-left: ${(props) => props.theme.spacing(1)}px;
+  height: 32px;
+  width: 32px;
+`;
+
+export class Lane extends React.Component {
   handleContainerLoaded = (container) => {
     if (container) {
       this.props.onContainerLoaded(container);
@@ -85,7 +91,7 @@ class Lane extends React.Component {
   };
 
   render() {
-    const { title, description, children } = this.props;
+    const { title, className, description, children } = this.props;
 
     return (
       <Card mb={6}>
@@ -97,7 +103,7 @@ class Lane extends React.Component {
             {description}
           </Typography>
           <div
-            className={title}
+            className={className}
             termid={this.props.termId}
             style={{ minHeight: "20px" }}
             ref={this.handleContainerLoaded}
@@ -386,148 +392,6 @@ function TermDropDown(props) {
       </FormHelperText>
     </FormControl>
   );
-}
-
-function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
-  /**
-   * Use containers state to keep track of the terms
-   */
-  const [containers, setContainers] = useState([]);
-
-  /**
-   * Helper function to push container to containers state
-   * @param {Object} container - used by Dragula to define "baskets" in which to contain courses
-   */
-  const onContainerReady = (container) => {
-    containers.push(container);
-  };
-
-  useEffect(() => {
-    setContainers((containers) => [...containers]);
-  }, []);
-
-  useEffect(() => {
-    const drake = dragula(containers);
-    drake.on("drop", function (el, container) {
-      el.style.backgroundColor = "#e6e6e6";
-      var newCourse;
-      const removeCourse = () => {
-        usersCourseArray.map((term) => {
-          if (term.name === el.getAttribute("term")) {
-            term.courses.map((course, courseIndex) => {
-              if (el.getAttribute("courseid") === course.code) {
-                newCourse = term.courses.splice(courseIndex, 1);
-              }
-            });
-          }
-        });
-      };
-      removeCourse();
-      usersCourseArray[container.getAttribute("termid")].courses.push(
-        newCourse[0]
-      );
-      drake.cancel(true);
-      setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);
-    });
-  }, [usersCourseArray]);
-
-  /**
-   * Returns a delete button for each term so that user can remove term from worklist
-   * @param {String} name
-   * @param {Number} index
-   */
-  const getLaneTitle = (name, index) => {
-    return (
-      <>
-        {name}
-        <Button
-          style={{
-            minWidth: "30px",
-            color: "#bf0a0a",
-            padding: "0",
-            float: "right",
-          }}
-          onClick={() => {
-            usersCourseArray.splice(index, 1);
-            setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);
-          }}
-        >
-          <DeleteIcon
-            style={{
-              width: ".7em",
-              height: ".7em",
-            }}
-          />
-        </Button>
-      </>
-    );
-  };
-
-  if (usersCourseArray[0] != -1) {
-    return (
-      <>
-        {usersCourseArray.map((term, termIndex) => {
-          return (
-            <>
-              <TaskWrapper mb={4}>
-                <TaskWrapperContent>
-                  <Lane
-                    title={getLaneTitle(term.name, termIndex)}
-                    className={term.name}
-                    termId={termIndex}
-                    description=""
-                    onContainerLoaded={onContainerReady}
-                  >
-                    {term.courses.map((course, courseIndex) => {
-                      return (
-                        <>
-                          <Card
-                            style={{
-                              margin: "5px 5px 5px 0",
-                              padding: "10px",
-                              display: "inline-block",
-                              backgroundColor: "#e6e6e6",
-                            }}
-                            courseid={course.code}
-                            term={term.name}
-                            key={`${termIndex}_${courseIndex}`}
-                          >
-                            {course.code}
-                            <Button
-                              style={{
-                                minWidth: "30px",
-                                color: "#bf0a0a",
-                                padding: "0",
-                              }}
-                              onClick={() => {
-                                term.courses.splice(courseIndex, 1);
-                                setUsersCourseArray((usersCourseArray) => [
-                                  ...usersCourseArray,
-                                ]);
-                              }}
-                            >
-                              x
-                            </Button>
-                          </Card>
-                        </>
-                      );
-                    })}
-                  </Lane>
-                </TaskWrapperContent>
-              </TaskWrapper>
-            </>
-          );
-        })}
-      </>
-    );
-  } else
-    return (
-      <>
-        <Divider></Divider>
-        <br />
-        <Typography>You have no courses.</Typography>
-      </>
-    );
 }
 
 function PrerequisitesCard(props) {

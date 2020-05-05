@@ -1,14 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const Courses = require("./models/courses.model");
-const Users = require("./models/users.model");
+const Courses = require("./models/courses.model.js");
+const Users = require("./models/users.model.js");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const findOrCreate = require("mongoose-findorcreate");
 const FacebookStrategy = require("passport-facebook");
-const GoogleOauthProduction = require("./helpers/GoogleOauthProduction");
-const GoogleOauthTest = require("./helpers/GoogleOauthTest");
+const GoogleOauthTest = require("./helpers/GoogleOauthTest.js");
+const GoogleOauth20Strategy = require("passport-google-oauth20");
 const TwitterStrategy = require("passport-twitter");
 const path = require("path");
 const keepDynoAwake = require("./helpers/keepDynoAwake");
@@ -57,6 +57,33 @@ app.use(passport.session()); // Used to persist login sessions
 //       return done(err, user);
 //     })
 //   }));
+
+const GoogleOauthProduction = new GoogleOauth20Strategy(
+  {
+    clientID:
+      "610240877212-muh7g8rvb1pficemikp3r3vdfaobgo9f.apps.googleusercontent.com",
+    clientSecret: "MpRbTT5AssctwpN0Id0GHIwe",
+    callbackURL: "https://ubcexplorer.io/auth/google/callback",
+  },
+  function (accessToken, refreshToken, profile, done) {
+    console.log(profile);
+    Users.findOrCreate(
+      { email: profile.emails[0].value },
+      {
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
+        courses: [],
+      },
+      function (err, user) {
+        // Updates user picture upon each auth session
+        user.picture = profile._json.picture;
+        user.save();
+        // auth complete
+        return done(err, user);
+      }
+    );
+  }
+);
 
 passport.use(
   process.env.NODE_ENV === 'production'
