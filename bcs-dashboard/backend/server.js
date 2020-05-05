@@ -68,7 +68,7 @@ app.use(passport.session()); // Used to persist login sessions
 //   }));
 
 passport.use(
-  process.env.NODE_ENV = 'production'
+  process.env.NODE_ENV === 'production'
   ? GoogleOauthProduction
   : GoogleOauthTest);
 
