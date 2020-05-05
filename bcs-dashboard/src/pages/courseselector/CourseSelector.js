@@ -201,7 +201,7 @@ function SearchCard(props) {
 
   const handleClick = (courseInfo) => {
     axios
-      .get("/getCourseInfo/" + courseInfo)
+      .get((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + courseInfo)
       .then((res) => {
         setCode(courseInfo);
         setDesc(res.data.desc);
@@ -413,7 +413,7 @@ function PrerequisitesCard(props) {
 
   const getCourseInfo = (course) => {
     axios
-      .get("/getCourseInfo/" + course)
+      .get((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
       .then((res) => {
         if (res.data.desc) {
           setCourseListToDisplay((courseListToDisplay) =>
@@ -456,7 +456,7 @@ function DependenciesCard(props) {
     if (dependencies) {
       for (let course of dependencies) {
         axios
-          .get("/getCourseInfo/" + course)
+          .get((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
           .then((res) => {
             if (res.data.desc) {
               setCourseListToDisplay((courseListToDisplay) =>
@@ -557,13 +557,13 @@ function CourseSelector() {
 
   useEffect(() => {
     if (usersCourseArray && usersCourseArray[0] !== -1) {
-      axios.post("/updateUserWorkList", usersCourseArray).then(() => {});
+      axios.post((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/updateUserWorkList", usersCourseArray).then(() => { });
     }
   }, [usersCourseArray]);
 
   useEffect(() => {
     axios
-      .get("/userdata")
+      .get((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/userdata")
       .then((res) => {
         setUsersCourseArray(res.data[0].courses);
       })

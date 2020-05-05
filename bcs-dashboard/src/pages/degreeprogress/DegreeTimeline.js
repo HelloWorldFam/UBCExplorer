@@ -112,7 +112,7 @@ function DegreeTimeline() {
     }]);
 
     useEffect(() => {
-        fetch('/getcourses')
+        fetch((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getcourses")
             .then(response => response.json())
             .then(json => {
                 setCourseResult(json); // access json.body here
