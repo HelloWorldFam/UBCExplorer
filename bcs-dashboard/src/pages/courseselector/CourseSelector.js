@@ -146,7 +146,7 @@ function SearchCard(props) {
 
   const handleClick = (courseInfo) => {
     axios
-      .get("/getCourseInfo/" + courseInfo)
+      .get("http://localhost:3000/getCourseInfo/" + courseInfo)
       .then((res) => {
         setCode(courseInfo);
         setDesc(res.data.desc);
@@ -352,7 +352,7 @@ function PrerequisitesCard(props) {
 
   const getCourseInfo = (course) => {
     axios
-      .get("/getCourseInfo/" + course)
+      .get("http://localhost:3000/getCourseInfo/" + course)
       .then((res) => {
         let courseToDisplay = {
           title: res.data.code,
@@ -406,7 +406,7 @@ function DependenciesCard(props) {
     if (dependencies) {
       for (let course of dependencies) {
         axios
-          .get("/getCourseInfo/" + course)
+          .get("http://localhost:3000/getCourseInfo/" + course)
           .then((res) => {
             let courseToDisplay = {
               title: res.data.code,
@@ -509,6 +509,7 @@ function CourseSelector() {
   const [selectedCourse, setSelectedCourse] = useState({});
   const [courseToAdd, setCourseToAdd] = useState({});
   const [usersCourseArray, setUsersCourseArray] = useState([-1]);
+  const [windowHeight, setWindowHeight] = useState(0);
 
   const onContainerReady = (container) => {
     setContainers(containers.push(container));
@@ -529,7 +530,13 @@ function CourseSelector() {
       .catch((err) => {
         console.log(err);
       });
+      window.addEventListener('resize', updateWindowDimensions);
+      updateWindowDimensions();
   }, []);
+
+  const updateWindowDimensions = () => {
+    setWindowHeight(window.innerHeight);
+  }
 
   useEffect(() => {
     if (courseToAdd.code != null) {
@@ -555,7 +562,7 @@ function CourseSelector() {
       <Divider my={6} />
 
       <Grid container spacing={6}>
-        <Grid item xs={12} lg={6} xl={3}>
+        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: windowHeight - 225, overflow: 'auto' }}>
           <Lane
             title="Search"
             description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
@@ -567,7 +574,7 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3}>
+        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: windowHeight - 225, overflow: 'auto' }}>
           <Lane
             title="Prerequisite / Corequisite Courses"
             description="Selected course's prerequisites and corequisites."
@@ -578,7 +585,7 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3}>
+        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: windowHeight - 225, overflow: 'auto' }}>
           <Lane
             title="Dependent Courses"
             description="Courses that list this course as a direct prerequisite."
@@ -589,7 +596,7 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3}>
+        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: windowHeight - 95, overflow: 'auto' }}>
           <Lane
             title="Your Degree"
             description="The courses that you have added to your worklist."
