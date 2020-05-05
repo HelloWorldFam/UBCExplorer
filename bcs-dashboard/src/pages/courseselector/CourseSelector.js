@@ -31,7 +31,6 @@ import {
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
-
 import DeleteIcon from "@material-ui/icons/Delete";
 
 const NavLink = React.forwardRef((props, ref) => (
