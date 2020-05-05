@@ -42,14 +42,6 @@ const UsersSchema = new Schema({
 }).plugin(findOrCreate);
 const Users = mongoose.model("Users", UsersSchema);
 
-const CourseSchema = new Schema({
-  code: String,
-  name: String,
-  cred: String,
-  desc: String
-}).plugin(findOrCreate);
-const Courses = mongoose.model('Courses', CourseSchema);
-
 // cookieSession config
 app.use(
   cookieSession({
@@ -80,6 +72,36 @@ passport.use(
         "610240877212-muh7g8rvb1pficemikp3r3vdfaobgo9f.apps.googleusercontent.com",
       clientSecret: "MpRbTT5AssctwpN0Id0GHIwe",
       callbackURL: "https://ubcexplorer.io/auth/google/callback",
+    },
+    function (accessToken, refreshToken, profile, done) {
+      console.log(profile);
+      Users.findOrCreate(
+        { email: profile.emails[0].value },
+        {
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
+          courses: [],
+        },
+        function (err, user) {
+          // Updates user picture upon each auth session
+          user.picture = profile._json.picture;
+          user.save();
+          // auth complete
+          return done(err, user);
+        }
+      );
+    }
+  )
+);
+
+// Testing credentials
+passport.use(
+  new GoogleOauth20Strategy(
+    {
+      clientID:
+        "610240877212-f8024mt2n5gpc599ljnbv6n3fi0luevi.apps.googleusercontent.com",
+      clientSecret: "GV5YeO-Rm8r3fH6etv3nddjx",
+      callbackURL: "http://localhost:3000/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
       console.log(profile);

@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from "styled-components";
 import { NavLink as RouterNavLink } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 
 // Vertical Timeline (Scrolling) component
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
@@ -151,6 +152,27 @@ function DegreeTimeline() {
 export default DegreeTimeline;
 
 function tooltipText(course) {
+    // const updatePrer = (course) => {
+    //     axios.get("/getCourseInfo/" + course.code)
+    //         .then((res) => {
+    //             console.log(res);
+    //             return res.data.prer;
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         })
+    // }
+
+    // const updateCrer = (course) => {
+    //     axios.get("/getCourseInfo/" + course.code)
+    //         .then((res) => {
+    //             return res.data.crer;
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         })
+    // }
+
     return (
         <>
             <h3>Name: {course.name}</h3>
