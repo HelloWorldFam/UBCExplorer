@@ -15,10 +15,10 @@ import {
   CardContent,
   Grid,
   Typography as MuiTypography,
+  Tooltip
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
-import { Link } from "react-router-dom";
 
 const Card = styled(MuiCard)`
 overflow:visible;
@@ -76,7 +76,7 @@ class Lane extends React.Component {
   }
 }
 
-function SearchResultCard(props) {
+function InformationCard(props) {
   return (
     <TaskWrapper mb={4}>
       <TaskWrapperContent>
@@ -96,21 +96,85 @@ function SearchResultCard(props) {
   );
 }
 
+function SearchResultCard(props) {
+  const [average, setAverage] = useState({});
+
+  useEffect(() => {
+    if (props.course.code) {
+      let toSearch = props.course.code.split(" ");
+      axios
+        .get(
+          `https://ubcgrades.com/api/course-profile/${toSearch[0]}/${toSearch[1]}`
+        )
+        .then((res) => {
+          setAverage(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [props.course.code]);
+
+  return (
+    <TaskWrapper mb={4}>
+      <Tooltip
+        title={tooltipText(props.course, average)}
+        placement="right"
+        arrow
+      >
+        <TaskWrapperContent>
+          <Typography variant="h6" align="left">
+            {props.title}
+            <br />
+            {props.course.name ? props.course.name : props.name}
+          </Typography>
+          <Typography variant="body2" mb={3}>
+            {
+              <p align="left">
+                {props.course.desc ? props.course.desc : props.desc}
+              </p>
+            }
+          </Typography>
+        </TaskWrapperContent>
+      </Tooltip>
+    </TaskWrapper>
+  );
+}
+
+function tooltipText(course, average) {
+  return (
+    <>
+      {course.name ? <h3>Name: {course.name}</h3> : ""}
+      {course.cred ? <h3>Credits: {course.cred}</h3> : ""}
+      {course.prer ? <h3>Pre-reqs: {course.prer}</h3> : ""}
+      {course.crer ? <h3>Co-reqs: {course.crer}</h3> : ""}
+      {average.average ? <h3>Historical average: {average.average}%</h3> : ""}
+      {average.high ? <h3>High: {average.high}%</h3> : ""}
+      {average.low ? <h3>Low: {average.low}%</h3> : ""}
+      {average.pass_percent ? (
+        <h3>Pass percent: {average.pass_percent}%</h3>
+      ) : (
+        ""
+      )}
+    </>
+  );
+}
+
 function SearchCard(props) {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [cred, setCred] = useState("");
+  const [course, setCourse] = useState({});
   const [title, setTitle] = useState("Search results will appear here.");
 
   const handleClick = (courseInfo) => {
     axios
-      .get("/getCourseInfo/" + courseInfo)
+      .get("http://localhost:3000/getCourseInfo/" + courseInfo)
       .then((res) => {
         setDesc(res.data.desc);
         setCred("");
         setCred(res.data.cred);
         setName(res.data.name);
         setTitle(courseInfo);
+        setCourse(res.data);
         props.onChange(res.data);
       })
       .catch((err) => console.log(err));
@@ -122,7 +186,7 @@ function SearchCard(props) {
         <SearchComponent onChange={handleClick} />
         <br />
         <Centered>
-          <SearchResultCard title={title} name={name} desc={desc} cred={cred} />
+          <SearchResultCard title={title} name={name} desc={desc} cred={cred} course={course} />
         </Centered>
       </TaskWrapperContent>
     </SearchWrapper>
@@ -154,17 +218,11 @@ function PrerequisitesCard(props) {
 
   const getCourseInfo = (course) => {
     axios
-      .get("/getCourseInfo/" + course)
+      .get("http://localhost:3000/getCourseInfo/" + course)
       .then((res) => {
-        let courseToDisplay = {
-          title: res.data.code,
-          name: res.data.name,
-          desc: res.data.desc,
-          cred: res.data.cred,
-        };
-        if (courseToDisplay.desc) {
+        if (res.data.desc) {
           setCourseListToDisplay((courseListToDisplay) =>
-            courseListToDisplay.concat(courseToDisplay)
+            courseListToDisplay.concat(res.data)
           );
         }
       })
@@ -174,28 +232,21 @@ function PrerequisitesCard(props) {
   return (
     <div>
       {prereqDescription && (
-        <SearchResultCard
+        <InformationCard
           title="Prerequisite Information:"
           name=""
           desc={prereqDescription}
         />
       )}
       {coreqDescription && (
-        <SearchResultCard
+        <InformationCard
           title="Corequisite Information:"
           name=""
           desc={coreqDescription}
         />
       )}
       {courseListToDisplay.map((course) => {
-        return (
-          <SearchResultCard
-            title={course.title}
-            name={course.name}
-            desc={course.desc}
-            cred={course.cred}
-          />
-        );
+        return <SearchResultCard course={course} title={course.code} />;
       })}
     </div>
   );
@@ -210,17 +261,11 @@ function DependenciesCard(props) {
     if (dependencies) {
       for (let course of dependencies) {
         axios
-          .get("/getCourseInfo/" + course)
+          .get("http://localhost:3000/getCourseInfo/" + course)
           .then((res) => {
-            let courseToDisplay = {
-              title: res.data.code,
-              name: res.data.name,
-              desc: res.data.desc,
-              cred: res.data.cred,
-            };
-            if (courseToDisplay.desc) {
+            if (res.data.desc) {
               setCourseListToDisplay((courseListToDisplay) =>
-                courseListToDisplay.concat(courseToDisplay)
+                courseListToDisplay.concat(res.data)
               );
             }
           })
@@ -232,14 +277,7 @@ function DependenciesCard(props) {
   return (
     <div>
       {courseListToDisplay.map((course) => {
-        return (
-          <SearchResultCard
-            title={course.title}
-            name={course.name}
-            desc={course.desc}
-            cred={course.cred}
-          />
-        );
+        return <SearchResultCard course={course} title={course.code} />;
       })}
     </div>
   );
