@@ -106,9 +106,9 @@ class Dashboard extends React.Component {
           <MainContent p={isWidthUp("lg", width) ? 10 : 5}>
             {children}
           </MainContent>
-          <Footer />
+          {/* <Footer /> */}
         </AppContent>
-        <Settings />
+        {/* <Settings /> */}
       </Root>
     );
   }
