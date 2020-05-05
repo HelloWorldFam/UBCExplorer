@@ -88,9 +88,6 @@ function InformationCard(props) {
         <Typography variant="body2" mb={3}>
           {<p align="left">{props.desc}</p>}
         </Typography>
-        <Typography variant="body2" mb={3} align="left">
-          {<p align="left">{props.cred ? "Credits: " + props.cred : ""}</p>}
-        </Typography>
       </TaskWrapperContent>
     </TaskWrapper>
   );
@@ -133,6 +130,9 @@ function SearchResultCard(props) {
               </p>
             }
           </Typography>
+          <Typography variant="body2" mb={3} align="left">
+          {<p align="left">{props.course.cred ? "Credits: " + props.course.cred : ""}</p>}
+        </Typography>
         </TaskWrapperContent>
       </Tooltip>
     </TaskWrapper>
@@ -391,7 +391,9 @@ function MainSearchPage() {
                   <b>Welcome to the UBC Explorer - Course Search</b>
                   <br />
                   The course search tool is created to enable a seamless, fast
-                  course search experience. <br />
+                  course search experience. <b>Desktop users: </b>Hover over a course to see 
+                  information about prerequisites and historical grade averages. <b>Mobile users: </b>
+                  press and hold on a course to see the same information. <br />
                   <br />
                   <b>Getting Started</b>
                   <br />
