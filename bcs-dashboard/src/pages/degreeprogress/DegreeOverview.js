@@ -172,7 +172,6 @@ function Overview(props) {
                     Overall progress through BCS Degree:
                 </Typography>
 
-                {/* This is using @material-ui*/}
                 <DoughnutChart coreCoursesCompleted={coreCoursesCompleted}
                     coreCoursesRemaining={coreCoursesRemaining}
                     bridgingCoursesCompleted={bridgingCoursesCompleted}
@@ -188,7 +187,6 @@ function Overview(props) {
                 <Typography variant="h6" paragraph >
                     Core BCS course progress:
                 </Typography>
-                {/* Used Progress bar #1 */}
                 <Progress percent={corePercentComplete} />
 
 
@@ -204,7 +202,6 @@ function Overview(props) {
                 <Typography variant="h6" paragraph >
                     Bridging Module course progress:
                     </Typography>
-                {/* Used Progress bar #1 */}
                 <Progress percent={bridgingPercentComplete} />
 
                 <Typography variant="h7" paragraph >
@@ -220,7 +217,6 @@ function Overview(props) {
                 <Typography variant="h6" paragraph >
                     Upper CPSC course progress:
                     </Typography>
-                {/* Used Progress bar #1 */}
                 <Progress percent={upperCPSCPercentComplete} />
 
 
@@ -236,7 +232,6 @@ function Overview(props) {
                 <Typography variant="h6" paragraph >
                     Exemption replacement progress:
                     </Typography>
-                {/* Used Progress bar #1 */}
                 <Progress percent={exemptionPercentComplete} />
                 <Typography variant="h7" paragraph >
                     Courses Completed: {exemptionCoursesComplete} <br />
