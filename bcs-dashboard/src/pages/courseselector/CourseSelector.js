@@ -18,7 +18,6 @@ import SearchComponent from "./SearchComponent";
 import { YourDegreeCard } from "./components/YourDegreeCard";
 
 import {
-  Avatar as MuiAvatar,
   Breadcrumbs as MuiBreadcrumbs,
   Button,
   Card as MuiCard,
@@ -27,11 +26,11 @@ import {
   Grid,
   Link,
   TextField as MuiTextField,
+  Tooltip,
   Typography as MuiTypography,
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
-
 
 const NavLink = React.forwardRef((props, ref) => (
   <RouterNavLink innerRef={ref} {...props} />
@@ -57,7 +56,6 @@ export const TaskWrapper = styled(Card)`
   border: 1px solid ${(props) => props.theme.palette.grey[300]};
   background: ${(props) => props.theme.body.background};
   margin-bottom: ${(props) => props.theme.spacing(4)}px;
-  cursor: grab;
 `;
 
 const SearchWrapper = styled(Card)`
@@ -118,7 +116,7 @@ export class Lane extends React.Component {
   }
 }
 
-function SearchResultCard(props) {
+function InformationCard(props) {
   return (
     <TaskWrapper mb={4}>
       <TaskWrapperContent>
@@ -135,6 +133,68 @@ function SearchResultCard(props) {
   );
 }
 
+function SearchResultCard(props) {
+  const [average, setAverage] = useState({});
+
+  useEffect(() => {
+    if (props.course.code) {
+      let toSearch = props.course.code.split(" ");
+      axios
+        .get(
+          `https://ubcgrades.com/api/course-profile/${toSearch[0]}/${toSearch[1]}`
+        )
+        .then((res) => {
+          setAverage(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [props.course.code]);
+
+  return (
+    <TaskWrapper mb={4}>
+      <Tooltip
+        title={tooltipText(props.course, average)}
+        placement="right"
+        arrow
+      >
+        <TaskWrapperContent>
+          <Typography variant="h6" align="left">
+            {props.title}
+            <br />
+            {props.course.name ? props.course.name : props.name}
+          </Typography>
+          <Typography variant="body2" mb={3}>
+            {
+              <p align="left">
+                {props.course.desc ? props.course.desc : props.desc}
+              </p>
+            }
+          </Typography>
+        </TaskWrapperContent>
+      </Tooltip>
+    </TaskWrapper>
+  );
+}
+
+function tooltipText(course, average) {
+  return (
+    <>
+      {course.name ? <h3>Name: {course.name}</h3> : ""}
+      {course.cred ? <h3>Credits: {course.cred}</h3> : ""}
+      {course.prer ? <h3>Pre-reqs: {course.prer}</h3> : ""}
+      {course.crer ? <h3>Co-reqs: {course.crer}</h3> : ""}
+      {average.average ? <h3>Historical average: {average.average}%</h3> : ""}
+      {average.high ? <h3>High: {average.high}%</h3> : ""}
+      {average.low ? <h3>Low: {average.low}%</h3> : ""}
+      {average.pass_percent ? (
+        <h3>Pass percent: {average.pass_percent}%</h3>
+      ) : (
+        ""
+      )}
+    </>
+  );
+}
+
 function SearchCard(props) {
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
@@ -143,6 +203,7 @@ function SearchCard(props) {
   const [title, setTitle] = useState("Search results will appear here.");
   const [tag, setTag] = useState("");
   const [term, setTerm] = useState("");
+  const [course, setCourse] = useState({});
 
   const handleClick = (courseInfo) => {
     axios
@@ -154,6 +215,7 @@ function SearchCard(props) {
         setCred(res.data.cred);
         setName(res.data.name);
         setTitle(courseInfo);
+        setCourse(res.data);
         props.onChange(res.data);
       })
       .catch((err) => console.log(err));
@@ -188,7 +250,12 @@ function SearchCard(props) {
           <SearchComponent onChange={handleClick} />
           <br />
           <Centered>
-            <SearchResultCard title={title} name={name} desc={desc} />
+            <SearchResultCard
+              title={title}
+              name={name}
+              desc={desc}
+              course={course}
+            />
           </Centered>
           <TextField
             label="Credits"
@@ -354,14 +421,9 @@ function PrerequisitesCard(props) {
     axios
       .get((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
       .then((res) => {
-        let courseToDisplay = {
-          title: res.data.code,
-          name: res.data.name,
-          desc: res.data.desc,
-        };
-        if (courseToDisplay.desc) {
+        if (res.data.desc) {
           setCourseListToDisplay((courseListToDisplay) =>
-            courseListToDisplay.concat(courseToDisplay)
+            courseListToDisplay.concat(res.data)
           );
         }
       })
@@ -371,27 +433,21 @@ function PrerequisitesCard(props) {
   return (
     <div>
       {prereqDescription && (
-        <SearchResultCard
+        <InformationCard
           title="Prerequisite Information:"
           name=""
           desc={prereqDescription}
         />
       )}
       {coreqDescription && (
-        <SearchResultCard
+        <InformationCard
           title="Corequisite Information:"
           name=""
           desc={coreqDescription}
         />
       )}
       {courseListToDisplay.map((course) => {
-        return (
-          <SearchResultCard
-            title={course.title}
-            name={course.name}
-            desc={course.desc}
-          />
-        );
+        return <SearchResultCard course={course} title={course.code} />;
       })}
     </div>
   );
@@ -408,14 +464,9 @@ function DependenciesCard(props) {
         axios
           .get((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
           .then((res) => {
-            let courseToDisplay = {
-              title: res.data.code,
-              name: res.data.name,
-              desc: res.data.desc,
-            };
-            if (courseToDisplay.desc) {
+            if (res.data.desc) {
               setCourseListToDisplay((courseListToDisplay) =>
-                courseListToDisplay.concat(courseToDisplay)
+                courseListToDisplay.concat(res.data)
               );
             }
           })
@@ -427,13 +478,7 @@ function DependenciesCard(props) {
   return (
     <div>
       {courseListToDisplay.map((course) => {
-        return (
-          <SearchResultCard
-            title={course.title}
-            name={course.name}
-            desc={course.desc}
-          />
-        );
+        return <SearchResultCard course={course} title={course.code} />;
       })}
     </div>
   );
@@ -509,6 +554,8 @@ function CourseSelector() {
   const [selectedCourse, setSelectedCourse] = useState({});
   const [courseToAdd, setCourseToAdd] = useState({});
   const [usersCourseArray, setUsersCourseArray] = useState([-1]);
+  const [windowHeight, setWindowHeight] = useState(0);
+  const MAX_HEIGHT = windowHeight - 230;
 
   const onContainerReady = (container) => {
     setContainers(containers.push(container));
@@ -529,7 +576,13 @@ function CourseSelector() {
       .catch((err) => {
         console.log(err);
       });
+    window.addEventListener("resize", updateWindowDimensions);
+    updateWindowDimensions();
   }, []);
+
+  const updateWindowDimensions = () => {
+    setWindowHeight(window.innerHeight);
+  };
 
   useEffect(() => {
     if (courseToAdd.code != null) {
@@ -555,7 +608,13 @@ function CourseSelector() {
       <Divider my={6} />
 
       <Grid container spacing={6}>
-        <Grid item xs={12} lg={6} xl={3}>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
+        >
           <Lane
             title="Search"
             description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
@@ -567,7 +626,13 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3}>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
+        >
           <Lane
             title="Prerequisite / Corequisite Courses"
             description="Selected course's prerequisites and corequisites."
@@ -578,7 +643,13 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3}>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
+        >
           <Lane
             title="Dependent Courses"
             description="Courses that list this course as a direct prerequisite."
@@ -589,7 +660,13 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3}>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
+        >
           <Lane
             title="Your Degree"
             description="The courses that you have added to your worklist."
