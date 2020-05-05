@@ -85,7 +85,7 @@ export function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
         </>);
     };
 
-    if (usersCourseArray[0] != -1) {
+    if (usersCourseArray && usersCourseArray[0] != -1) {
         return (<>
             {usersCourseArray.map((term, termIndex) => {
                 return (<>
