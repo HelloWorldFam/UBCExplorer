@@ -30,121 +30,7 @@ const Divider = styled(MuiDivider)(spacing);
 const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
 
-function Overview(props) {
-    const [courseBaskets, updateCourseBaskets] = React.useState({});
-    const coreBCS = {
-        "completed": [],
-        "inProgress": [],
-        "incomplete": [],
-        "required": ["CPSC 110", "CPSC 121", "CPSC 210", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
-    };
-    const upperCPSC = {
-        "completed": [],
-        "inProgress": [],
-        "incomplete": [],
-    };
-    const bridgMod = {
-        "completed": [],
-        "inProgress": [],
-        "incomplete": [],
-    };
-    const exemptions = {
-        "completed": [],
-        "inProgress": null,
-        "incomplete": null,
-    };
-    const exemptionReplacement = {
-        "completed": [],
-        "inProgress": [],
-        "incomplete": [],
-    }
-    const coopTerms = {
-        "completed": [],
-        "inProgress": [],
-        "incomplete": [],
-        "required": ["CPSC 298", "CPSC 299", "CPSC 398", "CPSC 399"],
-    };
-
-    // tags: "Core Course", "Bridging Module", "Upper CPSC", "Exemption", "Exemption Replacement"
-    const sortCourses = () => {
-        props.courseResult.map((term) => {
-            if (term.name === "Exemptions") {
-                exemptions.completed = term.courses;
-            } else {
-                const progress = () => {
-                    if (getRelativeProgress(term.name) == -1) return "completed";
-                    else if (getRelativeProgress(term.name) == 0) return "inProgress";
-                    else return "incomplete";
-                }
-                term.courses.map((course) => {
-                    // if (coreBCS.required.includes(course.code)) coreBCS[progress()].push(course.code);
-                    if (coopTerms.required.includes(course.code)) coopTerms[progress()].push(course.code);
-                    else if (course.tag === "Exemption Replacement") exemptionReplacement[progress()].push(course.code);
-                    else if (course.tag === "Core Course") coreBCS[progress()].push(course.code);
-                    else if (course.tag === "Upper CPSC") upperCPSC[progress()].push(course.code);
-                    else if (course.tag === "Bridging Module") bridgMod[progress()].push(course.code);
-                    // else if (course.code.substring(0, 4) === "CPSC") upperCPSC[progress()].push(course.code);
-                    // else exemptionReplacement[progress()].push(course.code);
-                })
-            }
-        });
-       
-        updateCourseBaskets({
-            "coreBCS": coreBCS,
-            "upperCPSC": upperCPSC,
-            "bridgMod": bridgMod,
-            "exemptions": exemptions,
-            "exemptionReplacement": exemptionReplacement
-        })
-    }
-    useEffect(() => {
-        sortCourses(props.courseResult);
-    }, []);
-
-    /**
-     * 
-     * @param {string} termName 
-     * @returns {number} :  -1 if course term is in the past
-     *                       0 if course term is current term
-     *                       1 if course term is future term
-     */
-    const getRelativeProgress = (termName) => {
-        var courseStartDate = parseInt(termName.substring(0, 4)) * 100;
-        if (termName.substring(4) === "W1") courseStartDate += 9;            // add 9 months ie. set month to September
-        else if (termName.substring(4) === "W2") courseStartDate += 101;     // add 13 months ie. set month to January
-        else if (termName.substring(4) === "S") courseStartDate += 5;        // add 5 months ie. set month to May
-
-        var currentDate = new Date().getFullYear() * 100 + new Date().getMonth();
-
-        if (currentDate < courseStartDate) return 1;
-        else if (currentDate >= courseStartDate && currentDate <= courseStartDate + 3) return 0;
-        else return -1;
-    }
-
-    return (
-        <Card>
-            <CardContent mb={5}>
-                {/* Transcript table mock up */}
-                <DegreeTable courseBaskets={courseBaskets}/>
-            </CardContent>
-        </Card>
-    );
-}
-
-
-function DegreeTranscript() {
-    // Commented out temporarily
-    // const [courseResult, setCourseResult] = React.useState([]);
-    //
-    // useEffect(() => {
-    //     setCourseResult(() => {
-    //         fetch('/getcourses')
-    //             .then(response => response.json())
-    //             .then(json => {
-    //                 return json // access json.body here
-    //             });
-    //     });
-    // });
+function Transcript(props) {
 
     const courseResult = [{
         "name": "2019W1",
@@ -258,9 +144,37 @@ function DegreeTranscript() {
             "term": "Exemptions"
         }]
     }];
+
+    return (
+        <Card>
+            <CardContent mb={5}>
+                {/* Transcript table mock up */}
+                <DegreeTable courseResult={courseResult}/>
+            </CardContent>
+        </Card>
+    );
+}
+
+
+function DegreeTranscript() {
+    // Commented out temporarily
+    // const [courseResult, setCourseResult] = React.useState([]);
+    //
+    // useEffect(() => {
+    //     setCourseResult(() => {
+    //         fetch('/getcourses')
+    //             .then(response => response.json())
+    //             .then(json => {
+    //                 return json // access json.body here
+    //             });
+    //     });
+    // });
+
+    const courseResult = courseResult;
+    
     return (
         <React.Fragment>
-            <Helmet title="Degree Overview" />
+            <Helmet title="Degree Transcript" />
             <Typography variant="h3" gutterBottom display="inline">
                 Degree Overview
             </Typography>
@@ -278,7 +192,7 @@ function DegreeTranscript() {
 
             <Grid container spacing={6}>
                 <Grid item xs={12}>
-                    <Overview courseResult={courseResult} />
+                    <Transcript courseResult={courseResult} />
                 </Grid>
             </Grid>
         </React.Fragment>

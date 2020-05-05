@@ -31,6 +31,7 @@ import {
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const NavLink = React.forwardRef((props, ref) => (
   <RouterNavLink innerRef={ref} {...props} />
@@ -76,14 +77,7 @@ export const TaskWrapperContent = styled(CardContent)`
 
 export const Typography = styled(MuiTypography)(spacing);
 
-const Avatar = styled(MuiAvatar)`
-  float: right;
-  margin-left: ${(props) => props.theme.spacing(1)}px;
-  height: 32px;
-  width: 32px;
-`;
-
-export class Lane extends React.Component {
+class Lane extends React.Component {
   handleContainerLoaded = (container) => {
     if (container) {
       this.props.onContainerLoaded(container);
