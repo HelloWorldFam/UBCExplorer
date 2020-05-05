@@ -31,7 +31,6 @@ import {
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
-import DeleteIcon from "@material-ui/icons/Delete";
 
 const NavLink = React.forwardRef((props, ref) => (
   <RouterNavLink innerRef={ref} {...props} />
@@ -77,7 +76,7 @@ export const TaskWrapperContent = styled(CardContent)`
 
 export const Typography = styled(MuiTypography)(spacing);
 
-class Lane extends React.Component {
+export class Lane extends React.Component {
   handleContainerLoaded = (container) => {
     if (container) {
       this.props.onContainerLoaded(container);
@@ -201,7 +200,7 @@ function SearchCard(props) {
 
   const handleClick = (courseInfo) => {
     axios
-      .get((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + courseInfo)
+      .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + courseInfo)
       .then((res) => {
         setCode(courseInfo);
         setDesc(res.data.desc);
@@ -413,7 +412,7 @@ function PrerequisitesCard(props) {
 
   const getCourseInfo = (course) => {
     axios
-      .get((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
+      .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
       .then((res) => {
         if (res.data.desc) {
           setCourseListToDisplay((courseListToDisplay) =>
@@ -456,7 +455,7 @@ function DependenciesCard(props) {
     if (dependencies) {
       for (let course of dependencies) {
         axios
-          .get((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
+          .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
           .then((res) => {
             if (res.data.desc) {
               setCourseListToDisplay((courseListToDisplay) =>
@@ -557,13 +556,13 @@ function CourseSelector() {
 
   useEffect(() => {
     if (usersCourseArray && usersCourseArray[0] !== -1) {
-      axios.post((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/updateUserWorkList", usersCourseArray).then(() => { });
+      axios.post((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/updateUserWorkList", usersCourseArray).then(() => { });
     }
   }, [usersCourseArray]);
 
   useEffect(() => {
     axios
-      .get((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/userdata")
+      .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/userdata")
       .then((res) => {
         setUsersCourseArray(res.data[0].courses);
       })

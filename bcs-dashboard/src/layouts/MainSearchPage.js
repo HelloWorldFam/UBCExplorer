@@ -170,7 +170,7 @@ function SearchCard(props) {
 
   const handleClick = (courseInfo) => {
     axios
-      .get((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + courseInfo)
+      .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + courseInfo)
       .then((res) => {
         setDesc(res.data.desc);
         setCred("");
@@ -227,7 +227,7 @@ function PrerequisitesCard(props) {
 
   const getCourseInfo = (course) => {
     axios
-      .get((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
+      .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
       .then((res) => {
         if (res.data.desc) {
           setCourseListToDisplay((courseListToDisplay) =>
@@ -270,7 +270,7 @@ function DependenciesCard(props) {
     if (dependencies) {
       for (let course of dependencies) {
         axios
-          .get((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
+          .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
           .then((res) => {
             if (res.data.desc) {
               setCourseListToDisplay((courseListToDisplay) =>
