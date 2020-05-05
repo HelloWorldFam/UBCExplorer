@@ -26,7 +26,7 @@ export default function SearchComponent(props) {
       }
 
       axios
-        .get("http://localhost:3000/searchAny/" + value)
+        .get("https://ubcexplorer.io/searchAny/" + value)
         .then((res) => {
           if (!(res.data instanceof Array)) {
             setIsLoading(false);
