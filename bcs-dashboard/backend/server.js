@@ -6,7 +6,8 @@ const passport = require("passport");
 const cookieSession = require("cookie-session");
 const findOrCreate = require("mongoose-findorcreate");
 const FacebookStrategy = require("passport-facebook");
-const GoogleOauth20Strategy = require("passport-google-oauth20");
+const GoogleOauthProduction = require("./helpers/GoogleOauthProduction");
+const GoogleOauthTest = require("./helpers/GoogleOauthTest");
 const TwitterStrategy = require("passport-twitter");
 const path = require("path");
 const keepDynoAwake = require("./helpers/keepDynoAwake");
@@ -67,63 +68,9 @@ app.use(passport.session()); // Used to persist login sessions
 //   }));
 
 passport.use(
-  new GoogleOauth20Strategy(
-    {
-      clientID:
-        "610240877212-muh7g8rvb1pficemikp3r3vdfaobgo9f.apps.googleusercontent.com",
-      clientSecret: "MpRbTT5AssctwpN0Id0GHIwe",
-      callbackURL: "https://ubcexplorer.io/auth/google/callback",
-    },
-    function (accessToken, refreshToken, profile, done) {
-      console.log(profile);
-      Users.findOrCreate(
-        { email: profile.emails[0].value },
-        {
-          firstName: profile.name.givenName,
-          lastName: profile.name.familyName,
-          courses: [],
-        },
-        function (err, user) {
-          // Updates user picture upon each auth session
-          user.picture = profile._json.picture;
-          user.save();
-          // auth complete
-          return done(err, user);
-        }
-      );
-    }
-  )
-);
-
-// Testing credentials
-passport.use(
-  new GoogleOauth20Strategy(
-    {
-      clientID:
-        "610240877212-f8024mt2n5gpc599ljnbv6n3fi0luevi.apps.googleusercontent.com",
-      clientSecret: "GV5YeO-Rm8r3fH6etv3nddjx",
-      callbackURL: "http://localhost:3000/auth/google/callback",
-    },
-    function (accessToken, refreshToken, profile, done) {
-      console.log(profile);
-      Users.findOrCreate(
-        { email: profile.emails[0].value },
-        {
-          firstName: profile.name.givenName,
-          lastName: profile.name.familyName,
-          courses: [],
-        },
-        function (err, user) {
-          // Updates user picture upon each auth session
-          user.picture = profile._json.picture;
-          user.save();
-          // auth complete
-          return done(err, user);
-        }
-      );
-    }
-  )
-);
+  process.env.NODE_ENV = 'production'
+  ? GoogleOauthProduction
+  : GoogleOauthTest);
 
 // passport.use(new TwitterStrategy({
 //   clientID: 'must sign up with facebook for one',
