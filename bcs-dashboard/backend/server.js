@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const Courses = require("./models/courses.model");
+const Users = require("./models/users.model");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const findOrCreate = require("mongoose-findorcreate");
@@ -34,16 +35,6 @@ connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
-const { Schema } = mongoose;
-const UsersSchema = new Schema({
-  email: String,
-  firstName: String,
-  lastName: String,
-  picture: String,
-  courses: Array,
-}).plugin(findOrCreate);
-const Users = mongoose.model("Users", UsersSchema);
-
 // cookieSession config
 app.use(
   cookieSession({
@@ -69,8 +60,8 @@ app.use(passport.session()); // Used to persist login sessions
 
 passport.use(
   process.env.NODE_ENV === 'production'
-  ? GoogleOauthProduction
-  : GoogleOauthTest);
+    ? GoogleOauthProduction
+    : GoogleOauthTest);
 
 // passport.use(new TwitterStrategy({
 //   clientID: 'must sign up with facebook for one',
@@ -128,7 +119,7 @@ app.get("/userdata", isUserAuthenticated, (req, res) => {
 });
 
 app.get('/coursedata', (req, res) => {
-  Courses.find({code: req.params.code}, function (err, result) {
+  Courses.find({ code: req.params.code }, function (err, result) {
     res.send(result);
   })
 });
