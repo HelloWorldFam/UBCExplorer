@@ -18,7 +18,6 @@ import "react-dragula/dist/dragula.css";
 import SearchComponent from "./SearchComponent";
 
 import {
-  Avatar as MuiAvatar,
   Breadcrumbs as MuiBreadcrumbs,
   Button,
   Card as MuiCard,
@@ -27,6 +26,7 @@ import {
   Grid,
   Link,
   TextField as MuiTextField,
+  Tooltip,
   Typography as MuiTypography,
 } from "@material-ui/core";
 
@@ -78,13 +78,6 @@ const TaskWrapperContent = styled(CardContent)`
 
 const Typography = styled(MuiTypography)(spacing);
 
-const Avatar = styled(MuiAvatar)`
-  float: right;
-  margin-left: ${(props) => props.theme.spacing(1)}px;
-  height: 32px;
-  width: 32px;
-`;
-
 class Lane extends React.Component {
   handleContainerLoaded = (container) => {
     if (container) {
@@ -119,19 +112,64 @@ class Lane extends React.Component {
 }
 
 function SearchResultCard(props) {
+  const [average, setAverage] = useState({});
+
+  useEffect(() => {
+    if (props.course.code) {
+      let toSearch = props.course.code.split(" ");
+      axios
+        .get(
+          `https://ubcgrades.com/api/course-profile/${toSearch[0]}/${toSearch[1]}`
+        )
+        .then((res) => {
+          setAverage(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [props.course.code]);
+
   return (
     <TaskWrapper mb={4}>
-      <TaskWrapperContent>
-        <Typography variant="h6" align="left">
-          {props.title}
-          <br />
-          {props.name}
-        </Typography>
-        <Typography variant="body2" mb={3}>
-          {<p align="left">{props.desc}</p>}
-        </Typography>
-      </TaskWrapperContent>
+      <Tooltip
+        title={tooltipText(props.course, average)}
+        placement="right"
+        arrow
+      >
+        <TaskWrapperContent>
+          <Typography variant="h6" align="left">
+            {props.title}
+            <br />
+            {props.course.name ? props.course.name : props.name}
+          </Typography>
+          <Typography variant="body2" mb={3}>
+            {
+              <p align="left">
+                {props.course.desc ? props.course.desc : props.desc}
+              </p>
+            }
+          </Typography>
+        </TaskWrapperContent>
+      </Tooltip>
     </TaskWrapper>
+  );
+}
+
+function tooltipText(course, average) {
+  return (
+    <>
+      {course.name ? <h3>Name: {course.name}</h3> : ""}
+      {course.cred ? <h3>Credits: {course.cred}</h3> : ""}
+      {course.prer ? <h3>Pre-reqs: {course.prer}</h3> : ""}
+      {course.crer ? <h3>Co-reqs: {course.crer}</h3> : ""}
+      {average.average ? <h3>Historical average: {average.average}%</h3> : ""}
+      {average.high ? <h3>High: {average.high}%</h3> : ""}
+      {average.low ? <h3>Low: {average.low}%</h3> : ""}
+      {average.pass_percent ? (
+        <h3>Pass percent: {average.pass_percent}%</h3>
+      ) : (
+        ""
+      )}
+    </>
   );
 }
 
@@ -143,6 +181,7 @@ function SearchCard(props) {
   const [title, setTitle] = useState("Search results will appear here.");
   const [tag, setTag] = useState("");
   const [term, setTerm] = useState("");
+  const [course, setCourse] = useState({});
 
   const handleClick = (courseInfo) => {
     axios
@@ -154,6 +193,7 @@ function SearchCard(props) {
         setCred(res.data.cred);
         setName(res.data.name);
         setTitle(courseInfo);
+        setCourse(res.data);
         props.onChange(res.data);
       })
       .catch((err) => console.log(err));
@@ -188,7 +228,12 @@ function SearchCard(props) {
           <SearchComponent onChange={handleClick} />
           <br />
           <Centered>
-            <SearchResultCard title={title} name={name} desc={desc} />
+            <SearchResultCard
+              title={title}
+              name={name}
+              desc={desc}
+              course={course}
+            />
           </Centered>
           <TextField
             label="Credits"
@@ -496,14 +541,9 @@ function PrerequisitesCard(props) {
     axios
       .get("http://localhost:3000/getCourseInfo/" + course)
       .then((res) => {
-        let courseToDisplay = {
-          title: res.data.code,
-          name: res.data.name,
-          desc: res.data.desc,
-        };
-        if (courseToDisplay.desc) {
+        if (res.data.desc) {
           setCourseListToDisplay((courseListToDisplay) =>
-            courseListToDisplay.concat(courseToDisplay)
+            courseListToDisplay.concat(res.data)
           );
         }
       })
@@ -517,6 +557,7 @@ function PrerequisitesCard(props) {
           title="Prerequisite Information:"
           name=""
           desc={prereqDescription}
+          course={{}}
         />
       )}
       {coreqDescription && (
@@ -524,16 +565,11 @@ function PrerequisitesCard(props) {
           title="Corequisite Information:"
           name=""
           desc={coreqDescription}
+          course={{}}
         />
       )}
       {courseListToDisplay.map((course) => {
-        return (
-          <SearchResultCard
-            title={course.title}
-            name={course.name}
-            desc={course.desc}
-          />
-        );
+        return <SearchResultCard course={course} title={course.code} />;
       })}
     </div>
   );
@@ -550,14 +586,9 @@ function DependenciesCard(props) {
         axios
           .get("http://localhost:3000/getCourseInfo/" + course)
           .then((res) => {
-            let courseToDisplay = {
-              title: res.data.code,
-              name: res.data.name,
-              desc: res.data.desc,
-            };
-            if (courseToDisplay.desc) {
+            if (res.data.desc) {
               setCourseListToDisplay((courseListToDisplay) =>
-                courseListToDisplay.concat(courseToDisplay)
+                courseListToDisplay.concat(res.data)
               );
             }
           })
@@ -569,13 +600,7 @@ function DependenciesCard(props) {
   return (
     <div>
       {courseListToDisplay.map((course) => {
-        return (
-          <SearchResultCard
-            title={course.title}
-            name={course.name}
-            desc={course.desc}
-          />
-        );
+        return <SearchResultCard course={course} title={course.code} />;
       })}
     </div>
   );
@@ -660,7 +685,7 @@ function CourseSelector() {
 
   useEffect(() => {
     if (usersCourseArray && usersCourseArray[0] !== -1) {
-      axios.post("/updateUserWorkList", usersCourseArray).then(() => { });
+      axios.post("/updateUserWorkList", usersCourseArray).then(() => {});
     }
   }, [usersCourseArray]);
 
@@ -673,13 +698,13 @@ function CourseSelector() {
       .catch((err) => {
         console.log(err);
       });
-      window.addEventListener('resize', updateWindowDimensions);
-      updateWindowDimensions();
+    window.addEventListener("resize", updateWindowDimensions);
+    updateWindowDimensions();
   }, []);
 
   const updateWindowDimensions = () => {
     setWindowHeight(window.innerHeight);
-  }
+  };
 
   useEffect(() => {
     if (courseToAdd.code != null) {
@@ -705,7 +730,13 @@ function CourseSelector() {
       <Divider my={6} />
 
       <Grid container spacing={6}>
-        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: MAX_HEIGHT, overflow: 'auto' }}>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
+        >
           <Lane
             title="Search"
             description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
@@ -717,7 +748,13 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: MAX_HEIGHT, overflow: 'auto' }}>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
+        >
           <Lane
             title="Prerequisite / Corequisite Courses"
             description="Selected course's prerequisites and corequisites."
@@ -728,7 +765,13 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: MAX_HEIGHT, overflow: 'auto' }}>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
+        >
           <Lane
             title="Dependent Courses"
             description="Courses that list this course as a direct prerequisite."
@@ -739,7 +782,13 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: MAX_HEIGHT, overflow: 'auto' }}>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
+        >
           <Lane
             title="Your Degree"
             description="The courses that you have added to your worklist."
