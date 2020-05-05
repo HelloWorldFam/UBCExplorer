@@ -9,19 +9,18 @@ import IconButton from "@material-ui/core/IconButton";
 import { blue } from "@material-ui/core/colors";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
-
 import {
   Card as MuiCard,
   CardContent,
   Grid,
   Typography as MuiTypography,
-  Tooltip
+  Tooltip,
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
 
 const Card = styled(MuiCard)`
-overflow:visible;
+  overflow: visible;
 `;
 
 const Spacer = styled.div(spacing);
@@ -131,8 +130,12 @@ function SearchResultCard(props) {
             }
           </Typography>
           <Typography variant="body2" mb={3} align="left">
-          {<p align="left">{props.course.cred ? "Credits: " + props.course.cred : ""}</p>}
-        </Typography>
+            {
+              <p align="left">
+                {props.course.cred ? "Credits: " + props.course.cred : ""}
+              </p>
+            }
+          </Typography>
         </TaskWrapperContent>
       </Tooltip>
     </TaskWrapper>
@@ -186,7 +189,13 @@ function SearchCard(props) {
         <SearchComponent onChange={handleClick} />
         <br />
         <Centered>
-          <SearchResultCard title={title} name={name} desc={desc} cred={cred} course={course} />
+          <SearchResultCard
+            title={title}
+            name={name}
+            desc={desc}
+            cred={cred}
+            course={course}
+          />
         </Centered>
       </TaskWrapperContent>
     </SearchWrapper>
@@ -318,13 +327,13 @@ function MainSearchPage() {
   };
 
   useEffect(() => {
-    window.addEventListener('resize', updateWindowDimensions);
+    window.addEventListener("resize", updateWindowDimensions);
     updateWindowDimensions();
-  }, [])
+  }, []);
 
   const updateWindowDimensions = () => {
     setWindowHeight(window.innerHeight);
-  }
+  };
 
   const classes2 = navBarStyle();
 
@@ -357,7 +366,13 @@ function MainSearchPage() {
             <SearchCard onChange={setSelectedCourse} />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: windowHeight - 95, overflow: 'auto' }}>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
+        >
           <Lane
             title="Prerequisite / Corequisite Courses"
             description="Selected course's prerequisites and corequisites."
@@ -368,7 +383,13 @@ function MainSearchPage() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: windowHeight - 95, overflow: 'auto' }}>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
+        >
           <Lane
             title="Dependent Courses"
             description="Courses that list this course as a direct prerequisite."
@@ -391,15 +412,16 @@ function MainSearchPage() {
                   <b>Welcome to the UBC Explorer - Course Search</b>
                   <br />
                   The course search tool is created to enable a seamless, fast
-                  course search experience. <b>Desktop users: </b>Hover over a course to see 
-                  information about prerequisites and historical grade averages. <b>Mobile users: </b>
+                  course search experience. <b>Desktop users: </b>Hover over a
+                  course to see information about prerequisites and historical
+                  grade averages. <b>Mobile users: </b>
                   press and hold on a course to see the same information. <br />
                   <br />
                   <b>Getting Started</b>
                   <br />
                   To get started, input the department and course code and
-                  select search. A list of prerequisites/corequisites and dependent
-                  courses will also be shown in the two right lanes.
+                  select search. A list of prerequisites/corequisites and
+                  dependent courses will also be shown in the two right lanes.
                   <br />
                   <br />
                   {/* <b>About</b>
@@ -415,10 +437,17 @@ function MainSearchPage() {
                   worklists, and degree progress tracking.
                   <br />
                   <br /> */}
-                  <a href="https://ubc.ca1.qualtrics.com/jfe/form/SV_enyfh63H9Euj8UJ" target="_blank"><b>Feedback / Bugs</b></a>
+                  <a
+                    href="https://ubc.ca1.qualtrics.com/jfe/form/SV_enyfh63H9Euj8UJ"
+                    target="_blank"
+                  >
+                    <b>Feedback / Bugs</b>
+                  </a>
                   <br />
-                  If you notice any bugs or have any feedback, feel free to use the link above, or send
-                  an email to <a href="mailto:hello@ubcexplorer.io">hello@ubcexplorer.io</a>.
+                  If you notice any bugs or have any feedback, feel free to use
+                  the link above, or send an email to{" "}
+                  <a href="mailto:hello@ubcexplorer.io">hello@ubcexplorer.io</a>
+                  .
                 </Typography>
               </TaskWrapperContent>
             </SearchWrapper>
