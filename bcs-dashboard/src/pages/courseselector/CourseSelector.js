@@ -110,6 +110,23 @@ class Lane extends React.Component {
   }
 }
 
+function InformationCard(props) {
+  return (
+    <TaskWrapper mb={4}>
+      <TaskWrapperContent>
+        <Typography variant="h6" align="left">
+          {props.title}
+          <br />
+          {props.name}
+        </Typography>
+        <Typography variant="body2" mb={3}>
+          {<p align="left">{props.desc}</p>}
+        </Typography>
+      </TaskWrapperContent>
+    </TaskWrapper>
+  );
+}
+
 function SearchResultCard(props) {
   const [average, setAverage] = useState({});
 
@@ -410,19 +427,17 @@ function PrerequisitesCard(props) {
   return (
     <div>
       {prereqDescription && (
-        <SearchResultCard
+        <InformationCard
           title="Prerequisite Information:"
           name=""
           desc={prereqDescription}
-          course={{}}
         />
       )}
       {coreqDescription && (
-        <SearchResultCard
+        <InformationCard
           title="Corequisite Information:"
           name=""
           desc={coreqDescription}
-          course={{}}
         />
       )}
       {courseListToDisplay.map((course) => {
