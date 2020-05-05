@@ -73,6 +73,8 @@ const TextFields = async(() => import("../pages/forms/TextFields"));
 // Icons components
 const MaterialIcons = async(() => import("../pages/icons/MaterialIcons"));
 const FeatherIcons = async(() => import("../pages/icons/FeatherIcons"));
+const TimelineIcon = async(() => import('@material-ui/icons/Timeline'));
+const ReceiptIcon = async(() => import('@material-ui/icons/Receipt'));
 
 // Pages components
 const Blank = async(() => import("../pages/pages/Blank"));
@@ -140,31 +142,22 @@ const courseSelectorRoutes = {
 const degreeOverview = {
   id: "Degree Overview",
   path: "/bcs/degreeoverview",
-  icon: <GolfCourse />,
+  icon: <Directions />,
   component: DegreeOverview,
 };
 
-const degreeProgressRoutes = {
-  id: "Degree Progress",
-  path: "/bcs/degreeprogress",
-  icon: <Directions />,
-  children: [
-    {
-      path: "/bcs/degreeprogress/overview",
-      name: "Overview",
-      component: DegreeOverview,
-    },
-    {
-      path: "/bcs/degreeprogress/timeline",
-      name: "Timeline",
-      component: DegreeTimeline,
-    },
-    {
-      path: "/bcs/degreeprogress/transcript",
-      name: "Transcript",
-      component: DegreeTranscript,
-    },
-  ],
+const degreeTimeline = {
+  id: "Degree Timeline",
+  path: "/bcs/timeline",
+  icon: <TimelineIcon />,
+  component: DegreeTimeline,
+};
+
+const degreeTranscript = {
+  id: "Degree Transcript",
+  path: "/bcs/transcript",
+  icon: <ReceiptIcon />,
+  component: DegreeTranscript,
 };
 
 const myCoursesRoutes = {
@@ -499,7 +492,8 @@ export const dashboard = [
   dashboardsRoutes,
   courseSelectorRoutes,
   degreeOverview,
-  degreeProgressRoutes,
+  degreeTimeline,
+  degreeTranscript,
   // myCoursesRoutes,
   // myToDosRoutes,
   // profileRoutes,
@@ -528,7 +522,8 @@ export default [
   dashboardsRoutes,
   courseSelectorRoutes,
   degreeOverview,
-  degreeProgressRoutes,
+  degreeTimeline,
+  degreeTranscript,
   // myCoursesRoutes,
   // myToDosRoutes,
   // profileRoutes,

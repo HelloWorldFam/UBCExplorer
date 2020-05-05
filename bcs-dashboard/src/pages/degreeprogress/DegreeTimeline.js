@@ -129,9 +129,6 @@ function DegreeTimeline() {
                 <Link component={NavLink} exact to="/bcs/dashboard">
                     Dashboard
                 </Link>
-                <Link component={NavLink} exact to="/bcs/degreeprogress/overview">
-                    Degree Overview
-                </Link>
                 <Typography>
                     Degree Timeline
                 </Typography>

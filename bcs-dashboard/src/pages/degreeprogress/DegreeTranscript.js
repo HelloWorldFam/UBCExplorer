@@ -263,22 +263,16 @@ function DegreeTranscript() {
             <Helmet title="Degree Overview" />
             <Typography variant="h3" gutterBottom display="inline">
                 Degree Overview
-        </Typography>
+            </Typography>
 
-            <Breadcrumbs aria-label="Breadcrumb" mt={2}>
+             <Breadcrumbs aria-label="Breadcrumb" mt={2}>
                 <Link component={NavLink} exact to="/bcs/dashboard">
                     Dashboard
-            </Link>
-            <Link component={NavLink} exact to="/bcs/degreeprogress/overview">
-                    Degree Overview
-            </Link>
-            <Link component={NavLink} exact to="/bcs/degreeprogress/timeline">
-                    Degree Timeline
-            </Link>
-            <Typography>
+                </Link>
+                <Typography>
                     Degree Transcript
-            </Typography>
-            </Breadcrumbs>
+                </Typography>
+            </Breadcrumbs> 
 
             <Divider my={6} />
 

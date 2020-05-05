@@ -20,7 +20,6 @@ import { spacing } from "@material-ui/system";
 import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
 
-import ProgressLine from './progressline/ProgressLine';
 import DegreeTable from './tablecharts/DegreeTable';
 import CoreTable from './tablecharts/CoreTable';
 import BridgingTable from './tablecharts/BridgingTable';
@@ -99,7 +98,7 @@ function Overview(props) {
                 })
             }
         });
-       
+
         updateCourseBaskets({
             "coreBCS": coreBCS,
             "upperCPSC": upperCPSC,
@@ -131,9 +130,9 @@ function Overview(props) {
         else if (currentDate >= courseStartDate && currentDate <= courseStartDate + 3) return 0;
         else return -1;
     }
-    
+
     const coreCoursesCompleted = courseBaskets.coreBCS?.completed?.length;
-    
+
     const bridgingCoursesCompleted = courseBaskets.bridgMod?.completed?.length;
     const bridgingCoursesCompletedTotal = 5;
     const minCourses = 21;
@@ -163,8 +162,8 @@ function Overview(props) {
     const coopPercent = Math.floor(coopTermsCompleted / coopTermsTotal * 100);
 
     return (
-         <Card>
-             <CardContent mb={5}>
+        <Card>
+            <CardContent mb={5}>
                 <Typography variant="h3" paragraph >
                     Overview
                 </Typography>
@@ -175,26 +174,26 @@ function Overview(props) {
 
                 {/* This is using @material-ui*/}
                 <DoughnutChart coreCoursesCompleted={coreCoursesCompleted}
-                                coreCoursesRemaining={coreCoursesRemaining}
-                                bridgingCoursesCompleted={bridgingCoursesCompleted}
-                                bridgingCoursesRemaining={bridgingCoursesCompletedRemaining}
-                                exemptionCoursesComplete={exemptionCoursesComplete}
-                                exemptionCoursesRemaining={exemptionCoursesRemaining}
-                                overallCourses={courses}
-                                overallCoursesRemaining={coursesRemaining}
-                                minCourses={minCourses}
-                                 />
+                    coreCoursesRemaining={coreCoursesRemaining}
+                    bridgingCoursesCompleted={bridgingCoursesCompleted}
+                    bridgingCoursesRemaining={bridgingCoursesCompletedRemaining}
+                    exemptionCoursesComplete={exemptionCoursesComplete}
+                    exemptionCoursesRemaining={exemptionCoursesRemaining}
+                    overallCourses={courses}
+                    overallCoursesRemaining={coursesRemaining}
+                    minCourses={minCourses}
+                />
 
                 <Divider my={6} />
                 <Typography variant="h6" paragraph >
                     Core BCS course progress:
-                    </Typography>
+                </Typography>
                 {/* Used Progress bar #1 */}
                 <Progress percent={corePercentComplete} />
 
 
                 <Typography variant="h7" paragraph >
-                    Courses Completed: {coreCoursesCompleted} 
+                    Courses Completed: {coreCoursesCompleted}
                     <br />
                     Courses Remaining: {coreCoursesRemaining}
                 </Typography>
@@ -209,7 +208,7 @@ function Overview(props) {
                 <Progress percent={bridgingPercentComplete} />
 
                 <Typography variant="h7" paragraph >
-                    Courses Completed: {bridgingCoursesCompleted} 
+                    Courses Completed: {bridgingCoursesCompleted}
                     <br />
                     Courses Remaining: {bridgingCoursesCompletedRemaining}
                 </Typography>
@@ -262,10 +261,8 @@ function Overview(props) {
                 <CoopTable coopCourses={courseBaskets.coopTerms} />
 
                 <Divider my={6} /> */}
-
-             </CardContent>
-         </Card>
-
+            </CardContent>
+        </Card>
     );
 }
 
@@ -292,139 +289,20 @@ function DegreeOverview() {
         });
     });
 
-
-    // const courseResult = [{
-    //     "name": "2019W1",
-    //     "courses": [{
-    //         "dept": "CPSC",
-    //         "code": "CPSC 110",
-    //         "name": "Computation, Programs, and Programming",
-    //         "desc": "Fundamental program and computation structures. Introductory programming skills. Computation as a tool for information processing, simulation and modelling, and interacting with the world. [3-3-0]",
-    //         "cred": 4,
-    //         "tag": "Core Course",
-    //         "term": "2019W1"
-    //     }, {
-    //         "dept": "COGS",
-    //         "code": "COGS 300",
-    //         "name": "Understanding and Designing Cognitive Systems",
-    //         "desc": "Theory and methods for integrating diverse disciplinary content in cognitive systems.",
-    //         "cred": 3,
-    //         "tag": "Bridging Module",
-    //         "term": "2019W1"
-    //     }, {
-    //         "dept": "COGS",
-    //         "code": "COGS 300",
-    //         "name": "Understanding and Designing Cognitive Systems",
-    //         "desc": "Theory and methods for integrating diverse disciplinary content in cognitive systems.",
-    //         "cred": 3,
-    //         "tag": "Bridging Module",
-    //         "term": "2019W1"
-    //     }, {
-    //         "dept": "PSYC",
-    //         "code": "PSYC 100",
-    //         "name": "Understanding and Designing Cognitive Systems",
-    //         "desc": "Theory and methods for integrating diverse disciplinary content in cognitive systems.",
-    //         "cred": 3,
-    //         "tag": "Exemption Replacement",
-    //         "term": "2019W1"
-    //     }]
-    // }, {
-    //     "name": "2020W2",
-    //     "courses": [{
-    //         "dept": "CPSC",
-    //         "code": "CPSC 121",
-    //         "name": "Models of Computation",
-    //         "desc": "Physical and mathematical structures of computation. Boolean algebra and combinations logic circuits; proof techniques; functions and sequential circuits; sets and relations; finite state machines; sequential instruction execution.",
-    //         "cred": 4,
-    //         "tag": "Core Course",
-    //         "term": "2020W2"
-    //     }, {
-    //         "dept": "COGS",
-    //         "code": "COGS 303 ",
-    //         "name": "Research Methods in Cognitive Systems",
-    //         "desc": "Examination and comparison of the research methodologies of different disciplines relevant to cognitive systems.",
-    //         "cred": 3,
-    //         "tag": "Bridging Module",
-    //         "term": "2020W2"
-    //     }, {
-    //         "dept": "MICB",
-    //         "code": "MICB 100",
-    //         "name": "Understanding and Designing Cognitive Systems",
-    //         "desc": "Theory and methods for integrating diverse disciplinary content in cognitive systems.",
-    //         "cred": 3,
-    //         "tag": "Exemption Replacement",
-    //         "term": "2020W2"
-    //     }
-    // ]
-    // }, {
-    //     "name": "2020W1",
-    //     "courses": [{
-    //         "dept": "CPSC",
-    //         "code": "CPSC 310",
-    //         "name": "Introduction to Software Engineering",
-    //         "desc": "Specification, design, validation, evolution and construction of modern software systems, within the context of socially and professionally relevant domains such as ethics, intellectual property, and information security.",
-    //         "cred": 4,
-    //         "tag": "Upper CPSC",
-    //         "term": "2020W1"
-    //     },
-    //     {
-    //         "dept": "ENGL",
-    //         "code": "ENGL 301",
-    //         "name": "Technical Writing",
-    //         "desc": "Study of the principles of written communication in general business and professional activities, and practice in the preparation of abstracts, proposals, reports, and correspondence. Not for credit towards the English Major or Minor.",
-    //         "cred": 3,
-    //         "tag": "Core Course",
-    //         "term": "2020W1"
-    //     },
-    //     {
-    //         "dept": "CPSC",
-    //         "code": "CPSC 298",
-    //         "name": "Technical Writing",
-    //         "desc": "Study of the principles of written communication in general business and professional activities, and practice in the preparation of abstracts, proposals, reports, and correspondence. Not for credit towards the English Major or Minor.",
-    //         "cred": 3,
-    //         "tag": "Core Course",
-    //         "term": "2020W1"
-    //     }]
-    // }, {
-    //     "name": "Exemptions",
-    //     "courses": [{
-    //         "dept": "ENGL",
-    //         "code": "ENGL 110",
-    //         "name": "Approaches to Literature",
-    //         "desc": "Study of selected examples of poetry, fiction, and drama. Essays are required.",
-    //         "cred": 3,
-    //         "tag": "Core Course",
-    //         "term": "Exemptions"
-    //     }, {
-    //         "dept": "MATH 180",
-    //         "code": "MATH 180",
-    //         "name": "Approaches to Literature",
-    //         "desc": "Study of selected examples of poetry, fiction, and drama. Essays are required.",
-    //         "cred": 3,
-    //         "tag": "Core Course",
-    //         "term": "Exemptions"
-    //     }]
-    // }];
-
     return (
         <React.Fragment>
             <Helmet title="Degree Overview" />
             <Typography variant="h3" gutterBottom display="inline">
                 Degree Overview
-        </Typography>
-
+            </Typography>
             <Breadcrumbs aria-label="Breadcrumb" mt={2}>
                 <Link component={NavLink} exact to="/dashboard">
                     Dashboard
-            </Link>
+                </Link>
                 <Typography>
                     Degree Overview
-            </Typography>
-                <Link component={NavLink} exact to="/degreeprogress/timeline">
-                    Degree Timeline
-            </Link>
+                </Typography>
             </Breadcrumbs>
-
             <Divider my={6} />
 
             <Grid container spacing={6}>
