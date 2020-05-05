@@ -42,52 +42,9 @@ function createData(name, status) {
   return { id, name, status};
 }
 
-//placeholder data --> createCourses should add to this array
-/* const rows = [
-  // createData(
-  //   "COGS 300",
-  //   <Chip label="Complete" rgbcolor={green[500]} />
-  // ),
-  // createData(
-  //   "COGS 303",
-  //   <Chip label="Complete" rgbcolor={green[500]} />
-  // )
-];
-
-//function that creates the data for the rows in the table
-const createCourse = (bridgMod) => {
-  console.log(bridgMod);
-  if (bridgMod) {
-    bridgMod.completed.forEach(element => {
-      rows.push(createData(
-        element,
-        <Chip label="Complete" rgbcolor={green[500]} />
-      )
-      )
-    })
-
-    bridgMod.inProgress.forEach(element => {
-      rows.push(createData(
-        element,
-        <Chip label="Inprogress" rgbcolor={orange[500]} />
-      )
-      )
-    })
-
-    bridgMod.incomplete.forEach(element => {
-      rows.push(createData(
-        element,
-        <Chip label="Incomplete" rgbcolor={red[500]} />
-      )
-      )
-    })
-  }
-}; */
-
 const BridgingTable = (props) => {
   let rows = [];
   
-  console.log(props.bridgMod);
   if (props.bridgMod) {
     props.bridgMod.completed.forEach(element => {
       rows.push(createData(
@@ -126,14 +83,21 @@ const BridgingTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map(row => (
-                <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell>{row.status}</TableCell>
-                </TableRow>
-              ))}
+            {rows.length > 0 ?
+                rows.map(row => (
+                  <TableRow key={row.id}>
+                    <TableCell component="th" scope="row">
+                      {row.name}
+                    </TableCell>
+                    <TableCell>{row.status}</TableCell>
+                  </TableRow>
+                )) :
+                (
+                  <TableRow key="no courses">
+                    <TableCell>You have no courses here.</TableCell>
+                    <TableCell>-</TableCell>
+                  </TableRow>
+                )}
             </TableBody>
           </Table>
         </TableWrapper>
