@@ -272,7 +272,7 @@ function DegreeOverview() {
 
     useEffect(() => {
         setCourseResult(() => {
-            fetch('/getcourses')
+            fetch((location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getcourses")
                 .then(response => {
                     if (!response) {
                         throw new Error("404: Could not fetch from '/getcourses'")
