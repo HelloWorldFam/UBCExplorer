@@ -17,6 +17,18 @@ export function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
     const onContainerReady = (container) => {
         containers.push(container);
     };
+    
+    /**
+     * Helper function so that drag and drop functions on mobile devices
+     * @param {Event} e 
+     */
+    var listener = function(e) {
+        if (! scrollable) {
+            e.preventDefault();
+        }
+    }
+    var scrollable = true;
+    document.addEventListener('touchmove', listener, { passive:false });
 
     useEffect(() => {
         setContainers((containers) => [...containers]);
@@ -24,21 +36,23 @@ export function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
 
     useEffect(() => {
         const drake = dragula(containers);
+        drake.on("drag", function (el, source) {
+            scrollable = false;
+        })
         drake.on("drop", function (el, container) {
+            scrollable = true;
+            setContainers([]);
             el.style.backgroundColor = "#e6e6e6";
-            var newCourse;
-            const removeCourse = () => {
-                usersCourseArray.map((term) => {
-                    if (term.name === el.getAttribute("term")) {
-                        term.courses.map((course, courseIndex) => {
-                            if (el.getAttribute("courseid") === course.code) {
-                                newCourse = term.courses.splice(courseIndex, 1);
-                            }
-                        });
-                    }
-                });
-            };
-            removeCourse();
+            let newCourse;
+            usersCourseArray.map((term) => {
+                if (term.name === el.getAttribute("term")) {
+                    term.courses.map((course, courseIndex) => {
+                        if (el.getAttribute("courseid") === course.code) {
+                            newCourse = term.courses.splice(courseIndex, 1);
+                        }
+                    });
+                }
+            });
             usersCourseArray[container.getAttribute("termid")].courses.push(newCourse[0]);
             drake.cancel(true);
             setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);
@@ -70,7 +84,7 @@ export function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
             </Button>
         </>);
     };
-    
+
     if (usersCourseArray[0] != -1) {
         return (<>
             {usersCourseArray.map((term, termIndex) => {
@@ -98,7 +112,7 @@ export function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
                                                 ]);
                                             }}>
                                                 x
-                            </Button>
+                                            </Button>
                                         </Card>
                                     </>);
                                 })}

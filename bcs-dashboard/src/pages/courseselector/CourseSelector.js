@@ -93,7 +93,7 @@ export class Lane extends React.Component {
   };
 
   render() {
-    const { title, description, children } = this.props;
+    const { title, className, description, children } = this.props;
 
     return (
       <Card mb={6}>
@@ -105,7 +105,7 @@ export class Lane extends React.Component {
             {description}
           </Typography>
           <div
-            className={title}
+            className={className}
             termid={this.props.termId}
             style={{ minHeight: "20px" }}
             ref={this.handleContainerLoaded}
