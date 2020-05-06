@@ -38,7 +38,7 @@ connection.once("open", () => {
 // cookieSession config
 app.use(
   cookieSession({
-    maxAge: 24 * 60 * 60 * 1000, // One day in milliseconds
+    maxAge: 7* (24 * 60 * 60 * 1000), // One day in milliseconds
     keys: ["SOME TEMP PLACEHOLDER"], // secret key to hash cookie ;)
   })
 );
@@ -79,7 +79,7 @@ const GoogleOauthProduction = new GoogleOauth20Strategy(
         user.picture = profile._json.picture;
         user.save();
         // auth complete
-        return done(err, user);
+        return done(err, user.email);
       }
     );
   }
@@ -140,7 +140,7 @@ app.get(
 
 // Ask about this - using this to retrieve user data from the Passport 'profile' object
 app.get("/userdata", isUserAuthenticated, (req, res) => {
-  Users.find({ email: req.user.email }, function (err, result) {
+  Users.find({ email: req.user }, function (err, result) {
     res.send(result);
   });
 });
@@ -200,7 +200,7 @@ app.get("/about", (req, res) => {
 });
 
 app.get("/getCourses", isUserAuthenticated, (req, res) => {
-  Users.find({ email: req.user.email }, function (err, result) {
+  Users.find({ email: req.user }, function (err, result) {
     res.send(result[0].courses);
   });
 });
@@ -239,7 +239,7 @@ app.get("/searchAny/:code", (req, res) => {
 
 // Update course worklist/array of the term objects which was selected in course selector
 app.post("/updateUserWorkList", isUserAuthenticated, (req, res) => {
-  Users.findOne({ email: req.user.email })
+  Users.findOne({ email: req.user })
     .then((user) => {
       user.courses = req.body;
       user
