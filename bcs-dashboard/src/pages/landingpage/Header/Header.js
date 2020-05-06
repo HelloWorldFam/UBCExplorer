@@ -67,11 +67,10 @@ class IconMenu extends React.Component {
       <>
         <Button
           aria-owns={anchorEl ? "simple-menu" : undefined}
-          aria-haspopup="true"  
+          aria-haspopup="true"
           onClick={this.handleClick}
           variant="contained"
-          color="white"
-         
+          color="buttoncolor"
         >
           Sign In/Register
         </Button>
@@ -80,6 +79,7 @@ class IconMenu extends React.Component {
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
+          color="buttoncolor"
         >
           <MenuItem>
             {/* <ListItemIcon>
@@ -98,7 +98,7 @@ class IconMenu extends React.Component {
                   </a>  */}
           </MenuItem>
           <MenuItem>
-            <a href="/auth/google">
+            <a href="/auth/facebook">
               <ListItemText
                 inset
                 secondary="Sign In/Login With Facebook"
@@ -107,19 +107,10 @@ class IconMenu extends React.Component {
             </a>
           </MenuItem>
           <MenuItem>
-            <a href="/auth/google">
+            <a href="/auth/github">
               <ListItemText
                 inset
                 secondary="Sign In/Login With GitHub"
-                pl={0.5}
-              />
-            </a>
-          </MenuItem>
-          <MenuItem>
-            <a href="/auth/google">
-              <ListItemText
-                inset
-                secondary="Sign In/Login With Twitter"
                 pl={0.5}
               />
             </a>
