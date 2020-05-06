@@ -6,12 +6,13 @@ const Users = require("./models/users.model.js");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const findOrCreate = require("mongoose-findorcreate");
-const FacebookStrategy = require("passport-facebook");
 const GoogleOauthTest = require("./helpers/GoogleOauthTest.js");
 const GoogleOauth20Strategy = require("passport-google-oauth20");
 
 const path = require("path");
 const keepDynoAwake = require("./helpers/keepDynoAwake");
+
+const FacebookStrategy = require("passport-facebook").Strategy;
 
 const GitHubStrategy = require("passport-github").Strategy;
 
@@ -48,25 +49,30 @@ app.use(
 app.use(passport.initialize()); // Used to initialize passport
 app.use(passport.session()); // Used to persist login sessions
 
-//Strategy config
-// const FacebookOauthProduction = new FacebookOauthStrategy(
-//   {
-//     clientID: "861615657655378",
-//     clientSecret: "52ccb87530008a10ec91b9a9ec4fa35a",
-//     callbackURL: "https://localhost:3000/auth/facebook/callback"
+//Facebook Strategy config
+const FacebookOauthProduction = new FacebookStrategy(
+  {
+    clientID: "861615657655378",
+    clientSecret: "52ccb87530008a10ec91b9a9ec4fa35a",
+    callbackURL: "https://localhost:3000/auth/facebook/callback",
+  },
+  function (accessToken, refreshToken, profile, done) {
+    console.log(profile);
+    Users.findOrCreate(
+      { facebookId: profile.id },
+      { email: profile.emails[0].value },
+      // { firstName: profile.givenName },
+      // { lastName: profile.familyName },
 
-//   }, function (accessToken, refreshToken, profile, done) {
-//       console.log(profile);
-//       Users.findOrCreate(...,
-//         { email: profile.emails[0].value },
-//         { firstName: profile.givenName },
-//         { lastName: profile.familyName }
-//
-//         function(err, user) {
-//         if (err) { return done(err); }
-//         done(null, user);
-//       });
-//     }
+      function (err, user) {
+        if (err) {
+          return done(err);
+        }
+        done(null, user);
+      }
+    );
+  }
+);
 
 // Github strategy.
 const GitHubOAuthProduction = new GitHubStrategy(
@@ -113,6 +119,8 @@ const GoogleOauthProduction = new GoogleOauth20Strategy(
     );
   }
 );
+
+passport.use(FacebookOauthProduction);
 
 passport.use(GitHubOAuthProduction);
 
@@ -183,6 +191,19 @@ app.get(
 app.get(
   "/auth/google/callback",
   passport.authenticate("google"),
+  (req, res) => {
+    console.log("Successfully logged in");
+    res.redirect("/bcs/dashboard");
+  }
+);
+
+// passport.authenticate middleware is used here to authenticate the request
+app.get("/auth/facebook", passport.authenticate("facebook"));
+
+// The middleware receives the data from Google and runs the function on Strategy config
+app.get(
+  "/auth/facebook/callback",
+  passport.authenticate("facebook"),
   (req, res) => {
     console.log("Successfully logged in");
     res.redirect("/bcs/dashboard");
