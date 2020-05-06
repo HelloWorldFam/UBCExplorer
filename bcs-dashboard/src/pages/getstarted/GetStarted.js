@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from 'react-router-dom';
 import styled, { withTheme } from "styled-components";
 import axios from 'axios';
 import { Lane, TaskWrapper, TaskWrapperContent } from "../courseselector/CourseSelector";
@@ -60,6 +61,7 @@ const addCoreToDegree = () => {
 function Default({ theme }) {
     const [containers, setContainers] = useState([]);
     const [firstName, setFirstName] = useState("");
+    const history = useHistory();
 
     const onContainerReady = (container) => {
         setContainers(containers.push(container));
@@ -144,7 +146,11 @@ function Default({ theme }) {
                     <h3>Ready?</h3>
                     <TaskWrapper>
                         <TaskWrapperContent>
-                            <Button variant="contained" color="primary" size="small">Go to Course Selector!</Button>
+                            <Button variant="contained" color="primary" size="small"
+                                onClick={() => { history.push('/bcs/courseselector') }}
+                            >
+                                Go to Course Selector!
+                            </Button>
                         </TaskWrapperContent>
                     </TaskWrapper>
                 </Typography>
