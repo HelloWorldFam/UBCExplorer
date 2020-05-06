@@ -180,7 +180,7 @@ function tooltipText(course, average) {
       {average.high ? <h3>High: {average.high}%</h3> : ""}
       {average.low ? <h3>Low: {average.low}%</h3> : ""}
       {average.pass_percent ? (
-        <h3>Pass percent: {average.pass_percent}%</h3>
+        <h3>Pass rate: {average.pass_percent}%</h3>
       ) : (
         ""
       )}
