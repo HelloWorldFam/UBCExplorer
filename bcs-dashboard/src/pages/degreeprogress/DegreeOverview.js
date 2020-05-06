@@ -269,7 +269,6 @@ function DegreeOverview() {
         fetch((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getcourses")
             .then(response => response.json())
             .then(json => {
-                console.log("this is the json: " + json);
                 setCourseResult(json) // access json.body here
             })
             .catch((err) => {
