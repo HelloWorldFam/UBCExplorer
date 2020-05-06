@@ -284,6 +284,55 @@ function SearchCard(props) {
   );
 }
 
+function coreInfo() {
+  return (
+    <>
+      <h3>Hello world</h3>
+    </>
+  );
+}
+
+function bridgingModule() {
+  return (
+    <>
+      <h3>
+        Bridging Module as part of BCS degree requirement is 15 credits of
+        courses. <br />
+        <br />
+        Courses must be 300 or above from a single discipline (i.e. 5 courses
+        from the Faculty of Commerce) and you can be treated as a “minor.”
+        However, you can create your own bridging module from multiple
+        disciplines. <br /> Note that at least 9 credits of the bridging module
+        need to be from outside the CPSC. <br /> Email the BCS Director to check
+        if your bridging module is valid.
+      </h3>
+    </>
+  );
+}
+
+function upperCPSC() {
+  return (
+    <>
+      <p>Hello world</p>
+    </>
+  );
+}
+
+function exemptionCourses() {
+  return (
+    <>
+      <h3>Hello world</h3>
+    </>
+  );
+}
+
+function exemptionReplacement() {
+  return (
+    <>
+      <h3>Hello world</h3>
+    </>
+  );
+}
 function RadioButtonsGroup(props) {
   const [value, setValue] = useState("Core Course");
 
@@ -328,6 +377,52 @@ function RadioButtonsGroup(props) {
     <FormControl component="fieldset">
       <FormLabel component="legend">Requirement Tag</FormLabel>
 
+      <RadioGroup
+        aria-label="tag"
+        name="tag"
+        value={value}
+        onChange={(e) => handleChange(e.target.value)}
+      >
+        <Tooltip title={coreInfo()} placement="right" arrow>
+          <FormControlLabel
+            value="Core Course"
+            control={<Radio />}
+            label="Core Course"
+          />
+        </Tooltip>
+
+        <Tooltip title={bridgingModule()} placement="right" arrow>
+          <FormControlLabel
+            value="Bridging Module"
+            control={<Radio />}
+            label="Bridging Module"
+          />
+        </Tooltip>
+
+        <Tooltip title={upperCPSC()} placement="right" arrow>
+          <FormControlLabel
+            value="Upper CPSC"
+            control={<Radio />}
+            label="Upper CPSC"
+          />
+        </Tooltip>
+
+        <Tooltip title={exemptionCourses()} placement="right" arrow>
+          <FormControlLabel
+            value="Exemption"
+            control={<Radio />}
+            label="Exemption"
+          />
+        </Tooltip>
+
+        <Tooltip title={exemptionReplacement()} placement="right" arrow>
+          <FormControlLabel
+            value="Exemption Replacement"
+            control={<Radio />}
+            label="Exemption Replacement"
+          />
+        </Tooltip>
+      </RadioGroup>
       <button type="button" onClick={handleOpen}>
         Core CPSC
       </button>
@@ -361,41 +456,6 @@ function RadioButtonsGroup(props) {
           </div>
         </Fade>
       </Modal>
-
-      <RadioGroup
-        aria-label="tag"
-        name="tag"
-        value={value}
-        onChange={(e) => handleChange(e.target.value)}
-      >
-        <FormControlLabel
-          value="Core Course"
-          control={<Radio />}
-          label="Core Course"
-        >
-
-        </FormControlLabel>
-        <FormControlLabel
-          value="Bridging Module"
-          control={<Radio />}
-          label="Bridging Module"
-        />
-        <FormControlLabel
-          value="Upper CPSC"
-          control={<Radio />}
-          label="Upper CPSC"
-        />
-        <FormControlLabel
-          value="Exemption"
-          control={<Radio />}
-          label="Exemption"
-        />
-        <FormControlLabel
-          value="Exemption Replacement"
-          control={<Radio />}
-          label="Exemption Replacement"
-        />
-      </RadioGroup>
     </FormControl>
   );
 }
