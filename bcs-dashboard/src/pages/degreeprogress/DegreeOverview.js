@@ -109,7 +109,7 @@ function Overview(props) {
     }
     useEffect(() => {
         sortCourses(props.courseResult);
-    }, []);
+    }, [props.courseResult]);
 
     /**
      * 
@@ -266,23 +266,17 @@ function DegreeOverview() {
     const [courseResult, setCourseResult] = React.useState([]);
 
     useEffect(() => {
-        setCourseResult(() => {
-            fetch((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getcourses")
-                .then(response => {
-                    if (!response) {
-                        throw new Error("404: Could not fetch from '/getcourses'")
-                    } else {
-                        response.json()
-                    }
-                })
-                .then(json => {
-                    return setCourseResult(json) // access json.body here
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        });
-    });
+        fetch((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getcourses")
+            .then(response => response.json())
+            .then(json => {
+                console.log("this is the json: " + json);
+                setCourseResult(json) // access json.body here
+            })
+            .catch((err) => {
+                console.log(err);
+                return courseResult;
+            })
+    }, []);
 
     return (
         <React.Fragment>
