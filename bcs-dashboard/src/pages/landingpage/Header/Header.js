@@ -9,9 +9,14 @@ import { withStyles } from "@material-ui/core/styles";
 import Helmet from "react-helmet";
 import styled from "styled-components";
 
+// Logos
+import GithubLogo from "./SignInLogos/Github.png";
+import GoogleLogo from "./SignInLogos/Google.png";
+import FacebookLogo from "./SignInLogos/Facebook.png";
+
 // added
 import {
-  Button,
+  Button as MuiButton,
   CardContent,
   Fade,
   Grid,
@@ -37,7 +42,13 @@ import {
 
 import { spacing } from "@material-ui/system";
 
-const Card = styled(MuiCard)(spacing);
+const Card = styled(MuiCard)`
+  margin: 10px;
+  box-shadow: none;
+`;
+const Button = styled(MuiButton)`
+  
+`
 
 const Divider = styled(MuiDivider)(spacing);
 
@@ -71,6 +82,8 @@ class IconMenu extends React.Component {
           onClick={this.handleClick}
           variant="contained"
           color="buttoncolor"
+          disableRipple={true}
+          disableFocusRipple={true}
         >
           Sign In/Register
         </Button>
@@ -82,37 +95,18 @@ class IconMenu extends React.Component {
           onClose={this.handleClose}
           color="buttoncolor"
         >
-          <MenuItem>
-            {/* <ListItemIcon>
-                  <SendIcon />
-                </ListItemIcon> */}
-            <a href="/auth/google">
-              <ListItemText
-                secondary="Sign In/Login With Google"
-                pl={0.5}
-              />
-            </a>
-            {/* <a href="/auth/google">
-                    <span className="material-icons">how_to_reg</span>
-                    Sign In/Register
-                  </a>  */}
-          </MenuItem>
-          <MenuItem>
-            <a href="/auth/facebook">
-              <ListItemText
-                secondary="Sign In/Login With Facebook"
-                pl={0.5}
-              />
-            </a>
-          </MenuItem>
-          <MenuItem>
-            <a href="/auth/github">
-              <ListItemText
-                secondary="Sign In/Login With GitHub"
-                pl={0.5}
-              />
-            </a>
-          </MenuItem>
+          <Card>
+            <Typography variant="h6" style={{ padding: '0 10px 10px 10px', }}>Sign in with an OAuth provider:</Typography>
+            <Button style={{ margin: '3px', }} variant="outlined" href="/auth/google">
+              <strong>Google</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={GoogleLogo}></img>
+            </Button>
+            <Button style={{ margin: '3px', }} variant="outlined" href="/auth/facebook">
+              <strong>Facebook</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={FacebookLogo}></img>
+            </Button>
+            <Button style={{ margin: '3px', }} variant="outlined" href="/auth/github">
+              <strong>Github</strong> <img style={{ width: '52px', height: '16px', marginLeft: '10px' }} src={GithubLogo}></img>
+            </Button>
+          </Card>
         </Menu>
       </>
     );
