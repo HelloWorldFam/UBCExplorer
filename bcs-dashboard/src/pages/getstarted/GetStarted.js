@@ -15,10 +15,47 @@ import {
 import { spacing } from "@material-ui/system";
 import AddExemptionsGif from "./AddExemptions.gif";
 import SelectCoursesGif from "./SelectCourses.gif";
+import BuildWorklist from "./SampleWorklist";
 
 const Divider = styled(MuiDivider)(spacing);
 
 const Typography = styled(MuiTypography)(spacing);
+
+/**
+ * Description: Adds the entire list of core courses to worklist.
+ *              If current month >= 05 May, adds it to following September.
+ *              If current month <  05 May, adds it to the previous September. 
+ *
+ * Warning:     This will overwrite your existing worklist.
+ */
+const addCoreToDegree = () => {
+    let year = new Date().getFullYear();
+    if (new Date().getMonth() + 1 < 5) year--;
+    let workList = BuildWorklist(year);
+    let hasExistingWorklist = false;
+    fetch((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getcourses")
+        .then(response => {
+            if (!(response instanceof Array)) {
+                alert("A network error has occurred. Please try again later.");
+                // Do not send post request
+                hasExistingWorklist = true;
+            }
+            else if (response.length !== 0) {
+                // If !hasExistingWorklist, will send post request
+                hasExistingWorklist = window.confirm("You have an existing worklist. Adding core courses will overwrite your existing worklist. \n\n Are you sure you wish to proceed?");
+            }
+            if (!hasExistingWorklist) {
+                axios
+                    .post(
+                        (window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/updateUserWorkList",
+                        workList
+                    )
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}
 
 function Default({ theme }) {
     const [containers, setContainers] = useState([]);
@@ -56,7 +93,7 @@ function Default({ theme }) {
 
             <Divider my={6} />
             <Lane
-                title="Your Degree, Simplified"
+                title="Get Started"
                 description={(<small>For detailed requirements, see: <a href='https://my.cs.ubc.ca/node/41871'>Welcome Notes to BCS Students (Steve Wolfman, 2018)</a> and <a href='https://www.cs.ubc.ca/students/undergrad/programs/second-degree/academic-schedule'>BCS Academic Schedule</a>.</small>)}
                 onContainerLoaded={onContainerReady}
             >
@@ -65,7 +102,9 @@ function Default({ theme }) {
                     <h3>Step one:</h3>
                     <TaskWrapper>
                         <TaskWrapperContent>
-                            <Button variant="contained" color="primary" size="small">Add Core Courses</Button> <br /><br />
+                            <Button variant="contained" color="primary" size="small" onClick={() => addCoreToDegree()}>
+                                Add Core Courses
+                            </Button> <br /><br />
                             Get started by adding these courses to your worklist:
                             <ul>
                                 <li>ENGL 112 - Strategies for University Writing</li>
@@ -92,14 +131,14 @@ function Default({ theme }) {
                                 <li>CPSC 4xx - 2 CPSC electives numbered 400 or above</li>
                                 <li>5 Bridging Module courses (<a href='https://my.cs.ubc.ca/node/41871#sec-2-1'>need help?</a>)</li>
                             </ul> <br />
-                            <img src={SelectCoursesGif} style={{maxHeight: '60em', maxWidth:'30em' }}></img>
+                            <img src={SelectCoursesGif} style={{ maxHeight: '60em', maxWidth: '30em' }}></img>
                         </TaskWrapperContent>
                     </TaskWrapper>
                     <h3>Step three:</h3>
                     <TaskWrapper>
                         <TaskWrapperContent>
                             Got exemptions? Make sure you add them to your worklist. <br /><br />
-                            <img src={AddExemptionsGif} style={{maxHeight: '60em', maxWidth:'30em' }}></img>
+                            <img src={AddExemptionsGif} style={{ maxHeight: '60em', maxWidth: '30em' }}></img>
                         </TaskWrapperContent>
                     </TaskWrapper>
                     <h3>Ready?</h3>
