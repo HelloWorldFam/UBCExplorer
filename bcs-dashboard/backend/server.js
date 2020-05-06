@@ -134,7 +134,7 @@ app.get(
   passport.authenticate("google"),
   (req, res) => {
     console.log("Successfully logged in");
-    res.redirect("/bcs/dashboard");
+    res.redirect("/bcs/start");
   }
 );
 
