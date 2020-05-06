@@ -58,7 +58,7 @@ app.use(passport.session()); // Used to persist login sessions
 //   }, function (accessToken, refreshToken, profile, done) {
 //       console.log(profile);
 //       Users.findOrCreate(...,
-//         {email: profile.emails[0].value },
+//         { email: profile.emails[0].value },
 //         { firstName: profile.givenName },
 //         { lastName: profile.familyName }
 //
@@ -122,6 +122,17 @@ passport.use(
     : GoogleOauthTest
 );
 
+// passport.use(new TwitterStrategy({
+//   clientID: 'must sign up with facebook for one',
+//   clientSecret: 'must sign up with facebook for one',
+//   callbackURL: 'our callback URL'
+// },
+//   function (accessToken, refreshToken, profile, done) {
+//     Users.findOrCreate({ email: profile.email }, { firstName: profile.firstName, lastName: profile.lastName }, function (err, user) {
+//       return done(err, user);
+//     })
+//   }));
+
 // Used to stuff a piece of information into a cookie
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -181,6 +192,7 @@ app.get(
 // Ask about this - using this to retrieve user data from the Passport 'profile' object
 app.get("/userdata", isUserAuthenticated, (req, res) => {
   Users.find({ email: req.user }, function (err, result) {
+    console.log(result);
     res.send(result);
   });
 });
@@ -294,6 +306,23 @@ app.post("/updateUserWorkList", isUserAuthenticated, (req, res) => {
       console.log(err);
       res.sendStatus(400);
     });
+});
+
+// Update course worklist/array of the term objects which was selected in course selector
+app.post("/updateUser", isUserAuthenticated, (req, res) => {
+  Users.findOne({ email: req.user }).then((user) => {
+    user.firstName = req.body.firstName;
+    user.lastName = req.body.lastName;
+    user
+      .save()
+      .then(() => {
+        res.sendStatus(200);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.sendStatus(400);
+      });
+  });
 });
 
 // Commented out for testing
