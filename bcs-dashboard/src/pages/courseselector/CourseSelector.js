@@ -16,7 +16,8 @@ import Helmet from "react-helmet";
 import "react-dragula/dist/dragula.css";
 import SearchComponent from "./SearchComponent";
 import { YourDegreeCard } from "./components/YourDegreeCard";
-import Backdrop from '@material-ui/core/Backdrop';
+import Backdrop from "@material-ui/core/Backdrop";
+import Modal from "@material-ui/core/Modal";
 
 import {
   Breadcrumbs as MuiBreadcrumbs,
@@ -33,7 +34,7 @@ import {
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
-import { Modal } from "semantic-ui-react";
+// import { Modal } from "semantic-ui-react";
 
 const NavLink = React.forwardRef((props, ref) => (
   <RouterNavLink innerRef={ref} {...props} />
@@ -182,11 +183,7 @@ function tooltipText(course, average) {
       {average.average ? <h3>Historical average: {average.average}%</h3> : ""}
       {average.high ? <h3>High: {average.high}%</h3> : ""}
       {average.low ? <h3>Low: {average.low}%</h3> : ""}
-      {average.pass_percent ? (
-        <h3>Pass rate: {average.pass_percent}%</h3>
-      ) : (
-          ""
-        )}
+      {average.pass_percent ? <h3>Pass rate: {average.pass_percent}%</h3> : ""}
     </>
   );
 }
@@ -203,7 +200,13 @@ function SearchCard(props) {
 
   const handleClick = (courseInfo) => {
     axios
-      .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + courseInfo)
+      .get(
+        (window.location.host === "ubcexplorer.io"
+          ? ""
+          : "http://localhost:3000") +
+          "/getCourseInfo/" +
+          courseInfo
+      )
       .then((res) => {
         setCode(courseInfo);
         setDesc(res.data.desc);
@@ -284,6 +287,34 @@ function SearchCard(props) {
 function RadioButtonsGroup(props) {
   const [value, setValue] = useState("Core Course");
 
+  const [open, setOpen] = useState(false);
+
+  /**
+   * For modal
+   */
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const useStylesModal = makeStyles((theme) => ({
+    modal: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    paper: {
+      backgroundColor: theme.palette.background.paper,
+      border: "2px solid #000",
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
+  }));
+
+  const classes = useStylesModal();
+
   useEffect(() => {
     props.onChange(value);
   }, []);
@@ -296,6 +327,41 @@ function RadioButtonsGroup(props) {
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend">Requirement Tag</FormLabel>
+
+      <button type="button" onClick={handleOpen}>
+        Core CPSC
+      </button>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <div className={classes.paper}>
+            <h2 id="transition-modal-title">Core CPSC Courses</h2>
+            <p id="transition-modal-description">
+              <ul>
+                <li>CPSC 110</li>
+                <li>CPSC 121</li>
+                <li>CPSC 210</li>
+                <li>CPSC 221</li>
+                <li>CPSC 213</li>
+                <li>CPSC 310</li>
+                <li>CPSC 313</li>
+                <li>CPSC 320</li>
+              </ul>
+            </p>
+          </div>
+        </Fade>
+      </Modal>
+
       <RadioGroup
         aria-label="tag"
         name="tag"
@@ -306,7 +372,9 @@ function RadioButtonsGroup(props) {
           value="Core Course"
           control={<Radio />}
           label="Core Course"
-        />
+        >
+
+        </FormControlLabel>
         <FormControlLabel
           value="Bridging Module"
           control={<Radio />}
@@ -415,7 +483,13 @@ function PrerequisitesCard(props) {
 
   const getCourseInfo = (course) => {
     axios
-      .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
+      .get(
+        (window.location.host === "ubcexplorer.io"
+          ? ""
+          : "http://localhost:3000") +
+          "/getCourseInfo/" +
+          course
+      )
       .then((res) => {
         if (res.data.desc) {
           setCourseListToDisplay((courseListToDisplay) =>
@@ -458,7 +532,13 @@ function DependenciesCard(props) {
     if (dependencies) {
       for (let course of dependencies) {
         axios
-          .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
+          .get(
+            (window.location.host === "ubcexplorer.io"
+              ? ""
+              : "http://localhost:3000") +
+              "/getCourseInfo/" +
+              course
+          )
           .then((res) => {
             if (res.data.desc) {
               setCourseListToDisplay((courseListToDisplay) =>
@@ -552,31 +632,6 @@ function CourseSelector() {
   const [usersCourseArray, setUsersCourseArray] = useState([-1]);
   const [windowHeight, setWindowHeight] = useState(0);
   const MAX_HEIGHT = windowHeight - 230;
-  const [open, setOpen] = React.useState(false);
-
-  /**
-   * For modal
-   */
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const useStyles = makeStyles((theme) => ({
-    modal: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    paper: {
-      backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
-  }));
-  const classes = useStyles();  
 
   const onContainerReady = (container) => {
     setContainers(containers.push(container));
@@ -584,13 +639,24 @@ function CourseSelector() {
 
   useEffect(() => {
     if (usersCourseArray && usersCourseArray[0] !== -1) {
-      axios.post((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/updateUserWorkList", usersCourseArray).then(() => { });
+      axios
+        .post(
+          (window.location.host === "ubcexplorer.io"
+            ? ""
+            : "http://localhost:3000") + "/updateUserWorkList",
+          usersCourseArray
+        )
+        .then(() => {});
     }
   }, [usersCourseArray]);
 
   useEffect(() => {
     axios
-      .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/userdata")
+      .get(
+        (window.location.host === "ubcexplorer.io"
+          ? ""
+          : "http://localhost:3000") + "/userdata"
+      )
       .then((res) => {
         setUsersCourseArray(res.data[0].courses);
       })
@@ -627,28 +693,6 @@ function CourseSelector() {
       </Breadcrumbs>
 
       <Divider my={6} />
-      <button type="button" onClick={handleOpen}>
-        react-transition-group
-      </button>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-            <h2 id="transition-modal-title">Transition modal</h2>
-            <p id="transition-modal-description">react-transition-group animates me.</p>
-          </div>
-        </Fade>
-      </Modal>
       <Grid container spacing={6}>
         <Grid
           item
