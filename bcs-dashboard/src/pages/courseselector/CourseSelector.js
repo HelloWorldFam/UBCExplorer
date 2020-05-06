@@ -16,8 +16,6 @@ import Helmet from "react-helmet";
 import "react-dragula/dist/dragula.css";
 import SearchComponent from "./SearchComponent";
 import { YourDegreeCard } from "./components/YourDegreeCard";
-import Backdrop from "@material-ui/core/Backdrop";
-import Modal from "@material-ui/core/Modal";
 
 import {
   Breadcrumbs as MuiBreadcrumbs,
@@ -34,7 +32,6 @@ import {
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
-// import { Modal } from "semantic-ui-react";
 
 const NavLink = React.forwardRef((props, ref) => (
   <RouterNavLink innerRef={ref} {...props} />
@@ -287,7 +284,24 @@ function SearchCard(props) {
 function coreInfo() {
   return (
     <>
-      <h3>Hello world</h3>
+      <h3>
+        Core BCS Courses that must be taken:
+        <br />
+        - CPSC 110: &nbsp;&nbsp;Computation, Programs, and Programming
+        <br />
+        - CPSC 121: &nbsp;&nbsp;Models of Computation
+        <br />
+        - CPSC 210: &nbsp;&nbsp;Software Construction
+        <br />
+        - CPSC 221: &nbsp;&nbsp;Basic Data Structures and Algorithms
+        <br />
+        - CPSC 213: &nbsp;&nbsp;Introduction to Computer Systems
+        <br />
+        - CPSC 310: &nbsp;&nbsp;Introduction to Software Engineering
+        <br />
+        - CPSC 313: &nbsp;&nbsp;Computer Hardware and Operating Systems
+        <br />- CPSC 320: &nbsp;&nbsp;Intermediate Algorithm Design and Analysis
+      </h3>
     </>
   );
 }
@@ -299,12 +313,11 @@ function bridgingModule() {
         Bridging Module as part of BCS degree requirement is 15 credits of
         courses. <br />
         <br />
-        Courses must be 300 or above from a single discipline (i.e. 5 courses
-        from the Faculty of Commerce) and you can be treated as a “minor.”
-        However, you can create your own bridging module from multiple
-        disciplines. <br /> Note that at least 9 credits of the bridging module
-        need to be from outside the CPSC. <br /> Email the BCS Director to check
-        if your bridging module is valid.
+        Courses must be 300/400 level from a single discipline.
+        However, you can create your own bridging module from
+        multiple disciplines. <br /> Note that at least 9 credits of the
+        bridging module need to be from outside the CPSC. <br /> Email the BCS
+        Director to check if your bridging module is valid.
       </h3>
     </>
   );
@@ -313,7 +326,7 @@ function bridgingModule() {
 function upperCPSC() {
   return (
     <>
-      <p>Hello world</p>
+      <h3>Upper Year CPSC courses 300/400 level that are not apart of the bridging module or core CPSC courses.</h3>
     </>
   );
 }
@@ -321,7 +334,17 @@ function upperCPSC() {
 function exemptionCourses() {
   return (
     <>
-      <h3>Hello world</h3>
+      <h3>
+        Courses that may be exempted:
+        <br />
+        <br />
+        - STCM 3xx (upper year communication requirement)
+        <br />
+        - STAT 203 <br />
+        - MATH 180 <br />
+        - ENGL 1xx (can also be exempted through English Exemption Exam)
+        <br />- CPSC 110 (exempted through CPSC110 challenge exam)
+      </h3>
     </>
   );
 }
@@ -329,40 +352,32 @@ function exemptionCourses() {
 function exemptionReplacement() {
   return (
     <>
-      <h3>Hello world</h3>
+      <h3>
+        Replace each lower-level (100- or 200-numbered) exemption with 3 credits
+        of any other UBC course ( including CPSC and upper-level courses if
+        you'd like). <br />
+        Exemption replacements are officially subject to the BCS admin or
+        director's approval.
+      </h3>
     </>
   );
 }
+
+const useStylesTooltip = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+  customWidth: {
+    maxWidth: 500,
+  },
+  noMaxWidth: {
+    maxWidth: "none",
+  },
+}));
+
 function RadioButtonsGroup(props) {
   const [value, setValue] = useState("Core Course");
-
-  const [open, setOpen] = useState(false);
-
-  /**
-   * For modal
-   */
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const useStylesModal = makeStyles((theme) => ({
-    modal: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    paper: {
-      backgroundColor: theme.palette.background.paper,
-      border: "2px solid #000",
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
-  }));
-
-  const classes = useStylesModal();
+  const classes = useStylesTooltip();
 
   useEffect(() => {
     props.onChange(value);
@@ -383,7 +398,12 @@ function RadioButtonsGroup(props) {
         value={value}
         onChange={(e) => handleChange(e.target.value)}
       >
-        <Tooltip title={coreInfo()} placement="right" arrow>
+        <Tooltip
+          title={coreInfo()}
+          placement="right"
+          arrow
+          classes={{ tooltip: classes.customWidth }}
+        >
           <FormControlLabel
             value="Core Course"
             control={<Radio />}
@@ -391,7 +411,12 @@ function RadioButtonsGroup(props) {
           />
         </Tooltip>
 
-        <Tooltip title={bridgingModule()} placement="right" arrow>
+        <Tooltip
+          title={bridgingModule()}
+          placement="right"
+          arrow
+          classes={{ tooltip: classes.customWidth }}
+        >
           <FormControlLabel
             value="Bridging Module"
             control={<Radio />}
@@ -399,7 +424,12 @@ function RadioButtonsGroup(props) {
           />
         </Tooltip>
 
-        <Tooltip title={upperCPSC()} placement="right" arrow>
+        <Tooltip
+          title={upperCPSC()}
+          placement="right"
+          arrow
+          classes={{ tooltip: classes.customWidth }}
+        >
           <FormControlLabel
             value="Upper CPSC"
             control={<Radio />}
@@ -407,7 +437,12 @@ function RadioButtonsGroup(props) {
           />
         </Tooltip>
 
-        <Tooltip title={exemptionCourses()} placement="right" arrow>
+        <Tooltip
+          title={exemptionCourses()}
+          placement="right"
+          arrow
+          classes={{ tooltip: classes.customWidth }}
+        >
           <FormControlLabel
             value="Exemption"
             control={<Radio />}
@@ -415,7 +450,12 @@ function RadioButtonsGroup(props) {
           />
         </Tooltip>
 
-        <Tooltip title={exemptionReplacement()} placement="right" arrow>
+        <Tooltip
+          title={exemptionReplacement()}
+          placement="right"
+          arrow
+          classes={{ tooltip: classes.customWidth }}
+        >
           <FormControlLabel
             value="Exemption Replacement"
             control={<Radio />}
@@ -423,87 +463,6 @@ function RadioButtonsGroup(props) {
           />
         </Tooltip>
       </RadioGroup>
-      <button type="button" onClick={handleOpen}>
-        Core CPSC
-      </button>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-            <h2 id="transition-modal-title">Core CPSC Courses</h2>
-            <p id="transition-modal-description">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-                nec pulvinar ante. Fusce non euismod urna, vel gravida odio.
-                Aliquam ornare tempus nibh et suscipit. Sed gravida diam vitae
-                nunc congue, a elementum risus rutrum. Nullam et diam vitae
-                justo convallis placerat. Curabitur bibendum neque sapien, vitae
-                convallis metus placerat et. Etiam sit amet pharetra mi, id
-                feugiat lectus. Nullam vitae vehicula mi, sit amet efficitur
-                nibh. Pellentesque auctor justo porttitor sem tincidunt
-                fringilla. Integer mollis eros at purus lacinia, ac dictum urna
-                fringilla. Fusce tincidunt semper quam, in tempus sem maximus
-                in. Donec magna leo, varius at consequat a, tempor ac leo. Etiam
-                nec quam ac risus blandit pellentesque. Aliquam erat volutpat.
-                Sed dictum est sit amet augue ultrices facilisis. Nam cursus
-                tellus vitae ultricies consectetur. Pellentesque rutrum dolor
-                pellentesque metus placerat, quis imperdiet mauris imperdiet. In
-                mauris sapien, congue sed diam eget, facilisis ornare lacus.
-                Cras sed dui nec leo ultricies malesuada. Pellentesque non
-                molestie nibh, eu viverra dui. Proin diam tortor, facilisis
-                vitae diam sed, pellentesque ullamcorper nulla. Duis orci augue,
-                rutrum ac magna id, iaculis placerat eros. Donec vel nibh ut
-                turpis elementum ultricies sit amet eu dui. Etiam tincidunt
-                interdum neque, et porttitor nulla sollicitudin eu. Maecenas in
-                massa eu lectus tincidunt aliquet. Ut at dolor lorem. Orci
-                varius natoque penatibus et magnis dis parturient montes,
-                nascetur ridiculus mus. Morbi scelerisque dictum est vitae
-                efficitur. Fusce neque lorem, volutpat sed justo vel, iaculis
-                auctor enim. Pellentesque eu sapien quis odio sodales
-                ullamcorper ac quis diam. Nullam non venenatis metus, vel
-                malesuada lacus. Morbi ultricies pellentesque velit porttitor
-                tempus. Donec a interdum tortor, eu ullamcorper massa.
-                Suspendisse justo dolor, lacinia a viverra feugiat, consectetur
-                at nibh. Nullam massa risus, convallis vestibulum tristique
-                commodo, consequat non libero. Phasellus vitae dolor elementum,
-                tincidunt est id, imperdiet ligula. Aliquam nec nisi justo.
-                Morbi arcu velit, imperdiet vitae interdum a, sollicitudin at
-                tortor. Ut et tortor eget sapien lobortis elementum. Phasellus
-                rutrum purus tellus, consequat fringilla arcu tincidunt vitae.
-                Duis et purus ex. Donec non tristique sem, nec viverra ipsum.
-                Donec placerat ante at lacus tempor, quis ornare diam efficitur.
-                Nam diam mauris, congue in dolor vitae, sodales fermentum orci.
-                Etiam tristique suscipit nulla, sed cursus odio volutpat et.
-                Aenean felis massa, accumsan quis sapien et, pellentesque
-                consequat quam. Suspendisse placerat neque eu lacinia interdum.
-                Vivamus pretium mattis nibh, a viverra nisi iaculis tincidunt.
-                Aliquam eros arcu, semper ut nulla eget, fringilla accumsan
-                justo. Donec nulla nibh, eleifend in enim quis, condimentum
-                malesuada felis. Proin volutpat nulla in aliquam facilisis.
-                Maecenas dolor ligula, commodo in sem vitae, aliquet rhoncus
-                tellus. Sed a tempus leo, in pellentesque nibh. Vestibulum
-                feugiat, nunc viverra maximus posuere, diam nibh semper odio,
-                non ultricies ligula orci ut tortor. Vivamus aliquam scelerisque
-                ipsum id mollis. Mauris mi orci, mollis a sapien id, mollis
-                iaculis justo. Ut semper vehicula velit non tempus. Vestibulum
-                diam nulla, euismod a malesuada sit amet, pellentesque vitae
-                magna. Fusce vulputate egestas gravida. Duis molestie mauris
-                sem, nec maximus nulla suscipit sed.
-              </p>
-            </p>
-          </div>
-        </Fade>
-      </Modal>
     </FormControl>
   );
 }
