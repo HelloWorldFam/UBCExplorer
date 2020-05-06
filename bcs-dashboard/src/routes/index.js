@@ -34,6 +34,9 @@ import ReceiptIcon from '@material-ui/icons/Receipt';
 const LandingPage = async(() => import("../pages/landingpage/LandingPage"));
 const ContactPage = async(() => import("../pages/landingpage/Contact/Contact"));
 
+// Getting started component
+const GetStartedPage = async(() => import("../pages/getstarted/GetStarted"));
+
 // Degree progress components
 const DegreeTimeline = async(() => import("../pages/degreeprogress/DegreeTimeline"));
 const DegreeOverview = async(() => import("../pages/degreeprogress/DegreeOverview"));
@@ -120,11 +123,11 @@ const contactPageRoutes = {
 };
 
 const dashboardsRoutes = {
-  id: "Dashboard",
-  path: "/bcs/dashboard",
+  id: "Get Started",
+  path: "/bcs/start",
   icon: <Sliders />,
   containsHome: true,
-  component: Default,
+  component: GetStartedPage,
   /*
     Note: Uncomment below if you require children componenents 
   */

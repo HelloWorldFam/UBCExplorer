@@ -152,11 +152,7 @@ function tooltipText(course, average) {
       {average.average ? <h3>Historical average: {average.average}%</h3> : ""}
       {average.high ? <h3>High: {average.high}%</h3> : ""}
       {average.low ? <h3>Low: {average.low}%</h3> : ""}
-      {average.pass_percent ? (
-        <h3>Pass rate: {average.pass_percent}%</h3>
-      ) : (
-        ""
-      )}
+      {average.pass_percent ? <h3>Pass rate: {average.pass_percent}%</h3> : ""}
     </>
   );
 }
@@ -170,7 +166,13 @@ function SearchCard(props) {
 
   const handleClick = (courseInfo) => {
     axios
-      .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + courseInfo)
+      .get(
+        (window.location.host === "ubcexplorer.io"
+          ? ""
+          : "http://localhost:3000") +
+          "/getCourseInfo/" +
+          courseInfo
+      )
       .then((res) => {
         setDesc(res.data.desc);
         setCred("");
@@ -227,7 +229,13 @@ function PrerequisitesCard(props) {
 
   const getCourseInfo = (course) => {
     axios
-      .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
+      .get(
+        (window.location.host === "ubcexplorer.io"
+          ? ""
+          : "http://localhost:3000") +
+          "/getCourseInfo/" +
+          course
+      )
       .then((res) => {
         if (res.data.desc) {
           setCourseListToDisplay((courseListToDisplay) =>
@@ -270,7 +278,13 @@ function DependenciesCard(props) {
     if (dependencies) {
       for (let course of dependencies) {
         axios
-          .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
+          .get(
+            (window.location.host === "ubcexplorer.io"
+              ? ""
+              : "http://localhost:3000") +
+              "/getCourseInfo/" +
+              course
+          )
           .then((res) => {
             if (res.data.desc) {
               setCourseListToDisplay((courseListToDisplay) =>

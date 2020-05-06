@@ -28,6 +28,7 @@ import {
   TextField as MuiTextField,
   Tooltip,
   Typography as MuiTypography,
+  Fade,
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
@@ -46,7 +47,7 @@ const TextField = styled(TextFieldSpacing)`
 
 export const Card = styled(MuiCard)`
   overflow: visible;
-`;
+`; 
 
 export const Divider = styled(MuiDivider)(spacing);
 
@@ -179,11 +180,7 @@ function tooltipText(course, average) {
       {average.average ? <h3>Historical average: {average.average}%</h3> : ""}
       {average.high ? <h3>High: {average.high}%</h3> : ""}
       {average.low ? <h3>Low: {average.low}%</h3> : ""}
-      {average.pass_percent ? (
-        <h3>Pass rate: {average.pass_percent}%</h3>
-      ) : (
-        ""
-      )}
+      {average.pass_percent ? <h3>Pass rate: {average.pass_percent}%</h3> : ""}
     </>
   );
 }
@@ -200,7 +197,13 @@ function SearchCard(props) {
 
   const handleClick = (courseInfo) => {
     axios
-      .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + courseInfo)
+      .get(
+        (window.location.host === "ubcexplorer.io"
+          ? ""
+          : "http://localhost:3000") +
+        "/getCourseInfo/" +
+        courseInfo
+      )
       .then((res) => {
         setCode(courseInfo);
         setDesc(res.data.desc);
@@ -278,8 +281,103 @@ function SearchCard(props) {
   );
 }
 
+function coreInfo() {
+  return (
+    <>
+      <h3>
+        Core BCS Courses that must be taken:
+        <br />
+        - CPSC 110: &nbsp;&nbsp;Computation, Programs, and Programming
+        <br />
+        - CPSC 121: &nbsp;&nbsp;Models of Computation
+        <br />
+        - CPSC 210: &nbsp;&nbsp;Software Construction
+        <br />
+        - CPSC 221: &nbsp;&nbsp;Basic Data Structures and Algorithms
+        <br />
+        - CPSC 213: &nbsp;&nbsp;Introduction to Computer Systems
+        <br />
+        - CPSC 310: &nbsp;&nbsp;Introduction to Software Engineering
+        <br />
+        - CPSC 313: &nbsp;&nbsp;Computer Hardware and Operating Systems
+        <br />- CPSC 320: &nbsp;&nbsp;Intermediate Algorithm Design and Analysis
+      </h3>
+    </>
+  );
+}
+
+function bridgingModule() {
+  return (
+    <>
+      <h3>
+        Bridging Module as part of BCS degree requirement is 15 credits of
+        courses. <br />
+        <br />
+        Courses must be 300/400 level from a single discipline.
+        However, you can create your own bridging module from
+        multiple disciplines. <br /> Note that at least 9 credits of the
+        bridging module need to be from outside the CPSC. <br /> Email the BCS
+        Director to check if your bridging module is valid.
+      </h3>
+    </>
+  );
+}
+
+function upperCPSC() {
+  return (
+    <>
+      <h3>Upper Year CPSC courses 300/400 level that are not apart of the bridging module or core CPSC courses.</h3>
+    </>
+  );
+}
+
+function exemptionCourses() {
+  return (
+    <>
+      <h3>
+        Courses that may be exempted:
+        <br />
+        <br />
+        - STCM 3xx (upper year communication requirement)
+        <br />
+        - STAT 203 <br />
+        - MATH 180 <br />
+        - ENGL 1xx (can also be exempted through English Exemption Exam)
+        <br />- CPSC 110 (exempted through CPSC110 challenge exam)
+      </h3>
+    </>
+  );
+}
+
+function exemptionReplacement() {
+  return (
+    <>
+      <h3>
+        Replace each lower-level (100- or 200-numbered) exemption with 3 credits
+        of any other UBC course ( including CPSC and upper-level courses if
+        you'd like). <br />
+        Exemption replacements are officially subject to the BCS admin or
+        director's approval.
+      </h3>
+    </>
+  );
+}
+
+const useStylesTooltip = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+  customWidth: {
+    maxWidth: 500,
+  },
+  noMaxWidth: {
+    maxWidth: "none",
+  },
+}));
+
 function RadioButtonsGroup(props) {
   const [value, setValue] = useState("Core Course");
+  const classes = useStylesTooltip();
 
   useEffect(() => {
     props.onChange(value);
@@ -293,37 +391,77 @@ function RadioButtonsGroup(props) {
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend">Requirement Tag</FormLabel>
+
       <RadioGroup
         aria-label="tag"
         name="tag"
         value={value}
         onChange={(e) => handleChange(e.target.value)}
       >
-        <FormControlLabel
-          value="Core Course"
-          control={<Radio />}
-          label="Core Course"
-        />
-        <FormControlLabel
-          value="Bridging Module"
-          control={<Radio />}
-          label="Bridging Module"
-        />
-        <FormControlLabel
-          value="Upper CPSC"
-          control={<Radio />}
-          label="Upper CPSC"
-        />
-        <FormControlLabel
-          value="Exemption"
-          control={<Radio />}
-          label="Exemption"
-        />
-        <FormControlLabel
-          value="Exemption Replacement"
-          control={<Radio />}
-          label="Exemption Replacement"
-        />
+        <Tooltip
+          title={coreInfo()}
+          placement="right"
+          arrow
+          classes={{ tooltip: classes.customWidth }}
+        >
+          <FormControlLabel
+            value="Core Course"
+            control={<Radio />}
+            label="Core Course"
+          />
+        </Tooltip>
+
+        <Tooltip
+          title={bridgingModule()}
+          placement="right"
+          arrow
+          classes={{ tooltip: classes.customWidth }}
+        >
+          <FormControlLabel
+            value="Bridging Module"
+            control={<Radio />}
+            label="Bridging Module"
+          />
+        </Tooltip>
+
+        <Tooltip
+          title={upperCPSC()}
+          placement="right"
+          arrow
+          classes={{ tooltip: classes.customWidth }}
+        >
+          <FormControlLabel
+            value="Upper CPSC"
+            control={<Radio />}
+            label="Upper CPSC"
+          />
+        </Tooltip>
+
+        <Tooltip
+          title={exemptionCourses()}
+          placement="right"
+          arrow
+          classes={{ tooltip: classes.customWidth }}
+        >
+          <FormControlLabel
+            value="Exemption"
+            control={<Radio />}
+            label="Exemption"
+          />
+        </Tooltip>
+
+        <Tooltip
+          title={exemptionReplacement()}
+          placement="right"
+          arrow
+          classes={{ tooltip: classes.customWidth }}
+        >
+          <FormControlLabel
+            value="Exemption Replacement"
+            control={<Radio />}
+            label="Exemption Replacement"
+          />
+        </Tooltip>
       </RadioGroup>
     </FormControl>
   );
@@ -412,7 +550,13 @@ function PrerequisitesCard(props) {
 
   const getCourseInfo = (course) => {
     axios
-      .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
+      .get(
+        (window.location.host === "ubcexplorer.io"
+          ? ""
+          : "http://localhost:3000") +
+        "/getCourseInfo/" +
+        course
+      )
       .then((res) => {
         if (res.data.desc) {
           setCourseListToDisplay((courseListToDisplay) =>
@@ -455,7 +599,13 @@ function DependenciesCard(props) {
     if (dependencies) {
       for (let course of dependencies) {
         axios
-          .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getCourseInfo/" + course)
+          .get(
+            (window.location.host === "ubcexplorer.io"
+              ? ""
+              : "http://localhost:3000") +
+            "/getCourseInfo/" +
+            course
+          )
           .then((res) => {
             if (res.data.desc) {
               setCourseListToDisplay((courseListToDisplay) =>
@@ -507,15 +657,13 @@ const addToDegreeFunction = (
     }
   }
 
+  // Add the course to the degree
   if (termExists) {
-    // if the term exists!
-
     let isInCourseArray = false;
     for (let coursesInTerm of courseArray) {
       if (coursesInTerm.code === courseToAdd.code) {
-        //term exists, but course is in term - so do nothing send alert
-        alert("You have already added this!");
-        isInCourseArray = true;
+        //term exists; confirm if user wants to add?
+        isInCourseArray = !window.confirm("You have already added this course in the current term. Are you sure you want to add it again?");
         break;
       }
     }
@@ -525,6 +673,18 @@ const addToDegreeFunction = (
       courseArray.push(courseToAdd);
     }
   } else {
+    // Search to see if the user has added the course in the degree
+    let courseAlreadyAddedToDegree = false;
+    upper_loop:
+    for (let term of usersCourseArray) {
+      for (let course of term.courses) {
+        if (course.code === courseToAdd.code) {
+          courseAlreadyAddedToDegree = !window.confirm("You have already added this course in " + term.name + ". Are you sure you want to add it again?");
+          break upper_loop;
+        }
+      }
+    }
+    if (courseAlreadyAddedToDegree) return;
     // term does not exist- so create new term object with the course added.
     usersCourseArray.push({ name: courseToAdd.term, courses: [courseToAdd] });
   }
@@ -556,13 +716,24 @@ function CourseSelector() {
 
   useEffect(() => {
     if (usersCourseArray && usersCourseArray[0] !== -1) {
-      axios.post((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/updateUserWorkList", usersCourseArray).then(() => { });
+      axios
+        .post(
+          (window.location.host === "ubcexplorer.io"
+            ? ""
+            : "http://localhost:3000") + "/updateUserWorkList",
+          usersCourseArray
+        )
+        .then(() => { });
     }
   }, [usersCourseArray]);
 
   useEffect(() => {
     axios
-      .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/userdata")
+      .get(
+        (window.location.host === "ubcexplorer.io"
+          ? ""
+          : "http://localhost:3000") + "/userdata"
+      )
       .then((res) => {
         setUsersCourseArray(res.data[0].courses);
       })
@@ -599,7 +770,6 @@ function CourseSelector() {
       </Breadcrumbs>
 
       <Divider my={6} />
-
       <Grid container spacing={6}>
         <Grid
           item
