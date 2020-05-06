@@ -124,7 +124,7 @@ function Overview(props) {
         else if (termName.substring(4) === "W2") courseStartDate += 101;     // add 13 months ie. set month to January
         else if (termName.substring(4) === "S") courseStartDate += 5;        // add 5 months ie. set month to May
 
-        var currentDate = new Date().getFullYear() * 100 + new Date().getMonth();
+        var currentDate = new Date().getFullYear() * 100 + new Date().getMonth() + 1;
 
         if (currentDate < courseStartDate) return 1;
         else if (currentDate >= courseStartDate && currentDate <= courseStartDate + 3) return 0;
@@ -269,7 +269,6 @@ function DegreeOverview() {
         fetch((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getcourses")
             .then(response => response.json())
             .then(json => {
-                console.log("this is the json: " + json);
                 setCourseResult(json) // access json.body here
             })
             .catch((err) => {
