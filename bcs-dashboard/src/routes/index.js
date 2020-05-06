@@ -28,6 +28,7 @@ import {
 
 // Landing page component
 const LandingPage = async(() => import("../pages/landingpage/LandingPage"));
+const ContactPage = async(() => import("../pages/landingpage/Contact/Contact"));
 
 // Degree progress components
 const DegreeTimeline = async(() => import("../pages/degreeprogress/DegreeTimeline"));
@@ -106,6 +107,13 @@ const landingPageRoutes = {
   id: "Landing Page",
   path: "/bcs",
   component: LandingPage,
+  children: null,
+};
+
+const contactPageRoutes = {
+  id: "Contact Page",
+  path: "/contact",
+  component: ContactPage,
   children: null,
 };
 
@@ -487,6 +495,7 @@ const privateRoutes = {
 };
 
 export const landing = [landingPageRoutes];
+export const contact = [contactPageRoutes];
 
 export const dashboard = [
   dashboardsRoutes,
