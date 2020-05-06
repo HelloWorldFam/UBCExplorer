@@ -1,18 +1,16 @@
 const mongoose = require('mongoose');
+const findOrCreate = require("mongoose-findorcreate");
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-      firstName: { type: String, required: true, unique: false, trim: true },
-      lastName: { type: String, required: true, unique: false, trim: true },
-      username: { type: String, required: true, unique: true, trim: true, minlength: 3 },
-      password: { type: String, required: true, minlength: 3 },
-      email: { type: String, required: true },
-      courses: { type: Array, required: false }
-}, {
-  timestamps: true,
-});
+const UsersSchema = new Schema({
+  email: String,
+  firstName: String,
+  lastName: String,
+  picture: String,
+  courses: Array,
+}).plugin(findOrCreate);
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', UsersSchema);
 
 module.exports = User;

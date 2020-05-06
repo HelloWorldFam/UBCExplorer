@@ -36,7 +36,9 @@ const DegreeOverview = async(() => import("../pages/degreeprogress/DegreeOvervie
 const DegreeTranscript = async(() => import("../pages/degreeprogress/DegreeTranscript"));
 
 //Course Selector Components
-const CourseSelector = async(() => import("../pages/courseselector/CourseSelector"));
+const CourseSelector = async(() =>
+  import("../pages/courseselector/CourseSelector")
+);
 
 // Auth components
 const SignIn = async(() => import("../pages/auth/SignIn"));
@@ -72,6 +74,8 @@ const TextFields = async(() => import("../pages/forms/TextFields"));
 // Icons components
 const MaterialIcons = async(() => import("../pages/icons/MaterialIcons"));
 const FeatherIcons = async(() => import("../pages/icons/FeatherIcons"));
+const TimelineIcon = async(() => import('@material-ui/icons/Timeline'));
+const ReceiptIcon = async(() => import('@material-ui/icons/Receipt'));
 
 // Pages components
 const Blank = async(() => import("../pages/pages/Blank"));
@@ -101,7 +105,7 @@ const Presentation = async(() => import("../pages/docs/Presentation"));
 
 const landingPageRoutes = {
   id: "Landing Page",
-  path: "/",
+  path: "/bcs",
   component: LandingPage,
   children: null,
 };
@@ -115,7 +119,7 @@ const contactPageRoutes = {
 
 const dashboardsRoutes = {
   id: "Dashboard",
-  path: "/dashboard",
+  path: "/bcs/dashboard",
   icon: <Sliders />,
   containsHome: true,
   component: Default,
@@ -138,44 +142,42 @@ const dashboardsRoutes = {
 
 const courseSelectorRoutes = {
   id: "Course Selector",
-  path: "/courseselector",
+  path: "/bcs/courseselector",
   icon: <GolfCourse />,
   component: CourseSelector,
 };
 
-const degreeProgressRoutes = {
-  id: "Degree Progress",
-  path: "/degreeprogress",
+const degreeOverview = {
+  id: "Degree Overview",
+  path: "/bcs/degreeoverview",
   icon: <Directions />,
-  children: [
-    {
-      path: "/degreeprogress/overview",
-      name: "Overview",
-      component: DegreeOverview,
-    },
-    {
-      path: "/degreeprogress/timeline",
-      name: "Timeline",
-      component: DegreeTimeline,
-    },
-    {
-      path: "/degreeprogress/transcript",
-      name: "Transcript",
-      component: DegreeTranscript,
-    },
-  ],
+  component: DegreeOverview,
+};
+
+const degreeTimeline = {
+  id: "Degree Timeline",
+  path: "/bcs/timeline",
+  icon: <TimelineIcon />,
+  component: DegreeTimeline,
+};
+
+const degreeTranscript = {
+  id: "Degree Transcript",
+  path: "/bcs/transcript",
+  icon: <ReceiptIcon />,
+  component: DegreeTranscript,
 };
 
 const myCoursesRoutes = {
   id: "My Courses",
-  path: "/mycourses",
+  path: "/bcs/mycourses",
   icon: <Dashboard />,
   component: Default,
 };
 
 const myToDosRoutes = {
   id: "My ToDo's",
-  path: "/mytodos",
+  path: "/bcs/mytodos",
   icon: <CheckSquare />,
   component: Tasks,
 };
@@ -190,10 +192,10 @@ const profileRoutes = {
 };
 
 const settingsRoutes = {
-  id: "Settings",
-  path: "/settings",
-  name: "Settings",
-  icon: <SettingsIcon />,
+  id: "Account Settings",
+  path: "/bcs/settings",
+  name: "Account Settings",
+  icon: <User />,
   children: null,
   component: Settings,
 };
@@ -254,6 +256,15 @@ const calendarRoutes = {
   path: "/calendar",
   icon: <CalendarIcon />,
   component: Calendar,
+  children: null,
+};
+
+//Added routes for MainSearchPage
+
+const mainSearchRoutes = {
+  id: "mainSearchRoutes",
+  path: "/",
+  component: Blank,
   children: null,
 };
 
@@ -489,51 +500,56 @@ export const contact = [contactPageRoutes];
 export const dashboard = [
   dashboardsRoutes,
   courseSelectorRoutes,
-  degreeProgressRoutes,
-  myCoursesRoutes,
-  myToDosRoutes,
-  profileRoutes,
+  degreeOverview,
+  degreeTimeline,
+  degreeTranscript,
+  // myCoursesRoutes,
+  // myToDosRoutes,
+  // profileRoutes,
   settingsRoutes,
-  pagesRoutes,
-  projectsRoutes,
-  invoiceRoutes,
-  tasksRoutes,
-  calendarRoutes,
-  componentsRoutes,
-  chartRoutes,
-  formsRoutes,
-  tablesRoutes,
-  iconsRoutes,
-  mapsRoutes,
-  presentationRoutes,
-  documentationRoutes,
-  changelogRoutes,
-  privateRoutes,
+  // pagesRoutes,
+  // projectsRoutes,
+  // invoiceRoutes,
+  // tasksRoutes,
+  // calendarRoutes,
+  // componentsRoutes,
+  // chartRoutes,
+  // formsRoutes,
+  // tablesRoutes,
+  // iconsRoutes,
+  // mapsRoutes,
+  // presentationRoutes,
+  // documentationRoutes,
+  // changelogRoutes,
+  // privateRoutes,
 ];
 
 export const auth = [authRoutes];
+export const mainSearch = [mainSearchRoutes];
 
 export default [
   dashboardsRoutes,
   courseSelectorRoutes,
-  degreeProgressRoutes,
-  myCoursesRoutes,
-  myToDosRoutes,
-  profileRoutes,
+  degreeOverview,
+  degreeTimeline,
+  degreeTranscript,
+  // myCoursesRoutes,
+  // myToDosRoutes,
+  // profileRoutes,
   settingsRoutes,
-  pagesRoutes,
-  projectsRoutes,
-  invoiceRoutes,
-  tasksRoutes,
-  calendarRoutes,
-  authRoutes,
-  componentsRoutes,
-  chartRoutes,
-  formsRoutes,
-  tablesRoutes,
-  iconsRoutes,
-  mapsRoutes,
-  presentationRoutes,
-  documentationRoutes,
-  changelogRoutes,
+  // pagesRoutes,
+  // projectsRoutes,
+  // invoiceRoutes,
+  // tasksRoutes,
+  // calendarRoutes,
+  // authRoutes,
+  // componentsRoutes,
+  // chartRoutes,
+  // formsRoutes,
+  // tablesRoutes,
+  // iconsRoutes,
+  // mapsRoutes,
+  // presentationRoutes,
+  // documentationRoutes,
+  // changelogRoutes,
 ];

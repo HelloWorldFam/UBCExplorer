@@ -35,13 +35,15 @@ function Page404() {
 
       <Button
         component={Link}
-        to="/"
+        onClick={() => window.history.back()}
         variant="contained"
         color="secondary"
         mt={2}
       >
-        Return to website
+        Return to previous page
       </Button>
+      <br/>or<br/>
+      <Link to="/">Go to homepage</Link>
     </Wrapper>
   );
 }

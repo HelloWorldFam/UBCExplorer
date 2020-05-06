@@ -39,125 +39,141 @@ const TableWrapper = styled.div`
 
 // Data
 let id = 0;
-function createData(name, term, year, state, grade, credits) {
+// function createData(name, term, year, state, grade, credits) {
+function createData(name, term, state, credits) {
   id += 1;
-  return { id, name, term, year, state, grade, credits};
+  // return { id, name, term, year, state, grade, credits};
+  return { id, name, term, state, credits };
 }
 
-//placeholder data --> createCourses should add to this array
-const rows = [
-  createData(
-    "MATH 180",
-    "-",
-    "-",
-    <Chip label="Exempt" rgbcolor={red[200]} />,
-    "EX",
-    "3"
-  ),
-  createData(
-    "STAT 200",
-    "-",
-    "-",
-    <Chip label="Exempt" rgbcolor={red[200]} />,
-    "EX",
-    "3"
-  ),
-  createData(
-    "CPSC 110",
-    "Winter 1",
-    "2019",
-    <Chip label="Done" rgbcolor={green[500]} />,
-    "A+",
-    "4"
-  ),
-  createData(
-    "CPSC 121",
-    "Winter 1",
-    "2019",
-    <Chip label="Done" rgbcolor={green[500]} />,
-    "A+",
-    "4"
-  ),
-  createData(
-    "CPSC 210",
-    "Winter 2",
-    "2020",
-    <Chip label="In Progress" rgbcolor={orange[500]} />,
-    "IP",
-    "3"
-  ),
-  createData(
-    "STAT 302",
-    "Winter 2",
-    "2020",
-    <Chip label="In Progress" rgbcolor={orange[500]} />,
-    "IP",
-    "3"
-  ),
-  createData(
-    "CPSC 221",
-    "Summer 1",
-    "2020",
-    <Chip label="Planned" rgbcolor={green[1000]} />,
-    "N/A",
-    "4"
-  ),
-  createData(
-    "CPSC 310",
-    "Summer 2",
-    "2020",
-    <Chip label="Planned" rgbcolor={green[1000]} />,
-    "N/A",
-    "4"
-  )
-];
 
-//function that creates the data for the rows in the table
-const createCourse = (someData) => {
-  //stub
-};
+/**
+ * 
+ * @param {string} termName 
+ * @returns {number} :  -1 if course term is in the past
+ *                       0 if course term is current term
+ *                       1 if course term is future term
+ */
+const getRelativeProgress = (termName) => {
+  var courseStartDate = parseInt(termName.substring(0, 4)) * 100;
+  if (termName.substring(4) === "W1") courseStartDate += 9;            // add 9 months ie. set month to September
+  else if (termName.substring(4) === "W2") courseStartDate += 101;     // add 13 months ie. set month to January
+  else if (termName.substring(4) === "S") courseStartDate += 5;        // add 5 months ie. set month to May
 
-const DashboardTable = () => (
-  <Card mb={6}>
-    <CardHeader
-      action={
-        <IconButton aria-label="settings">
-          <MoreVertical />
-        </IconButton>
+  var currentDate = new Date().getFullYear() * 100 + new Date().getMonth();
+
+  if (currentDate < courseStartDate) return 1;
+  else if (currentDate >= courseStartDate && currentDate <= courseStartDate + 3) return 0;
+  else return -1;
+}
+
+const DashboardTable = (props) => {
+  let rows = [];
+
+
+  //   const progress = () => {
+  //     if (getRelativeProgress(term.name) == -1) return "completed";
+  //     else if (getRelativeProgress(term.name) == 0) return "inProgress";
+  //     else return "incomplete";
+  // }
+
+  if (props.courseResult) {
+    props.courseResult.forEach(term => {
+
+      if (term.name === "Exemptions") {
+        term.courses.forEach(course => {
+          rows.push(createData(
+            course.code,
+            course.term,
+            <Chip label="Exempt" rgbcolor={green[200]} />,
+            "-"
+          )
+          )
+        })
       }
-      title="Degree Transcript Table"
-    />
-    <Paper>
-      <TableWrapper>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Course Name</TableCell>
-              <TableCell>Term</TableCell>
-              <TableCell>Year</TableCell>
-              <TableCell>State</TableCell>
-              <TableCell>Grade</TableCell>
-              <TableCell>Credits</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(row => (
-              <TableRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell>{row.term}</TableCell>
-                <TableCell>{row.year}</TableCell>
-                <TableCell>{row.state}</TableCell>
-                <TableCell>{row.grade}</TableCell>
-                <TableCell>{row.credits}</TableCell>
+
+      if (getRelativeProgress(term.name) == -1  && !(term.name === "Exemptions")) {
+        term.courses.forEach(course => {
+          rows.push(createData(
+            course.code,
+            course.term,
+            <Chip label="Complete" rgbcolor={green[500]} />,
+            course.cred
+          )
+          )
+        })
+      }
+
+      else if (getRelativeProgress(term.name) == 0) {
+        term.courses.forEach(course => {
+          rows.push(createData(
+            course.code,
+            course.term,
+            <Chip label="inProgress" rgbcolor={orange[500]} />,
+            course.cred
+          )
+          )
+        })
+      }
+
+      else if (getRelativeProgress(term.name) == 1) {
+        term.courses.forEach(course => {
+          rows.push(createData(
+            course.code,
+            course.term,
+            <Chip label="Incomplete" rgbcolor={red[500]} />,
+            course.cred
+          )
+          )
+        })
+      }
+    })
+  }
+
+
+
+  return (
+    <Card mb={6}>
+      <CardHeader
+        action={
+          <IconButton aria-label="settings">
+            <MoreVertical />
+          </IconButton>
+        }
+        title="Degree Transcript Table"
+      />
+      <Paper>
+        <TableWrapper>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Course Name</TableCell>
+                <TableCell>Term</TableCell>
+                {/* <TableCell>Year</TableCell> */}
+                <TableCell>State</TableCell>
+                {/* <TableCell>Grade</TableCell> */}
+                <TableCell>Credits</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableWrapper>
-    </Paper>
-  </Card>
-);
+            </TableHead>
+            <TableBody>
+              {rows.map(row => (
+                <TableRow key={row.id}>
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell>{row.term}</TableCell>
+                  {/* <TableCell>{row.year}</TableCell> */}
+                  <TableCell>{row.state}</TableCell>
+                  {/* <TableCell>{row.grade}</TableCell> */}
+                  <TableCell>{row.credits}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableWrapper>
+      </Paper>
+    </Card>
+  );
+}
 
 export default DashboardTable;

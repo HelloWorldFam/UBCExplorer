@@ -7,7 +7,7 @@ import AuthLayout from "../layouts/Auth";
 import LandingLayout from '../layouts/Landing';
 import ContactLayout from '../layouts/Contact';
 import Page404 from "../pages/auth/Page404";
-
+import MainSearchPage from "../layouts/MainSearchPage";
 
 const childRoutes = (Layout, routes) =>
   routes.map(({ children, path, component: Component }, index) =>
@@ -18,7 +18,7 @@ const childRoutes = (Layout, routes) =>
           key={index}
           path={path}
           exact
-          render={props => (
+          render={(props) => (
             <Layout>
               <Component {...props} />
             </Layout>
@@ -31,7 +31,7 @@ const childRoutes = (Layout, routes) =>
         key={index}
         path={path}
         exact
-        render={props => (
+        render={(props) => (
           <Layout>
             <Component {...props} />
           </Layout>
@@ -43,6 +43,7 @@ const childRoutes = (Layout, routes) =>
 const Routes = () => (
   <Router>
     <Switch>
+      {childRoutes(MainSearchPage, mainSearchRoutes)}
       {childRoutes(DashboardLayout, dashboardRoutes)}
       {childRoutes(AuthLayout, authRoutes)}
       {childRoutes(LandingLayout, landingRoutes)}

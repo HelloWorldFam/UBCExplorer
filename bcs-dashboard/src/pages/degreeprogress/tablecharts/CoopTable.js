@@ -16,8 +16,6 @@ import { red, green, orange } from "@material-ui/core/colors";
 
 import { spacing } from "@material-ui/system";
 
-import { MoreVertical } from "react-feather";
-
 const Card = styled(MuiCard)(spacing);
 
 const Chip = styled(MuiChip)`
@@ -39,14 +37,15 @@ const TableWrapper = styled.div`
 let id = 0;
 function createData(name, status) {
   id += 1;
-  return { id, name, status };
+  return { id, name, status};
 }
 
-const CoreTable = (props) => {
-  let rows = [];
 
-  if (props.coreBCS) {
-    props.coreBCS.completed.forEach(element => {
+const CoopTable = (props) => {
+  let rows = [];
+  
+  if (props.coopCourses) {
+    props.coopCourses.completed.forEach(element => {
       rows.push(createData(
         element,
         <Chip label="Complete" rgbcolor={green[500]} />
@@ -54,7 +53,7 @@ const CoreTable = (props) => {
       )
     })
 
-    props.coreBCS.inProgress.forEach(element => {
+    props.coopCourses.inProgress.forEach(element => {
       rows.push(createData(
         element,
         <Chip label="Inprogress" rgbcolor={orange[500]} />
@@ -62,7 +61,7 @@ const CoreTable = (props) => {
       )
     })
 
-    props.coreBCS.incomplete.forEach(element => {
+    props.coopCourses.incomplete.forEach(element => {
       rows.push(createData(
         element,
         <Chip label="Incomplete" rgbcolor={red[500]} />
@@ -83,21 +82,14 @@ const CoreTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.length > 0 ?
-                rows.map(row => (
-                  <TableRow key={row.id}>
-                    <TableCell component="th" scope="row">
-                      {row.name}
-                    </TableCell>
-                    <TableCell>{row.status}</TableCell>
-                  </TableRow>
-                )) :
-                (
-                  <TableRow key="no courses">
-                    <TableCell>You have no courses here.</TableCell>
-                    <TableCell>-</TableCell>
-                  </TableRow>
-                )}
+              {rows.map(row => (
+                <TableRow key={row.id}>
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell>{row.status}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableWrapper>
@@ -106,4 +98,4 @@ const CoreTable = (props) => {
   );
 }
 
-export default CoreTable;
+export default CoopTable;

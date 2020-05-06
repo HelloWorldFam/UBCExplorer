@@ -1,16 +1,17 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const Courses = require("./models/courses.model");
-const Departments = require("./models/departments.model");
-const CourseCodes = require("./models/course_codes.model");
+const Courses = require("./models/courses.model.js");
+const Users = require("./models/users.model.js");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const findOrCreate = require("mongoose-findorcreate");
 const FacebookStrategy = require("passport-facebook");
+const GoogleOauthTest = require("./helpers/GoogleOauthTest.js");
 const GoogleOauth20Strategy = require("passport-google-oauth20");
 const TwitterStrategy = require("passport-twitter");
 const path = require("path");
+const keepDynoAwake = require("./helpers/keepDynoAwake");
 
 require("dotenv").config();
 
@@ -33,16 +34,6 @@ const connection = mongoose.connection;
 connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
-
-const { Schema } = mongoose;
-const UsersSchema = new Schema({
-  email: String,
-  firstName: String,
-  lastName: String,
-  picture: String,
-  courses: Array,
-}).plugin(findOrCreate);
-const Users = mongoose.model("Users", UsersSchema);
 
 // cookieSession config
 app.use(
@@ -67,34 +58,37 @@ app.use(passport.session()); // Used to persist login sessions
 //     })
 //   }));
 
-passport.use(
-  new GoogleOauth20Strategy(
-    {
-      clientID:
-        "610240877212-muh7g8rvb1pficemikp3r3vdfaobgo9f.apps.googleusercontent.com",
-      clientSecret: "MpRbTT5AssctwpN0Id0GHIwe",
-      callbackURL: "http://localhost:3000/auth/google/callback",
-    },
-    function (accessToken, refreshToken, profile, done) {
-      console.log(profile);
-      Users.findOrCreate(
-        { email: profile.emails[0].value },
-        {
-          firstName: profile.name.givenName,
-          lastName: profile.name.familyName,
-          courses: [],
-        },
-        function (err, user) {
-          // Updates user picture upon each auth session
-          user.picture = profile._json.picture;
-          user.save();
-          // auth complete
-          return done(err, user);
-        }
-      );
-    }
-  )
+const GoogleOauthProduction = new GoogleOauth20Strategy(
+  {
+    clientID:
+      "610240877212-muh7g8rvb1pficemikp3r3vdfaobgo9f.apps.googleusercontent.com",
+    clientSecret: "MpRbTT5AssctwpN0Id0GHIwe",
+    callbackURL: "https://ubcexplorer.io/auth/google/callback",
+  },
+  function (accessToken, refreshToken, profile, done) {
+    console.log(profile);
+    Users.findOrCreate(
+      { email: profile.emails[0].value },
+      {
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
+        courses: [],
+      },
+      function (err, user) {
+        // Updates user picture upon each auth session
+        user.picture = profile._json.picture;
+        user.save();
+        // auth complete
+        return done(err, user);
+      }
+    );
+  }
 );
+
+passport.use(
+  process.env.NODE_ENV === 'production'
+    ? GoogleOauthProduction
+    : GoogleOauthTest);
 
 // passport.use(new TwitterStrategy({
 //   clientID: 'must sign up with facebook for one',
@@ -140,7 +134,7 @@ app.get(
   passport.authenticate("google"),
   (req, res) => {
     console.log("Successfully logged in");
-    res.redirect("/dashboard");
+    res.redirect("/bcs/dashboard");
   }
 );
 
@@ -149,6 +143,12 @@ app.get("/userdata", isUserAuthenticated, (req, res) => {
   Users.find({ email: req.user.email }, function (err, result) {
     res.send(result);
   });
+});
+
+app.get('/coursedata', (req, res) => {
+  Courses.find({ code: req.params.code }, function (err, result) {
+    res.send(result);
+  })
 });
 
 // Secret route
@@ -162,13 +162,26 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
+// Whitelists React app static assets. 
+// This is to get around isUserAuthenticated middleware on "/*" paths
+app.get("/static", (req, res) => {
+  // send landing page
+  res.redirect("/");
+});
+app.get("/node_modules", (req, res) => {
+  // send landing page
+  res.redirect("/");
+});
+
 // Nodemon success message
 app.listen(port, () => {
+  console.log("keepDynoAwake is running");
+  keepDynoAwake("https://ubcexplorer.io/secret");
   console.log(`Server is running on port: ${port}`);
 });
 
 // Serve static files from the React app
-app.use(express.static("../build/"));
+app.use(express.static(path.join(__dirname, '..', 'build/')));
 
 //when connect to server, go up one directory into build folder
 app.get("/", (req, res) => {
@@ -176,35 +189,24 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
 });
 
-app.get("/getCourses", (req, res) => {
-  if (!req.user) {
-    res.send("You are not authenticated.");
-  } else {
-    Users.find({ email: req.user.email }, function (err, result) {
-      res.send(result[0].courses);
-    });
-  }
+app.get("/bcs", (req, res) => {
+  // send landing page
+  res.sendFile(path.join(__dirname, "../build/index.html"));
+});
+
+app.get("/about", (req, res) => {
+  // send landing page
+  res.sendFile(path.join(__dirname, "../build/index.html"));
+});
+
+app.get("/getCourses", isUserAuthenticated, (req, res) => {
+  Users.find({ email: req.user.email }, function (err, result) {
+    res.send(result[0].courses);
+  });
 });
 
 app.get("/getAllCourses", isUserAuthenticated, (req, res) => {
-  if (!req.user) {
-    res.send("You are not authenticated.");
-  } else {
-    Courses.find()
-      .then((courses) => res.send(courses))
-      .catch((err) => console.log(err));
-  }
-});
-
-app.get("/getDepartments", (req, res) => {
-  Departments.find()
-    .then((courses) => res.send(courses))
-    .catch((err) => console.log(err));
-});
-
-// Get all course codes from database
-app.get("/getAllCourseCodes", isUserAuthenticated, (req, res) => {
-  CourseCodes.find()
+  Courses.find()
     .then((courses) => res.send(courses))
     .catch((err) => console.log(err));
 });
@@ -218,12 +220,25 @@ app.get("/getCourseInfo/:code", (req, res) => {
     })
     .catch((err) => {
       res.send("An error has occurred: " + err);
-      console.log(err)
+      console.log(err);
+    });
+});
+
+// Search courses
+app.get("/searchAny/:code", (req, res) => {
+  Courses.find({ code: { $regex: req.params.code, $options: "i" } })
+    .then((course) => {
+      if (course.length === 0) res.send("Course not found");
+      else res.send(course.slice(0, 8));
+    })
+    .catch((err) => {
+      res.send("An error has occurred: " + err);
+      console.log(err);
     });
 });
 
 // Update course worklist/array of the term objects which was selected in course selector
-app.post("/updateUserWorkList", (req, res) => {
+app.post("/updateUserWorkList", isUserAuthenticated, (req, res) => {
   Users.findOne({ email: req.user.email })
     .then((user) => {
       user.courses = req.body;
@@ -242,11 +257,11 @@ app.post("/updateUserWorkList", (req, res) => {
 });
 
 // Commented out for testing
-// app.get("/*", isUserAuthenticated, (req, res) => {
-//   res.sendFile(path.join(__dirname, "../build/index.html"));
-// });
-
-// No authentication - for testing only!
-app.get("/*", (req, res) => {
+app.get("/*", isUserAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
 });
+
+// // No authentication - for testing only!
+// app.get("/*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../build/index.html"));
+// });
