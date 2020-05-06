@@ -73,6 +73,7 @@ export function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
                 color: "#bf0a0a",
                 padding: "0",
                 float: "right",
+                marginRight: "-8px"
             }} onClick={() => {
                 usersCourseArray.splice(index, 1);
                 setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);

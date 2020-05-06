@@ -9,7 +9,6 @@ module.exports = new GoogleOauth20Strategy(
   },
   function (accessToken, refreshToken, profile, done) {
     console.log(profile);
-    console.log(Users);
     Users.findOrCreate(
       { email: profile.emails[0].value },
       {
@@ -22,7 +21,7 @@ module.exports = new GoogleOauth20Strategy(
         user.picture = profile._json.picture;
         user.save();
         // auth complete
-        return done(err, user);
+        return done(err, user.email);
       }
     );
   }
