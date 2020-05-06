@@ -38,7 +38,7 @@ connection.once("open", () => {
 // cookieSession config
 app.use(
   cookieSession({
-    maxAge: 7* (24 * 60 * 60 * 1000), // One day in milliseconds
+    maxAge: 7 * (24 * 60 * 60 * 1000), // One day in milliseconds
     keys: ["SOME TEMP PLACEHOLDER"], // secret key to hash cookie ;)
   })
 );
@@ -86,9 +86,10 @@ const GoogleOauthProduction = new GoogleOauth20Strategy(
 );
 
 passport.use(
-  process.env.NODE_ENV === 'production'
+  process.env.NODE_ENV === "production"
     ? GoogleOauthProduction
-    : GoogleOauthTest);
+    : GoogleOauthTest
+);
 
 // passport.use(new TwitterStrategy({
 //   clientID: 'must sign up with facebook for one',
@@ -141,14 +142,15 @@ app.get(
 // Ask about this - using this to retrieve user data from the Passport 'profile' object
 app.get("/userdata", isUserAuthenticated, (req, res) => {
   Users.find({ email: req.user }, function (err, result) {
+    console.log(result);
     res.send(result);
   });
 });
 
-app.get('/coursedata', (req, res) => {
+app.get("/coursedata", (req, res) => {
   Courses.find({ code: req.params.code }, function (err, result) {
     res.send(result);
-  })
+  });
 });
 
 // Secret route
@@ -162,7 +164,7 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-// Whitelists React app static assets. 
+// Whitelists React app static assets.
 // This is to get around isUserAuthenticated middleware on "/*" paths
 app.get("/static", (req, res) => {
   // send landing page
@@ -181,7 +183,7 @@ app.listen(port, () => {
 });
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, '..', 'build/')));
+app.use(express.static(path.join(__dirname, "..", "build/")));
 
 //when connect to server, go up one directory into build folder
 app.get("/", (req, res) => {
@@ -256,18 +258,22 @@ app.post("/updateUserWorkList", isUserAuthenticated, (req, res) => {
     });
 });
 
-// // Update course worklist/array of the term objects which was selected in course selector
-// app.post("/updateUser", isUserAuthenticated, (req, res) => {
-//   Users.findOne({ email: req.user.email })
-//     .then((user) => {
-//       console.log(user);
-//       console.log(req.body);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//       res.sendStatus(400);
-//     });
-// });
+// Update course worklist/array of the term objects which was selected in course selector
+app.post("/updateUser", isUserAuthenticated, (req, res) => {
+  Users.findOne({ email: req.user }).then((user) => {
+    user.firstName = req.body.firstName;
+    user.lastName = req.body.lastName;
+    user
+      .save()
+      .then(() => {
+        res.sendStatus(200);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.sendStatus(400);
+      });
+  });
+});
 
 // Commented out for testing
 app.get("/*", isUserAuthenticated, (req, res) => {

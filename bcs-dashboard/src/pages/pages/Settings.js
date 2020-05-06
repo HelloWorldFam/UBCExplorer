@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { NavLink as RouterNavLink } from "react-router-dom";
+import { NavLink as RouterNavLink, Redirect } from "react-router-dom";
 import axios from "axios";
 import Helmet from "react-helmet";
 
@@ -91,7 +91,7 @@ function Personal(props) {
           : "http://localhost:3000") + "/updateUser",
         user
       )
-      .then(() => {})
+      .then(() => alert("Your changes have been saved."))
       .catch((err) => console.log(err));
   };
 
@@ -146,13 +146,17 @@ function Personal(props) {
 }
 
 function SimpleList() {
+  const handleClick = () => {
+    window.open("https://ubc.ca1.qualtrics.com/jfe/form/SV_enyfh63H9Euj8UJ");
+  };
+
   return (
     <Card mb={6}>
       <List component="nav">
         <ListItem button>
           <ListItemText primary="Export User Data (JSON Format)" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={handleClick()}>
           <ListItemText primary="Tell us what you think!" />
         </ListItem>
       </List>
