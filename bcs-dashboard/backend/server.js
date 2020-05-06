@@ -14,7 +14,7 @@ const keepDynoAwake = require("./helpers/keepDynoAwake");
 
 const FacebookStrategy = require("passport-facebook").Strategy;
 
-const GitHubStrategy = require("passport-github").Strategy;
+const GitHubStrategy = require("passport-github2").Strategy;
 
 require("dotenv").config();
 
@@ -77,17 +77,19 @@ const FacebookOauthProduction = new FacebookStrategy(
 // Github strategy.
 const GitHubOAuthProduction = new GitHubStrategy(
   {
-    clientID: "Iv1.5ac14f4cf87eef13",
-    clientSecret: "9721d2ee3b81fdaee29992418e342bf73b57173b",
+    clientID: "Iv1.b83becaf95ef5ce1",
+    clientSecret: "71b0cfc8bc19dcf09f5173f5a8949398022adffd",
     callbackURL: "http://localhost:3000/auth/github/callback",
+    scope: ['user:email'],
   },
   function (accessToken, refreshToken, profile, done) {
     console.log(profile);
     Users.findOrCreate(
-      { githubId: profile.id },
-      { email: profile.email },
+      { email: profile.emails[0].value },
       function (err, user) {
-        return done(err, user);
+        user.picture = profile._json.avatar_url;
+        user.save();
+        return done(err, user.email);
       }
     );
   }
@@ -165,7 +167,7 @@ app.get(
   "/auth/github",
   passport.authenticate("github", {
     //scope: ["(no scope)"],
-    scope: ["profile", "user"], // Used to specify the required data; we only want read-only access to public information
+    scope: ['user:email'], // Used to specify the required data; we only want read-only access to public information
   })
 );
 
@@ -175,7 +177,7 @@ app.get(
   passport.authenticate("github"),
   (req, res) => {
     console.log("Successfully logged in");
-    res.redirect("/bcs/dashboard");
+    res.redirect("/bcs/start");
   }
 );
 
@@ -206,7 +208,7 @@ app.get(
   passport.authenticate("facebook"),
   (req, res) => {
     console.log("Successfully logged in");
-    res.redirect("/bcs/dashboard");
+    res.redirect("/bcs/start");
   }
 );
 
