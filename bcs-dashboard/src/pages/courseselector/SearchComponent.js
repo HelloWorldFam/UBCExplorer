@@ -26,7 +26,7 @@ export default function SearchComponent(props) {
       }
 
       axios
-        .get("/searchAny/" + value)
+        .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/searchAny/" + value)
         .then((res) => {
           if (!(res.data instanceof Array)) {
             setIsLoading(false);
