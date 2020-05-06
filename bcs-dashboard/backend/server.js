@@ -140,7 +140,7 @@ app.get(
 
 // Ask about this - using this to retrieve user data from the Passport 'profile' object
 app.get("/userdata", isUserAuthenticated, (req, res) => {
-  Users.find({ email: req.user.email }, function (err, result) {
+  Users.find({ email: req.user }, function (err, result) {
     res.send(result);
   });
 });
@@ -200,7 +200,7 @@ app.get("/about", (req, res) => {
 });
 
 app.get("/getCourses", isUserAuthenticated, (req, res) => {
-  Users.find({ email: req.user.email }, function (err, result) {
+  Users.find({ email: req.user }, function (err, result) {
     res.send(result[0].courses);
   });
 });
@@ -239,7 +239,7 @@ app.get("/searchAny/:code", (req, res) => {
 
 // Update course worklist/array of the term objects which was selected in course selector
 app.post("/updateUserWorkList", isUserAuthenticated, (req, res) => {
-  Users.findOne({ email: req.user.email })
+  Users.findOne({ email: req.user })
     .then((user) => {
       user.courses = req.body;
       user
@@ -255,6 +255,19 @@ app.post("/updateUserWorkList", isUserAuthenticated, (req, res) => {
       res.sendStatus(400);
     });
 });
+
+// // Update course worklist/array of the term objects which was selected in course selector
+// app.post("/updateUser", isUserAuthenticated, (req, res) => {
+//   Users.findOne({ email: req.user.email })
+//     .then((user) => {
+//       console.log(user);
+//       console.log(req.body);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       res.sendStatus(400);
+//     });
+// });
 
 // Commented out for testing
 app.get("/*", isUserAuthenticated, (req, res) => {
