@@ -47,7 +47,7 @@ const TextField = styled(TextFieldSpacing)`
 
 export const Card = styled(MuiCard)`
   overflow: visible;
-`;
+`; 
 
 export const Divider = styled(MuiDivider)(spacing);
 
@@ -201,8 +201,8 @@ function SearchCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-          "/getCourseInfo/" +
-          courseInfo
+        "/getCourseInfo/" +
+        courseInfo
       )
       .then((res) => {
         setCode(courseInfo);
@@ -554,8 +554,8 @@ function PrerequisitesCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-          "/getCourseInfo/" +
-          course
+        "/getCourseInfo/" +
+        course
       )
       .then((res) => {
         if (res.data.desc) {
@@ -603,8 +603,8 @@ function DependenciesCard(props) {
             (window.location.host === "ubcexplorer.io"
               ? ""
               : "http://localhost:3000") +
-              "/getCourseInfo/" +
-              course
+            "/getCourseInfo/" +
+            course
           )
           .then((res) => {
             if (res.data.desc) {
@@ -657,14 +657,13 @@ const addToDegreeFunction = (
     }
   }
 
+  // Add the course to the degree
   if (termExists) {
-    // if the term exists!
-
     let isInCourseArray = false;
     for (let coursesInTerm of courseArray) {
       if (coursesInTerm.code === courseToAdd.code) {
         //term exists; confirm if user wants to add?
-        isInCourseArray = !window.confirm("You have already added this course. Are you sure you want to add it again?");
+        isInCourseArray = !window.confirm("You have already added this course in the current term. Are you sure you want to add it again?");
         break;
       }
     }
@@ -674,6 +673,18 @@ const addToDegreeFunction = (
       courseArray.push(courseToAdd);
     }
   } else {
+    // Search to see if the user has added the course in the degree
+    let courseAlreadyAddedToDegree = false;
+    upper_loop:
+    for (let term of usersCourseArray) {
+      for (let course of term.courses) {
+        if (course.code === courseToAdd.code) {
+          courseAlreadyAddedToDegree = !window.confirm("You have already added this course in " + term.name + ". Are you sure you want to add it again?");
+          break upper_loop;
+        }
+      }
+    }
+    if (courseAlreadyAddedToDegree) return;
     // term does not exist- so create new term object with the course added.
     usersCourseArray.push({ name: courseToAdd.term, courses: [courseToAdd] });
   }
@@ -712,7 +723,7 @@ function CourseSelector() {
             : "http://localhost:3000") + "/updateUserWorkList",
           usersCourseArray
         )
-        .then(() => {});
+        .then(() => { });
     }
   }, [usersCourseArray]);
 
