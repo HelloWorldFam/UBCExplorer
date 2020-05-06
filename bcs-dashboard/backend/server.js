@@ -38,7 +38,7 @@ connection.once("open", () => {
 // cookieSession config
 app.use(
   cookieSession({
-    maxAge: 24 * 60 * 60 * 1000, // One day in milliseconds
+    maxAge: 7* (24 * 60 * 60 * 1000), // One day in milliseconds
     keys: ["SOME TEMP PLACEHOLDER"], // secret key to hash cookie ;)
   })
 );
@@ -79,7 +79,7 @@ const GoogleOauthProduction = new GoogleOauth20Strategy(
         user.picture = profile._json.picture;
         user.save();
         // auth complete
-        return done(err, user);
+        return done(err, user.email);
       }
     );
   }
