@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { NavLink as RouterNavLink, Redirect } from "react-router-dom";
+import { NavLink as RouterNavLink } from "react-router-dom";
 import axios from "axios";
 import Helmet from "react-helmet";
 
@@ -10,7 +10,6 @@ import {
   Box,
   Button,
   Card as MuiCard,
-  Chip as MuiChip,
   CardContent,
   Divider as MuiDivider,
   FormControl as MuiFormControl,
@@ -150,13 +149,43 @@ function SimpleList() {
     window.open("https://ubc.ca1.qualtrics.com/jfe/form/SV_enyfh63H9Euj8UJ");
   };
 
+  const redirectToHome = () => {
+    window.location.replace("/bcs");
+  };
+
+  const handleDelete = () => {
+    let confirmation = window.confirm(
+      "Are you sure you want to delete your account? You will not be able to reverse this action."
+    );
+    if (confirmation == true) {
+      axios
+        .post(
+          (window.location.host === "ubcexplorer.io"
+            ? ""
+            : "http://localhost:3000") + "/deleteUser"
+        )
+        .then(() => {
+          alert("Your account has successfully been deleted.");
+          redirectToHome();
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
+  const downloadData = () => {
+    window.open("/downloadUserData");
+  };
+
   return (
     <Card mb={6}>
       <List component="nav">
         <ListItem button>
-          <ListItemText primary="Export User Data (JSON Format)" />
+          <ListItemText
+            primary="Export User Data (JSON Format)"
+            onClick={downloadData}
+          />
         </ListItem>
-        <ListItem button onClick={handleClick()}>
+        <ListItem button onClick={handleClick}>
           <ListItemText primary="Tell us what you think!" />
         </ListItem>
       </List>
@@ -164,7 +193,11 @@ function SimpleList() {
       <Divider />
       <List component="nav">
         <ListItem button>
-          <ListItemText primary="Delete Account" style={{ color: "red" }} />
+          <ListItemText
+            primary="Delete Account"
+            onClick={handleDelete}
+            style={{ color: "red" }}
+          />
         </ListItem>
       </List>
     </Card>
