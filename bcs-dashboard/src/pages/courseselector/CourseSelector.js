@@ -663,9 +663,8 @@ const addToDegreeFunction = (
     let isInCourseArray = false;
     for (let coursesInTerm of courseArray) {
       if (coursesInTerm.code === courseToAdd.code) {
-        //term exists, but course is in term - so do nothing send alert
-        alert("You have already added this!");
-        isInCourseArray = true;
+        //term exists; confirm if user wants to add?
+        isInCourseArray = !window.confirm("You have already added this course. Are you sure you want to add it again?");
         break;
       }
     }
