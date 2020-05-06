@@ -47,7 +47,7 @@ const TextField = styled(TextFieldSpacing)`
 
 export const Card = styled(MuiCard)`
   overflow: visible;
-`;
+`; 
 
 export const Divider = styled(MuiDivider)(spacing);
 
