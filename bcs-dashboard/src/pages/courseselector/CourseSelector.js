@@ -16,8 +16,6 @@ import Helmet from "react-helmet";
 import "react-dragula/dist/dragula.css";
 import SearchComponent from "./SearchComponent";
 import { YourDegreeCard } from "./components/YourDegreeCard";
-import Backdrop from "@material-ui/core/Backdrop";
-import Modal from "@material-ui/core/Modal";
 
 import {
   Breadcrumbs as MuiBreadcrumbs,
@@ -34,7 +32,6 @@ import {
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
-// import { Modal } from "semantic-ui-react";
 
 const NavLink = React.forwardRef((props, ref) => (
   <RouterNavLink innerRef={ref} {...props} />
@@ -50,7 +47,7 @@ const TextField = styled(TextFieldSpacing)`
 
 export const Card = styled(MuiCard)`
   overflow: visible;
-`;
+`; 
 
 export const Divider = styled(MuiDivider)(spacing);
 
@@ -204,8 +201,8 @@ function SearchCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-          "/getCourseInfo/" +
-          courseInfo
+        "/getCourseInfo/" +
+        courseInfo
       )
       .then((res) => {
         setCode(courseInfo);
@@ -287,7 +284,24 @@ function SearchCard(props) {
 function coreInfo() {
   return (
     <>
-      <h3>Hello world</h3>
+      <h3>
+        Core BCS Courses that must be taken:
+        <br />
+        - CPSC 110: &nbsp;&nbsp;Computation, Programs, and Programming
+        <br />
+        - CPSC 121: &nbsp;&nbsp;Models of Computation
+        <br />
+        - CPSC 210: &nbsp;&nbsp;Software Construction
+        <br />
+        - CPSC 221: &nbsp;&nbsp;Basic Data Structures and Algorithms
+        <br />
+        - CPSC 213: &nbsp;&nbsp;Introduction to Computer Systems
+        <br />
+        - CPSC 310: &nbsp;&nbsp;Introduction to Software Engineering
+        <br />
+        - CPSC 313: &nbsp;&nbsp;Computer Hardware and Operating Systems
+        <br />- CPSC 320: &nbsp;&nbsp;Intermediate Algorithm Design and Analysis
+      </h3>
     </>
   );
 }
@@ -299,12 +313,11 @@ function bridgingModule() {
         Bridging Module as part of BCS degree requirement is 15 credits of
         courses. <br />
         <br />
-        Courses must be 300 or above from a single discipline (i.e. 5 courses
-        from the Faculty of Commerce) and you can be treated as a “minor.”
-        However, you can create your own bridging module from multiple
-        disciplines. <br /> Note that at least 9 credits of the bridging module
-        need to be from outside the CPSC. <br /> Email the BCS Director to check
-        if your bridging module is valid.
+        Courses must be 300/400 level from a single discipline.
+        However, you can create your own bridging module from
+        multiple disciplines. <br /> Note that at least 9 credits of the
+        bridging module need to be from outside the CPSC. <br /> Email the BCS
+        Director to check if your bridging module is valid.
       </h3>
     </>
   );
@@ -313,7 +326,7 @@ function bridgingModule() {
 function upperCPSC() {
   return (
     <>
-      <p>Hello world</p>
+      <h3>Upper Year CPSC courses 300/400 level that are not apart of the bridging module or core CPSC courses.</h3>
     </>
   );
 }
@@ -321,7 +334,17 @@ function upperCPSC() {
 function exemptionCourses() {
   return (
     <>
-      <h3>Hello world</h3>
+      <h3>
+        Courses that may be exempted:
+        <br />
+        <br />
+        - STCM 3xx (upper year communication requirement)
+        <br />
+        - STAT 203 <br />
+        - MATH 180 <br />
+        - ENGL 1xx (can also be exempted through English Exemption Exam)
+        <br />- CPSC 110 (exempted through CPSC110 challenge exam)
+      </h3>
     </>
   );
 }
@@ -329,40 +352,32 @@ function exemptionCourses() {
 function exemptionReplacement() {
   return (
     <>
-      <h3>Hello world</h3>
+      <h3>
+        Replace each lower-level (100- or 200-numbered) exemption with 3 credits
+        of any other UBC course ( including CPSC and upper-level courses if
+        you'd like). <br />
+        Exemption replacements are officially subject to the BCS admin or
+        director's approval.
+      </h3>
     </>
   );
 }
+
+const useStylesTooltip = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+  customWidth: {
+    maxWidth: 500,
+  },
+  noMaxWidth: {
+    maxWidth: "none",
+  },
+}));
+
 function RadioButtonsGroup(props) {
   const [value, setValue] = useState("Core Course");
-
-  const [open, setOpen] = useState(false);
-
-  /**
-   * For modal
-   */
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const useStylesModal = makeStyles((theme) => ({
-    modal: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    paper: {
-      backgroundColor: theme.palette.background.paper,
-      border: "2px solid #000",
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
-  }));
-
-  const classes = useStylesModal();
+  const classes = useStylesTooltip();
 
   useEffect(() => {
     props.onChange(value);
@@ -383,7 +398,12 @@ function RadioButtonsGroup(props) {
         value={value}
         onChange={(e) => handleChange(e.target.value)}
       >
-        <Tooltip title={coreInfo()} placement="right" arrow>
+        <Tooltip
+          title={coreInfo()}
+          placement="right"
+          arrow
+          classes={{ tooltip: classes.customWidth }}
+        >
           <FormControlLabel
             value="Core Course"
             control={<Radio />}
@@ -391,7 +411,12 @@ function RadioButtonsGroup(props) {
           />
         </Tooltip>
 
-        <Tooltip title={bridgingModule()} placement="right" arrow>
+        <Tooltip
+          title={bridgingModule()}
+          placement="right"
+          arrow
+          classes={{ tooltip: classes.customWidth }}
+        >
           <FormControlLabel
             value="Bridging Module"
             control={<Radio />}
@@ -399,7 +424,12 @@ function RadioButtonsGroup(props) {
           />
         </Tooltip>
 
-        <Tooltip title={upperCPSC()} placement="right" arrow>
+        <Tooltip
+          title={upperCPSC()}
+          placement="right"
+          arrow
+          classes={{ tooltip: classes.customWidth }}
+        >
           <FormControlLabel
             value="Upper CPSC"
             control={<Radio />}
@@ -407,7 +437,12 @@ function RadioButtonsGroup(props) {
           />
         </Tooltip>
 
-        <Tooltip title={exemptionCourses()} placement="right" arrow>
+        <Tooltip
+          title={exemptionCourses()}
+          placement="right"
+          arrow
+          classes={{ tooltip: classes.customWidth }}
+        >
           <FormControlLabel
             value="Exemption"
             control={<Radio />}
@@ -415,7 +450,12 @@ function RadioButtonsGroup(props) {
           />
         </Tooltip>
 
-        <Tooltip title={exemptionReplacement()} placement="right" arrow>
+        <Tooltip
+          title={exemptionReplacement()}
+          placement="right"
+          arrow
+          classes={{ tooltip: classes.customWidth }}
+        >
           <FormControlLabel
             value="Exemption Replacement"
             control={<Radio />}
@@ -423,39 +463,6 @@ function RadioButtonsGroup(props) {
           />
         </Tooltip>
       </RadioGroup>
-      <button type="button" onClick={handleOpen}>
-        Core CPSC
-      </button>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-            <h2 id="transition-modal-title">Core CPSC Courses</h2>
-            <p id="transition-modal-description">
-              <ul>
-                <li>CPSC 110</li>
-                <li>CPSC 121</li>
-                <li>CPSC 210</li>
-                <li>CPSC 221</li>
-                <li>CPSC 213</li>
-                <li>CPSC 310</li>
-                <li>CPSC 313</li>
-                <li>CPSC 320</li>
-              </ul>
-            </p>
-          </div>
-        </Fade>
-      </Modal>
     </FormControl>
   );
 }
@@ -547,8 +554,8 @@ function PrerequisitesCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-          "/getCourseInfo/" +
-          course
+        "/getCourseInfo/" +
+        course
       )
       .then((res) => {
         if (res.data.desc) {
@@ -596,8 +603,8 @@ function DependenciesCard(props) {
             (window.location.host === "ubcexplorer.io"
               ? ""
               : "http://localhost:3000") +
-              "/getCourseInfo/" +
-              course
+            "/getCourseInfo/" +
+            course
           )
           .then((res) => {
             if (res.data.desc) {
@@ -650,15 +657,13 @@ const addToDegreeFunction = (
     }
   }
 
+  // Add the course to the degree
   if (termExists) {
-    // if the term exists!
-
     let isInCourseArray = false;
     for (let coursesInTerm of courseArray) {
       if (coursesInTerm.code === courseToAdd.code) {
-        //term exists, but course is in term - so do nothing send alert
-        alert("You have already added this!");
-        isInCourseArray = true;
+        //term exists; confirm if user wants to add?
+        isInCourseArray = !window.confirm("You have already added this course in the current term. Are you sure you want to add it again?");
         break;
       }
     }
@@ -668,6 +673,18 @@ const addToDegreeFunction = (
       courseArray.push(courseToAdd);
     }
   } else {
+    // Search to see if the user has added the course in the degree
+    let courseAlreadyAddedToDegree = false;
+    upper_loop:
+    for (let term of usersCourseArray) {
+      for (let course of term.courses) {
+        if (course.code === courseToAdd.code) {
+          courseAlreadyAddedToDegree = !window.confirm("You have already added this course in " + term.name + ". Are you sure you want to add it again?");
+          break upper_loop;
+        }
+      }
+    }
+    if (courseAlreadyAddedToDegree) return;
     // term does not exist- so create new term object with the course added.
     usersCourseArray.push({ name: courseToAdd.term, courses: [courseToAdd] });
   }
@@ -706,7 +723,7 @@ function CourseSelector() {
             : "http://localhost:3000") + "/updateUserWorkList",
           usersCourseArray
         )
-        .then(() => {});
+        .then(() => { });
     }
   }, [usersCourseArray]);
 
