@@ -347,16 +347,64 @@ function RadioButtonsGroup(props) {
           <div className={classes.paper}>
             <h2 id="transition-modal-title">Core CPSC Courses</h2>
             <p id="transition-modal-description">
-              <ul>
-                <li>CPSC 110</li>
-                <li>CPSC 121</li>
-                <li>CPSC 210</li>
-                <li>CPSC 221</li>
-                <li>CPSC 213</li>
-                <li>CPSC 310</li>
-                <li>CPSC 313</li>
-                <li>CPSC 320</li>
-              </ul>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
+                nec pulvinar ante. Fusce non euismod urna, vel gravida odio.
+                Aliquam ornare tempus nibh et suscipit. Sed gravida diam vitae
+                nunc congue, a elementum risus rutrum. Nullam et diam vitae
+                justo convallis placerat. Curabitur bibendum neque sapien, vitae
+                convallis metus placerat et. Etiam sit amet pharetra mi, id
+                feugiat lectus. Nullam vitae vehicula mi, sit amet efficitur
+                nibh. Pellentesque auctor justo porttitor sem tincidunt
+                fringilla. Integer mollis eros at purus lacinia, ac dictum urna
+                fringilla. Fusce tincidunt semper quam, in tempus sem maximus
+                in. Donec magna leo, varius at consequat a, tempor ac leo. Etiam
+                nec quam ac risus blandit pellentesque. Aliquam erat volutpat.
+                Sed dictum est sit amet augue ultrices facilisis. Nam cursus
+                tellus vitae ultricies consectetur. Pellentesque rutrum dolor
+                pellentesque metus placerat, quis imperdiet mauris imperdiet. In
+                mauris sapien, congue sed diam eget, facilisis ornare lacus.
+                Cras sed dui nec leo ultricies malesuada. Pellentesque non
+                molestie nibh, eu viverra dui. Proin diam tortor, facilisis
+                vitae diam sed, pellentesque ullamcorper nulla. Duis orci augue,
+                rutrum ac magna id, iaculis placerat eros. Donec vel nibh ut
+                turpis elementum ultricies sit amet eu dui. Etiam tincidunt
+                interdum neque, et porttitor nulla sollicitudin eu. Maecenas in
+                massa eu lectus tincidunt aliquet. Ut at dolor lorem. Orci
+                varius natoque penatibus et magnis dis parturient montes,
+                nascetur ridiculus mus. Morbi scelerisque dictum est vitae
+                efficitur. Fusce neque lorem, volutpat sed justo vel, iaculis
+                auctor enim. Pellentesque eu sapien quis odio sodales
+                ullamcorper ac quis diam. Nullam non venenatis metus, vel
+                malesuada lacus. Morbi ultricies pellentesque velit porttitor
+                tempus. Donec a interdum tortor, eu ullamcorper massa.
+                Suspendisse justo dolor, lacinia a viverra feugiat, consectetur
+                at nibh. Nullam massa risus, convallis vestibulum tristique
+                commodo, consequat non libero. Phasellus vitae dolor elementum,
+                tincidunt est id, imperdiet ligula. Aliquam nec nisi justo.
+                Morbi arcu velit, imperdiet vitae interdum a, sollicitudin at
+                tortor. Ut et tortor eget sapien lobortis elementum. Phasellus
+                rutrum purus tellus, consequat fringilla arcu tincidunt vitae.
+                Duis et purus ex. Donec non tristique sem, nec viverra ipsum.
+                Donec placerat ante at lacus tempor, quis ornare diam efficitur.
+                Nam diam mauris, congue in dolor vitae, sodales fermentum orci.
+                Etiam tristique suscipit nulla, sed cursus odio volutpat et.
+                Aenean felis massa, accumsan quis sapien et, pellentesque
+                consequat quam. Suspendisse placerat neque eu lacinia interdum.
+                Vivamus pretium mattis nibh, a viverra nisi iaculis tincidunt.
+                Aliquam eros arcu, semper ut nulla eget, fringilla accumsan
+                justo. Donec nulla nibh, eleifend in enim quis, condimentum
+                malesuada felis. Proin volutpat nulla in aliquam facilisis.
+                Maecenas dolor ligula, commodo in sem vitae, aliquet rhoncus
+                tellus. Sed a tempus leo, in pellentesque nibh. Vestibulum
+                feugiat, nunc viverra maximus posuere, diam nibh semper odio,
+                non ultricies ligula orci ut tortor. Vivamus aliquam scelerisque
+                ipsum id mollis. Mauris mi orci, mollis a sapien id, mollis
+                iaculis justo. Ut semper vehicula velit non tempus. Vestibulum
+                diam nulla, euismod a malesuada sit amet, pellentesque vitae
+                magna. Fusce vulputate egestas gravida. Duis molestie mauris
+                sem, nec maximus nulla suscipit sed.
+              </p>
             </p>
           </div>
         </Fade>
@@ -372,9 +420,7 @@ function RadioButtonsGroup(props) {
           value="Core Course"
           control={<Radio />}
           label="Core Course"
-        >
-
-        </FormControlLabel>
+        ></FormControlLabel>
         <FormControlLabel
           value="Bridging Module"
           control={<Radio />}
