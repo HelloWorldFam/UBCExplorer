@@ -16,6 +16,7 @@ import Helmet from "react-helmet";
 import "react-dragula/dist/dragula.css";
 import SearchComponent from "./SearchComponent";
 import { YourDegreeCard } from "./components/YourDegreeCard";
+import Backdrop from '@material-ui/core/Backdrop';
 
 import {
   Breadcrumbs as MuiBreadcrumbs,
@@ -28,9 +29,11 @@ import {
   TextField as MuiTextField,
   Tooltip,
   Typography as MuiTypography,
+  Fade,
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
+import { Modal } from "semantic-ui-react";
 
 const NavLink = React.forwardRef((props, ref) => (
   <RouterNavLink innerRef={ref} {...props} />
@@ -182,8 +185,8 @@ function tooltipText(course, average) {
       {average.pass_percent ? (
         <h3>Pass rate: {average.pass_percent}%</h3>
       ) : (
-        ""
-      )}
+          ""
+        )}
     </>
   );
 }
@@ -549,6 +552,31 @@ function CourseSelector() {
   const [usersCourseArray, setUsersCourseArray] = useState([-1]);
   const [windowHeight, setWindowHeight] = useState(0);
   const MAX_HEIGHT = windowHeight - 230;
+  const [open, setOpen] = React.useState(false);
+
+  /**
+   * For modal
+   */
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const useStyles = makeStyles((theme) => ({
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    paper: {
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
+  }));
+  const classes = useStyles();  
 
   const onContainerReady = (container) => {
     setContainers(containers.push(container));
@@ -599,7 +627,28 @@ function CourseSelector() {
       </Breadcrumbs>
 
       <Divider my={6} />
-
+      <button type="button" onClick={handleOpen}>
+        react-transition-group
+      </button>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <div className={classes.paper}>
+            <h2 id="transition-modal-title">Transition modal</h2>
+            <p id="transition-modal-description">react-transition-group animates me.</p>
+          </div>
+        </Fade>
+      </Modal>
       <Grid container spacing={6}>
         <Grid
           item
