@@ -33,6 +33,18 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const verticalTimelineProps = {
+    className: "vertical-timeline-element",
+    iconStyle: {
+        background: 'rgb(33, 150, 243)', 
+        color: '#fff',
+        width: '30px', 
+        height: '30px',
+        marginLeft: '-15px',
+        marginTop: '15px'
+    },
+};
+
 const NavLink = React.forwardRef((props, ref) => (
     <RouterNavLink innerRef={ref} {...props} />
 ));
@@ -54,17 +66,12 @@ function Timeline(props) {
                 <VerticalTimeline>
                     {props.courseResult.length === 0
                         ? (
-                            <VerticalTimelineElement
-                                className="vertical-timeline-element"
-                                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }} >
+                            <VerticalTimelineElement {...verticalTimelineProps} >
                                 <h3>You have not added any courses!</h3>
                             </VerticalTimelineElement>
                         )
                         : props.courseResult.map((item, index, array) => (
-                            <VerticalTimelineElement
-                                className="vertical-timeline-element"
-                                date={item.name}
-                                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }} >
+                            <VerticalTimelineElement date={item.name} {...verticalTimelineProps} >
                                 <h3 className="vertical-timeline-element-title">
                                     Courses:
                                 </h3>
@@ -87,29 +94,7 @@ function Timeline(props) {
 }
 
 function DegreeTimeline() {
-    const [courseResult, setCourseResult] = React.useState([{
-        "name": "2019W1",
-        "courses": [{
-            "dept": "CPSC",
-            "code": "CPSC 110",
-            "name": "Computation, Programs, and Programming",
-            "desc": "Fundamental program and computation structures. Introductory programming skills. Computation as a tool for information processing, simulation and modelling, and interacting with the world. [3-3-0]",
-            "cred": 4,
-            "tag": "Core Course",
-            "term": "2019W1"
-        }]
-    }, {
-        "name": "Exemptions",
-        "courses": [{
-            "dept": "ENGL",
-            "code": "ENGL 110",
-            "name": "Approaches to Literature",
-            "desc": "Study of selected examples of poetry, fiction, and drama. Essays are required.",
-            "cred": 3,
-            "tag": "Core Course",
-            "term": "Exemptions"
-        }]
-    }]);
+    const [courseResult, setCourseResult] = React.useState([]);
 
     useEffect(() => {
         fetch((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getcourses")
@@ -117,7 +102,7 @@ function DegreeTimeline() {
             .then(json => {
                 setCourseResult(json); // access json.body here
             });
-    });
+    }, []);
 
     return (
         <React.Fragment>

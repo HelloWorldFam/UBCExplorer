@@ -26,6 +26,10 @@ import {
   Settings as SettingsIcon,
 } from "@material-ui/icons";
 
+// Icons
+import TimelineIcon from '@material-ui/icons/Timeline';
+import ReceiptIcon from '@material-ui/icons/Receipt';
+
 // Landing page component
 const LandingPage = async(() => import("../pages/landingpage/LandingPage"));
 const ContactPage = async(() => import("../pages/landingpage/Contact/Contact"));
@@ -74,8 +78,6 @@ const TextFields = async(() => import("../pages/forms/TextFields"));
 // Icons components
 const MaterialIcons = async(() => import("../pages/icons/MaterialIcons"));
 const FeatherIcons = async(() => import("../pages/icons/FeatherIcons"));
-const TimelineIcon = async(() => import('@material-ui/icons/Timeline'));
-const ReceiptIcon = async(() => import('@material-ui/icons/Receipt'));
 
 // Pages components
 const Blank = async(() => import("../pages/pages/Blank"));
