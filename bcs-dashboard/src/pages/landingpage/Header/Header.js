@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import "materialize-css/dist/css/materialize.min.css";
+import "./materialize.css";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import "./Header.css";
 import "../LandingPage.css";
 import { Navbar, NavItem, Icon } from "react-materialize";
+import { withStyles } from "@material-ui/core/styles";
 
 import Helmet from "react-helmet";
 import styled from "styled-components";
@@ -62,7 +63,6 @@ class IconMenu extends React.Component {
 
   render() {
     const { anchorEl } = this.state;
-
     return (
       <>
         <Button
@@ -74,6 +74,7 @@ class IconMenu extends React.Component {
         >
           Sign In/Register
         </Button>
+
         <Menu
           id="simple-menu"
           anchorEl={anchorEl}
@@ -87,7 +88,6 @@ class IconMenu extends React.Component {
                 </ListItemIcon> */}
             <a href="/auth/google">
               <ListItemText
-                inset
                 secondary="Sign In/Login With Google"
                 pl={0.5}
               />
@@ -100,7 +100,6 @@ class IconMenu extends React.Component {
           <MenuItem>
             <a href="/auth/facebook">
               <ListItemText
-                inset
                 secondary="Sign In/Login With Facebook"
                 pl={0.5}
               />
@@ -109,7 +108,6 @@ class IconMenu extends React.Component {
           <MenuItem>
             <a href="/auth/github">
               <ListItemText
-                inset
                 secondary="Sign In/Login With GitHub"
                 pl={0.5}
               />
