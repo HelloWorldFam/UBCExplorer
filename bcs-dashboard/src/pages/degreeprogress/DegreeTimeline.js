@@ -33,6 +33,18 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const verticalTimelineProps = {
+    className: "vertical-timeline-element",
+    iconStyle: {
+        background: 'rgb(33, 150, 243)', 
+        color: '#fff',
+        width: '30px', 
+        height: '30px',
+        marginLeft: '-15px',
+        marginTop: '15px'
+    },
+};
+
 const NavLink = React.forwardRef((props, ref) => (
     <RouterNavLink innerRef={ref} {...props} />
 ));
@@ -54,17 +66,12 @@ function Timeline(props) {
                 <VerticalTimeline>
                     {props.courseResult.length === 0
                         ? (
-                            <VerticalTimelineElement
-                                className="vertical-timeline-element"
-                                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }} >
+                            <VerticalTimelineElement {...verticalTimelineProps} >
                                 <h3>You have not added any courses!</h3>
                             </VerticalTimelineElement>
                         )
                         : props.courseResult.map((item, index, array) => (
-                            <VerticalTimelineElement
-                                className="vertical-timeline-element"
-                                date={item.name}
-                                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }} >
+                            <VerticalTimelineElement date={item.name} {...verticalTimelineProps} >
                                 <h3 className="vertical-timeline-element-title">
                                     Courses:
                                 </h3>
