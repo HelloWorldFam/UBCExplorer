@@ -5,6 +5,8 @@ import Pic3 from "../Pictures/yes1.jpg";
 import Pic4 from "../Pictures/1324.jpg";
 import { HashLink as Link } from "react-router-hash-link";
 import "./About.css";
+import DescriptionCards from "./DescriptionCards";
+import "../LandingPage.css";
 
 export default class About extends Component {
   render() {
@@ -14,7 +16,7 @@ export default class About extends Component {
           <div className="container">
             <div className="row">
               <h4 className="center">
-                <span className="blue-text darken-1">OUR</span> FEATURES
+                <span className="#232F32 darken-1">OUR</span> FEATURES
               </h4>
               <div className="col s12 m4">
                 <div className="card">
@@ -22,7 +24,7 @@ export default class About extends Component {
                     <img src={Pic1} alt="Schedule" />
                     <span className="card-title">Schedule</span>
                     <Link
-                      className="btn-floating activator halfway-fab waves-effect waves-light blue"
+                      className="btn-floating activator halfway-fab waves-effect waves-light blue-grey darken-4"
                       to={"#"}
                     >
                       <i className="material-icons">expand_less</i>
@@ -54,7 +56,7 @@ export default class About extends Component {
                     <img src={Pic2} alt="Course Finder" />
                     <span className="card-title">Course Finder</span>
                     <Link
-                      className="btn-floating activator halfway-fab waves-effect waves-light blue"
+                      className="btn-floating activator halfway-fab waves-effect waves-light blue-grey darken-4"
                       to={"#"}
                     >
                       <i className="material-icons">expand_less</i>
@@ -86,7 +88,7 @@ export default class About extends Component {
                     <img src={Pic3} alt="Discussion Forum" />
                     <span className="card-title">Discussion Forum</span>
                     <Link
-                      className="btn-floating activator halfway-fab waves-effect waves-light blue"
+                      className="btn-floating activator halfway-fab waves-effect waves-light blue-grey darken-4"
                       to={"#"}
                     >
                       <i className="material-icons">expand_less</i>
@@ -120,53 +122,9 @@ export default class About extends Component {
 
           <div className="subtletoppadding"></div>
           <div className="divider"></div>
-
-          <div className="container">
-            <div className="toppadding">
-              <div className="row">
-                <div className="col s12 m6">
-                  <div className="white center">
-                    <img src={Pic4} alt="placeholderpic1" />
-                    {/* <span class="material-icons">mail</span>
-                                        <h4>Email</h4> */}
-                    {/* <p>Please email us for any questions:_____ @gmail.com</p> */}
-                  </div>
-                </div>
-                <div className="col s12 m6">
-                  <div className="card-panel white center">
-                    {/* <i class="material-icons">account_box</i> */}
-                    <h4>Description</h4>
-
-                    <p>description to be added</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="betweencardpadding">
-            <div className="container">
-              <div className="row">
-                <div className="col s12 m6">
-                  <div className="card-panel white center">
-                    {/* <span class="material-icons">mail</span> */}
-                    <h4>Description</h4>
-                    <p>description to be added</p>
-                  </div>
-                </div>
-                <div className="col s12 m6">
-                  <div className="white center">
-                    {/* <i class="material-icons">account_box</i> */}
-                    <img src={Pic4} alt="placeholderpic2" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="divider"></div>
+          <DescriptionCards/>
         </div>
       </section>
-    );
+    )
   }
 }
