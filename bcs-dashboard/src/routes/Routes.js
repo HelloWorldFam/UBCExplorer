@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { dashboard as dashboardRoutes, auth as authRoutes, landing as landingRoutes, contact as contactRoutes } from "./index";
+import { dashboard as dashboardRoutes, auth as authRoutes, landing as landingRoutes, contact as contactRoutes, mainSearch as mainSearchRoutes } from "./index";
 
 import DashboardLayout from "../layouts/Dashboard";
 import AuthLayout from "../layouts/Auth";
