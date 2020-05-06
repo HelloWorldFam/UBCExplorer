@@ -34,7 +34,6 @@ import {
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
-// import { Modal } from "semantic-ui-react";
 
 const NavLink = React.forwardRef((props, ref) => (
   <RouterNavLink innerRef={ref} {...props} />
