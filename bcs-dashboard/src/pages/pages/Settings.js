@@ -10,7 +10,6 @@ import {
   Box,
   Button,
   Card as MuiCard,
-  Chip as MuiChip,
   CardContent,
   Divider as MuiDivider,
   FormControl as MuiFormControl,
@@ -77,22 +76,22 @@ function Details(props) {
 }
 
 function Personal(props) {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-
   const handleClick = () => {
     const user = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
+      firstName: props.firstName,
+      lastName: props.lastName,
+      email: props.email,
     };
-    alert(
-      `User wants to change fields to:
-      First Name: ${user.firstName}
-      Last Name: ${user.lastName}
-      Email: ${user.email}`
-    );
+
+    axios
+      .post(
+        (window.location.host === "ubcexplorer.io"
+          ? ""
+          : "http://localhost:3000") + "/updateUser",
+        user
+      )
+      .then(() => alert("Your changes have been saved."))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -133,7 +132,6 @@ function Personal(props) {
             id="email"
             type="email"
             value={props.email}
-            onChange={(e) => props.onChangeEmail(e.target.value)}
             placeholder="Email"
           />
         </FormControl>
@@ -147,22 +145,61 @@ function Personal(props) {
 }
 
 function SimpleList() {
+  const handleClick = () => {
+    window.open("https://ubc.ca1.qualtrics.com/jfe/form/SV_enyfh63H9Euj8UJ");
+  };
+
+  const redirectToHome = () => {
+    window.location.replace("/bcs");
+  };
+
+  const handleDelete = () => {
+    let confirmation = window.confirm(
+      "Are you sure you want to delete your account? You will not be able to reverse this action."
+    );
+    if (confirmation == true) {
+      axios
+        .post(
+          (window.location.host === "ubcexplorer.io"
+            ? ""
+            : "http://localhost:3000") + "/deleteUser"
+        )
+        .then(() => {
+          alert("Your account has successfully been deleted.");
+          redirectToHome();
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
+  const downloadData = () => {
+    window.open("/downloadUserData");
+  };
+
   return (
     <Card mb={6}>
-        <List component="nav">
-          <ListItem button>
-            <ListItemText primary="Export User Data (JSON Format)" />
-          </ListItem>
-          <ListItem button>
-            <ListItemText primary="Tell us what you think!" />
-          </ListItem>
-        </List>
-        <Divider />
-        <List component="nav">
-          <ListItem button>
-            <ListItemText primary="Delete Account" style={{ color: "red" }} />
-          </ListItem>
-        </List>
+      <List component="nav">
+        <ListItem button>
+          <ListItemText
+            primary="Export User Data (JSON Format)"
+            onClick={downloadData}
+          />
+        </ListItem>
+        <ListItem button onClick={handleClick}>
+          <ListItemText primary="Tell us what you think!" />
+        </ListItem>
+      </List>
+
+      <Divider />
+      <List component="nav">
+        <ListItem button>
+          <ListItemText
+            primary="Delete Account"
+            onClick={handleDelete}
+            style={{ color: "red" }}
+          />
+        </ListItem>
+      </List>
     </Card>
   );
 }

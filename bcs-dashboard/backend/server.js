@@ -6,12 +6,15 @@ const Users = require("./models/users.model.js");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const findOrCreate = require("mongoose-findorcreate");
-const FacebookStrategy = require("passport-facebook");
 const GoogleOauthTest = require("./helpers/GoogleOauthTest.js");
 const GoogleOauth20Strategy = require("passport-google-oauth20");
-const TwitterStrategy = require("passport-twitter");
+
 const path = require("path");
 const keepDynoAwake = require("./helpers/keepDynoAwake");
+
+const FacebookStrategy = require("passport-facebook").Strategy;
+
+const GitHubStrategy = require("passport-github").Strategy;
 
 require("dotenv").config();
 
@@ -38,7 +41,7 @@ connection.once("open", () => {
 // cookieSession config
 app.use(
   cookieSession({
-    maxAge: 7* (24 * 60 * 60 * 1000), // One day in milliseconds
+    maxAge: 7 * (24 * 60 * 60 * 1000), // One day in milliseconds
     keys: ["SOME TEMP PLACEHOLDER"], // secret key to hash cookie ;)
   })
 );
@@ -46,17 +49,49 @@ app.use(
 app.use(passport.initialize()); // Used to initialize passport
 app.use(passport.session()); // Used to persist login sessions
 
-// Strategy config
-// passport.use(new FacebookStrategy({
-//   clientID: 'must sign up with facebook for one',
-//   clientSecret: 'must sign up with facebook for one',
-//   callbackURL: 'our callback URL'
-// },
-//   function (accessToken, refreshToken, profile, done) {
-//     Users.findOrCreate({ email: profile.email }, { firstName: profile.firstName, lastName: profile.lastName }, function (err, user) {
-//       return done(err, user);
-//     })
-//   }));
+//Facebook Strategy config
+const FacebookOauthProduction = new FacebookStrategy(
+  {
+    clientID: "861615657655378",
+    clientSecret: "52ccb87530008a10ec91b9a9ec4fa35a",
+    callbackURL: "https://localhost:3000/auth/facebook/callback",
+  },
+  function (accessToken, refreshToken, profile, done) {
+    console.log(profile);
+    Users.findOrCreate(
+      { facebookId: profile.id },
+      { email: profile.emails[0].value },
+      // { firstName: profile.givenName },
+      // { lastName: profile.familyName },
+
+      function (err, user) {
+        if (err) {
+          return done(err);
+        }
+        done(null, user);
+      }
+    );
+  }
+);
+
+// Github strategy.
+const GitHubOAuthProduction = new GitHubStrategy(
+  {
+    clientID: "Iv1.5ac14f4cf87eef13",
+    clientSecret: "9721d2ee3b81fdaee29992418e342bf73b57173b",
+    callbackURL: "http://localhost:3000/auth/github/callback",
+  },
+  function (accessToken, refreshToken, profile, done) {
+    console.log(profile);
+    Users.findOrCreate(
+      { githubId: profile.id },
+      { email: profile.email },
+      function (err, user) {
+        return done(err, user);
+      }
+    );
+  }
+);
 
 const GoogleOauthProduction = new GoogleOauth20Strategy(
   {
@@ -85,10 +120,15 @@ const GoogleOauthProduction = new GoogleOauth20Strategy(
   }
 );
 
+passport.use(FacebookOauthProduction);
+
+passport.use(GitHubOAuthProduction);
+
 passport.use(
-  process.env.NODE_ENV === 'production'
+  process.env.NODE_ENV === "production"
     ? GoogleOauthProduction
-    : GoogleOauthTest);
+    : GoogleOauthTest
+);
 
 // passport.use(new TwitterStrategy({
 //   clientID: 'must sign up with facebook for one',
@@ -120,6 +160,25 @@ function isUserAuthenticated(req, res, next) {
   }
 }
 
+// passport.authenticate middleware is used here to authenticate the request for github
+app.get(
+  "/auth/github",
+  passport.authenticate("github", {
+    //scope: ["(no scope)"],
+    scope: ["profile", "user"], // Used to specify the required data; we only want read-only access to public information
+  })
+);
+
+// The middleware receives the data from Github and runs the function on Strategy config
+app.get(
+  "/auth/github/callback",
+  passport.authenticate("github"),
+  (req, res) => {
+    console.log("Successfully logged in");
+    res.redirect("/bcs/dashboard");
+  }
+);
+
 // passport.authenticate middleware is used here to authenticate the request
 app.get(
   "/auth/google",
@@ -138,17 +197,31 @@ app.get(
   }
 );
 
+// passport.authenticate middleware is used here to authenticate the request
+app.get("/auth/facebook", passport.authenticate("facebook"));
+
+// The middleware receives the data from Google and runs the function on Strategy config
+app.get(
+  "/auth/facebook/callback",
+  passport.authenticate("facebook"),
+  (req, res) => {
+    console.log("Successfully logged in");
+    res.redirect("/bcs/dashboard");
+  }
+);
+
 // Ask about this - using this to retrieve user data from the Passport 'profile' object
 app.get("/userdata", isUserAuthenticated, (req, res) => {
   Users.find({ email: req.user }, function (err, result) {
+    console.log(result);
     res.send(result);
   });
 });
 
-app.get('/coursedata', (req, res) => {
+app.get("/coursedata", (req, res) => {
   Courses.find({ code: req.params.code }, function (err, result) {
     res.send(result);
-  })
+  });
 });
 
 // Secret route
@@ -157,12 +230,12 @@ app.get("/secret", isUserAuthenticated, (req, res) => {
 });
 
 // Logout route
-app.get("/logout", (req, res) => {
+app.get("/bcs/logout", (req, res) => {
   req.logout();
-  res.redirect("/");
+  res.redirect("/bcs");
 });
 
-// Whitelists React app static assets. 
+// Whitelists React app static assets.
 // This is to get around isUserAuthenticated middleware on "/*" paths
 app.get("/static", (req, res) => {
   // send landing page
@@ -181,7 +254,7 @@ app.listen(port, () => {
 });
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, '..', 'build/')));
+app.use(express.static(path.join(__dirname, "..", "build/")));
 
 //when connect to server, go up one directory into build folder
 app.get("/", (req, res) => {
@@ -254,6 +327,51 @@ app.post("/updateUserWorkList", isUserAuthenticated, (req, res) => {
       console.log(err);
       res.sendStatus(400);
     });
+});
+
+// Update course worklist/array of the term objects which was selected in course selector
+app.post("/updateUser", isUserAuthenticated, (req, res) => {
+  Users.findOne({ email: req.user }).then((user) => {
+    user.firstName = req.body.firstName;
+    user.lastName = req.body.lastName;
+    user
+      .save()
+      .then(() => {
+        res.sendStatus(200);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.sendStatus(400);
+      });
+  });
+});
+
+app.post("/deleteUser", isUserAuthenticated, (req, res) => {
+  Users.findOne({ email: req.user }).then((user) => {
+    user
+      .delete()
+      .then(() => {
+        res.sendStatus(204);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.sendStatus(404);
+      });
+  });
+});
+
+// Download user data to JSON
+const fs = require("fs");
+app.get("/downloadUserData", isUserAuthenticated, (req, res) => {
+  Users.findOne({ email: req.user }).then((user) => {
+    const data = user;
+    fs.writeFile("userdata.json", data, function (error) {
+      if (error) throw error;
+      console.log("Write to userdata.csv successfully!");
+    });
+    res.attachment("userdata.json");
+    res.status(200).send(data);
+  });
 });
 
 // Commented out for testing

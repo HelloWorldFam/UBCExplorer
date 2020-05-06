@@ -15,12 +15,15 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "json2csv": "^5.0.1",
+    "mongodb": "^3.5.7",
     "mongoose": "^5.9.10",
     "mongoose-findorcreate": "^3.0.0",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.2",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
+    "passport-github": "^1.1.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-twitter": "^1.0.4"
   }

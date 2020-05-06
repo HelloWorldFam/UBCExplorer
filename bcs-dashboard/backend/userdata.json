@@ -1,0 +1,13 @@
+{
+  courses: [
+    { name: '2019W1', courses: [Array] },
+    { name: '2019W2', courses: [Array] },
+    { name: 'Exemptions', courses: [Array] }
+  ],
+  _id: 5eb26ce504bec0a37ee3611c,
+  email: 'king455@gmail.com',
+  firstName: 'Scott',
+  lastName: 'King',
+  __v: 17,
+  picture: 'https://lh3.googleusercontent.com/a-/AOh14Gjq-eyn81B5nzVHSp0bvlnuNGcVwEpoKd0EM8j3Aa4'
+}

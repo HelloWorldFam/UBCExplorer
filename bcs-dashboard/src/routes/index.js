@@ -32,6 +32,7 @@ import ReceiptIcon from '@material-ui/icons/Receipt';
 
 // Landing page component
 const LandingPage = async(() => import("../pages/landingpage/LandingPage"));
+const ContactPage = async(() => import("../pages/landingpage/Contact/Contact"));
 
 // Getting started component
 const GetStartedPage = async(() => import("../pages/getstarted/GetStarted"));
@@ -111,6 +112,13 @@ const landingPageRoutes = {
   id: "Landing Page",
   path: "/bcs",
   component: LandingPage,
+  children: null,
+};
+
+const contactPageRoutes = {
+  id: "Contact Page",
+  path: "/contact",
+  component: ContactPage,
   children: null,
 };
 
@@ -492,6 +500,7 @@ const privateRoutes = {
 };
 
 export const landing = [landingPageRoutes];
+export const contact = [contactPageRoutes];
 
 export const dashboard = [
   dashboardsRoutes,

@@ -16,8 +16,8 @@ const LandingPage = () => {
       <Banner />
       <Intro />
       <About />
-      <WhoWeAre />
-      <Contact />
+      {/* <WhoWeAre /> */}
+      {/* <Contact /> */}
       <Footer />
       <SignIn />
     </>
