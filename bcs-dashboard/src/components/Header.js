@@ -194,7 +194,7 @@ class UserMenu extends Component {
       <React.Fragment>
         <IconButton
           color="inherit"
-          href="/settings"
+          href="/bcs/settings"
         >
           <Settings />
         </IconButton>
@@ -221,7 +221,7 @@ class UserMenu extends Component {
           </MenuItem> */}
           <MenuItem>
             <LinkStyle>
-              <a href="/logout">Sign out</a>
+              <a href="/bcs/logout">Sign out</a>
             </LinkStyle>
           </MenuItem>
         </Menu>
