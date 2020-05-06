@@ -159,9 +159,9 @@ app.get("/secret", isUserAuthenticated, (req, res) => {
 });
 
 // Logout route
-app.get("/logout", (req, res) => {
+app.get("/bcs/logout", (req, res) => {
   req.logout();
-  res.redirect("/");
+  res.redirect("/bcs");
 });
 
 // Whitelists React app static assets.
@@ -272,6 +272,34 @@ app.post("/updateUser", isUserAuthenticated, (req, res) => {
         console.log(err);
         res.sendStatus(400);
       });
+  });
+});
+
+app.post("/deleteUser", isUserAuthenticated, (req, res) => {
+  Users.findOne({ email: req.user }).then((user) => {
+    user
+      .delete()
+      .then(() => {
+        res.sendStatus(204);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.sendStatus(404);
+      });
+  });
+});
+
+// Download user data to JSON
+const fs = require("fs");
+app.get("/downloadUserData", isUserAuthenticated, (req, res) => {
+  Users.findOne({ email: req.user }).then((user) => {
+    const data = user;
+    fs.writeFile("userdata.json", data, function (error) {
+      if (error) throw error;
+      console.log("Write to userdata.csv successfully!");
+    });
+    res.attachment("userdata.json");
+    res.status(200).send(data);
   });
 });
 
