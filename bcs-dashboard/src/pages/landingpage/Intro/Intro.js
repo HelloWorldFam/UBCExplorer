@@ -11,22 +11,20 @@ export default class Intro extends Component {
                     <div className="container">
                         <div className="row">
                             <h4 className="center">
-                                <span className="themecolor-text darken-1">INTRODUCTION TO BCS APP</span>
+                                <span className="themecolor-text darken-1">INTRODUCTION TO UBC EXPLORER</span>
                             </h4>
                             <div className="col s6 m3">
                                 <div className="card-panel">
+                               
                                     <i className="material-icons large themecolor-text">account_circle</i>
                                     <h4>Founders</h4>
-                                    <p>We are a group of 6 BCS students who are passionate about tech
-                            {/* <li>Ben Cheung</li>
-                            <li>Scott King</li>
-                            <li>James Park</li>
-                            <li>Brenden Yee</li>
-                            <li>James Sun</li>
-                            <li>Jerry Hall</li> */}
+                                    <p>We are a team of 6 BCS students passionate about tech
+                                    
                                     </p>
+                                
                                 </div>
                             </div>
+                            
                             <div className="col s6 m3">
                                 <div className="card-panel">
                                     <i className="material-icons large themecolor-text">blur_circular</i>

@@ -7,19 +7,17 @@ import About from "./About/About";
 import WhoWeAre from "./WhoWeAre/WhoWeAre";
 import Contact from "./Contact/Contact";
 import Footer from "./Footer/Footer";
-import SignIn from "./SignIn/SignIn";
 
 const LandingPage = () => {
   return (
     <>
       <Header />
       <Banner />
-      <About />
       <Intro />
+      <About />
       {/* <WhoWeAre /> */}
       {/* <Contact /> */}
       <Footer />
-      <SignIn />
     </>
   );
 };
