@@ -133,6 +133,17 @@ const DashboardTable = (props) => {
     });
   }
 
+  if (rows.length === 0) {
+    rows.push(
+      createData(
+        "You have no courses here.",
+        "-",
+        "-",
+        "-"
+      )
+    );
+  }
+
   return (
     <Card mb={6}>
       <CardHeader

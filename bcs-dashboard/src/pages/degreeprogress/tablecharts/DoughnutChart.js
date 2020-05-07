@@ -126,7 +126,7 @@ const PieChart = (props) => {
           <TableBody>
             <TableRow>
               <TableCell component="th" scope="row">
-                Corse CPSC
+                Core CPSC
               </TableCell>
               <TableCell align="right">{coreCourses}</TableCell>
               <TableCell align="right">{props.coreCoursesRemaining}</TableCell>
