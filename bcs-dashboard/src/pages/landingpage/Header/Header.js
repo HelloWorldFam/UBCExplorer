@@ -42,6 +42,8 @@ import {
 
 import { spacing } from "@material-ui/system";
 
+const ExploreLogo = fetch("/favicon.ico");
+
 const Card = styled(MuiCard)`
   margin: 10px;
   box-shadow: none;
@@ -120,7 +122,7 @@ const SmoothScroll = () => {
         <nav className="themecolor">
           <div className="container">
             <div className="nav-wrapper">
-              <AnchorLink href="!#" className="brand-logo">UBC Explorer<i className="material-icons">search</i></AnchorLink>
+              <AnchorLink href="!#" className="brand-logo">UBC Explorer<i className="material-icons">school</i></AnchorLink>
               <AnchorLink href="/bcs#" data-target="mobile-demo" className="sidenav-trigger">
                 <i className="material-icons">menu</i>
               </AnchorLink>
