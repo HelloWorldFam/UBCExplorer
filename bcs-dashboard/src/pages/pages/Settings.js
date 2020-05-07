@@ -150,7 +150,7 @@ function SimpleList() {
   };
 
   const redirectToHome = () => {
-    window.location.replace("/bcs");
+    window.location.replace("/");
   };
 
   const handleDelete = () => {
