@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import SearchComponent from "../pages/courseselector/SearchComponent";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
 import { blue } from "@material-ui/core/colors";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
@@ -348,8 +347,6 @@ function MainSearchPage() {
   const updateWindowDimensions = () => {
     setWindowHeight(window.innerHeight);
   };
-
-  const classes2 = navBarStyle();
 
   return (
     <React.Fragment>
