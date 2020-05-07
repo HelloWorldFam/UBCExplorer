@@ -80,7 +80,7 @@ const GitHubOAuthProduction = new GitHubStrategy(
   {
     clientID: "Iv1.b83becaf95ef5ce1",
     clientSecret: "71b0cfc8bc19dcf09f5173f5a8949398022adffd",
-    callbackURL: "http://localhost:3000/auth/github/callback",
+    callbackURL: "https://ubcexplorer.io/auth/github/callback",
     scope: ['user:email'],
   },
   function (accessToken, refreshToken, profile, done) {
