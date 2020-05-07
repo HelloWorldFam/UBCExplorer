@@ -54,16 +54,17 @@ const FacebookOauthProduction = new FacebookStrategy(
   {
     clientID: "2828647350596227",
     clientSecret: "afde4d264c365d946882ec076bf5d4cd",
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    callbackURL: "http://ubcexplorer.io/auth/facebook/callback",
+    profileFields: ['id', 'email', 'first_name', 'last_name', 'photos'],
   },
   function (accessToken, refreshToken, profile, done) {
     console.log(profile);
     Users.findOrCreate(
-      { email: profile.emails[0].value },
+      { email: profile._json.email },
       {
-        facebookId: profile.id,
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
+        facebookId: profile._json.id,
+        firstName: profile._json.first_name,
+        lastName: profile._json.last_name,
         courses: [],
       },
       function (err, user) {
@@ -206,7 +207,9 @@ app.get(
 );
 
 // passport.authenticate middleware is used here to authenticate the request
-app.get("/auth/facebook", passport.authenticate("facebook"));
+app.get("/auth/facebook", passport.authenticate("facebook", {
+  scope: 'email',
+}));
 
 // The middleware receives the data from Google and runs the function on Strategy config
 app.get(
