@@ -62,8 +62,8 @@ function Details(props) {
           <BigAvatar alt="Lucy Lavender" src={props.picture} />
           <Typography variant="body2" component="div" gutterBottom>
             <Box fontWeight="fontWeightMedium">
-              {props.firstName ? props.firstName : "firstName"}{" "}
-              {props.lastName ? props.lastName : "lastName"}
+              {props.firstName ? props.firstName : ""}{" "}
+              {props.lastName ? props.lastName : ""}
             </Box>
             <Box fontWeight="fontWeightRegular">
               {props.email ? props.email : "email"}
