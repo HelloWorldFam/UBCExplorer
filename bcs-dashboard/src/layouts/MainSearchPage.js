@@ -7,6 +7,12 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { blue } from "@material-ui/core/colors";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import DirectionsIcon from '@material-ui/icons/Directions';
+
+// Logos
+import GithubLogo from "../pages/landingpage/Header/SignInLogos/Github.png";
+import GoogleLogo from "../pages/landingpage/Header/SignInLogos/Google.png";
+import FacebookLogo from "../pages/landingpage/Header/SignInLogos/Facebook.png";
 
 import {
   Card as MuiCard,
@@ -14,6 +20,8 @@ import {
   Grid,
   Typography as MuiTypography,
   Tooltip,
+  Button,
+  Menu,
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
@@ -47,6 +55,13 @@ const TaskWrapperContent = styled(CardContent)`
 `;
 
 const Typography = styled(MuiTypography)(spacing);
+
+const DropDownCard = styled(MuiCard)`
+  box-shadow: none;
+  margin: 10px;
+  max-width:26.5em;
+  line-height: 1.5;
+`;
 
 class Lane extends React.Component {
   handleContainerLoaded = (container) => {
@@ -169,8 +184,8 @@ function SearchCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-          "/getCourseInfo/" +
-          courseInfo
+        "/getCourseInfo/" +
+        courseInfo
       )
       .then((res) => {
         setDesc(res.data.desc);
@@ -232,8 +247,8 @@ function PrerequisitesCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-          "/getCourseInfo/" +
-          course
+        "/getCourseInfo/" +
+        course
       )
       .then((res) => {
         if (res.data.desc) {
@@ -281,8 +296,8 @@ function DependenciesCard(props) {
             (window.location.host === "ubcexplorer.io"
               ? ""
               : "http://localhost:3000") +
-              "/getCourseInfo/" +
-              course
+            "/getCourseInfo/" +
+            course
           )
           .then((res) => {
             if (res.data.desc) {
@@ -310,7 +325,8 @@ const navBarStyle = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
+    color: "#FFF"
   },
   title: {
     flexGrow: 1,
@@ -334,6 +350,9 @@ function MainSearchPage() {
   const [containers, setContainers] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState({});
   const [windowHeight, setWindowHeight] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(0);
+  const [anchorEl, setAnchorEl] = useState();
+  const navBarClasses = navBarStyle();
 
   const onContainerReady = (container) => {
     setContainers(containers.push(container));
@@ -346,6 +365,16 @@ function MainSearchPage() {
 
   const updateWindowDimensions = () => {
     setWindowHeight(window.innerHeight);
+    setWindowWidth(window.innerWidth);
+    console.log(window.innerWidth);
+  };
+
+  const openExplorerMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const closeExplorerMenu = (event) => {
+    setAnchorEl(null);
   };
 
   return (
@@ -360,8 +389,38 @@ function MainSearchPage() {
           >
             logo here
           </IconButton>  */}
-            <Typography variant="h6">UBC Explorer Course Search</Typography>
+            <Typography className={navBarClasses.root} variant="h6">UBC Explorer Course Search</Typography>
             {/* <Button color="inherit">Login/Register</Button> */}
+            <Button className={navBarClasses.menuButton} onClick={openExplorerMenu}>
+              <DirectionsIcon />{(windowWidth > 625) ? <>&nbsp;BCS Explorer</> : ""}
+            </Button>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={closeExplorerMenu}
+              color="buttoncolor"
+            >
+              <DropDownCard>
+                <strong>BCS Degree Explorer:</strong> a simplified course planning tool for
+                Bachelor of Computer Science (BCS) students. <br />
+                <center>
+                  <Button style={{ margin: '10px', backgroundColor: '#f7f9fc' }} variant="outlined" href="/bcs">
+                    <strong>Learn More!</strong>
+                  </Button>
+                </center>
+                <Typography variant="body" style={{ padding: '0 10px 10px 10px', display:'block' }}>Sign in with an OAuth provider:</Typography>
+                <Button style={{ margin: '1px', }} variant="outlined" href="/auth/google">
+                  <strong>Google</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={GoogleLogo}></img>
+                </Button>
+                <Button style={{ margin: '1px', }} variant="outlined" href="/auth/facebook">
+                  <strong>Facebook</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={FacebookLogo}></img>
+                </Button>
+                <Button style={{ margin: '1px', }} variant="outlined" href="/auth/github">
+                  <strong>Github</strong> <img style={{ width: '52px', height: '16px', marginLeft: '10px' }} src={GithubLogo}></img>
+                </Button>
+              </DropDownCard>
+            </Menu>
           </Toolbar>
         </AppBar>
       </MuiThemeProvider>
