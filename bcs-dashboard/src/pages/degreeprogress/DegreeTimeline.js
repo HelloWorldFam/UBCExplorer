@@ -106,14 +106,14 @@ function DegreeTimeline() {
 
     return (
         <React.Fragment>
-            <Helmet title="Degree Progress" />
+            <Helmet title="Degree Timeline" />
             <Typography variant="h3" gutterBottom display="inline">
-                Degree Progress
+                Degree Timeline
             </Typography>
 
             <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-                <Link component={NavLink} exact to="/bcs/dashboard">
-                    Dashboard
+                <Link component={NavLink} exact to="/bcs/start">
+                    Get Started
                 </Link>
                 <Typography>
                     Degree Timeline
