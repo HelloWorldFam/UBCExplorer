@@ -89,8 +89,8 @@ const GitHubOAuthProduction = new GitHubStrategy(
     Users.findOrCreate(
       { email: profile.emails[0].value },
       {
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
+        firstName: profile.name,
+        lastName: "",
         courses: [],
       },
       function (err, user) {
@@ -243,7 +243,9 @@ app.get("/secret", isUserAuthenticated, (req, res) => {
 // Logout route
 app.get("/bcs/logout", (req, res) => {
   req.logout();
-  res.redirect("/bcs");
+  // Temporarily changed until BCS page complete -JH
+  // res.redirect("/bcs");
+  res.redirect("/");
 });
 
 // Whitelists React app static assets.

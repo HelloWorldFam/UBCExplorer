@@ -404,18 +404,20 @@ function MainSearchPage() {
               <DropDownCard>
                 <strong>BCS Degree Explorer:</strong> a simplified course planning tool for
                 Bachelor of Computer Science (BCS) students. <br />
-                <center>
+                {/* Learn More is commented out until we polish up BCS page */}
+                {/* <center>
                   <Button style={{ margin: '10px', backgroundColor: '#f7f9fc' }} variant="outlined" href="/bcs">
                     <strong>Learn More!</strong>
                   </Button>
-                </center>
+                </center> */}<br/>
                 <Typography variant="body" style={{ padding: '0 10px 10px 10px', display:'block' }}>Sign in with an OAuth provider:</Typography>
                 <Button style={{ margin: '1px', }} variant="outlined" href="/auth/google">
                   <strong>Google</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={GoogleLogo}></img>
                 </Button>
-                <Button style={{ margin: '1px', }} variant="outlined" href="/auth/facebook">
+                {/* Facebook is commented out until we resolve auth issues */}
+                {/* <Button style={{ margin: '1px', }} variant="outlined" href="/auth/facebook">
                   <strong>Facebook</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={FacebookLogo}></img>
-                </Button>
+                </Button> */}
                 <Button style={{ margin: '1px', }} variant="outlined" href="/auth/github">
                   <strong>Github</strong> <img style={{ width: '52px', height: '16px', marginLeft: '10px' }} src={GithubLogo}></img>
                 </Button>
