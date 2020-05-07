@@ -12,7 +12,10 @@ export default class About extends Component {
   render() {
     return (
       <section id="about" className="section section-about scrollspy">
-        <div className="navbarpadding">
+        {/* <div className="navbarpadding"> */}
+          <DescriptionCards/>
+          
+          <div className="divider"></div>
           <div className="container">
             <div className="row">
               <h4 className="center">
@@ -111,10 +114,8 @@ export default class About extends Component {
             </div>
           </div>
 
-          <div className="subtletoppadding"></div>
-          <div className="divider"></div>
-          <DescriptionCards/>
-        </div>
+          
+        {/* </div> */}
       </section>
     )
   }
