@@ -52,9 +52,9 @@ app.use(passport.session()); // Used to persist login sessions
 //Facebook Strategy config
 const FacebookOauthProduction = new FacebookStrategy(
   {
-    clientID: "861615657655378",
-    clientSecret: "52ccb87530008a10ec91b9a9ec4fa35a",
-    callbackURL: "https://ubcexplorer.io/auth/facebook/callback",
+    clientID: "2828647350596227",
+    clientSecret: "afde4d264c365d946882ec076bf5d4cd",
+    callbackURL: "http://localhost:3000/auth/facebook/callback",
   },
   function (accessToken, refreshToken, profile, done) {
     console.log(profile);
