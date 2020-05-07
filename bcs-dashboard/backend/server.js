@@ -60,11 +60,12 @@ const FacebookOauthProduction = new FacebookStrategy(
     console.log(profile);
     Users.findOrCreate(
       { email: profile.emails[0].value },
-      { 
+      {
         facebookId: profile.id,
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
-       },
+        courses: [],
+      },
       function (err, user) {
         user.picture = profile.photos[0].value;
         user.save();
@@ -86,6 +87,11 @@ const GitHubOAuthProduction = new GitHubStrategy(
     console.log(profile);
     Users.findOrCreate(
       { email: profile.emails[0].value },
+      {
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
+        courses: [],
+      },
       function (err, user) {
         user.picture = profile._json.avatar_url;
         user.save();
