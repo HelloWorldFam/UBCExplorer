@@ -42,6 +42,8 @@ import {
 
 import { spacing } from "@material-ui/system";
 
+const ExploreLogo = fetch("/favicon.ico");
+
 const Card = styled(MuiCard)`
   margin: 10px;
   box-shadow: none;
@@ -120,14 +122,8 @@ const SmoothScroll = () => {
         <nav className="themecolor">
           <div className="container">
             <div className="nav-wrapper">
-              <AnchorLink href="/home" className="brand-logo">
-                UBC Explorer<i className="material-icons">search</i>
-              </AnchorLink>
-              <AnchorLink
-                href="/home"
-                data-target="mobile-demo"
-                className="sidenav-trigger"
-              >
+              <AnchorLink href="!#" className="brand-logo">UBC Explorer<i className="material-icons">school</i></AnchorLink>
+              <AnchorLink href="/bcs#" data-target="mobile-demo" className="sidenav-trigger">
                 <i className="material-icons">menu</i>
               </AnchorLink>
               <ul className="right hide-on-med-and-down">
@@ -135,13 +131,16 @@ const SmoothScroll = () => {
                   <AnchorLink href="/home">Home</AnchorLink>
                 </li>
                 <li>
-                  <AnchorLink href="/intro">Highlights</AnchorLink>
+                  <AnchorLink href="/intro">Intro</AnchorLink>
                 </li>
                 <li>
                   <AnchorLink href="/about">Features</AnchorLink>
                 </li>
                 <li>
-                  <NavItem href="./contact">Contact</NavItem>
+                  <AnchorLink href="/Footer">Contact</AnchorLink>
+                </li>
+                <li>
+                  <NavItem href="./contact">About</NavItem>
                 </li>
                 <li>
                   <IconMenu />
@@ -151,27 +150,31 @@ const SmoothScroll = () => {
           </div>
         </nav>
       </div>
+      
       <ul className="sidenav" id="mobile-demo">
         <li>
           <AnchorLink href="/home">Home</AnchorLink>
         </li>
         <li>
-          <AnchorLink href="/intro">Highlights</AnchorLink>
+          <AnchorLink href="/intro">Intro</AnchorLink>
         </li>
         <li>
           <AnchorLink href="/about">Features</AnchorLink>
         </li>
+
         <li>
           <AnchorLink href="/contact">Contact</AnchorLink>
         </li>
         <li>
-          <a href="/auth/google">
-            <span className="material-icons">how_to_reg</span>
-            Sign In/Register
-          </a>
+          <NavItem href="./contact">About</NavItem>
+        </li>
+
+        <li>
+          <IconMenu />
         </li>
       </ul>
     </section>
+    
   );
 };
 
@@ -181,6 +184,7 @@ export default class Header extends Component {
       <div>
         <SmoothScroll />
       </div>
+      
     );
   }
 }

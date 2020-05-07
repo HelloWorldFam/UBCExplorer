@@ -2,35 +2,46 @@
     padding-top: 50px;
 }
 .toppadding {
-    padding-top: 200px
+    padding-top: 135px
 }
 .betweencardpadding {
     padding-top: 200px;
-    padding-bottom: 100px
 }
 .subtletoppadding {
     padding-top: 55px;
 }
 .lefttextpadding {
-    padding-left: 130px;
+    padding: 100px;
 }
 
 .lefttextpaddingCourse {
-    padding-left: 100px;
+    padding: 55px;
 }
 
 .rightpicpadding {
-    padding-right: 100px;
+    padding: 55px;
 }
 
 .img-response-size {
-    width: auto;
+    width: 100%;
     height: 100%;
-    min-height: 200px;
   }
 
+
+  
 
 .important-message {
     font-weight: bolder;
     /* font-weight: 600; */
  }
+
+ .center-text-bold{
+    /* font-weight: bolder; */
+    /* font-weight: 900; */
+    text-shadow: 0px 1px, 1px 0px, 1px 1px;
+    text-align: center;
+  }
+
+  .center-text{
+    text-align: center;
+  }

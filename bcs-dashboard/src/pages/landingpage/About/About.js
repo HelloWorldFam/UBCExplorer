@@ -12,7 +12,20 @@ export default class About extends Component {
   render() {
     return (
       <section id="about" className="section section-about scrollspy">
-        <div className="navbarpadding">
+        {/* <div className="navbarpadding"> */}
+        <div className="navbarpadding"></div>
+        <div className="center-text-bold"><h2 className="important-message">Welcome to UBC Explorer</h2></div>
+        <div className="center-text"><h5>Your comprehensive BCS Degree Planner.</h5></div>
+        <div className="navbarpadding"></div>
+          <DescriptionCards/>
+        <div className="center-text-bold"><h2 className="important-message">Are you ready to start your journey?</h2></div>
+        <div className="center-text"><h5>Let's get started.</h5></div>
+        
+        <div className="navbarpadding"></div>
+        <div className="navbarpadding"></div>
+        <div className="navbarpadding"></div>
+{/*           
+          <div className="divider"></div>
           <div className="container">
             <div className="row">
               <h4 className="center">
@@ -109,12 +122,10 @@ export default class About extends Component {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
-          <div className="subtletoppadding"></div>
-          <div className="divider"></div>
-          <DescriptionCards/>
-        </div>
+          
+        {/* </div> */}
       </section>
     )
   }

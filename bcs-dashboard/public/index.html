@@ -43,6 +43,23 @@
 </head>
 
 <body>
+  
+<script>
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems, options);
+  });
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+</script>
+
+
+
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>

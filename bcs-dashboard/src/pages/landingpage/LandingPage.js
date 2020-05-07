@@ -7,7 +7,6 @@ import About from "./About/About";
 import WhoWeAre from "./WhoWeAre/WhoWeAre";
 import Contact from "./Contact/Contact";
 import Footer from "./Footer/Footer";
-import SignIn from "./SignIn/SignIn";
 
 const LandingPage = () => {
   return (
@@ -19,7 +18,6 @@ const LandingPage = () => {
       {/* <WhoWeAre /> */}
       {/* <Contact /> */}
       <Footer />
-      <SignIn />
     </>
   );
 };
