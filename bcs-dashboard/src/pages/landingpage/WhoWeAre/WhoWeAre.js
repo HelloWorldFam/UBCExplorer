@@ -3,6 +3,7 @@ import "../../../../node_modules/materialize-css/dist/css/materialize.min.css";
 import Pic3 from "../Pictures/gg.jpg";
 import "./Gallery.css";
 import "../LandingPage.css";
+import Typography from "@material-ui/core/Typography";
 
 import JerryPic from "../Pictures/jerry.jpg";
 import SunPic from "../Pictures/sun.jpg";
@@ -81,7 +82,7 @@ export default class WhoWeAre extends Component {
         <div className="navbarpadding">
           <div className="container">
             <h4 className="center">
-              <span className="color">FOUNDERS</span>- WHO WE ARE
+              <span className="color">FOUNDERS</span> - WHO WE ARE
               <p className="sizeFont">
                 We are a team of six, BCSers with the objective to modernize the
                 course search and course planning experience.
@@ -100,21 +101,19 @@ export default class WhoWeAre extends Component {
                                 <div className="input-field">
                                     <input type="text" id="vision" className="validate" /> */}
               {/* <label for="vision" className="blue-text">With the BCS course-selector App, we hope to deliver a one-in-all website</label> */}
-              <h5 align="left">
+              <Typography variant="body1" gutterBottom align="left">
                 Our mission is to deliver modernized tools which enables
                 students to be able to have a more efficient and seamless course
                 search/degree planning experience.
-              </h5>
-              <br />
-              <h5 align="left">We currently offer two features:</h5>
-              <br />
-              <h5 align="left">
+                <br /><br />
+                We currently offer two features:
+                <br />
                 • UBC Course Explorer - a seamless, easy-to-use course tool that
                 searches for course dependencies and prerequisites.
                 <br />• BCS Degree Explorer - a simple worklist builder for your
                 entire BCS degree. It allows you to plan your degree, track your
                 progress, and see whether you are on-track to graduate.
-              </h5>
+              </Typography>
             </div>
 
             {/* </form> */}
