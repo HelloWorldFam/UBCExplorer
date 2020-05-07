@@ -54,21 +54,21 @@ const FacebookOauthProduction = new FacebookStrategy(
   {
     clientID: "861615657655378",
     clientSecret: "52ccb87530008a10ec91b9a9ec4fa35a",
-    callbackURL: "https://localhost:3000/auth/facebook/callback",
+    callbackURL: "https://ubcexplorer.io/auth/facebook/callback",
   },
   function (accessToken, refreshToken, profile, done) {
     console.log(profile);
     Users.findOrCreate(
-      { facebookId: profile.id },
       { email: profile.emails[0].value },
-      // { firstName: profile.givenName },
-      // { lastName: profile.familyName },
-
+      { 
+        facebookId: profile.id,
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
+       },
       function (err, user) {
-        if (err) {
-          return done(err);
-        }
-        done(null, user);
+        user.picture = profile.photos[0].value;
+        user.save();
+        done(err, user);
       }
     );
   }
