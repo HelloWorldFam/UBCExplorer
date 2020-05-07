@@ -4,12 +4,12 @@ import Pic3 from "../Pictures/gg.jpg";
 import "./Gallery.css";
 import "../LandingPage.css";
 
-import JerryPic from "../Pictures/jerry.jpg";
-import SunPic from "../Pictures/sun.jpg";
-import BenPic from "../Pictures/ben.jpg";
-import ScottPic from "../Pictures/scott.jpg";
-import JamesPPic from "../Pictures/james-p-pic.jpg";
-import BrendenPic from "../Pictures/brenden.jpg";
+import JerryPic from "../Pictures/jerryCIRCLE.png";
+import SunPic from "../Pictures/sunCIRCLE.png";
+import BenPic from "../Pictures/benCIRCLE.png";
+import ScottPic from "../Pictures/scottCIRCLE.png";
+import JamesPPic from "../Pictures/james-p-picCIRCLE.png";
+import BrendenPic from "../Pictures/brendenCIRCLE.png";
 
 const Photo = ({ img, alt }) => {
   return (
