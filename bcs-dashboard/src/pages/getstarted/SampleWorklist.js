@@ -1,6 +1,15 @@
 export default function buildWorklist(year) {
     return (
         [{
+            "name": year - 1 + "W1",
+            "courses": []
+        }, {
+            "name": year - 1 + "W2",
+            "courses": []
+        }, {
+            "name": year + "S",
+            "courses": []
+        },{
             "name": year + "W1",
             "courses": [{
                 "code": "ENGL 112",
@@ -96,6 +105,9 @@ export default function buildWorklist(year) {
                 "tag": "Core Course",
                 "term": "2020W1"
             }]
+        }, {
+            "name": "Exemptions",
+            "courses": []
         }]
     )
 }

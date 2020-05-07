@@ -52,23 +52,25 @@ app.use(passport.session()); // Used to persist login sessions
 //Facebook Strategy config
 const FacebookOauthProduction = new FacebookStrategy(
   {
-    clientID: "861615657655378",
-    clientSecret: "52ccb87530008a10ec91b9a9ec4fa35a",
-    callbackURL: "https://localhost:3000/auth/facebook/callback",
+    clientID: "2828647350596227",
+    clientSecret: "afde4d264c365d946882ec076bf5d4cd",
+    callbackURL: "http://ubcexplorer.io/auth/facebook/callback",
+    profileFields: ['id', 'email', 'first_name', 'last_name', 'photos'],
   },
   function (accessToken, refreshToken, profile, done) {
     console.log(profile);
     Users.findOrCreate(
-      { facebookId: profile.id },
-      { email: profile.emails[0].value },
-      // { firstName: profile.givenName },
-      // { lastName: profile.familyName },
-
+      { email: profile._json.email },
+      {
+        facebookId: profile._json.id,
+        firstName: profile._json.first_name,
+        lastName: profile._json.last_name,
+        courses: [],
+      },
       function (err, user) {
-        if (err) {
-          return done(err);
-        }
-        done(null, user);
+        user.picture = profile.photos[0].value;
+        user.save();
+        done(err, user);
       }
     );
   }
@@ -79,13 +81,18 @@ const GitHubOAuthProduction = new GitHubStrategy(
   {
     clientID: "Iv1.b83becaf95ef5ce1",
     clientSecret: "71b0cfc8bc19dcf09f5173f5a8949398022adffd",
-    callbackURL: "http://localhost:3000/auth/github/callback",
+    callbackURL: "https://ubcexplorer.io/auth/github/callback",
     scope: ['user:email'],
   },
   function (accessToken, refreshToken, profile, done) {
     console.log(profile);
     Users.findOrCreate(
       { email: profile.emails[0].value },
+      {
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
+        courses: [],
+      },
       function (err, user) {
         user.picture = profile._json.avatar_url;
         user.save();
@@ -200,7 +207,9 @@ app.get(
 );
 
 // passport.authenticate middleware is used here to authenticate the request
-app.get("/auth/facebook", passport.authenticate("facebook"));
+app.get("/auth/facebook", passport.authenticate("facebook", {
+  scope: 'email',
+}));
 
 // The middleware receives the data from Google and runs the function on Strategy config
 app.get(
