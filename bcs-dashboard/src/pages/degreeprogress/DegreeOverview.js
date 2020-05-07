@@ -284,8 +284,8 @@ function DegreeOverview() {
                 Degree Overview
             </Typography>
             <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-                <Link component={NavLink} exact to="/dashboard">
-                    Dashboard
+                <Link component={NavLink} exact to="/bcs/start">
+                    Get Started
                 </Link>
                 <Typography>
                     Degree Overview

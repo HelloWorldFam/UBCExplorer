@@ -174,17 +174,17 @@ function DegreeTranscript() {
     
     return (
         <React.Fragment>
-            <Helmet title="Degree Transcript" />
+            <Helmet title="Degree Table" />
             <Typography variant="h3" gutterBottom display="inline">
-                Degree Overview
+                Degree Table
             </Typography>
 
              <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-                <Link component={NavLink} exact to="/bcs/dashboard">
-                    Dashboard
+                <Link component={NavLink} exact to="/bcs/start">
+                    Get Started
                 </Link>
                 <Typography>
-                    Degree Transcript
+                    Degree Table
                 </Typography>
             </Breadcrumbs> 
 
