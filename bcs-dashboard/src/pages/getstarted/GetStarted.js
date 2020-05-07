@@ -44,7 +44,7 @@ const addCoreToDegree = (setSnackbar) => {
                 // Do not send post request
                 hasExistingWorklist = true;
             }
-            else if (response.length !== 0) {
+            else if (json.length !== 0) {
                 // If !hasExistingWorklist, will send post request
                 hasExistingWorklist = window.confirm("You have an existing worklist. Adding core courses will overwrite your existing worklist. \n\n Are you sure you wish to proceed?");
             }
