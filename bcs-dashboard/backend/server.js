@@ -82,14 +82,14 @@ const GitHubOAuthProduction = new GitHubStrategy(
     clientID: "Iv1.b83becaf95ef5ce1",
     clientSecret: "71b0cfc8bc19dcf09f5173f5a8949398022adffd",
     callbackURL: "https://ubcexplorer.io/auth/github/callback",
-    scope: ['user:email'],
+    scope: ['user'],
   },
   function (accessToken, refreshToken, profile, done) {
     console.log(profile);
     Users.findOrCreate(
       { email: profile.emails[0].value },
       {
-        firstName: profile.name,
+        firstName: profile._json.name,
         lastName: "",
         courses: [],
       },
