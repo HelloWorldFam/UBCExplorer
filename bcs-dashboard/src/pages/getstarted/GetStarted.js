@@ -37,8 +37,9 @@ const addCoreToDegree = (setSnackbar) => {
     let workList = BuildWorklist(year);
     let hasExistingWorklist = false;
     fetch((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getcourses")
-        .then(response => {
-            if (!(response instanceof Array)) {
+        .then(response => response.json())
+        .then(json => {
+            if (!(json instanceof Array)) {
                 alert("A network error has occurred. Please try again later.");
                 // Do not send post request
                 hasExistingWorklist = true;
@@ -60,6 +61,7 @@ const addCoreToDegree = (setSnackbar) => {
         })
         .catch((err) => {
             console.log(err);
+            alert("A network error has occurred. Please try again later.");
         })
 }
 
