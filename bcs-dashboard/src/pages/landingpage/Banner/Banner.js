@@ -1,6 +1,6 @@
 import React from "react";
 import FirstPic from "../Pictures/image1.jpg";
-import SecondPic from "../Pictures/image2.jpg";
+import SecondPic from "../Pictures/gradpic.jpg";
 import ThirdPic from "../Pictures/image3.jpg";
 import { Link } from "react-router-dom";
 import "./Banner.css";
@@ -20,7 +20,7 @@ export default function Banner() {
       >
         <Slide image={<img alt="" src={FirstPic} />}>
           <Caption placement="right">
-            <h2>BCS Course Selector App</h2>
+            <h2>UBC Explorer</h2>
             <h5 className="">Welcome to your journey at UBC</h5>
             <Link to="/auth/google" className="btn btn-large blue-grey darken-4">
               Get Started
@@ -38,8 +38,8 @@ export default function Banner() {
         </Slide>
         <Slide image={<img alt="" src={ThirdPic} />}>
           <Caption placement="right">
-            <h2>Find your classmates</h2>
-            <h5 className="">Connect with peers and alumni</h5>
+            <h2>Course Search</h2>
+            <h5 className="">Find detailed course information</h5>
             <Link to="/auth/google" className="btn btn-large blue-grey darken-4">
               Find Out More
             </Link>

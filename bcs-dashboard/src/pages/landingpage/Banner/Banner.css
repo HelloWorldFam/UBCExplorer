@@ -1,3 +1,7 @@
 .slider .btn {
     margin-top: 50px
 }
+
+.darkenimage {
+    filter: brightness(70%)
+}
