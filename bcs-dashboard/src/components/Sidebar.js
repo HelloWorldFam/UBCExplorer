@@ -9,6 +9,8 @@ import { darken } from "polished";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "../vendor/perfect-scrollbar.css";
 
+import SchoolIconMui from '@material-ui/icons/School';
+
 import { spacing } from "@material-ui/system";
 
 import {
@@ -76,7 +78,7 @@ const Brand = styled(ListItem)`
   }
 `;
 
-const BrandIcon = styled(Layers)`
+const SchoolIcon = styled(SchoolIconMui)`
   margin-right: ${props => props.theme.spacing(2)}px;
   color: ${props => props.theme.sidebar.header.brand.color};
 `;
@@ -335,7 +337,7 @@ class Sidebar extends React.Component {
     return (
       <Drawer variant="permanent" {...other}>
         <Brand>
-          <BrandIcon /> <Box ml={1}>BCS Explorer <BrandChip label="BETA" /></Box> 
+          <SchoolIcon /> <Box ml={1}>BCS Explorer <BrandChip label="BETA" /></Box> 
         </Brand>
         <Scrollbar>
           <List disablePadding>
