@@ -1,6 +1,9 @@
 export default function buildWorklist(year) {
     return (
         [{
+            "name": year - 1 + "W1",
+            "courses": []
+        }, {
             "name": year - 1 + "W2",
             "courses": []
         }, {
