@@ -250,8 +250,11 @@ app.get("/node_modules", (req, res) => {
 
 // Nodemon success message
 app.listen(port, () => {
-  console.log("keepDynoAwake is running");
-  keepDynoAwake("https://ubcexplorer.io/secret");
+  // Only keep dyno awake in production
+  if (process.env.NODE_ENV === "production") {
+    console.log("keepDynoAwake is running");
+    keepDynoAwake("https://ubcexplorer.io/secret");
+  }
   console.log(`Server is running on port: ${port}`);
 });
 

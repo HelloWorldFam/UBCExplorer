@@ -11,12 +11,14 @@ import {
     Card,
     Container,
     Link,
-    Button
+    Button,
+    Snackbar
 } from "@material-ui/core";
 import { spacing } from "@material-ui/system";
 import AddExemptionsGif from "./AddExemptions.gif";
 import SelectCoursesGif from "./SelectCourses.gif";
 import BuildWorklist from "./SampleWorklist";
+import MuiAlert from '@material-ui/lab/Alert'
 
 const Divider = styled(MuiDivider)(spacing);
 
@@ -29,21 +31,22 @@ const Typography = styled(MuiTypography)(spacing);
  *
  * Warning:     This will overwrite your existing worklist.
  */
-const addCoreToDegree = () => {
+const addCoreToDegree = (setSnackbar) => {
     let year = new Date().getFullYear();
     if (new Date().getMonth() + 1 < 5) year--;
     let workList = BuildWorklist(year);
     let hasExistingWorklist = false;
     fetch((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/getcourses")
-        .then(response => {
-            if (!(response instanceof Array)) {
+        .then(response => response.json())
+        .then(json => {
+            if (!(json instanceof Array)) {
                 alert("A network error has occurred. Please try again later.");
                 // Do not send post request
                 hasExistingWorklist = true;
             }
-            else if (response.length !== 0) {
+            else if (json.length !== 0) {
                 // If !hasExistingWorklist, will send post request
-                hasExistingWorklist = window.confirm("You have an existing worklist. Adding core courses will overwrite your existing worklist. \n\n Are you sure you wish to proceed?");
+                hasExistingWorklist = !window.confirm("You have an existing worklist. Adding core courses will overwrite your existing worklist. \n\n Are you sure you wish to proceed?");
             }
             if (!hasExistingWorklist) {
                 axios
@@ -51,17 +54,30 @@ const addCoreToDegree = () => {
                         (window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/updateUserWorkList",
                         workList
                     )
+                    .then(() => {
+                        setSnackbar({ open: true, message: "Successfully added your courses to worklist!" })
+                    })
             }
         })
         .catch((err) => {
             console.log(err);
+            alert("A network error has occurred. Please try again later.");
         })
 }
 
 function Default({ theme }) {
     const [containers, setContainers] = useState([]);
     const [firstName, setFirstName] = useState("");
+    const [snackBar, setSnackbar] = useState({ open: false, message: "Added your courses to worklist!" });
     const history = useHistory();
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setSnackbar({ open: false });
+    };
 
     const onContainerReady = (container) => {
         setContainers(containers.push(container));
@@ -104,9 +120,14 @@ function Default({ theme }) {
                     <h3>Step one:</h3>
                     <TaskWrapper>
                         <TaskWrapperContent>
-                            <Button variant="contained" color="primary" size="small" onClick={() => addCoreToDegree()}>
+                            <Button variant="contained" color="primary" size="small" onClick={() => addCoreToDegree(setSnackbar)}>
                                 Add Core Courses
                             </Button> <br /><br />
+                            <Snackbar open={snackBar.open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                                <MuiAlert onClose={handleCloseSnackbar} severity="success">
+                                    {snackBar.message}
+                                </MuiAlert>
+                            </Snackbar>
                             Get started by adding these courses to your worklist:
                             <ul>
                                 <li>ENGL 112 - Strategies for University Writing</li>
