@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Pic1 from "../Pictures/yes2.jpg";
+import Pic1 from "../Pictures/courseplanpic.jpg";
 import Pic2 from "../Pictures/yes3.jpg"; //bcs-dashboard\src\pages\landingpage\Pictures\yes3.jpg
-import Pic3 from "../Pictures/yes1.jpg";
+import Pic3 from "../Pictures/degreeoverviewpic.jpg";
 import Pic4 from "../Pictures/1324.jpg";
 import { HashLink as Link } from "react-router-hash-link";
 import "./About.css";
@@ -16,13 +16,13 @@ export default class About extends Component {
           <div className="container">
             <div className="row">
               <h4 className="center">
-                <span className="#232F32 darken-1">OUR</span> FEATURES
+                <span className="#232F32 darken-1"></span> FEATURES
               </h4>
               <div className="col s12 m4">
                 <div className="card">
                   <div className="card-image">
                     <img src={Pic1} alt="Schedule" />
-                    <span className="card-title">Schedule</span>
+                    <span className="card-title">Course Plan</span>
                     <Link
                       className="btn-floating activator halfway-fab waves-effect waves-light blue-grey darken-4"
                       to={"#"}
@@ -39,13 +39,12 @@ export default class About extends Component {
                       <i className="material-icons right">close</i>
                     </span>
                     <p>
-                      The BCS Course Selector App allows students to add courses
-                      to their course worklist for each semester. Students are
-                      able to view their weekly schedule of lectures and labs.
+                      With the UBC Explorer App students can plan out their degree semester by semester by adding courses
+                      to their current schedule.
                     </p>
                     <p>
-                      Multiple worklists allow students to see how different
-                      combinations of courses will work into a weekly schedule.
+                      Course tags allow students to specify which requirements each course meets and the course selector feature guides students
+                      through planning their degree requirements.
                     </p>
                   </div>
                 </div>
@@ -54,7 +53,7 @@ export default class About extends Component {
                 <div className="card">
                   <div className="card-image">
                     <img src={Pic2} alt="Course Finder" />
-                    <span className="card-title">Course Finder</span>
+                    <span className="card-title">Course Search</span>
                     <Link
                       className="btn-floating activator halfway-fab waves-effect waves-light blue-grey darken-4"
                       to={"#"}
@@ -63,21 +62,21 @@ export default class About extends Component {
                     </Link>
                   </div>
                   <div className="card-content">
-                    <p>Search for specific BCS courses</p>
+                    <p>Search for courses</p>
                   </div>
                   <div className="card-reveal">
                     <span className="card-title grey-text text-darken-4">
-                      Search for specific BCS courses
+                    Search for specific courses
                       <i className="material-icons right">close</i>
                     </span>
                     <p>
-                      Looking for a GPA booster? The most popular bridging
-                      module courses?
+                      With the BCS Course Selector App, students can look up
+                      any courses of interests and find about the pre-requisites and dependencies
+                      altogether.
                     </p>
                     <p>
-                      With the BCS Course Selector App, students can look up
-                      descriptions for courses of interests as well as read past
-                      reviews of courses taken by BCS Alumni.
+                      Select the course based on core course, bridging module, exemption, 
+                      upper CPSC course, and exemption replacement course type and create your personalized timeline. 
                     </p>
                   </div>
                 </div>
@@ -86,7 +85,7 @@ export default class About extends Component {
                 <div className="card">
                   <div className="card-image">
                     <img src={Pic3} alt="Discussion Forum" />
-                    <span className="card-title">Discussion Forum</span>
+                    <span className="card-title">Degree Overview and Timeline</span>
                     <Link
                       className="btn-floating activator halfway-fab waves-effect waves-light blue-grey darken-4"
                       to={"#"}
@@ -95,24 +94,16 @@ export default class About extends Component {
                     </Link>
                   </div>
                   <div className="card-content">
-                    <p>Connect with peers and alumni</p>
+                    <p>View your degree progress</p>
                   </div>
                   <div className="card-reveal">
                     <span className="card-title grey-text text-darken-4">
-                      Connect with peers and alumni
+                      View your degree progress
                       <i className="material-icons right">close</i>
                     </span>
                     <p>
-                      At the heart of the BCS program at UBC is the strong
-                      close-knit community of peers and alumni.
-                    </p>
-                    <p>
-                      With the discussion forum, users can connect with others
-                      in the BCS program and alumni who have moved on to
-                      industry. Users can ask any questions they might have
-                      about the program and life at UBC in general. This is a
-                      great way to connect and network with others with a
-                      passion for tech!
+                      With the Degree Overview and Degree Timeline features, students are able to see how far along they are
+                      in meeting their degree requirements and see a timeline of their semester plans.
                     </p>
                   </div>
                 </div>
