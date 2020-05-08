@@ -113,7 +113,7 @@ const DashboardTable = (props) => {
             createData(
               course.code,
               course.term,
-              <Chip label="inProgress" rgbcolor={orange[500]} />,
+              <Chip label="Inprogress" rgbcolor={orange[500]} />,
               course.cred
             )
           );

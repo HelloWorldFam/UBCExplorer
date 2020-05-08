@@ -46,7 +46,8 @@ function Overview(props) {
         "completed": [],
         "inProgress": [],
         "incomplete": [],
-        "required": ["CPSC 110", "CPSC 121", "CPSC 210", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
+        "required": ["ENGL 112", "CPSC 110", "STAT 203", "MATH 180", "CPSC 121", "CPSC 210", "ENGL 301", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
+        "missing": [],
     };
     const upperCPSC = {
         "completed": [],
@@ -75,6 +76,43 @@ function Overview(props) {
         "required": ["CPSC 298", "CPSC 299", "CPSC 398", "CPSC 399"],
     };
 
+
+//TEST DATA
+    // function Overview(props) {
+    //     const [courseBaskets, updateCourseBaskets] = React.useState({});
+    //     const coreBCS = {
+    //         "completed": ["CPSC 110", "CPSC 121", "CPSC 210", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
+    //         "inProgress": [],
+    //         "incomplete": [],
+    //         "required": ["ENGL 112", "CPSC 110", "STAT 203", "MATH 180", "CPSC 121", "CPSC 210", "ENGL 301", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
+    //     };
+    //     const upperCPSC = {
+    //         "completed": ["CPSC 304", "CPSC 401"],
+    //         "inProgress": ["CPSC 378"],
+    //         "incomplete": ["CPSC 408"],
+    //     };
+    //     const bridgMod = {
+    //         "completed": ["COGS 300", "COGS 303"],
+    //         "inProgress": ["PSYC 309"],
+    //         "incomplete": ["CPSC 350"],
+    //     };
+    //     const exemptions = {
+    //         "completed": ["ENGL 112", "STAT 203"],
+    //         "inProgress": null,
+    //         "incomplete": null,
+    //     };
+    //     const exemptionReplacement = {
+    //         "completed": ["PSYC 100"],
+    //         "inProgress": ["MICB 300"],
+    //         "incomplete": [],
+    //     }
+    //     const coopTerms = {
+    //         "completed": [],
+    //         "inProgress": [],
+    //         "incomplete": [],
+    //         "required": ["CPSC 298", "CPSC 299", "CPSC 398", "CPSC 399"],
+    //     };
+
     // tags: "Core Course", "Bridging Module", "Upper CPSC", "Exemption", "Exemption Replacement"
     const sortCourses = () => {
         props.courseResult.map((term) => {
@@ -93,6 +131,13 @@ function Overview(props) {
                     else if (course.tag === "Core Course") coreBCS[progress()].push(course.code);
                     else if (course.tag === "Upper CPSC") upperCPSC[progress()].push(course.code);
                     else if (course.tag === "Bridging Module") bridgMod[progress()].push(course.code);
+
+                    //Tried to make this code for the missing courses but it needs work - Brenden
+                    // coreBCS.required.map((course) => {
+                    //     if (!coreBCS.completed.includes(course.code) && !exemptions.completed.includes(course.code)) coreBCS.missing.push(course.code);
+                    // }
+                    // )
+
                     // else if (course.code.substring(0, 4) === "CPSC") upperCPSC[progress()].push(course.code);
                     // else exemptionReplacement[progress()].push(course.code);
                 })
@@ -131,31 +176,39 @@ function Overview(props) {
         else return -1;
     }
 
-    const coreCoursesCompleted = courseBaskets.coreBCS?.completed?.length;
+    //Exemptions
+    const exemptionCourses = courseBaskets.exemptions?.completed?.length;
 
-    const bridgingCoursesCompleted = courseBaskets.bridgMod?.completed?.length;
+    //Totals
+    const coreCoursesTotal = 12 - exemptionCourses;
+    const upperCPSCCoursesTotal = 4;
     const bridgingCoursesCompletedTotal = 5;
     const minCourses = 21;
-    const coursesRemaining = minCourses - courses;
-    const coreCoursesTotal = minCourses - bridgingCoursesCompletedTotal;
-    const corePercentComplete = Math.floor(coreCoursesCompleted / coreCoursesTotal * 100);
-    const bridgingCoursesCompletedRemaining = bridgingCoursesCompletedTotal - bridgingCoursesCompleted;
+
+    const missingCoreCourses = courseBaskets.coreBCS?.missing?.length;
+
+    //Completed courses
+    const coreCoursesCompleted = courseBaskets.coreBCS?.completed?.length;
+    const upperCPSCCoursesCompleted = courseBaskets.upperCPSC?.completed?.length;
+    const bridgingCoursesCompleted = courseBaskets.bridgMod?.completed?.length;
+    const exemptionCoursesComplete = courseBaskets.exemptionReplacement?.completed?.length;
+    const courses = coreCoursesCompleted + upperCPSCCoursesCompleted + bridgingCoursesCompleted + exemptionCoursesComplete;
+
+    //Remaining courses
     const coreCoursesRemaining = coreCoursesTotal - coreCoursesCompleted;
+    const upperCPSCCoursesRemaining = upperCPSCCoursesTotal - upperCPSCCoursesCompleted;
+    const bridgingCoursesCompletedRemaining = bridgingCoursesCompletedTotal - bridgingCoursesCompleted;
+    const exemptionCoursesRemaining = exemptionCourses - exemptionCoursesComplete;
+    const coursesRemaining = minCourses - courses;
+
+    //Percentage complete
+    const corePercentComplete = Math.floor(coreCoursesCompleted / coreCoursesTotal * 100);
+    const upperCPSCPercentComplete = Math.floor(upperCPSCCoursesCompleted / upperCPSCCoursesTotal * 100);
     const bridgingPercentComplete = Math.floor(bridgingCoursesCompleted / bridgingCoursesCompletedTotal * 100);
+    const exemptionPercentComplete = Math.floor(exemptionCoursesComplete / exemptionCourses * 100) || 0;
     const percentComplete = Math.floor(courses / minCourses * 100);
 
-    const upperCPSCCoursesCompleted = courseBaskets.upperCPSC?.completed?.length;
-    const upperCPSCCoursesTotal = 4;
-    const upperCPSCCoursesRemaining = upperCPSCCoursesTotal - upperCPSCCoursesCompleted;
-    const upperCPSCPercentComplete = Math.floor(upperCPSCCoursesCompleted / upperCPSCCoursesTotal * 100);
-
-    const exemptionCourses = courseBaskets.exemptions?.completed?.length;
-    const exemptionCoursesComplete = courseBaskets.exemptionReplacement?.completed?.length;
-    const exemptionCoursesRemaining = exemptionCourses - exemptionCoursesComplete;
-    const exemptionPercentComplete = Math.floor(exemptionCoursesComplete / exemptionCourses * 100) || 0;
-
-    const courses = coreCoursesCompleted + bridgingCoursesCompleted + exemptionCoursesComplete;
-
+    //Co-op
     const coopTermsTotal = 4;
     const coopTermsCompleted = courseBaskets.coopTerms?.completed?.length;
     const coopTermsRemaining = coopTermsTotal - coopTermsCompleted;
@@ -181,6 +234,10 @@ function Overview(props) {
                     overallCourses={courses}
                     overallCoursesRemaining={coursesRemaining}
                     minCourses={minCourses}
+                    upperCPSCCoursesCompleted={upperCPSCCoursesCompleted}
+                    upperCPSCCoursesRemaining={upperCPSCCoursesRemaining}
+                    coursesRemaining = {coursesRemaining}
+                    percentComplete = {percentComplete}
                 />
 
                 <Divider my={6} />
@@ -194,23 +251,11 @@ function Overview(props) {
                     Courses Completed: {coreCoursesCompleted}
                     <br />
                     Courses Remaining: {coreCoursesRemaining}
+                    <br />
+                    Core courses missing from worklist: {missingCoreCourses}
                 </Typography>
 
                 <CoreTable coreBCS={courseBaskets.coreBCS} />
-
-                <Divider my={6} />
-                <Typography variant="h6" paragraph >
-                    Bridging Module course progress:
-                    </Typography>
-                <Progress percent={bridgingPercentComplete} />
-
-                <Typography variant="h7" paragraph >
-                    Courses Completed: {bridgingCoursesCompleted}
-                    <br />
-                    Courses Remaining: {bridgingCoursesCompletedRemaining}
-                </Typography>
-
-                <BridgingTable bridgMod={courseBaskets.bridgMod} />
 
                 <Divider my={6} />
 
@@ -226,6 +271,20 @@ function Overview(props) {
                 </Typography>
 
                 <UpperCPSCTable upperCPSC={courseBaskets.upperCPSC} />
+
+                <Divider my={6} />
+                <Typography variant="h6" paragraph >
+                    Bridging Module course progress:
+                    </Typography>
+                <Progress percent={bridgingPercentComplete} />
+
+                <Typography variant="h7" paragraph >
+                    Courses Completed: {bridgingCoursesCompleted}
+                    <br />
+                    Courses Remaining: {bridgingCoursesCompletedRemaining}
+                </Typography>
+
+                <BridgingTable bridgMod={courseBaskets.bridgMod} />
 
                 <Divider my={6} />
 

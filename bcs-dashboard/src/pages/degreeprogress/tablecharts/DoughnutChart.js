@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
 
-import { blue, orange, green, red } from "@material-ui/core/colors";
+import { blue, orange, green, red, indigo } from "@material-ui/core/colors";
 
 import {
   Card as MuiCard,
@@ -61,17 +61,22 @@ const RedText = styled.span`
 
 const PieChart = (props) => {
   const coreCourses = props.coreCoursesCompleted;
+  const coreCoursesRemaining = props.coreCoursesRemaining;
+  const upperCPSCCoursesCompleted = props.upperCPSCCoursesCompleted;
+  const upperCPSCCoursesRemaining = props.upperCPSCCoursesRemaining;
   const bridgingCourses = props.bridgingCoursesCompleted;
   const exemptionCoursesComplete = props.exemptionCoursesComplete;
   const exemptionCoursesRemaining = props.exemptionCoursesRemaining;
   const courses = props.overallCourses;
   const minCourses = props.minCourses;
-  const coursesRemaining = minCourses - courses;
-  const percentComplete = Math.floor((courses / minCourses) * 100);
+  const coursesRemaining = props.coursesRemaining;
+  const percentComplete = props.percentComplete;
+  // const percentComplete = Math.floor((courses / minCourses) * 100);
 
   const data = {
     labels: [
-      "Core CPSC Courses",
+      "Core BCS Courses",
+      "Upper CPSC Courses",
       "Bridging Module Courses",
       "Exemption Replacement Courses",
       "Remaining Courses",
@@ -80,12 +85,14 @@ const PieChart = (props) => {
       {
         data: [
           coreCourses,
+          upperCPSCCoursesCompleted,
           bridgingCourses,
           exemptionCoursesComplete,
           coursesRemaining,
         ],
         backgroundColor: [
           blue[500],
+          indigo[500],
           green[500],
           orange[500],
           props.theme.palette.grey[200],
@@ -126,10 +133,18 @@ const PieChart = (props) => {
           <TableBody>
             <TableRow>
               <TableCell component="th" scope="row">
-                Core CPSC
+                Core BCS
               </TableCell>
               <TableCell align="right">{coreCourses}</TableCell>
-              <TableCell align="right">{props.coreCoursesRemaining}</TableCell>
+              <TableCell align="right">{coreCoursesRemaining}</TableCell>
+            </TableRow>
+
+            <TableRow>
+              <TableCell component="th" scope="row">
+                Upper CPSC
+              </TableCell>
+              <TableCell align="right">{upperCPSCCoursesCompleted}</TableCell>
+              <TableCell align="right">{upperCPSCCoursesRemaining}</TableCell>
             </TableRow>
 
             <TableRow>
