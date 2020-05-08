@@ -70,7 +70,7 @@ const FacebookOauthProduction = new FacebookStrategy(
       function (err, user) {
         user.picture = profile.photos[0].value;
         user.save();
-        done(err, user);
+        done(err, user.email);
       }
     );
   }

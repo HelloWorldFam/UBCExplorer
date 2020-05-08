@@ -414,10 +414,9 @@ function MainSearchPage() {
                 <Button style={{ margin: '1px', }} variant="outlined" href="/auth/google">
                   <strong>Google</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={GoogleLogo}></img>
                 </Button>
-                {/* Facebook is commented out until we resolve auth issues */}
-                {/* <Button style={{ margin: '1px', }} variant="outlined" href="/auth/facebook">
+                <Button style={{ margin: '1px', }} variant="outlined" href="/auth/facebook">
                   <strong>Facebook</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={FacebookLogo}></img>
-                </Button> */}
+                </Button>
                 <Button style={{ margin: '1px', }} variant="outlined" href="/auth/github">
                   <strong>Github</strong> <img style={{ width: '52px', height: '16px', marginLeft: '10px' }} src={GithubLogo}></img>
                 </Button>
