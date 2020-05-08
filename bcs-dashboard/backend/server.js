@@ -54,7 +54,7 @@ const FacebookOauthProduction = new FacebookStrategy(
   {
     clientID: "2828647350596227",
     clientSecret: "afde4d264c365d946882ec076bf5d4cd",
-    callbackURL: "http://ubcexplorer.io/auth/facebook/callback",
+    callbackURL: "https://ubcexplorer.io/auth/facebook/callback",
     profileFields: ['id', 'email', 'first_name', 'last_name', 'photos'],
   },
   function (accessToken, refreshToken, profile, done) {
