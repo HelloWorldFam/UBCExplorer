@@ -61,7 +61,7 @@ const getRelativeProgress = (termName) => {
   // add 13 months ie. set month to January
   else if (termName.substring(4) === "S") courseStartDate += 5; // add 5 months ie. set month to May
 
-  var currentDate = new Date().getFullYear() * 100 + new Date().getMonth();
+  var currentDate = new Date().getFullYear() * 100 + new Date().getMonth() + 1;
 
   if (currentDate < courseStartDate) return 1;
   else if (currentDate >= courseStartDate && currentDate <= courseStartDate + 3)
