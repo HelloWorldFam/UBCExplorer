@@ -78,7 +78,61 @@ export const TaskWrapperContent = styled(CardContent)`
 
 export const Typography = styled(MuiTypography)(spacing);
 
+const ScaleFull = styled.div`
+  /*  */
+`;
+
+const Scale9 = styled.div`
+  transform: scale(0.9);
+  transform-origin: top left;
+  width: 110%;
+  height: 90%;
+`;
+
+const Scale8 = styled.div`
+  transform: scale(0.8);
+  transform-origin: top left;
+  width: 127%;
+  height: 80%;
+`;
+
+const Scale7 = styled.div`
+  transform: scale(0.7);
+  transform-origin: top left;
+  width: 143%;
+  height: 70%;
+`;
+
+const Scale6 = styled.div`
+  transform: scale(0.6);
+  transform-origin: top left;
+  width: 167%;
+  height: 60%;
+`;
+
+const Scale = (props) => {
+  switch (props.zoom) {
+    case 0:
+      return <ScaleFull />;
+    case 1:
+      return <Scale9 />;
+    case 2:
+      return <Scale8 />;
+    case 3:
+      return <Scale7 />;
+    case 4:
+      return <Scale6 />;
+  }
+};
+
 export class Lane extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      zoom: 0,
+    };
+  }
+
   handleContainerLoaded = (container) => {
     if (container) {
       this.props.onContainerLoaded(container);
@@ -89,24 +143,26 @@ export class Lane extends React.Component {
     const { title, className, description, children } = this.props;
 
     return (
-      <Card mb={6}>
-        <CardContent>
-          <Typography variant="h6" gutterBottom>
-            {title}
-          </Typography>
-          <Typography variant="body2" mb={4}>
-            {description}
-          </Typography>
-          <div
-            className={className}
-            termid={this.props.termId}
-            style={{ minHeight: "20px" }}
-            ref={this.handleContainerLoaded}
-          >
-            {children}
-          </div>
-        </CardContent>
-      </Card>
+      <ScaleFull>
+        <Card mb={6}>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              {title}
+            </Typography>
+            <Typography variant="body2" mb={4}>
+              {description}
+            </Typography>
+            <div
+              className={className}
+              termid={this.props.termId}
+              style={{ minHeight: "20px" }}
+              ref={this.handleContainerLoaded}
+            >
+              {children}
+            </div>
+          </CardContent>
+        </Card>
+      </ScaleFull>
     );
   }
 }
@@ -247,12 +303,12 @@ function SearchCard(props) {
           <SearchComponent onChange={handleClick} />
           <br />
           <Centered>
-            {/* <SearchResultCard
+            <SearchResultCard
               title={title}
               name={name}
               desc={desc}
               course={course}
-            /> */}
+            />
           </Centered>
           <TextField
             label="Credits"
@@ -711,29 +767,6 @@ const addToDegreeFunction = (
   setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);
 };
 
-function Example() {
-  return (
-    <TransformWrapper
-      defaultScale={1}
-      defaultPositionX={200}
-      defaultPositionY={100}
-    >
-      {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-        <React.Fragment>
-          <div className="tools">
-            <button onClick={zoomIn}>+</button>
-            <button onClick={zoomOut}>-</button>
-            <button onClick={resetTransform}>x</button>
-          </div>
-          <TransformComponent>
-            <CourseSelector />
-          </TransformComponent>
-        </React.Fragment>
-      )}
-    </TransformWrapper>
-  );
-}
-
 function CourseSelector() {
   const [containers, setContainers] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState({});
@@ -814,33 +847,12 @@ function CourseSelector() {
             title="Search"
             description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
             onContainerLoaded={onContainerReady}
+            fullWidth
           >
             <SearchCard
               onChange={setSelectedCourse}
               onSubmitCourse={setCourseToAdd}
             />
-          </Lane>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          lg={6}
-          xl={3}
-          style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
-        >
-          <Lane
-            title="Search Result"
-            description="Searched course will appear here."
-            onContainerLoaded={onContainerReady}
-          >
-            {selectedCourse.code ? (
-              <SearchResultCard
-                course={selectedCourse}
-                title={selectedCourse.code}
-              />
-            ) : (
-              ""
-            )}
           </Lane>
         </Grid>
         <Grid
@@ -877,7 +889,7 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={12}>
+        <Grid item xs={12} lg={6} xl={3}>
           <Lane
             title="Your Degree"
             description="The courses that you have added to your worklist."
@@ -889,16 +901,9 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={12}>
-          <Lane
-            title="Your Degree"
-            description="The courses that you have added to your worklist."
-            onContainerLoaded={onContainerReady}
-          ></Lane>
-        </Grid>
       </Grid>
     </React.Fragment>
   );
 }
 
-export default Example;
+export default CourseSelector;
