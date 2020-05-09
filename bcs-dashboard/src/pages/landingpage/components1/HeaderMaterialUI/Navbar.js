@@ -142,7 +142,7 @@ class IconMenu extends React.Component {
 const useStyles = makeStyles(theme=> ({
     menuSliderContainer: {
         width: 250,
-        background: "#511", 
+        background: "#232f3e", 
         height: "100rem"
     },
 
@@ -154,7 +154,7 @@ const useStyles = makeStyles(theme=> ({
     // },
 
     listItem: {
-        color: "grey"
+        color: "white"
     }
 
 
@@ -217,9 +217,10 @@ const Navbar = () => {
     )
 
     return (
-        <>  
+        <>
+  
         <Box component="nav">
-            <AppBar position="fixed" style={{background: "#222"}}>
+            <AppBar position="fixed" style={{background: "#232f3e"}}>
                 <Toolbar>
                     <IconButton onClick={toggleSlider("right", true)}>
                     <ArrowBack style={{color: "white"}}/>
@@ -231,7 +232,7 @@ const Navbar = () => {
                         >
                             {sideList("right")}
                     </MobileRightMenuSlider>
-                    <Typography variant="h3" style={{color: "grey"}}>
+                    <Typography variant="h3" style={{color: "white"}}>
                         UBC Explorer
                     </Typography>
                     <div className="spacer"/>

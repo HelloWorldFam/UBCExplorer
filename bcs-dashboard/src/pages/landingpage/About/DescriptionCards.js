@@ -34,8 +34,8 @@ export default class DescriptionCards extends Component {
                         </div>
                     </div>
                 </div>
-
-                <div className="betweencardpadding">
+                <div className="betweencardpadding"></div>
+                <div className="toppadding">
                     <div className="row">
                     <div className="col s12 m6">
                             <div className="left">
@@ -50,14 +50,12 @@ export default class DescriptionCards extends Component {
                                 <h6>See data on how far along you are in your BCS journey.</h6>
                                 <h6>Check which courses you have completed and have yet to finish.</h6>
                             </div>
-
-
                         </div>
-                       
-                    </div>
                 </div>
-
+                </div>
                 <div className="betweencardpadding"></div>
+                <div className="toppadding">
+                
 
                 <div className="row">
                         <div className="col s12 m6"> 
@@ -78,8 +76,8 @@ export default class DescriptionCards extends Component {
                             </div>
                         </div>
                     </div>
+                    </div>
 
-                    <div className="betweencardpadding"></div>
          
             </>
         )
