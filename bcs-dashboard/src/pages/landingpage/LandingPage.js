@@ -9,7 +9,7 @@ import Contact from "./Contact/Contact";
 import Footer from "./Footer/Footer";
 
 import Home from "./components1/index";
-import CssBaseline from '@material-ui/core/CssBaseline';
+import CssBaseline from '@material-ui/core/CssBaseline';  
  
 const LandingPage = () => {
   return (
@@ -17,10 +17,10 @@ const LandingPage = () => {
     <CssBaseline />
    
     <Home />
-    <Banner />
+    {/* <Banner />
     <About />
     <Contact />
-    <Footer />
+    <Footer /> */}
 
     
   
