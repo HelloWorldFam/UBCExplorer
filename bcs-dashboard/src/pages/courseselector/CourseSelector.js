@@ -16,6 +16,7 @@ import Helmet from "react-helmet";
 import "react-dragula/dist/dragula.css";
 import SearchComponent from "./SearchComponent";
 import { YourDegreeCard } from "./components/YourDegreeCard";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 import {
   Breadcrumbs as MuiBreadcrumbs,
@@ -47,7 +48,7 @@ const TextField = styled(TextFieldSpacing)`
 
 export const Card = styled(MuiCard)`
   overflow: visible;
-`; 
+`;
 
 export const Divider = styled(MuiDivider)(spacing);
 
@@ -201,8 +202,8 @@ function SearchCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-        "/getCourseInfo/" +
-        courseInfo
+          "/getCourseInfo/" +
+          courseInfo
       )
       .then((res) => {
         setCode(courseInfo);
@@ -246,12 +247,12 @@ function SearchCard(props) {
           <SearchComponent onChange={handleClick} />
           <br />
           <Centered>
-            <SearchResultCard
+            {/* <SearchResultCard
               title={title}
               name={name}
               desc={desc}
               course={course}
-            />
+            /> */}
           </Centered>
           <TextField
             label="Credits"
@@ -313,11 +314,11 @@ function bridgingModule() {
         Bridging Module as part of BCS degree requirement is 15 credits of
         courses. <br />
         <br />
-        Courses must be 300/400 level from a single discipline.
-        However, you can create your own bridging module from
-        multiple disciplines. <br /> Note that at least 9 credits of the
-        bridging module need to be from outside the CPSC. <br /> Email the BCS
-        Director to check if your bridging module is valid.
+        Courses must be 300/400 level from a single discipline. However, you can
+        create your own bridging module from multiple disciplines. <br /> Note
+        that at least 9 credits of the bridging module need to be from outside
+        the CPSC. <br /> Email the BCS Director to check if your bridging module
+        is valid.
       </h3>
     </>
   );
@@ -326,7 +327,10 @@ function bridgingModule() {
 function upperCPSC() {
   return (
     <>
-      <h3>Upper Year CPSC courses 300/400 level that are not apart of the bridging module or core CPSC courses.</h3>
+      <h3>
+        Upper Year CPSC courses 300/400 level that are not apart of the bridging
+        module or core CPSC courses.
+      </h3>
     </>
   );
 }
@@ -554,8 +558,8 @@ function PrerequisitesCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-        "/getCourseInfo/" +
-        course
+          "/getCourseInfo/" +
+          course
       )
       .then((res) => {
         if (res.data.desc) {
@@ -603,8 +607,8 @@ function DependenciesCard(props) {
             (window.location.host === "ubcexplorer.io"
               ? ""
               : "http://localhost:3000") +
-            "/getCourseInfo/" +
-            course
+              "/getCourseInfo/" +
+              course
           )
           .then((res) => {
             if (res.data.desc) {
@@ -663,7 +667,9 @@ const addToDegreeFunction = (
     for (let coursesInTerm of courseArray) {
       if (coursesInTerm.code === courseToAdd.code) {
         //term exists; confirm if user wants to add?
-        isInCourseArray = !window.confirm("You have already added this course in the current term. Are you sure you want to add it again?");
+        isInCourseArray = !window.confirm(
+          "You have already added this course in the current term. Are you sure you want to add it again?"
+        );
         break;
       }
     }
@@ -675,11 +681,14 @@ const addToDegreeFunction = (
   } else {
     // Search to see if the user has added the course in the degree
     let courseAlreadyAddedToDegree = false;
-    upper_loop:
-    for (let term of usersCourseArray) {
+    upper_loop: for (let term of usersCourseArray) {
       for (let course of term.courses) {
         if (course.code === courseToAdd.code) {
-          courseAlreadyAddedToDegree = !window.confirm("You have already added this course in " + term.name + ". Are you sure you want to add it again?");
+          courseAlreadyAddedToDegree = !window.confirm(
+            "You have already added this course in " +
+              term.name +
+              ". Are you sure you want to add it again?"
+          );
           break upper_loop;
         }
       }
@@ -702,6 +711,29 @@ const addToDegreeFunction = (
   setUsersCourseArray((usersCourseArray) => [...usersCourseArray]);
 };
 
+function Example() {
+  return (
+    <TransformWrapper
+      defaultScale={1}
+      defaultPositionX={200}
+      defaultPositionY={100}
+    >
+      {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+        <React.Fragment>
+          <div className="tools">
+            <button onClick={zoomIn}>+</button>
+            <button onClick={zoomOut}>-</button>
+            <button onClick={resetTransform}>x</button>
+          </div>
+          <TransformComponent>
+            <CourseSelector />
+          </TransformComponent>
+        </React.Fragment>
+      )}
+    </TransformWrapper>
+  );
+}
+
 function CourseSelector() {
   const [containers, setContainers] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState({});
@@ -723,7 +755,7 @@ function CourseSelector() {
             : "http://localhost:3000") + "/updateUserWorkList",
           usersCourseArray
         )
-        .then(() => { });
+        .then(() => {});
     }
   }, [usersCourseArray]);
 
@@ -775,7 +807,7 @@ function CourseSelector() {
           item
           xs={12}
           lg={6}
-          xl={6}
+          xl={3}
           style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
         >
           <Lane
@@ -787,6 +819,28 @@ function CourseSelector() {
               onChange={setSelectedCourse}
               onSubmitCourse={setCourseToAdd}
             />
+          </Lane>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
+        >
+          <Lane
+            title="Search Result"
+            description="Searched course will appear here."
+            onContainerLoaded={onContainerReady}
+          >
+            {selectedCourse.code ? (
+              <SearchResultCard
+                course={selectedCourse}
+                title={selectedCourse.code}
+              />
+            ) : (
+              ""
+            )}
           </Lane>
         </Grid>
         <Grid
@@ -823,13 +877,7 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          lg={6}
-          xl={12}
-          style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
-        >
+        <Grid item xs={12} lg={6} xl={12}>
           <Lane
             title="Your Degree"
             description="The courses that you have added to your worklist."
@@ -841,9 +889,16 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
+        <Grid item xs={12} lg={6} xl={12}>
+          <Lane
+            title="Your Degree"
+            description="The courses that you have added to your worklist."
+            onContainerLoaded={onContainerReady}
+          ></Lane>
+        </Grid>
       </Grid>
     </React.Fragment>
   );
 }
 
-export default CourseSelector;
+export default Example;
