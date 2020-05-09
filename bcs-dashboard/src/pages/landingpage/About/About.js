@@ -18,6 +18,9 @@ export default class About extends Component {
         <div className="center-text"><h5>Your comprehensive BCS Degree Planner.</h5></div>
         <div className="navbarpadding"></div>
           <DescriptionCards/>
+          <div className="navbarpadding"></div>
+          <div className="navbarpadding"></div>
+
         <div className="center-text-bold"><h2 className="important-message">Are you ready to start your journey?</h2></div>
         <div className="center-text"><h5>Let's get started.</h5></div>
         

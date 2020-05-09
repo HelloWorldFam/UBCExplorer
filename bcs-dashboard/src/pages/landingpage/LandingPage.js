@@ -8,7 +8,7 @@ import WhoWeAre from "./WhoWeAre/WhoWeAre";
 import Contact from "./Contact/Contact";
 import Footer from "./Footer/Footer";
 
-import Home from "./components1/index";
+import Home from "./components1/App";
 import CssBaseline from '@material-ui/core/CssBaseline';  
  
 const LandingPage = () => {
@@ -19,7 +19,7 @@ const LandingPage = () => {
     <Home />
     <Banner />
     <About />
-    <Contact />
+    {/* <Contact /> */}
     <Footer />
 
     

@@ -217,8 +217,7 @@ const Navbar = () => {
     )
 
     return (
-        <>
-       
+        <>  
         <Box component="nav">
             <AppBar position="fixed" style={{background: "#222"}}>
                 <Toolbar>
@@ -240,7 +239,6 @@ const Navbar = () => {
                 <li>
                   <AnchorLink href="/home">Home</AnchorLink>
                 </li>
-                 
                 <li>
                   <AnchorLink href="/about">Features</AnchorLink>
                 </li>
@@ -250,7 +248,6 @@ const Navbar = () => {
                 <li>
                   <AnchorLink href="/Footer">Contact</AnchorLink>
                 </li>
-      
                 <li>
                   <IconMenu />
                 </li>
