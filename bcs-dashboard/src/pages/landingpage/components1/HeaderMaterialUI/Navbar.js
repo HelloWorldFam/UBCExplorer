@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import MobileRightMenuSlider from "@material-ui/core/Drawer"
+import "./Navbar.css";
+
 
 import {
 AppBar,
@@ -24,7 +26,6 @@ import {
     ContactMail
 } from "@material-ui/icons";
 
-import FirstPic from "../Pictures/image1.jpg";
 
 
 // CSS styles
@@ -35,12 +36,12 @@ const useStyles = makeStyles(theme=> ({
         height: "100rem"
     },
 
-    FirstPic: {
-        display: "block",
-        margin: "0.5rem auto",
-        width: theme.spacing(13),
-        height: theme.spacing(13)
-    },
+    // FirstPic: {
+    //     display: "block",
+    //     margin: "0.5rem auto",
+    //     width: theme.spacing(13),
+    //     height: theme.spacing(13)
+    // },
 
     listItem: {
         color: "grey"
@@ -56,16 +57,16 @@ const menuItems = [
         listText: "Home"
     },
     {
-        listIcon: <AssignmentInd />,
-        listText: "Intro"
-    },
-    {
         listIcon: <Apps />,
         listText: "About"
     },
     {
         listIcon: <ContactMail />,
         listText: "Contact"
+    },
+    {
+        listIcon: <AssignmentInd />,
+        listText: "Login"
     },
 ]
 
@@ -87,7 +88,7 @@ const Navbar = () => {
         component="div"
         onClick={toggleSlider(slider, false)}
         >
-        <Avatar className={classes.FirstPic} src={FirstPic} alt="logo" />
+        {/* <Avatar className={classes.FirstPic} src={FirstPic} alt="logo" /> */}
         <Divider />
         
         <List>
@@ -105,14 +106,24 @@ const Navbar = () => {
         <>
        
         <Box component="nav">
-            <AppBar position="static" style={{background: "#222"}}>
+            <AppBar position="fixed" style={{background: "#222"}}>
                 <Toolbar>
                     <IconButton onClick={toggleSlider("right", true)}>
-                    <ArrowBack style={{color: "tomato"}}/>
+                    <ArrowBack style={{color: "white"}}/>
                     </IconButton>
-                    <Typography variant="h5" style={{color: "grey"}}>
-                        BCS Explorer
+                    <Typography variant="h3" style={{color: "grey"}}>
+                        UBC Explorer
                     </Typography>
+                    {/* <div className="toolbar__logo" variant="h5" style={{color: "grey"}}><a href="/bcs">UBC Explorer</a></div> */}
+                    <div className="spacer"/>
+                    <div className="toolbar_navigation-items">
+                         <ul>
+                    {/* <li><a href="/bcs">Home</a></li> */}
+                    <li><a href="/">About</a></li>
+                    <li><a href="/">Contact</a></li>
+                    <li><a href="/">Login</a></li>
+                         </ul>
+                         </div>
                     <MobileRightMenuSlider
                     anchor="left"
                         open={state.right}

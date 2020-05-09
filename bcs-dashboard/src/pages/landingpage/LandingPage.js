@@ -17,10 +17,10 @@ const LandingPage = () => {
     <CssBaseline />
    
     <Home />
-    {/* <Banner />
+    <Banner />
     <About />
     <Contact />
-    <Footer /> */}
+    <Footer />
 
     
   
