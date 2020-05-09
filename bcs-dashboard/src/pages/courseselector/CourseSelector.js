@@ -775,7 +775,7 @@ function CourseSelector() {
           item
           xs={12}
           lg={6}
-          xl={3}
+          xl={6}
           style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
         >
           <Lane
@@ -827,7 +827,7 @@ function CourseSelector() {
           item
           xs={12}
           lg={6}
-          xl={3}
+          xl={12}
           style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
         >
           <Lane
