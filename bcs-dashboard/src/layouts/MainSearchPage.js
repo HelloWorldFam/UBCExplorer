@@ -405,13 +405,12 @@ function MainSearchPage() {
               <DropDownCard>
                 <strong>BCS Degree Explorer:</strong> a simplified course planning tool for
                 Bachelor of Computer Science (BCS) students. <br />
-                {/* Learn More is commented out until we polish up BCS page */}
-                {/* <center>
+                <center>
                   <Button style={{ margin: '10px', backgroundColor: '#f7f9fc' }} variant="outlined" href="/bcs">
                     <strong>Learn More!</strong>
                   </Button>
-                </center> */}<br/>
-                <Typography variant="body" style={{ padding: '0 10px 10px 10px', display:'block' }}>Sign in with an OAuth provider:</Typography>
+                </center>
+                <Typography variant="body" style={{ padding: '0 10px 10px 0', display:'block' }}>Sign in with an OAuth provider:</Typography>
                 <Button style={{ margin: '1px', }} variant="outlined" href="/auth/google">
                   <strong>Google</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={GoogleLogo}></img>
                 </Button>
