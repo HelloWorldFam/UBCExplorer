@@ -243,9 +243,7 @@ app.get("/secret", isUserAuthenticated, (req, res) => {
 // Logout route
 app.get("/bcs/logout", (req, res) => {
   req.logout();
-  // Temporarily changed until BCS page complete -JH
-  // res.redirect("/bcs");
-  res.redirect("/");
+  res.redirect("/bcs");
 });
 
 // Whitelists React app static assets.
