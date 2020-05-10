@@ -98,39 +98,36 @@ const getAllCoursesEndPointAPICallExample = [
     code: "FNEL 101",
     name: "Introduction to a Salish Language I",
     cred: null,
-    desc:
-      "Emphasis on accurate pronunciation, conversation, basic grammatical structures and listening and literacy skills, and the study of oral traditions in their cultural context. No prior knowledge of the language is assumed.",
+    desc: "Course Description",
     link:
       "https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&dept=FNEL&course=101",
   },
 ];
 
-const getCourseInfoEngPointAPICallExample = {
-  preq: [],
-  creq: [],
-  depn: [
-    "PHYS 410",
-    "CPSC 203",
-    "CPSC 210",
-    "CPSC 302",
-    "CPSC 303",
-    "CPSC 330",
-    "ATSC 212",
-    "LING 242",
-    "EOSC 213",
-    "EOSC 442",
+const getCourseInfoEndPointAPICallExample = {
+  preq: ["MATH 101", "MATH 103", "MATH 105", "MATH 121", "SCIE 001"],
+  creq: [
+    "MATH 215",
+    "MATH 255",
+    "MATH 256",
+    "MATH 258",
+    "MATH 152",
+    "MATH 221",
+    "MATH 223",
   ],
-  _id: "5eb76d708ade8b27172d5dab",
-  dept: "CPSC",
-  code: "CPSC 110",
-  name: "Computation, Programs, and Programming",
-  cred: 4,
-  desc:
-    "Fundamental program and computation structures. Introductory programming skills. Computation as a tool for information processing, simulation and modelling, and interacting with the world. [3-3-0]",
+  depn: ["CPSC 203", "CPSC 330", "EOSC 442"],
+  _id: "5eb76d718ade8b27172d6363",
+  dept: "MATH",
+  code: "MATH 210",
+  name: "Introduction to Mathematical Computing",
+  cred: 3,
+  desc: "Course Description",
+  prer: "One of MATH 101, MATH 103, MATH 105, MATH 121, SCIE 001.",
+  crer:
+    "One of MATH 215, MATH 255, MATH 256, MATH 258 and one of MATH 152, MATH 221, MATH 223.",
   link:
-    "https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&dept=CPSC&course=110",
+    "https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&dept=MATH&course=210",
 };
-
 function RestApiDocs() {
   return (
     <React.Fragment>
@@ -151,64 +148,9 @@ function RestApiDocs() {
             </p>
 
             <Divider my={6} />
-            <h3>User Data EndPoints</h3>
-            <Divider my={6} />
-
-            <div>
-              <code>/userdata</code> <br /> <b>Description:</b> Retrieves the
-              authenticated user's entire profile. A user profile consists of
-              courses, _id, email, firstName, lastName, and picture. <br />{" "}
-              <b>Note:</b>User authentication is required.
-              <br />
-              <br />
-              <b> API Response</b>
-              <br />
-              <div>
-                <pre>
-                  {JSON.stringify(userDataEndPointAPIResponse, null, 2)}
-                </pre>
-              </div>
-              <br />
-              <b>Examples of API Calls</b>
-              <br />
-              <code>https://ubcexplorer.io/userdata</code>
-              <br />
-              <br />
-              <Divider my={6} />
-              <code>/downloadUserData</code> <br />
-              <b>Description:</b> Download your user data as a JSON file. <br />
-              <b>Note:</b>User authentication is required.
-              <br />
-              <br />
-              <b>Examples of API Calls</b>
-              <br />
-              <code>https://ubcexplorer.io/downloadUserData</code>
-            </div>
-            <br />
-            <Divider my={6} />
             <h3>Course Data EndPoints</h3>
             <Divider my={6} />
             <div>
-              <code>/getCourses</code>
-              <br />
-              <b>Description:</b> Retrieves the authenticated user's list of
-              courses. <br />
-              <b>Note:</b>User authentication is required.
-              <br />
-              <br />
-              <b>API Response</b>
-              <br />{" "}
-              <div>
-                <pre>
-                  {JSON.stringify(getCoursesEndPointAPIResponse, null, 2)}
-                </pre>
-              </div>{" "}
-              <br />
-              <b>Examples of API Calls</b>
-              <br />
-              <code>https://ubcexplorer.io/getCourses</code>
-              <br />
-              <Divider my={6} />
               <code>/getAllCourses</code>
               <br />
               <b>Description:</b> Retrieves a list of all courses offered by UBC
@@ -233,10 +175,10 @@ function RestApiDocs() {
               <b>Description:</b> Query a specific course from courses database.{" "}
               <br />
               <br />
-              <b>API Response</b> (For a CPSC 210 search) <br />{" "}
+              <b>API Response</b> (For a MATH 210 search) <br />{" "}
               <div>
                 <pre>
-                  {JSON.stringify(getCourseInfoEngPointAPICallExample, null, 2)}
+                  {JSON.stringify(getCourseInfoEndPointAPICallExample, null, 2)}
                 </pre>
               </div>
               <br />
@@ -248,7 +190,9 @@ function RestApiDocs() {
               <br />
               <b>Examples of API Calls</b>
               <br />
-              <code>https://ubcexplorer.io/getCourseInfo/CPSC%20110</code>
+              <code>https://ubcexplorer.io/getCourseInfo/[DEPT]%20[CODE]</code>
+              <br />
+              <code>https://ubcexplorer.io/getCourseInfo/MATH%20210</code>
               <br />
               <Divider my={6} />
               <code>/searchAny/:code</code>
@@ -279,6 +223,59 @@ function RestApiDocs() {
               Search CPSC:{" "}
               <code>https://ubcexplorer.io/searchAny/CPSC%20310</code>
               <br />
+              <br /> <Divider my={6} />
+              <h3>User Data EndPoints</h3>
+              <Divider my={6} />
+              <div>
+                <code>/userdata</code> <br /> <b>Description:</b> Retrieves the
+                authenticated user's entire profile. A user profile consists of
+                courses, _id, email, firstName, lastName, and picture. <br />{" "}
+                <b>Note:</b>User authentication is required.
+                <br />
+                <br />
+                <b> API Response</b>
+                <br />
+                <div>
+                  <pre>
+                    {JSON.stringify(userDataEndPointAPIResponse, null, 2)}
+                  </pre>
+                </div>
+                <br />
+                <b>Examples of API Calls</b>
+                <br />
+                <code>https://ubcexplorer.io/userdata</code>
+                <br />
+                <br />
+                <Divider my={6} />
+                <code>/downloadUserData</code> <br />
+                <b>Description:</b> Download your user data as a JSON file.{" "}
+                <br />
+                <b>Note:</b>User authentication is required.
+                <br />
+                <br />
+                <b>Examples of API Calls</b>
+                <br />
+                <code>https://ubcexplorer.io/downloadUserData</code>
+              </div>
+              <br />
+              <br /> <code>/getCourses</code>
+              <br />
+              <b>Description:</b> Retrieves the authenticated user's list of
+              courses. <br />
+              <b>Note:</b>User authentication is required.
+              <br />
+              <br />
+              <b>API Response</b>
+              <br />{" "}
+              <div>
+                <pre>
+                  {JSON.stringify(getCoursesEndPointAPIResponse, null, 2)}
+                </pre>
+              </div>{" "}
+              <br />
+              <b>Examples of API Calls</b>
+              <br />
+              <code>https://ubcexplorer.io/getCourses</code>
               <br />
             </div>
           </Typography>

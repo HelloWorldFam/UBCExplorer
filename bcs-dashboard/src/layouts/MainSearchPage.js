@@ -63,6 +63,16 @@ const DropDownCard = styled(MuiCard)`
   line-height: 1.5;
 `;
 
+const LinkStyling = styled.div`
+  a:visited {
+    color: black;
+  }
+
+  a:link {
+    color: black;
+  }
+`;
+
 class Lane extends React.Component {
   handleContainerLoaded = (container) => {
     if (container) {
@@ -134,7 +144,17 @@ function SearchResultCard(props) {
           <Typography variant="h6" align="left">
             {props.title}
             <br />
-            {props.course.name ? props.course.name : props.name}
+            <LinkStyling>
+              {props.course.name ? (
+                <Tooltip title="Click to see course on SSC">
+                  <a href={props.course.link} target="none">
+                    {props.course.name}
+                  </a>
+                </Tooltip>
+              ) : (
+                  props.name
+                )}
+            </LinkStyling>
           </Typography>
           <Typography variant="body2" mb={3}>
             {
@@ -409,8 +429,8 @@ function MainSearchPage() {
                   <Button style={{ margin: '10px', backgroundColor: '#f7f9fc' }} variant="outlined" href="/bcs">
                     <strong>Learn More!</strong>
                   </Button>
-                </center> */}<br/>
-                <Typography variant="body" style={{ padding: '0 10px 10px 10px', display:'block' }}>Sign in with an OAuth provider:</Typography>
+                </center> */}<br />
+                <Typography variant="body" style={{ padding: '0 10px 10px 10px', display: 'block' }}>Sign in with an OAuth provider:</Typography>
                 <Button style={{ margin: '1px', }} variant="outlined" href="/auth/google">
                   <strong>Google</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={GoogleLogo}></img>
                 </Button>
