@@ -86,8 +86,8 @@ function Overview(props) {
 // function Overview(props) {
 //     const [courseBaskets, updateCourseBaskets] = React.useState({});
 //     const coreBCS = {
-//         "completed": ["CPSC 110", "CPSC 121", "CPSC 210", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320", "ENGL 100", "MATH 180", "STAT 200", "ENGL 301"],
-//         "inProgress": [],
+//         "completed": ["CPSC 121", "CPSC 210", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320", "MATH 180", "STAT 200", "ENGL 301"],
+//         "inProgress": ["CPSC 110"],
 //         "incomplete": [],
 //         "required": ["CPSC 110", "CPSC 121", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
 //         "lowerEnglReq": ["ENGL 100", "ENGL 110", "ENGL 111", "ENGL 112", "ENGL 120", "ENGL 121"],
@@ -149,27 +149,51 @@ function Overview(props) {
             }
         });
 
+       
+
+
+
         coreBCS.required.map((course) => {
-            if (!coreBCS.completed.includes(course) && !exemptions.completed.includes(course)) coreBCS.missing.push(course);
+            if (!coreBCS.completed?.includes(course) 
+            && !coreBCS.inProgress?.includes(course) 
+            && !coreBCS.incomplete?.includes(course) 
+            && !exemptions.completed?.includes(course)) coreBCS.missing.push(course);
         });
 
-        if (!coreBCS.completed.some((course) => coreBCS.lowerEnglReq.includes(course))) {
+        //the exemptions.completed array is a list of course objects rather than list of strings so the conditional is not working properly
+        //is there a way to turn the exemptions array into a list of course codes strings rather than a list of course objects?
+        if (!coreBCS.completed?.some((course) => coreBCS.lowerEnglReq.includes(course)) 
+        && !coreBCS.inProgress?.some((course) => coreBCS.lowerEnglReq.includes(course)) 
+        && !coreBCS.incomplete?.some((course) => coreBCS.lowerEnglReq.includes(course))
+        && !exemptions.completed?.some((course) => coreBCS.lowerEnglReq.includes(course))) {
             coreBCS.missing.push("ENGL 1xx (excluding ENGL 140)");
         }
 
-        if (!coreBCS.completed.some((course) => coreBCS.mathReq.includes(course))) {
+        if (!coreBCS.completed?.some((course) => coreBCS.mathReq.includes(course))
+        && !coreBCS.inProgress?.some((course) => coreBCS.mathReq.includes(course)) 
+        && !coreBCS.incomplete?.some((course) => coreBCS.mathReq.includes(course))
+        && !exemptions.completed?.some((course) => coreBCS.lowerEnglReq.includes(course))) {
             coreBCS.missing.push("MATH 180 (or equiv.)");
         }
 
-        if (!coreBCS.completed.some((course) => coreBCS.statReq.includes(course))) {
+        if (!coreBCS.completed?.some((course) => coreBCS.statReq.includes(course))
+        && !coreBCS.inProgress?.some((course) => coreBCS.statReq.includes(course)) 
+        && !coreBCS.incomplete?.some((course) => coreBCS.statReq.includes(course))
+        && !exemptions.completed?.some((course) => coreBCS.statReq.includes(course))) {
             coreBCS.missing.push("STAT 203 (or equiv.)");
         }
 
-        if (!coreBCS.completed.some((course) => coreBCS.cpscTwoReq.includes(course))) {
+        if (!coreBCS.completed?.some((course) => coreBCS.cpscTwoReq.includes(course))
+        && !coreBCS.inProgress?.some((course) => coreBCS.cpscTwoReq.includes(course)) 
+        && !coreBCS.incomplete?.some((course) => coreBCS.cpscTwoReq.includes(course))
+        && !exemptions.completed?.some((course) => coreBCS.cpscTwoReq.includes(course))) {
             coreBCS.missing.push("CPSC 210 (or 211)");
         }
 
-        if (!coreBCS.completed.some((course) => coreBCS.upperCommReq.includes(course))) {
+        if (!coreBCS.completed?.some((course) => coreBCS.upperCommReq.includes(course))
+        && !coreBCS.inProgress?.some((course) => coreBCS.upperCommReq.includes(course)) 
+        && !coreBCS.incomplete?.some((course) => coreBCS.upperCommReq.includes(course))
+        && !exemptions.completed?.some((course) => coreBCS.upperCommReq.includes(course))) {
             coreBCS.missing.push("ENGL 301");
         }
 
@@ -357,7 +381,7 @@ function Overview(props) {
                     {(Math.max(0, (exemptionCourses - exemptionCoursesComplete - exemptionReplacement.inProgress?.length - exemptionReplacement.incomplete?.length)) === 0) ? 
                     <span style={{ color: 'green' }}>All courses added! Please consult BCS director to ensure courses are appropriate.</span> :
                     <span style={{ color: 'red' }}>
-                        You must add additional {(exemptionCourses - exemptionCoursesComplete - exemptionReplacement.inProgress?.length - exemptionReplacement.incomplete?.length)} exemption course(s).
+                        You must add additional {(exemptionCourses - exemptionCoursesComplete - exemptionReplacement.inProgress?.length - exemptionReplacement.incomplete?.length)} exemption replacement course(s).
                     </span>}
                 </Typography>
 
