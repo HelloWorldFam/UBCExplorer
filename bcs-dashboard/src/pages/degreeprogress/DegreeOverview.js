@@ -40,54 +40,11 @@ const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
 
 
-// function Overview(props) {
-    // const [courseBaskets, updateCourseBaskets] = React.useState({});
-    // const coreBCS = {
-    //     "completed": [],
-    //     "inProgress": [],
-    //     "incomplete": [],
-    //     "required": ["CPSC 110", "CPSC 121", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
-    //     "lowerEnglReq": ["ENGL 100", "ENGL 110", "ENGL 111", "ENGL 112", "ENGL 120", "ENGL 121"],
-    //     "upperCommReq": ["ENGL 301", "SCIE 300"],
-    //     "statReq": ["STAT 203", "STAT 200", "STAT 241"],
-    //     "mathReq": ["MATH 100", "MATH 102", "MATH 104", "MATH 110", "MATH 120", "MATH 180", "MATH 184"],
-    //     "cpscTwoReq": ["CPSC 210", "CPSC 211"],
-    //     "missing": [],
-    // };
-    // const upperCPSC = {
-    //     "completed": [],
-    //     "inProgress": [],
-    //     "incomplete": [],
-    // };
-    // const bridgMod = {
-    //     "completed": [],
-    //     "inProgress": [],
-    //     "incomplete": [],
-    // };
-    // const exemptions = {
-    //     "completed": [],
-    //     "inProgress": null,
-    //     "incomplete": null,
-    // };
-    // const exemptionReplacement = {
-    //     "completed": [],
-    //     "inProgress": [],
-    //     "incomplete": [],
-    // }
-    // const coopTerms = {
-    //     "completed": [],
-    //     "inProgress": [],
-    //     "incomplete": [],
-    //     "required": ["CPSC 298", "CPSC 299", "CPSC 398", "CPSC 399"],
-    // };
-
-
-//TEST DATA
 function Overview(props) {
     const [courseBaskets, updateCourseBaskets] = React.useState({});
     const coreBCS = {
-        "completed": ["CPSC 121", "CPSC 210", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320", "MATH 180", "STAT 200", "ENGL 301"],
-        "inProgress": ["CPSC 110"],
+        "completed": [],
+        "inProgress": [],
         "incomplete": [],
         "required": ["CPSC 110", "CPSC 121", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
         "lowerEnglReq": ["ENGL 100", "ENGL 110", "ENGL 111", "ENGL 112", "ENGL 120", "ENGL 121"],
@@ -98,23 +55,23 @@ function Overview(props) {
         "missing": [],
     };
     const upperCPSC = {
-        "completed": ["CPSC 304"],
-        "inProgress": ["CPSC 378"],
-        "incomplete": ["CPSC 408"],
+        "completed": [],
+        "inProgress": [],
+        "incomplete": [],
     };
     const bridgMod = {
-        "completed": ["COGS 300", "COGS 303"],
-        "inProgress": ["PSYC 309"],
-        "incomplete": ["CPSC 350"],
+        "completed": [],
+        "inProgress": [],
+        "incomplete": [],
     };
     const exemptions = {
-        "completed": ["ENGL 112", "STAT 203"],
+        "completed": [],
         "inProgress": null,
         "incomplete": null,
     };
     const exemptionReplacement = {
-        "completed": ["PSYC 100"],
-        "inProgress": ["MICB 300"],
+        "completed": [],
+        "inProgress": [],
         "incomplete": [],
     }
     const coopTerms = {
@@ -123,6 +80,49 @@ function Overview(props) {
         "incomplete": [],
         "required": ["CPSC 298", "CPSC 299", "CPSC 398", "CPSC 399"],
     };
+
+
+//TEST DATA
+// function Overview(props) {
+//     const [courseBaskets, updateCourseBaskets] = React.useState({});
+//     const coreBCS = {
+//         "completed": ["CPSC 121", "CPSC 210", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320", "MATH 180", "STAT 200", "ENGL 301"],
+//         "inProgress": ["CPSC 110"],
+//         "incomplete": [],
+//         "required": ["CPSC 110", "CPSC 121", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
+//         "lowerEnglReq": ["ENGL 100", "ENGL 110", "ENGL 111", "ENGL 112", "ENGL 120", "ENGL 121"],
+//         "upperCommReq": ["ENGL 301", "SCIE 300"],
+//         "statReq": ["STAT 203", "STAT 200", "STAT 241"],
+//         "mathReq": ["MATH 100", "MATH 102", "MATH 104", "MATH 110", "MATH 120", "MATH 180", "MATH 184"],
+//         "cpscTwoReq": ["CPSC 210", "CPSC 211"],
+//         "missing": [],
+//     };
+//     const upperCPSC = {
+//         "completed": ["CPSC 304"],
+//         "inProgress": ["CPSC 378"],
+//         "incomplete": ["CPSC 408"],
+//     };
+//     const bridgMod = {
+//         "completed": ["COGS 300", "COGS 303"],
+//         "inProgress": ["PSYC 309"],
+//         "incomplete": ["CPSC 350"],
+//     };
+//     const exemptions = {
+//         "completed": ["ENGL 112", "STAT 203"],
+//         "inProgress": null,
+//         "incomplete": null,
+//     };
+//     const exemptionReplacement = {
+//         "completed": ["PSYC 100"],
+//         "inProgress": ["MICB 300"],
+//         "incomplete": [],
+//     }
+//     const coopTerms = {
+//         "completed": [],
+//         "inProgress": [],
+//         "incomplete": [],
+//         "required": ["CPSC 298", "CPSC 299", "CPSC 398", "CPSC 399"],
+//     };
 
     // tags: "Core Course", "Bridging Module", "Upper CPSC", "Exemption", "Exemption Replacement"
     const sortCourses = () => {
@@ -149,46 +149,51 @@ function Overview(props) {
             }
         });
 
+       
+
+
+
         coreBCS.required.map((course) => {
-            if (!coreBCS.completed.includes(course) 
-            && !coreBCS.inProgress.includes(course) 
-            && !coreBCS.incomplete.includes(course) 
-            && !exemptions.completed.includes(course)) coreBCS.missing.push(course);
+            if (!coreBCS.completed?.includes(course) 
+            && !coreBCS.inProgress?.includes(course) 
+            && !coreBCS.incomplete?.includes(course) 
+            && !exemptions.completed?.includes(course)) coreBCS.missing.push(course);
         });
 
-        if (!coreBCS.completed.some((course) => coreBCS.lowerEnglReq.includes(course)) 
-        && !coreBCS.inProgress.some((course) => coreBCS.lowerEnglReq.includes(course)) 
-        && !coreBCS.incomplete.some((course) => coreBCS.lowerEnglReq.includes(course))
-        && !coreBCS.inProgress.some((course) => coreBCS.lowerEnglReq.includes(course)) 
-        && !exemptions.completed.some((course) => coreBCS.lowerEnglReq.includes(course))) {
+        //the exemptions.completed array is a list of course objects rather than list of strings so the conditional is not working properly
+        //is there a way to turn the exemptions array into a list of course codes strings rather than a list of course objects?
+        if (!coreBCS.completed?.some((course) => coreBCS.lowerEnglReq.includes(course)) 
+        && !coreBCS.inProgress?.some((course) => coreBCS.lowerEnglReq.includes(course)) 
+        && !coreBCS.incomplete?.some((course) => coreBCS.lowerEnglReq.includes(course))
+        && !exemptions.completed?.some((course) => coreBCS.lowerEnglReq.includes(course))) {
             coreBCS.missing.push("ENGL 1xx (excluding ENGL 140)");
         }
 
-        if (!coreBCS.completed.some((course) => coreBCS.mathReq.includes(course))
-        && !coreBCS.inProgress.some((course) => coreBCS.mathReq.includes(course)) 
-        && !coreBCS.incomplete.some((course) => coreBCS.mathReq.includes(course))
-        && !exemptions.completed.some((course) => coreBCS.lowerEnglReq.includes(course))) {
+        if (!coreBCS.completed?.some((course) => coreBCS.mathReq.includes(course))
+        && !coreBCS.inProgress?.some((course) => coreBCS.mathReq.includes(course)) 
+        && !coreBCS.incomplete?.some((course) => coreBCS.mathReq.includes(course))
+        && !exemptions.completed?.some((course) => coreBCS.lowerEnglReq.includes(course))) {
             coreBCS.missing.push("MATH 180 (or equiv.)");
         }
 
-        if (!coreBCS.completed.some((course) => coreBCS.statReq.includes(course))
-        && !coreBCS.inProgress.some((course) => coreBCS.statReq.includes(course)) 
-        && !coreBCS.incomplete.some((course) => coreBCS.statReq.includes(course))
-        && !exemptions.completed.some((course) => coreBCS.statReq.includes(course))) {
+        if (!coreBCS.completed?.some((course) => coreBCS.statReq.includes(course))
+        && !coreBCS.inProgress?.some((course) => coreBCS.statReq.includes(course)) 
+        && !coreBCS.incomplete?.some((course) => coreBCS.statReq.includes(course))
+        && !exemptions.completed?.some((course) => coreBCS.statReq.includes(course))) {
             coreBCS.missing.push("STAT 203 (or equiv.)");
         }
 
-        if (!coreBCS.completed.some((course) => coreBCS.cpscTwoReq.includes(course))
-        && !coreBCS.inProgress.some((course) => coreBCS.cpscTwoReq.includes(course)) 
-        && !coreBCS.incomplete.some((course) => coreBCS.cpscTwoReq.includes(course))
-        && !exemptions.completed.some((course) => coreBCS.cpscTwoReq.includes(course))) {
+        if (!coreBCS.completed?.some((course) => coreBCS.cpscTwoReq.includes(course))
+        && !coreBCS.inProgress?.some((course) => coreBCS.cpscTwoReq.includes(course)) 
+        && !coreBCS.incomplete?.some((course) => coreBCS.cpscTwoReq.includes(course))
+        && !exemptions.completed?.some((course) => coreBCS.cpscTwoReq.includes(course))) {
             coreBCS.missing.push("CPSC 210 (or 211)");
         }
 
-        if (!coreBCS.completed.some((course) => coreBCS.upperCommReq.includes(course))
-        && !coreBCS.inProgress.some((course) => coreBCS.upperCommReq.includes(course)) 
-        && !coreBCS.incomplete.some((course) => coreBCS.upperCommReq.includes(course))
-        && !exemptions.completed.some((course) => coreBCS.upperCommReq.includes(course))) {
+        if (!coreBCS.completed?.some((course) => coreBCS.upperCommReq.includes(course))
+        && !coreBCS.inProgress?.some((course) => coreBCS.upperCommReq.includes(course)) 
+        && !coreBCS.incomplete?.some((course) => coreBCS.upperCommReq.includes(course))
+        && !exemptions.completed?.some((course) => coreBCS.upperCommReq.includes(course))) {
             coreBCS.missing.push("ENGL 301");
         }
 
