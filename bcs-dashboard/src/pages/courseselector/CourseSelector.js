@@ -16,7 +16,6 @@ import Helmet from "react-helmet";
 import "react-dragula/dist/dragula.css";
 import SearchComponent from "./SearchComponent";
 import { YourDegreeCard } from "./components/YourDegreeCard";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 import {
   Breadcrumbs as MuiBreadcrumbs,
@@ -30,7 +29,10 @@ import {
   Tooltip,
   Typography as MuiTypography,
   Fade,
+  Fab,
 } from "@material-ui/core";
+
+import { ZoomOut, ZoomIn } from "@material-ui/icons";
 
 import { spacing } from "@material-ui/system";
 
@@ -113,15 +115,15 @@ const Scale6 = styled.div`
 const Scale = (props) => {
   switch (props.zoom) {
     case 0:
-      return <ScaleFull />;
+      return <ScaleFull>{props.children}</ScaleFull>;
     case 1:
-      return <Scale9 />;
+      return <Scale9>{props.children}</Scale9>;
     case 2:
-      return <Scale8 />;
+      return <Scale8>{props.children}</Scale8>;
     case 3:
-      return <Scale7 />;
+      return <Scale7>{props.children}</Scale7>;
     case 4:
-      return <Scale6 />;
+      return <Scale6>{props.children}</Scale6>;
   }
 };
 
@@ -129,7 +131,7 @@ export class Lane extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      zoom: 0,
+      zoom: this.props.zoom ? this.props.zoom : 0
     };
   }
 
@@ -143,7 +145,7 @@ export class Lane extends React.Component {
     const { title, className, description, children } = this.props;
 
     return (
-      <ScaleFull>
+      <Scale zoom={this.state.zoom}>
         <Card mb={6}>
           <CardContent>
             <Typography variant="h6" gutterBottom>
@@ -162,7 +164,7 @@ export class Lane extends React.Component {
             </div>
           </CardContent>
         </Card>
-      </ScaleFull>
+      </Scale>
     );
   }
 }
@@ -773,6 +775,7 @@ function CourseSelector() {
   const [courseToAdd, setCourseToAdd] = useState({});
   const [usersCourseArray, setUsersCourseArray] = useState([-1]);
   const [windowHeight, setWindowHeight] = useState(0);
+  const [zoom, setZoom] = useState(0);
   const MAX_HEIGHT = windowHeight - 230;
 
   const onContainerReady = (container) => {
@@ -819,20 +822,54 @@ function CourseSelector() {
     }
   }, [courseToAdd]);
 
+  const zoomOut = () => {
+    if (zoom >= 0) {
+      setZoom(zoom - 1);
+    }
+  };
+
+  const zoomIn = () => {
+    if (zoom <= 5) {
+      setZoom(zoom + 1);
+    }
+  };
+
   return (
     <React.Fragment>
       <Helmet title="Course Selector" />
-      <Typography variant="h3" gutterBottom display="inline">
-        Course Selector
-      </Typography>
-
-      <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-        <Link component={NavLink} exact to="/bcs/start">
-          Get Started
-        </Link>
-
-        <Typography>Course Selector</Typography>
-      </Breadcrumbs>
+      <Grid container spacing={6}>
+        <Grid item>
+          <Typography variant="h3" gutterBottom display="inline">
+            Course Selector
+          </Typography>
+          <Breadcrumbs aria-label="Breadcrumb" mt={2}>
+            <Link component={NavLink} exact to="/bcs/start">
+              Get Started
+            </Link>
+            <Typography>Course Selector</Typography>
+          </Breadcrumbs>
+        </Grid>
+        <Grid item>
+          <Fab
+            mx={2}
+            size="small"
+            color="primary"
+            aria-label="Add"
+            onClick={zoomIn}
+          >
+            <ZoomIn />
+          </Fab>
+          <Fab
+            mx={2}
+            size="small"
+            color="primary"
+            aria-label="Add"
+            onClick={zoomOut}
+          >
+            <ZoomOut />
+          </Fab>
+        </Grid>
+      </Grid>
 
       <Divider my={6} />
       <Grid container spacing={6}>
@@ -848,6 +885,7 @@ function CourseSelector() {
             description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
             onContainerLoaded={onContainerReady}
             fullWidth
+            zoom={zoom}
           >
             <SearchCard
               onChange={setSelectedCourse}
@@ -866,6 +904,7 @@ function CourseSelector() {
             title="Prerequisite / Corequisite Courses"
             description="Selected course's prerequisites and corequisites."
             onContainerLoaded={onContainerReady}
+            zoom={zoom}
           >
             <PrerequisitesCard
               course={selectedCourse === undefined ? [] : selectedCourse}
@@ -883,6 +922,7 @@ function CourseSelector() {
             title="Dependent Courses"
             description="Courses that list this course as a direct prerequisite."
             onContainerLoaded={onContainerReady}
+            zoom={zoom}
           >
             <DependenciesCard
               course={selectedCourse === undefined ? [] : selectedCourse}
@@ -894,6 +934,7 @@ function CourseSelector() {
             title="Your Degree"
             description="The courses that you have added to your worklist."
             onContainerLoaded={onContainerReady}
+            zoom={zoom}
           >
             <YourDegreeCard
               usersCourseArray={usersCourseArray}
