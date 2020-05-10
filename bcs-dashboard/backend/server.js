@@ -55,7 +55,7 @@ const FacebookOauthProduction = new FacebookStrategy(
     clientID: "2828647350596227",
     clientSecret: "afde4d264c365d946882ec076bf5d4cd",
     callbackURL: "https://ubcexplorer.io/auth/facebook/callback",
-    profileFields: ['id', 'email', 'first_name', 'last_name', 'photos'],
+    profileFields: ["id", "email", "first_name", "last_name", "photos"],
   },
   function (accessToken, refreshToken, profile, done) {
     console.log(profile);
@@ -82,7 +82,7 @@ const GitHubOAuthProduction = new GitHubStrategy(
     clientID: "Iv1.b83becaf95ef5ce1",
     clientSecret: "71b0cfc8bc19dcf09f5173f5a8949398022adffd",
     callbackURL: "https://ubcexplorer.io/auth/github/callback",
-    scope: ['user'],
+    scope: ["user"],
   },
   function (accessToken, refreshToken, profile, done) {
     console.log(profile);
@@ -174,7 +174,7 @@ app.get(
   "/auth/github",
   passport.authenticate("github", {
     //scope: ["(no scope)"],
-    scope: ['user:email'], // Used to specify the required data; we only want read-only access to public information
+    scope: ["user:email"], // Used to specify the required data; we only want read-only access to public information
   })
 );
 
@@ -207,9 +207,12 @@ app.get(
 );
 
 // passport.authenticate middleware is used here to authenticate the request
-app.get("/auth/facebook", passport.authenticate("facebook", {
-  scope: 'email',
-}));
+app.get(
+  "/auth/facebook",
+  passport.authenticate("facebook", {
+    scope: "email",
+  })
+);
 
 // The middleware receives the data from Google and runs the function on Strategy config
 app.get(
@@ -259,6 +262,16 @@ app.get("/node_modules", (req, res) => {
   res.redirect("/");
 });
 
+app.get("/api", (req, res) => {
+  // send landing page
+  res.redirect("/");
+});
+
+app.get("/privacypolicy", (req, res) => {
+  // send landing page
+  res.redirect("/");
+});
+
 // Nodemon success message
 app.listen(port, () => {
   // Only keep dyno awake in production
@@ -294,7 +307,7 @@ app.get("/getCourses", isUserAuthenticated, (req, res) => {
   });
 });
 
-app.get("/getAllCourses", isUserAuthenticated, (req, res) => {
+app.get("/getAllCourses", (req, res) => {
   Courses.find()
     .then((courses) => res.send(courses))
     .catch((err) => console.log(err));

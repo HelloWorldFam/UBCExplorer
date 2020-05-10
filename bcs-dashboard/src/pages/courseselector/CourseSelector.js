@@ -279,8 +279,8 @@ function SearchCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-        "/getCourseInfo/" +
-        courseInfo
+          "/getCourseInfo/" +
+          courseInfo
       )
       .then((res) => {
         setCode(courseInfo);
@@ -635,8 +635,8 @@ function PrerequisitesCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-        "/getCourseInfo/" +
-        course
+          "/getCourseInfo/" +
+          course
       )
       .then((res) => {
         if (res.data.desc) {
@@ -684,8 +684,8 @@ function DependenciesCard(props) {
             (window.location.host === "ubcexplorer.io"
               ? ""
               : "http://localhost:3000") +
-            "/getCourseInfo/" +
-            course
+              "/getCourseInfo/" +
+              course
           )
           .then((res) => {
             if (res.data.desc) {
@@ -810,7 +810,7 @@ function CourseSelector() {
             : "http://localhost:3000") + "/updateUserWorkList",
           usersCourseArray
         )
-        .then(() => { });
+        .then(() => {});
     }
   }, [usersCourseArray]);
 
