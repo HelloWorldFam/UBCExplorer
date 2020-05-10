@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import "materialize-css/dist/css/materialize.min.css";
 import WhoWeAre from "../WhoWeAre/WhoWeAre";
 import { Navbar, NavItem, Icon } from "react-materialize";
-import ContactNavBar from "./ContactNavBar";
+import HeaderBar from "./ContactNavBar";
 import "../LandingPage.css";
 
 export default class Contact extends Component {
   render() {
     return (
       <>
-        <ContactNavBar />
+        <HeaderBar />
         <section id="contact" className="section section-contact scrollspy">
           <div className="container">
             <WhoWeAre />

@@ -54,6 +54,7 @@ Box
 } from "@material-ui/core";
 
 import {
+  School,
     ArrowBack,
     AssignmentInd,
     Home,
@@ -89,8 +90,13 @@ class IconMenu extends React.Component {
     };
   
     handleClick = (event) => {
+      if (window.innerWidth < 993) {
+        this.setState({ anchorEl: document.querySelector("#root > div > nav > header > div") })
+      } else {
       this.setState({ anchorEl: event.currentTarget });
-    };
+      }
+    
+}
   
     handleClose = () => {
       this.setState({ anchorEl: null });
@@ -109,13 +115,15 @@ class IconMenu extends React.Component {
             disableRipple={true}
             disableFocusRipple={true}
           >
-            Sign In/Register
+            Login | Register
           </Button>
   
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
+            // anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            // transformOrigin={{ vertical: "top", horizontal: "center" }}
             onClose={this.handleClose}
             color="buttoncolor"
           >
@@ -141,7 +149,7 @@ class IconMenu extends React.Component {
 // CSS styles
 const useStyles = makeStyles(theme=> ({
     menuSliderContainer: {
-        width: 250,
+        width: 240,
         background: "#232f3e", 
         height: "100rem"
     },
@@ -160,6 +168,7 @@ const useStyles = makeStyles(theme=> ({
 
 })); 
 
+
 const menuItems = [
   
   {
@@ -172,22 +181,19 @@ const menuItems = [
         listText: "Home",
         listPath: "/"
     },
-    {
-        listIcon: <Apps />,
-        listText: "Features"
-    },
+    
     {
         listIcon: <Apps />,
         listText: "About"
     },
-    {
-        listIcon: <ContactMail />,
-        listText: "Contact"
-    },
-    {
-        listIcon: <IconMenu/>,
-        // listText: "Sign In/Register"
-    },
+    // {
+    //     listIcon: <ContactMail />,
+    //     listText: "Contact"
+    // },
+    // {
+    //     listIcon: <IconMenu/>,
+    //     // listText: "Sign In/Register"
+    // },
     
 ]
 
@@ -227,10 +233,11 @@ const Navbar = () => {
         <>
   
         <Box component="nav">
+          {/* <div className="try"></div> */}
             <AppBar position="fixed" style={{background: "#232f3e"}}>
                 <Toolbar>
                     <IconButton onClick={toggleSlider("right", true)}>
-                    <ArrowBack style={{color: "white"}}/>
+                    <School style={{color: "white"}}/>
                     </IconButton>
                     <MobileRightMenuSlider
                     anchor="left"
