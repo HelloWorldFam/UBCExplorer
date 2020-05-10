@@ -46,7 +46,12 @@ function Overview(props) {
         "completed": [],
         "inProgress": [],
         "incomplete": [],
-        "required": ["ENGL 112", "CPSC 110", "STAT 203", "MATH 180", "CPSC 121", "CPSC 210", "ENGL 301", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
+        "required": ["CPSC 110", "CPSC 121", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
+        "lowerEnglReq": ["ENGL 100", "ENGL 110", "ENGL 111", "ENGL 112", "ENGL 120", "ENGL 121"],
+        "upperCommReq": ["ENGL 301", "SCIE 300"],
+        "statReq": ["STAT 203", "STAT 200", "STAT 241"],
+        "mathReq": ["MATH 100", "MATH 102", "MATH 104", "MATH 110", "MATH 120", "MATH 180", "MATH 184"],
+        "cpscTwoReq": ["CPSC 210", "CPSC 211"],
         "missing": [],
     };
     const upperCPSC = {
@@ -78,40 +83,46 @@ function Overview(props) {
 
 
 //TEST DATA
-    // function Overview(props) {
-    //     const [courseBaskets, updateCourseBaskets] = React.useState({});
-    //     const coreBCS = {
-    //         "completed": ["CPSC 110", "CPSC 121", "CPSC 210", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
-    //         "inProgress": [],
-    //         "incomplete": [],
-    //         "required": ["ENGL 112", "CPSC 110", "STAT 203", "MATH 180", "CPSC 121", "CPSC 210", "ENGL 301", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
-    //     };
-    //     const upperCPSC = {
-    //         "completed": ["CPSC 304", "CPSC 401"],
-    //         "inProgress": ["CPSC 378"],
-    //         "incomplete": ["CPSC 408"],
-    //     };
-    //     const bridgMod = {
-    //         "completed": ["COGS 300", "COGS 303"],
-    //         "inProgress": ["PSYC 309"],
-    //         "incomplete": ["CPSC 350"],
-    //     };
-    //     const exemptions = {
-    //         "completed": ["ENGL 112", "STAT 203"],
-    //         "inProgress": null,
-    //         "incomplete": null,
-    //     };
-    //     const exemptionReplacement = {
-    //         "completed": ["PSYC 100"],
-    //         "inProgress": ["MICB 300"],
-    //         "incomplete": [],
-    //     }
-    //     const coopTerms = {
-    //         "completed": [],
-    //         "inProgress": [],
-    //         "incomplete": [],
-    //         "required": ["CPSC 298", "CPSC 299", "CPSC 398", "CPSC 399"],
-    //     };
+// function Overview(props) {
+//     const [courseBaskets, updateCourseBaskets] = React.useState({});
+//     const coreBCS = {
+//         "completed": ["CPSC 110", "CPSC 121", "CPSC 210", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320", "ENGL 100", "MATH 180", "STAT 200", "ENGL 301"],
+//         "inProgress": [],
+//         "incomplete": [],
+//         "required": ["CPSC 110", "CPSC 121", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
+//         "lowerEnglReq": ["ENGL 100", "ENGL 110", "ENGL 111", "ENGL 112", "ENGL 120", "ENGL 121"],
+//         "upperCommReq": ["ENGL 301", "SCIE 300"],
+//         "statReq": ["STAT 203", "STAT 200", "STAT 241"],
+//         "mathReq": ["MATH 100", "MATH 102", "MATH 104", "MATH 110", "MATH 120", "MATH 180", "MATH 184"],
+//         "cpscTwoReq": ["CPSC 210", "CPSC 211"],
+//         "missing": [],
+//     };
+//     const upperCPSC = {
+//         "completed": ["CPSC 304"],
+//         "inProgress": ["CPSC 378"],
+//         "incomplete": ["CPSC 408"],
+//     };
+//     const bridgMod = {
+//         "completed": ["COGS 300", "COGS 303"],
+//         "inProgress": ["PSYC 309"],
+//         "incomplete": ["CPSC 350"],
+//     };
+//     const exemptions = {
+//         "completed": ["ENGL 112", "STAT 203"],
+//         "inProgress": null,
+//         "incomplete": null,
+//     };
+//     const exemptionReplacement = {
+//         "completed": ["PSYC 100"],
+//         "inProgress": ["MICB 300"],
+//         "incomplete": [],
+//     }
+//     const coopTerms = {
+//         "completed": [],
+//         "inProgress": [],
+//         "incomplete": [],
+//         "required": ["CPSC 298", "CPSC 299", "CPSC 398", "CPSC 399"],
+//     };
 
     // tags: "Core Course", "Bridging Module", "Upper CPSC", "Exemption", "Exemption Replacement"
     const sortCourses = () => {
@@ -132,17 +143,36 @@ function Overview(props) {
                     else if (course.tag === "Upper CPSC") upperCPSC[progress()].push(course.code);
                     else if (course.tag === "Bridging Module") bridgMod[progress()].push(course.code);
 
-                    //Tried to make this code for the missing courses but it needs work - Brenden
-                    // coreBCS.required.map((course) => {
-                    //     if (!coreBCS.completed.includes(course.code) && !exemptions.completed.includes(course.code)) coreBCS.missing.push(course.code);
-                    // }
-                    // )
-
                     // else if (course.code.substring(0, 4) === "CPSC") upperCPSC[progress()].push(course.code);
                     // else exemptionReplacement[progress()].push(course.code);
                 })
             }
         });
+
+        coreBCS.required.map((course) => {
+            if (!coreBCS.completed.includes(course) && !exemptions.completed.includes(course)) coreBCS.missing.push(course);
+        });
+
+        if (!coreBCS.completed.some((course) => coreBCS.lowerEnglReq.includes(course))) {
+            coreBCS.missing.push("ENGL 1xx (excluding ENGL 140)");
+        }
+
+        if (!coreBCS.completed.some((course) => coreBCS.mathReq.includes(course))) {
+            coreBCS.missing.push("MATH 180 (or equiv.)");
+        }
+
+        if (!coreBCS.completed.some((course) => coreBCS.statReq.includes(course))) {
+            coreBCS.missing.push("STAT 203 (or equiv.)");
+        }
+
+        if (!coreBCS.completed.some((course) => coreBCS.cpscTwoReq.includes(course))) {
+            coreBCS.missing.push("CPSC 210 (or 211)");
+        }
+
+        if (!coreBCS.completed.some((course) => coreBCS.upperCommReq.includes(course))) {
+            coreBCS.missing.push("ENGL 301");
+        }
+
 
         updateCourseBaskets({
             "coreBCS": coreBCS,
@@ -195,18 +225,18 @@ function Overview(props) {
     const courses = coreCoursesCompleted + upperCPSCCoursesCompleted + bridgingCoursesCompleted + exemptionCoursesComplete;
 
     //Remaining courses
-    const coreCoursesRemaining = coreCoursesTotal - coreCoursesCompleted;
-    const upperCPSCCoursesRemaining = upperCPSCCoursesTotal - upperCPSCCoursesCompleted;
-    const bridgingCoursesCompletedRemaining = bridgingCoursesCompletedTotal - bridgingCoursesCompleted;
-    const exemptionCoursesRemaining = exemptionCourses - exemptionCoursesComplete;
-    const coursesRemaining = minCourses - courses;
+    const coreCoursesRemaining = Math.max((coreCoursesTotal - coreCoursesCompleted), 0);
+    const upperCPSCCoursesRemaining = Math.max((upperCPSCCoursesTotal - upperCPSCCoursesCompleted), 0);
+    const bridgingCoursesCompletedRemaining = Math.max((bridgingCoursesCompletedTotal - bridgingCoursesCompleted), 0);
+    const exemptionCoursesRemaining = Math.max((exemptionCourses - exemptionCoursesComplete), 0);
+    const coursesRemaining = Math.max((minCourses - courses), 0);
 
     //Percentage complete
-    const corePercentComplete = Math.floor(coreCoursesCompleted / coreCoursesTotal * 100);
-    const upperCPSCPercentComplete = Math.floor(upperCPSCCoursesCompleted / upperCPSCCoursesTotal * 100);
-    const bridgingPercentComplete = Math.floor(bridgingCoursesCompleted / bridgingCoursesCompletedTotal * 100);
-    const exemptionPercentComplete = Math.floor(exemptionCoursesComplete / exemptionCourses * 100) || 0;
-    const percentComplete = Math.floor(courses / minCourses * 100);
+    const corePercentComplete = Math.min(Math.floor(coreCoursesCompleted / coreCoursesTotal * 100), 100);
+    const upperCPSCPercentComplete = Math.min(Math.floor(upperCPSCCoursesCompleted / upperCPSCCoursesTotal * 100), 100);
+    const bridgingPercentComplete = Math.min(Math.floor(bridgingCoursesCompleted / bridgingCoursesCompletedTotal * 100), 100);
+    const exemptionPercentComplete = Math.min(Math.floor(exemptionCoursesComplete / exemptionCourses * 100) || 0, 100);
+    const percentComplete = Math.min(Math.floor(courses / minCourses * 100), 100);
 
     //Co-op
     const coopTermsTotal = 4;
@@ -236,8 +266,8 @@ function Overview(props) {
                     minCourses={minCourses}
                     upperCPSCCoursesCompleted={upperCPSCCoursesCompleted}
                     upperCPSCCoursesRemaining={upperCPSCCoursesRemaining}
-                    coursesRemaining = {coursesRemaining}
-                    percentComplete = {percentComplete}
+                    coursesRemaining={coursesRemaining}
+                    percentComplete={percentComplete}
                 />
 
                 <Divider my={6} />
@@ -252,7 +282,25 @@ function Overview(props) {
                     <br />
                     Courses Remaining: {coreCoursesRemaining}
                     <br />
-                    Core courses missing from worklist: {missingCoreCourses}
+                    {courseBaskets.coreBCS?.missing?.length > 0 ?
+                        <span style={{ color: 'red' }}>
+                            Courses missing from worklist:&nbsp;
+                        {courseBaskets.coreBCS.missing.map((code, index) => {
+                            if (index === 0) {
+                                return (
+                                    <>
+                                        {code}
+                                    </>)
+                            } else {
+                                return (
+                                    <>
+                                        , {code}
+                                    </>)
+                            }
+                        })} </span> :
+                        <span style={{ color: 'green' }}>
+                            All courses added!
+                            </span>}
                 </Typography>
 
                 <CoreTable coreBCS={courseBaskets.coreBCS} />
@@ -267,7 +315,12 @@ function Overview(props) {
 
                 <Typography variant="h7" paragraph >
                     Courses Completed: {upperCPSCCoursesCompleted} <br />
-                    Courses Remaining: {upperCPSCCoursesRemaining}
+                    Courses Remaining: {upperCPSCCoursesRemaining} <br />
+                    {(Math.max(0, (4 - upperCPSCCoursesCompleted - upperCPSC.inProgress?.length - upperCPSC.incomplete?.length)) === 0) ?
+                        <span style={{ color: 'green' }}>All courses added!</span> :
+                        <span style={{ color: 'red' }}>
+                            You must add additional {4 - upperCPSCCoursesCompleted - upperCPSC.inProgress?.length - upperCPSC.incomplete?.length} upper CPSC course(s).
+                        </span>}
                 </Typography>
 
                 <UpperCPSCTable upperCPSC={courseBaskets.upperCPSC} />
@@ -282,6 +335,12 @@ function Overview(props) {
                     Courses Completed: {bridgingCoursesCompleted}
                     <br />
                     Courses Remaining: {bridgingCoursesCompletedRemaining}
+                    <br/>
+                    {(Math.max(0, (5 - bridgingCoursesCompleted - bridgMod.inProgress?.length - bridgMod.incomplete?.length)) === 0) ? 
+                    <span style={{ color: 'green' }}>All courses added! Please consult BCS director to ensure courses are appropriate.</span> :
+                    <span style={{ color: 'red' }}>
+                        You must add additional {5 - bridgingCoursesCompleted - bridgMod.inProgress?.length - bridgMod.incomplete?.length} bridging module course(s).
+                    </span>}
                 </Typography>
 
                 <BridgingTable bridgMod={courseBaskets.bridgMod} />
@@ -294,7 +353,12 @@ function Overview(props) {
                 <Progress percent={exemptionPercentComplete} />
                 <Typography variant="h7" paragraph >
                     Courses Completed: {exemptionCoursesComplete} <br />
-                    Courses Remaining: {exemptionCoursesRemaining}
+                    Courses Remaining: {exemptionCoursesRemaining} <br/>
+                    {(Math.max(0, (exemptionCourses - exemptionCoursesComplete - exemptionReplacement.inProgress?.length - exemptionReplacement.incomplete?.length)) === 0) ? 
+                    <span style={{ color: 'green' }}>All courses added! Please consult BCS director to ensure courses are appropriate.</span> :
+                    <span style={{ color: 'red' }}>
+                        You must add additional {(exemptionCourses - exemptionCoursesComplete - exemptionReplacement.inProgress?.length - exemptionReplacement.incomplete?.length)} exemption course(s).
+                    </span>}
                 </Typography>
 
                 <ExemptionTable exemptions={courseBaskets.exemptions} replacements={courseBaskets.exemptionReplacement} />
