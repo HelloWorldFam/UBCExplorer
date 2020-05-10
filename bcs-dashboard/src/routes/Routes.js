@@ -7,6 +7,7 @@ import {
   contact as contactRoutes,
   mainSearch as mainSearchRoutes,
   privacy as privacyPolicyRoutes,
+  restapi as restAPIDocsRoutes,
 } from "./index";
 
 import DashboardLayout from "../layouts/Dashboard";
@@ -16,6 +17,7 @@ import ContactLayout from "../layouts/Contact";
 import Page404 from "../pages/auth/Page404";
 import MainSearchPage from "../layouts/MainSearchPage";
 import PrivacyPolicy from "../pages/privacypolicy/PrivacyPolicy";
+import RestApiDocs from "../pages/rest-api-doc/RestApiDocs";
 
 const childRoutes = (Layout, routes) =>
   routes.map(({ children, path, component: Component }, index) =>
@@ -51,6 +53,7 @@ const childRoutes = (Layout, routes) =>
 const Routes = () => (
   <Router>
     <Switch>
+      {childRoutes(RestApiDocs, restAPIDocsRoutes)}
       {childRoutes(PrivacyPolicy, privacyPolicyRoutes)}
       {childRoutes(MainSearchPage, mainSearchRoutes)}
       {childRoutes(DashboardLayout, dashboardRoutes)}

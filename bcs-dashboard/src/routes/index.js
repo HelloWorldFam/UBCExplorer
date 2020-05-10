@@ -41,6 +41,11 @@ const PrivacyPolicyPage = async(() =>
   import("../pages/privacypolicy/PrivacyPolicy")
 );
 
+//Rest API Documentation Page
+const RestApiDocumentation = async(() =>
+  import("../pages/rest-api-doc/RestApiDocs.js")
+);
+
 // Degree progress components
 const DegreeTimeline = async(() =>
   import("../pages/degreeprogress/DegreeTimeline")
@@ -500,6 +505,14 @@ const privacyPolicyRoutes = {
   children: null,
 };
 
+const restAPIDocsRoutes = {
+  id: "Privacy Policy",
+  path: "/api",
+  icon: <BookOpen />,
+  component: RestApiDocumentation,
+  children: null,
+};
+
 const changelogRoutes = {
   id: "Changelog",
   path: "/changelog",
@@ -550,6 +563,7 @@ export const dashboard = [
 export const auth = [authRoutes];
 export const mainSearch = [mainSearchRoutes];
 export const privacy = [privacyPolicyRoutes];
+export const restapi = [restAPIDocsRoutes];
 
 export default [
   dashboardsRoutes,
