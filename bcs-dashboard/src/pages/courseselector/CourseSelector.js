@@ -840,7 +840,7 @@ function CourseSelector() {
   }, [courseToAdd]);
 
   const zoomOut = () => {
-    if (zoom <= 4) {
+    if (zoom < 4) {
       setZoom(zoom + 1);
     }
   };
@@ -867,24 +867,28 @@ function CourseSelector() {
           </Breadcrumbs>
         </Grid>
         <Grid item>
-          <Fab
+          <Button
             mx={2}
             size="small"
+            variant="outlined"
+            disabled={false}
             color="primary"
             aria-label="Add"
             onClick={zoomOut}
           >
             <ZoomOut />
-          </Fab>
-          <Fab
+          </Button>
+          <Button
             mx={2}
             size="small"
+            variant="outlined"
+            disabled={false}
             color="primary"
             aria-label="Add"
             onClick={zoomIn}
           >
             <ZoomIn />
-          </Fab>
+          </Button>
         </Grid>
       </Grid>
 
