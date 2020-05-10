@@ -21,6 +21,7 @@ export default class Contact extends Component {
                   <h6>
                     Let's stay in touch.{" "}
                     <a href="mailto:hello@ubcexplorer.io">
+                      <br/>
                       hello@ubcexplorer.io
                     </a>
                   </h6>
@@ -35,7 +36,8 @@ export default class Contact extends Component {
                                     <input type="text" id="vision" className="validate" /> */}
                   {/* <label for="vision" className="blue-text">With the BCS course-selector App, we hope to deliver a one-in-all website</label> */}
                   <h6>
-                    Have feedback, suggestions, or bug reports? Fill out our{" "}
+                    Have feedback, suggestions, or bug reports? 
+                    <br/>Fill out our{" "}
                     <a href="https://ubc.ca1.qualtrics.com/jfe/form/SV_enyfh63H9Euj8UJ">
                       feedback form
                     </a>
