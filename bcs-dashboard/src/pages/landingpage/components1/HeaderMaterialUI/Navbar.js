@@ -276,11 +276,11 @@ const Navbar = (props) => {
                             {sideList("right")}
                     </MobileRightMenuSlider>
               
+                    <School style={{color: "white"}}/> 
                     <Typography variant="h3" style={{color: "white"}}>
-                        UBC Explorer &nbsp;
+                      &nbsp;&nbsp;UBC Degree Explorer
                   
                     </Typography>
-                    <School style={{color: "white"}}/> 
                     <Menu />
                     <div className="spacer"/>
                     <ul className="right hide-on-med-and-down">

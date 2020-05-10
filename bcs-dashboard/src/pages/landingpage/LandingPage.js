@@ -11,10 +11,12 @@ import {Route} from 'react-router-dom';
 
 import Home from "./components1/App";
 import CssBaseline from '@material-ui/core/CssBaseline';  
+import Helmet from "react-helmet";
  
 const LandingPage = () => {
   return (
     <>
+    <Helmet defaultTitle="UBC Degree Explorer"/>
     <CssBaseline />
    <Route exact path="/bcs" component={Home}/>
    
