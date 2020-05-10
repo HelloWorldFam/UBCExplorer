@@ -17,6 +17,7 @@ const LandingPage = () => {
     <>
     <CssBaseline />
    <Route exact path="/bcs" component={Home}/>
+   
     {/* <Home /> */}
     <Banner />
     <About />

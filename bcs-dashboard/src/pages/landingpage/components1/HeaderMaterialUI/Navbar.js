@@ -176,17 +176,26 @@ const menuItems = [
     listText: "UBC Explorer",
    
   },
+  {
+    listIcon: <Home />,
+    listText: "Home",
+    listPath: "/bcs"
+},
 
     {
-        listIcon: <Home />,
-        listText: "Home",
-        listPath: "/"
+        listIcon: <Apps />,
+        listText: "About",
+        listPath: "/contact"
     },
+
     
     {
-        listIcon: <Apps />,
-        listText: "About"
-    },
+      listIcon: <Apps />,
+      listText: "Course-Selector Page",
+      listPath: "/"
+  },
+  
+
     // {
     //     listIcon: <ContactMail />,
     //     listText: "Contact"

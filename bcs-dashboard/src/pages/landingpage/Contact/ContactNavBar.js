@@ -60,6 +60,77 @@ import {
     Apps,
     ContactMail
 } from "@material-ui/icons";
+// Logos
+import GithubLogo from "./LogoFolder/Github.png";
+import GoogleLogo from "./LogoFolder/Google.png";
+import FacebookLogo from "./LogoFolder/Facebook.png";
+
+
+
+
+// Login
+// Icon menu component for the login expansion
+class IconMenu extends React.Component {
+  state = {
+    anchorEl: null,
+  };
+
+  handleClick = (event) => {
+    if (window.innerWidth < 993) {
+      this.setState({ anchorEl: document.querySelector("#root > div > nav > header > div") })
+    } else {
+    this.setState({ anchorEl: event.currentTarget });
+    }
+  
+}
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  render() {
+    const { anchorEl } = this.state;
+    return (
+      <>
+        <Button
+          aria-owns={anchorEl ? "simple-menu" : undefined}
+          aria-haspopup="true"
+          onClick={this.handleClick}
+          variant="contained"
+          color="buttoncolor"
+          disableRipple={true}
+          disableFocusRipple={true}
+        >
+          Login | Register
+        </Button>
+
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          // anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          // transformOrigin={{ vertical: "top", horizontal: "center" }}
+          onClose={this.handleClose}
+          color="buttoncolor"
+        >
+          <Card>
+            <Typography variant="h6" style={{ padding: '0 10px 10px 10px', }}>Sign in with an OAuth provider:</Typography>
+            <Button style={{ margin: '3px', }} variant="outlined" href="/auth/google">
+              <strong>Google</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={GoogleLogo}></img>
+            </Button>
+            <Button style={{ margin: '3px', }} variant="outlined" href="/auth/facebook">
+              <strong>Facebook</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={FacebookLogo}></img>
+            </Button>
+            <Button style={{ margin: '3px', }} variant="outlined" href="/auth/github">
+              <strong>Github</strong> <img style={{ width: '52px', height: '16px', marginLeft: '10px' }} src={GithubLogo}></img>
+            </Button>
+          </Card>
+        </Menu>
+      </>
+    );
+  }
+}
+
 
 
 
@@ -116,9 +187,14 @@ const menuItems = [
 
     {
         listIcon: <Home />,
-        listText: "Main Page",
-        listPath: "/"
+        listText: "Home",
+        listPath: "/bcs"
     },
+    {
+      listIcon: <Apps />,
+      listText: "Course-Selector Page",
+      listPath: "/"
+  },
     
 ]
 
@@ -175,21 +251,13 @@ const HeaderBar = () => {
                         UBC Explorer
                     </Typography>
                     <div className="spacer"/>
-                    {/* <ul className="right hide-on-med-and-down"> */}
-                    <ul>
+                    <ul className="right hide-on-med-and-down">
                 <li>
-                  <AnchorLink href="./bcs">Main Page</AnchorLink>
-                </li>
-                {/* <li> */}
-                  {/* <AnchorLink href="/about">Features</AnchorLink>
+                  <NavItem href="./bcs">Home</NavItem>
                 </li>
                 <li>
-                  <AnchorLink href="./contact">About</AnchorLink>
-                </li>
-                <li>
-                  <AnchorLink href="/Footer">Contact</AnchorLink>
-                </li> */}
-              
+                  <IconMenu/>
+                  </li>
               </ul>
               </Toolbar>
             </AppBar>
@@ -206,7 +274,16 @@ export default HeaderBar;
 
 
 
-
+ {/* <li> */}
+                  {/* <AnchorLink href="/about">Features</AnchorLink>
+                </li>
+                <li>
+                  <AnchorLink href="./contact">About</AnchorLink>
+                </li>
+                <li>
+                  <AnchorLink href="/Footer">Contact</AnchorLink>
+                </li> */}
+              
 // const SmoothScroll = () => {
 //   return (<section>
 //     <div className="navbar-fixed">
