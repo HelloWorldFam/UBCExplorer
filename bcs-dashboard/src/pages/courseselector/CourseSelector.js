@@ -47,7 +47,7 @@ const TextField = styled(TextFieldSpacing)`
 
 export const Card = styled(MuiCard)`
   overflow: visible;
-`; 
+`;
 
 export const Divider = styled(MuiDivider)(spacing);
 
@@ -201,8 +201,8 @@ function SearchCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-        "/getCourseInfo/" +
-        courseInfo
+          "/getCourseInfo/" +
+          courseInfo
       )
       .then((res) => {
         setCode(courseInfo);
@@ -313,11 +313,11 @@ function bridgingModule() {
         Bridging Module as part of BCS degree requirement is 15 credits of
         courses. <br />
         <br />
-        Courses must be 300/400 level from a single discipline.
-        However, you can create your own bridging module from
-        multiple disciplines. <br /> Note that at least 9 credits of the
-        bridging module need to be from outside the CPSC. <br /> Email the BCS
-        Director to check if your bridging module is valid.
+        Courses must be 300/400 level from a single discipline. However, you can
+        create your own bridging module from multiple disciplines. <br /> Note
+        that at least 9 credits of the bridging module need to be from outside
+        the CPSC. <br /> Email the BCS Director to check if your bridging module
+        is valid.
       </h3>
     </>
   );
@@ -326,7 +326,10 @@ function bridgingModule() {
 function upperCPSC() {
   return (
     <>
-      <h3>Upper Year CPSC courses 300/400 level that are not apart of the bridging module or core CPSC courses.</h3>
+      <h3>
+        Upper Year CPSC courses 300/400 level that are not apart of the bridging
+        module or core CPSC courses.
+      </h3>
     </>
   );
 }
@@ -554,8 +557,8 @@ function PrerequisitesCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-        "/getCourseInfo/" +
-        course
+          "/getCourseInfo/" +
+          course
       )
       .then((res) => {
         if (res.data.desc) {
@@ -603,8 +606,8 @@ function DependenciesCard(props) {
             (window.location.host === "ubcexplorer.io"
               ? ""
               : "http://localhost:3000") +
-            "/getCourseInfo/" +
-            course
+              "/getCourseInfo/" +
+              course
           )
           .then((res) => {
             if (res.data.desc) {
@@ -663,7 +666,9 @@ const addToDegreeFunction = (
     for (let coursesInTerm of courseArray) {
       if (coursesInTerm.code === courseToAdd.code) {
         //term exists; confirm if user wants to add?
-        isInCourseArray = !window.confirm("You have already added this course in the current term. Are you sure you want to add it again?");
+        isInCourseArray = !window.confirm(
+          "You have already added this course in the current term. Are you sure you want to add it again?"
+        );
         break;
       }
     }
@@ -675,11 +680,14 @@ const addToDegreeFunction = (
   } else {
     // Search to see if the user has added the course in the degree
     let courseAlreadyAddedToDegree = false;
-    upper_loop:
-    for (let term of usersCourseArray) {
+    upper_loop: for (let term of usersCourseArray) {
       for (let course of term.courses) {
         if (course.code === courseToAdd.code) {
-          courseAlreadyAddedToDegree = !window.confirm("You have already added this course in " + term.name + ". Are you sure you want to add it again?");
+          courseAlreadyAddedToDegree = !window.confirm(
+            "You have already added this course in " +
+              term.name +
+              ". Are you sure you want to add it again?"
+          );
           break upper_loop;
         }
       }
@@ -723,7 +731,7 @@ function CourseSelector() {
             : "http://localhost:3000") + "/updateUserWorkList",
           usersCourseArray
         )
-        .then(() => { });
+        .then(() => {});
     }
   }, [usersCourseArray]);
 

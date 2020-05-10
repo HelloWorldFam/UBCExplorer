@@ -1,5 +1,4 @@
 import React from "react";
-
 import async from "../components/Async";
 
 import {
@@ -27,8 +26,8 @@ import {
 } from "@material-ui/icons";
 
 // Icons
-import TimelineIcon from '@material-ui/icons/Timeline';
-import ReceiptIcon from '@material-ui/icons/Receipt';
+import TimelineIcon from "@material-ui/icons/Timeline";
+import ReceiptIcon from "@material-ui/icons/Receipt";
 
 // Landing page component
 const LandingPage = async(() => import("../pages/landingpage/LandingPage"));
@@ -37,10 +36,21 @@ const ContactPage = async(() => import("../pages/landingpage/Contact/Contact"));
 // Getting started component
 const GetStartedPage = async(() => import("../pages/getstarted/GetStarted"));
 
+//Privacy Policy
+const PrivacyPolicyPage = async(() =>
+  import("../pages/privacypolicy/PrivacyPolicy")
+);
+
 // Degree progress components
-const DegreeTimeline = async(() => import("../pages/degreeprogress/DegreeTimeline"));
-const DegreeOverview = async(() => import("../pages/degreeprogress/DegreeOverview"));
-const DegreeTranscript = async(() => import("../pages/degreeprogress/DegreeTranscript"));
+const DegreeTimeline = async(() =>
+  import("../pages/degreeprogress/DegreeTimeline")
+);
+const DegreeOverview = async(() =>
+  import("../pages/degreeprogress/DegreeOverview")
+);
+const DegreeTranscript = async(() =>
+  import("../pages/degreeprogress/DegreeTranscript")
+);
 
 //Course Selector Components
 const CourseSelector = async(() =>
@@ -482,6 +492,14 @@ const documentationRoutes = {
   children: null,
 };
 
+const privacyPolicyRoutes = {
+  id: "Privacy Policy",
+  path: "/privacyPolicy",
+  icon: <BookOpen />,
+  component: PrivacyPolicyPage,
+  children: null,
+};
+
 const changelogRoutes = {
   id: "Changelog",
   path: "/changelog",
@@ -531,6 +549,7 @@ export const dashboard = [
 
 export const auth = [authRoutes];
 export const mainSearch = [mainSearchRoutes];
+export const privacy = [privacyPolicyRoutes];
 
 export default [
   dashboardsRoutes,
@@ -538,6 +557,7 @@ export default [
   degreeOverview,
   degreeTimeline,
   degreeTranscript,
+
   // myCoursesRoutes,
   // myToDosRoutes,
   // profileRoutes,
