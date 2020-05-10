@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { NavLink as RouterNavLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
+import Loader from '../../components/Loader.js';
 
 // Vertical Timeline (Scrolling) component
 import {
@@ -59,7 +60,40 @@ const Divider = styled(MuiDivider)(spacing);
 const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
 function Timeline(props) {
+  const [toolTipTitle, setToolTipTitle] = useState(Loader);
+  const [toolTipOpen, setTooltipOpen] = useState(false);
+
   const classes = useStyles();
+
+  const getTooltipTitle = (course) => {
+    setTooltipOpen(true);
+    axios
+      .get(
+        (window.location.host === "ubcexplorer.io"
+          ? ""
+          : "http://localhost:3000") +
+        "/getCourseInfo/" +
+        course
+      )
+      .then((res) => {
+        if (res.data) {
+          let prereqs = res.data.preq;
+          let depends = res.data.depn;
+          let course = res.data.code;
+          let credits = res.data.cred;
+          setToolTipTitle(
+            <>
+              Course: {course} <br />
+                    Credits: {credits} <br />
+                    Prerequisites: {prereqs.map((item, index) => index === 0 ? <>{item}</> : <>, {item}</>)} <br />
+                    Dependencies: {depends.map((item, index) => index === 0 ? <>{item}</> : <>, {item}</>)} <br />
+            </>
+          )
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <Card style={{ backgroundColor: "#e3e3e3" }} mb={6}>
       <CardContent>
@@ -72,29 +106,35 @@ function Timeline(props) {
               <h3>You have not added any courses!</h3>
             </VerticalTimelineElement>
           ) : (
-            props.courseResult.map((item, index, array) => (
-              <VerticalTimelineElement
-                date={item.name}
-                {...verticalTimelineProps}
-              >
-                <h3 className="vertical-timeline-element-title">Courses:</h3>
-                {item.courses.map((course) => (
-                  <>
-                    <Tooltip title={tooltipText(course)} arrow>
-                      <Button
-                        className="vertical-timeline-element-subtitle"
-                        variant="outlined"
-                        size="medium"
-                        className={classes.margin}
-                      >
-                        {course.code}
-                      </Button>
-                    </Tooltip>
-                  </>
-                ))}
-              </VerticalTimelineElement>
-            ))
-          )}
+              props.courseResult.map((item, index, array) => (
+                <VerticalTimelineElement
+                  date={item.name}
+                  {...verticalTimelineProps}
+                >
+                  <h3 className="vertical-timeline-element-title">Courses:</h3>
+                  {item.courses.map((course) => (
+                    <>
+                      <Tooltip
+                        title={toolTipTitle}
+                        open={toolTipOpen}
+                        placement="bottom"
+                        arrow
+                        onOpen={() => { getTooltipTitle(course.code) }}
+                        onClose={() => { setTooltipOpen(false); setToolTipTitle(Loader) }}>
+                        <Button
+                          className="vertical-timeline-element-subtitle"
+                          variant="outlined"
+                          size="medium"
+                          className={classes.margin}
+                        >
+                          {course.code}
+                        </Button>
+                      </Tooltip>
+                    </>
+                  ))}
+                </VerticalTimelineElement>
+              ))
+            )}
         </VerticalTimeline>
       </CardContent>
     </Card>
@@ -103,6 +143,8 @@ function Timeline(props) {
 
 function DegreeTimeline() {
   const [courseResult, setCourseResult] = React.useState([]);
+  const [toolTipTitle, setToolTipTitle] = useState(Loader);
+  const [toolTipOpen, setTooltipOpen] = useState(false);
 
   useEffect(() => {
     fetch(
@@ -142,6 +184,7 @@ function DegreeTimeline() {
 }
 
 export default DegreeTimeline;
+
 
 function tooltipText(course) {
 

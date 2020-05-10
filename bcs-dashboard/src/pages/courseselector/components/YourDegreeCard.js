@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import dragula from "react-dragula";
-import { Button } from "@material-ui/core";
+import { Button, Tooltip, Toolbar } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { TaskWrapper, TaskWrapperContent, Lane, Card, Divider, Typography } from "../CourseSelector";
+import axios from "axios";
+import Loader from '../../../components/Loader.js';
 
 export function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
+    const [toolTipTitle, setToolTipTitle] = useState(Loader);
+    const [toolTipOpen, setTooltipOpen] = useState(false);
+
     /**
      * Use containers state to keep track of the terms
      */
@@ -17,18 +22,18 @@ export function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
     const onContainerReady = (container) => {
         containers.push(container);
     };
-    
+
     /**
      * Helper function so that drag and drop functions on mobile devices
      * @param {Event} e 
      */
-    var listener = function(e) {
-        if (! scrollable) {
+    var listener = function (e) {
+        if (!scrollable) {
             e.preventDefault();
         }
     }
     var scrollable = true;
-    document.addEventListener('touchmove', listener, { passive:false });
+    document.addEventListener('touchmove', listener, { passive: false });
 
     useEffect(() => {
         setContainers((containers) => [...containers]);
@@ -86,6 +91,35 @@ export function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
         </>);
     };
 
+    const getTooltipTitle = (course) => {
+        setTooltipOpen(true);
+        axios
+          .get(
+            (window.location.host === "ubcexplorer.io"
+              ? ""
+              : "http://localhost:3000") +
+            "/getCourseInfo/" +
+            course
+          )
+          .then((res) => {
+            if (res.data) {
+                let prereqs = res.data.preq;
+                let depends = res.data.depn;
+                let course = res.data.code;
+                let credits = res.data.cred;
+                setToolTipTitle(
+                    <>
+                        Course: {course} <br/>
+                        Credits: {credits} <br/>
+                        Prerequisites: {prereqs.map((item, index) => index === 0 ? <>{item}</> : <>, {item}</>)} <br/>
+                        Dependencies: {depends.map((item, index) => index === 0 ? <>{item}</> : <>, {item}</>)} <br/>
+                    </>
+                )
+            }
+          })
+          .catch((err) => console.log(err));
+    }
+
     if (usersCourseArray && usersCourseArray[0] != -1 && usersCourseArray.length !== 0) {
         return (<>
             {usersCourseArray.map((term, termIndex) => {
@@ -95,26 +129,34 @@ export function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
                             <Lane title={getLaneTitle(term.name, termIndex)} className={term.name} termId={termIndex} description="" onContainerLoaded={onContainerReady}>
                                 {term.courses.map((course, courseIndex) => {
                                     return (<>
-                                        <Card style={{
-                                            margin: "5px 5px 5px 0",
-                                            padding: "10px",
-                                            display: "inline-block",
-                                            backgroundColor: "#e6e6e6",
-                                        }} courseid={course.code} term={term.name} key={`${termIndex}_${courseIndex}`}>
-                                            {course.code}
-                                            <Button style={{
-                                                minWidth: "30px",
-                                                color: "#bf0a0a",
-                                                padding: "0",
-                                            }} onClick={() => {
-                                                term.courses.splice(courseIndex, 1);
-                                                setUsersCourseArray((usersCourseArray) => [
-                                                    ...usersCourseArray,
-                                                ]);
-                                            }}>
-                                                x
+                                        <Tooltip
+                                            title={toolTipTitle}
+                                            open={toolTipOpen}
+                                            placement="bottom"
+                                            arrow
+                                            onOpen={() => {getTooltipTitle(course.code)}}
+                                            onClose={() => {setTooltipOpen(false); setToolTipTitle(Loader)}}>
+                                            <Card style={{
+                                                margin: "5px 5px 5px 0",
+                                                padding: "10px",
+                                                display: "inline-block",
+                                                backgroundColor: "#e6e6e6",
+                                            }} courseid={course.code} term={term.name} key={`${termIndex}_${courseIndex}`}>
+                                                {course.code}
+                                                <Button style={{
+                                                    minWidth: "30px",
+                                                    color: "#bf0a0a",
+                                                    padding: "0",
+                                                }} onClick={() => {
+                                                    term.courses.splice(courseIndex, 1);
+                                                    setUsersCourseArray((usersCourseArray) => [
+                                                        ...usersCourseArray,
+                                                    ]);
+                                                }}>
+                                                    x
                                             </Button>
-                                        </Card>
+                                            </Card>
+                                        </Tooltip>
                                     </>);
                                 })}
                             </Lane>
