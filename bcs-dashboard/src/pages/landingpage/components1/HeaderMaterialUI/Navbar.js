@@ -19,6 +19,8 @@ import StorageIcon from '@material-ui/icons/Storage';
 import ViewHeadlineIcon from '@material-ui/icons/ViewHeadline';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+
 import {
   Button as MuiButton,
   CardContent,
@@ -215,7 +217,7 @@ const menuItems = [
 ]
 
 
-const Navbar = () => { 
+const Navbar = (props) => { 
     const [state, setState] = useState({
         right: false
     });
@@ -247,8 +249,9 @@ const Navbar = () => {
     )
 
     return (
-        <>
-  
+        // <>
+      <React.Fragment>
+
         <Box component="nav">
           {/* <div className="try"></div> */}
             <AppBar position="fixed" style={{background: "#232f3e"}}>
@@ -299,8 +302,10 @@ const Navbar = () => {
               </ul>
               </Toolbar>
             </AppBar>
+         
         </Box>
-        </>
+        </React.Fragment>
+        // {/* </> */}
     )
 }
 
