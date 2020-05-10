@@ -13,6 +13,12 @@ import GithubLogo from "./LogoFolder/Github.png";
 import GoogleLogo from "./LogoFolder/Google.png";
 import FacebookLogo from "./LogoFolder/Facebook.png";
 // added
+
+import NoteIcon from '@material-ui/icons/Note';
+import StorageIcon from '@material-ui/icons/Storage';
+import ViewHeadlineIcon from '@material-ui/icons/ViewHeadline';
+import ListAltIcon from '@material-ui/icons/ListAlt';
+
 import {
   Button as MuiButton,
   CardContent,
@@ -250,8 +256,14 @@ const Navbar = () => {
 
                
                     <IconButton onClick={toggleSlider("right", true)}>
-                    
-                    <School style={{color: "white"}}/>
+                    {/* <StorageIcon style={{color: "white"}}/>
+
+                    <NoteIcon style={{color: "white"}}/>
+                    <School style={{color: "white"}}/> */}
+                    <ViewHeadlineIcon style={{color: "white"}}/>
+                    {/* <ListAltIcon style={{color: "white"}}/> */}
+
+
                     </IconButton>
                     <MobileRightMenuSlider
                     anchor="left"
@@ -262,8 +274,10 @@ const Navbar = () => {
                     </MobileRightMenuSlider>
               
                     <Typography variant="h3" style={{color: "white"}}>
-                        UBC Explorer
+                        UBC Explorer &nbsp;
+                  
                     </Typography>
+                    <School style={{color: "white"}}/> 
                     <Menu />
                     <div className="spacer"/>
                     <ul className="right hide-on-med-and-down">

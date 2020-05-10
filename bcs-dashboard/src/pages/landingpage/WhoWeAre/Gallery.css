@@ -1,6 +1,6 @@
-.navbarpadding {
+/* .navbarpadding {
     padding-top: 50px;
-}
+} */
 .marg {
     margin-top: 20px;
    }
@@ -8,18 +8,24 @@
       font-size: x-large;
       font-weight: 700;
   }
+/*   
   .betweenpadding {
     padding-top: 30px;
-}
+} */
 
-  
+/*   
 .try {
     font-size: 20px;
     font-weight: 500;
 
-}
+} */
 
 .color {
     font-size: 40px;
     font-weight: 700;
+}
+
+.changeFont {
+    font-size: 20px;
+    font-weight: 500;
 }

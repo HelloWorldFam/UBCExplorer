@@ -11,6 +11,8 @@ import Helmet from "react-helmet";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
 import './ContactBar.css';
+import ViewHeadlineIcon from '@material-ui/icons/ViewHeadline';
+
 import {
   Button as MuiButton,
   CardContent,
@@ -238,7 +240,7 @@ const HeaderBar = () => {
              
                 <Toolbar>
                     <IconButton onClick={toggleSlider("right", true)}>
-                    <School style={{color: "white"}}/>
+                    <ViewHeadlineIcon style={{color: "white"}}/>
                     </IconButton>
                     <MobileRightMenuSlider
                     anchor="left"
@@ -248,8 +250,9 @@ const HeaderBar = () => {
                             {sideList("right")}
                     </MobileRightMenuSlider>
                     <Typography variant="h3" style={{color: "white"}}>
-                        UBC Explorer
+                        UBC Explorer &nbsp;
                     </Typography>
+                    <School style={{color: "white"}}/>
                     <div className="spacer"/>
                     <ul className="right hide-on-med-and-down">
                 <li>

@@ -30,3 +30,7 @@
 .spacer {
     flex: 0.9;
 }
+
+.changeColor {
+    color: #232f3e;
+}
