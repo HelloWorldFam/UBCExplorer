@@ -131,7 +131,7 @@ function Overview(props) {
                 exemptions.completed = function() {
                     let exemptCourses = [];
                     term.courses.map(course => exemptCourses.push(course.code));
-                    return exemptCoruses;
+                    return exemptCourses;
                 } ();
             } else {
                 const progress = () => {
