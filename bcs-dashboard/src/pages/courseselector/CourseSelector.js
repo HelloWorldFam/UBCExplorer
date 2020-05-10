@@ -131,7 +131,6 @@ export function Lane(props) {
   const [zoom, setZoom] = useState(0);
 
   useEffect(() => {
-    console.log(props.zoom);
     if (props.zoom <= 4 && props.zoom >= 0) {
       setZoom(props.zoom);
     }
