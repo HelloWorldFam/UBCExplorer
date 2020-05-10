@@ -7,6 +7,7 @@ import About from "./About/About";
 import WhoWeAre from "./WhoWeAre/WhoWeAre";
 import Contact from "./Contact/Contact";
 import Footer from "./Footer/Footer";
+import {Route} from 'react-router-dom';
 
 import Home from "./components1/App";
 import CssBaseline from '@material-ui/core/CssBaseline';  
@@ -15,8 +16,8 @@ const LandingPage = () => {
   return (
     <>
     <CssBaseline />
-   
-    <Home />
+   <Route exact path="/bcs" component={Home}/>
+    {/* <Home /> */}
     <Banner />
     <About />
     {/* <Contact /> */}

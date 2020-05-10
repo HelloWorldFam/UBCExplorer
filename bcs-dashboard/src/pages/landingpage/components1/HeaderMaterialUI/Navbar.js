@@ -5,6 +5,7 @@ import "./Navbar.css";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import Helmet from "react-helmet";
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 // Logos
 import GithubLogo from "./LogoFolder/Github.png";
@@ -16,7 +17,7 @@ import {
   CardContent,
   Fade,
   Grid,
-  Link,
+  // Link,
   List,
   ListItem,
   ListItemIcon,
@@ -160,10 +161,16 @@ const useStyles = makeStyles(theme=> ({
 })); 
 
 const menuItems = [
+  
+  {
+    listText: "UBC Explorer",
+   
+  },
 
     {
         listIcon: <Home />,
-        listText: "Home"
+        listText: "Home",
+        listPath: "/"
     },
     {
         listIcon: <Apps />,
@@ -178,9 +185,10 @@ const menuItems = [
         listText: "Contact"
     },
     {
-        listIcon: <AssignmentInd />,
-        listText: "Sign In/Register"
+        listIcon: <IconMenu/>,
+        // listText: "Sign In/Register"
     },
+    
 ]
 
 
@@ -206,7 +214,7 @@ const Navbar = () => {
         
         <List>
             {menuItems.map((lsItem, key) => (
-            <ListItem button key={key}>
+            <ListItem button key={key} component={Link} to={lsItem.listPath}>
                 <ListItemIcon className={classes.listItem}> {lsItem.listIcon} </ListItemIcon>
                 <ListItemText className={classes.listItem} primary={lsItem.listText} /> 
                 </ListItem>
