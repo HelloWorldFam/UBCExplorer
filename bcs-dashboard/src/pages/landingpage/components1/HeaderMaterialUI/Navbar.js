@@ -7,6 +7,7 @@ import Helmet from "react-helmet";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
 
+import { NavItem, Icon } from "react-materialize";
 // Logos
 import GithubLogo from "./LogoFolder/Github.png";
 import GoogleLogo from "./LogoFolder/Google.png";
@@ -258,7 +259,7 @@ const Navbar = () => {
                   <AnchorLink href="/about">Features</AnchorLink>
                 </li>
                 <li>
-                  <AnchorLink href="./contact">About</AnchorLink>
+                  <NavItem href="./contact">About</NavItem>
                 </li>
                 <li>
                   <AnchorLink href="/Footer">Contact</AnchorLink>
