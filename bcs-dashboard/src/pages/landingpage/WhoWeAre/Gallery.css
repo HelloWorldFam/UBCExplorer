@@ -6,9 +6,20 @@
    }
   .sizeFont {
       font-size: x-large;
+      font-weight: 700;
   }
   .betweenpadding {
     padding-top: 30px;
 }
 
   
+.try {
+    font-size: 20px;
+    font-weight: 500;
+
+}
+
+.color {
+    font-size: 40px;
+    font-weight: 700;
+}

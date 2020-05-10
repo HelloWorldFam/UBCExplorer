@@ -116,14 +116,10 @@ const menuItems = [
 
     {
         listIcon: <Home />,
-        listText: "Home",
+        listText: "Main Page",
         listPath: "/"
     },
     
-    {
-        listIcon: <Apps />,
-        listText: "About"
-    },
 ]
 
 
@@ -179,19 +175,20 @@ const HeaderBar = () => {
                         UBC Explorer
                     </Typography>
                     <div className="spacer"/>
-                    <ul className="right hide-on-med-and-down">
+                    {/* <ul className="right hide-on-med-and-down"> */}
+                    <ul>
                 <li>
-                  <AnchorLink href="/home">Home</AnchorLink>
+                  <AnchorLink href="./bcs">Main Page</AnchorLink>
                 </li>
-                <li>
-                  <AnchorLink href="/about">Features</AnchorLink>
+                {/* <li> */}
+                  {/* <AnchorLink href="/about">Features</AnchorLink>
                 </li>
                 <li>
                   <AnchorLink href="./contact">About</AnchorLink>
                 </li>
                 <li>
                   <AnchorLink href="/Footer">Contact</AnchorLink>
-                </li>
+                </li> */}
               
               </ul>
               </Toolbar>

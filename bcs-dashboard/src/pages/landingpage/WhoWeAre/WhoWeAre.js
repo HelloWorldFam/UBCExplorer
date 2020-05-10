@@ -82,7 +82,7 @@ export default class WhoWeAre extends Component {
         <div className="navbarpadding">
           <div className="container">
             <h4 className="center">
-              <span className="color">FOUNDERS</span> - WHO WE ARE
+              <span className="color">FOUNDERS - WHO WE ARE </span>
               <p className="sizeFont">
                 We are a team of six, BCSers with the objective to modernize the
                 course search and course planning experience.
@@ -101,7 +101,8 @@ export default class WhoWeAre extends Component {
                                 <div className="input-field">
                                     <input type="text" id="vision" className="validate" /> */}
               {/* <label for="vision" className="blue-text">With the BCS course-selector App, we hope to deliver a one-in-all website</label> */}
-              <Typography variant="body1" gutterBottom align="left">
+              <Typography variant="body1" gutterBottom align="left" className="try">
+               
                 Our mission is to deliver modernized tools which enables
                 students to be able to have a more efficient and seamless course
                 search/degree planning experience.
