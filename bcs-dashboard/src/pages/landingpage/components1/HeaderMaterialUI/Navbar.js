@@ -18,6 +18,8 @@ import NoteIcon from '@material-ui/icons/Note';
 import StorageIcon from '@material-ui/icons/Storage';
 import ViewHeadlineIcon from '@material-ui/icons/ViewHeadline';
 import ListAltIcon from '@material-ui/icons/ListAlt';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
@@ -192,15 +194,15 @@ const menuItems = [
 },
 
     {
-        listIcon: <Apps />,
+        listIcon: <EmojiPeopleIcon />,
         listText: "About",
         listPath: "/contact"
     },
 
     
     {
-      listIcon: <Apps />,
-      listText: "Course-Selector Page",
+      listIcon: <ArrowBackIcon />,
+      listText: "Back to UBC Course Explorer",
       listPath: "/"
   },
   
