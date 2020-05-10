@@ -80,7 +80,7 @@ export default class WhoWeAre extends Component {
     return (
       <section id="WhoWeAre" className="section section-WhoWeAre scrollspy">
         <div className="navbarpadding">
-          <div className="container">
+          {/* <div className="container"> */}
             <h4 className="center">
               <span className="color">FOUNDERS - WHO WE ARE </span>
               <p className="sizeFont">
@@ -119,7 +119,7 @@ export default class WhoWeAre extends Component {
 
             {/* </form> */}
           </div>
-        </div>
+        {/* </div> */}
       </section>
     );
   }

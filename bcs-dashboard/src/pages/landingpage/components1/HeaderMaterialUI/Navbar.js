@@ -55,6 +55,7 @@ Box
 } from "@material-ui/core";
 
 import {
+  
   School,
     ArrowBack,
     AssignmentInd,
@@ -246,7 +247,10 @@ const Navbar = () => {
           {/* <div className="try"></div> */}
             <AppBar position="fixed" style={{background: "#232f3e"}}>
                 <Toolbar>
+
+               
                     <IconButton onClick={toggleSlider("right", true)}>
+                    
                     <School style={{color: "white"}}/>
                     </IconButton>
                     <MobileRightMenuSlider
@@ -256,9 +260,11 @@ const Navbar = () => {
                         >
                             {sideList("right")}
                     </MobileRightMenuSlider>
+              
                     <Typography variant="h3" style={{color: "white"}}>
                         UBC Explorer
                     </Typography>
+                    <Menu />
                     <div className="spacer"/>
                     <ul className="right hide-on-med-and-down">
                 <li>
