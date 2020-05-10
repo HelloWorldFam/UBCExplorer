@@ -262,6 +262,16 @@ app.get("/node_modules", (req, res) => {
   res.redirect("/");
 });
 
+app.get("/api", (req, res) => {
+  // send landing page
+  res.redirect("/");
+});
+
+app.get("/privacypolicy", (req, res) => {
+  // send landing page
+  res.redirect("/");
+});
+
 // Nodemon success message
 app.listen(port, () => {
   // Only keep dyno awake in production
