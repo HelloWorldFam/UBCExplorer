@@ -224,9 +224,11 @@ function SearchResultCard(props) {
             <br />
             <LinkStyling>
               {props.course.name ? (
-                <a href={props.course.link} target="none">
-                  {props.course.name}
-                </a>
+                <Tooltip title="Click to see course on SSC">
+                  <a href={props.course.link} target="none">
+                    {props.course.name}
+                  </a>
+                </Tooltip>
               ) : (
                   props.name
                 )}
@@ -885,100 +887,100 @@ function CourseSelector() {
             color="primary"
             aria-label="Add"
             onClick={() => setZoom(0)}>
-          Default
+            Default
           </Button>
-        <Button
-          mx={2}
-          size="small"
-          variant="outlined"
-          disabled={zoom === 0}
-          color="primary"
-          aria-label="Add"
-          onClick={zoomIn}
-        >
-          <ZoomIn />
-        </Button>
-      </Grid>
+          <Button
+            mx={2}
+            size="small"
+            variant="outlined"
+            disabled={zoom === 0}
+            color="primary"
+            aria-label="Add"
+            onClick={zoomIn}
+          >
+            <ZoomIn />
+          </Button>
+        </Grid>
       </Grid>
 
-    <Divider my={6} />
-    <Grid container spacing={6}>
-      <Grid
-        item
-        xs={12}
-        lg={6}
-        xl={3}
-        style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
-      >
-        <Lane
-          title="Search"
-          description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
-          onContainerLoaded={onContainerReady}
-          fullWidth
-          zoom={zoom}
+      <Divider my={6} />
+      <Grid container spacing={6}>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
         >
-          <SearchCard
-            onChange={setSelectedCourse}
-            onSubmitCourse={setCourseToAdd}
-          />
-        </Lane>
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        lg={6}
-        xl={3}
-        style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
-      >
-        <Lane
-          title="Prerequisite / Corequisite Courses"
-          description="Selected course's prerequisites and corequisites."
-          onContainerLoaded={onContainerReady}
-          zoom={zoom}
+          <Lane
+            title="Search"
+            description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
+            onContainerLoaded={onContainerReady}
+            fullWidth
+            zoom={zoom}
+          >
+            <SearchCard
+              onChange={setSelectedCourse}
+              onSubmitCourse={setCourseToAdd}
+            />
+          </Lane>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
         >
-          <PrerequisitesCard
-            course={selectedCourse === undefined ? [] : selectedCourse}
-          />
-        </Lane>
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        lg={6}
-        xl={3}
-        style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
-      >
-        <Lane
-          title="Dependent Courses"
-          description="Courses that list this course as a direct prerequisite."
-          onContainerLoaded={onContainerReady}
-          zoom={zoom}
+          <Lane
+            title="Prerequisite / Corequisite Courses"
+            description="Selected course's prerequisites and corequisites."
+            onContainerLoaded={onContainerReady}
+            zoom={zoom}
+          >
+            <PrerequisitesCard
+              course={selectedCourse === undefined ? [] : selectedCourse}
+            />
+          </Lane>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
         >
-          <DependenciesCard
-            course={selectedCourse === undefined ? [] : selectedCourse}
-          />
-        </Lane>
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        lg={6}
-        xl={3}
-        style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
-      >
-        <Lane
-          title="Your Degree"
-          description="The courses that you have added to your worklist."
-          onContainerLoaded={onContainerReady}
-          zoom={zoom}
+          <Lane
+            title="Dependent Courses"
+            description="Courses that list this course as a direct prerequisite."
+            onContainerLoaded={onContainerReady}
+            zoom={zoom}
+          >
+            <DependenciesCard
+              course={selectedCourse === undefined ? [] : selectedCourse}
+            />
+          </Lane>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
         >
-          <YourDegreeCard
-            usersCourseArray={usersCourseArray}
-            setUsersCourseArray={setUsersCourseArray}
-          />
-        </Lane>
+          <Lane
+            title="Your Degree"
+            description="The courses that you have added to your worklist."
+            onContainerLoaded={onContainerReady}
+            zoom={zoom}
+          >
+            <YourDegreeCard
+              usersCourseArray={usersCourseArray}
+              setUsersCourseArray={setUsersCourseArray}
+            />
+          </Lane>
+        </Grid>
       </Grid>
-    </Grid>
     </React.Fragment >
   );
 }
