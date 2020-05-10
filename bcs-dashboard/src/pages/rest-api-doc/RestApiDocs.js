@@ -258,7 +258,7 @@ function RestApiDocs() {
                 <br />
                 <code>https://ubcexplorer.io/downloadUserData</code>
               </div>
-              <br />
+              <Divider my={6} />
               <br /> <code>/getCourses</code>
               <br />
               <b>Description:</b> Retrieves the authenticated user's list of
