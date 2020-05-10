@@ -158,7 +158,8 @@ function RestApiDocs() {
               <br />
               <br />
               <b>API Response</b>
-              <br />{" "}
+              <br />
+              Returns a JSON array of all courses{" "}
               <div>
                 <pre>
                   {JSON.stringify(getAllCoursesEndPointAPICallExample, null, 2)}
