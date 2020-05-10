@@ -8,7 +8,6 @@ import Loader from '../../../components/Loader.js';
 
 export function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
     const [toolTipTitle, setToolTipTitle] = useState(Loader);
-    const [toolTipOpen, setTooltipOpen] = useState(false);
 
     /**
      * Use containers state to keep track of the terms
@@ -92,32 +91,31 @@ export function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
     };
 
     const getTooltipTitle = (course) => {
-        setTooltipOpen(true);
         axios
-          .get(
-            (window.location.host === "ubcexplorer.io"
-              ? ""
-              : "http://localhost:3000") +
-            "/getCourseInfo/" +
-            course
-          )
-          .then((res) => {
-            if (res.data) {
-                let prereqs = res.data.preq;
-                let depends = res.data.depn;
-                let course = res.data.code;
-                let credits = res.data.cred;
-                setToolTipTitle(
-                    <>
-                        Course: {course} <br/>
-                        Credits: {credits} <br/>
-                        Prerequisites: {prereqs.map((item, index) => index === 0 ? <>{item}</> : <>, {item}</>)} <br/>
-                        Dependencies: {depends.map((item, index) => index === 0 ? <>{item}</> : <>, {item}</>)} <br/>
-                    </>
-                )
-            }
-          })
-          .catch((err) => console.log(err));
+            .get(
+                (window.location.host === "ubcexplorer.io"
+                    ? ""
+                    : "http://localhost:3000") +
+                "/getCourseInfo/" +
+                course
+            )
+            .then((res) => {
+                if (res.data) {
+                    let prereqs = res.data.preq;
+                    let depends = res.data.depn;
+                    let course = res.data.code;
+                    let credits = res.data.cred;
+                    setToolTipTitle(
+                        <>
+                            Course: {course} <br />
+                        Credits: {credits} <br />
+                        Prerequisites: {prereqs.map((item, index) => index === 0 ? <>{item}</> : <>, {item}</>)} <br />
+                        Dependencies: {depends.map((item, index) => index === 0 ? <>{item}</> : <>, {item}</>)} <br />
+                        </>
+                    )
+                }
+            })
+            .catch((err) => console.log(err));
     }
 
     if (usersCourseArray && usersCourseArray[0] != -1 && usersCourseArray.length !== 0) {
@@ -130,12 +128,12 @@ export function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
                                 {term.courses.map((course, courseIndex) => {
                                     return (<>
                                         <Tooltip
+                                            key={course.code}
                                             title={toolTipTitle}
-                                            open={toolTipOpen}
                                             placement="bottom"
                                             arrow
-                                            onOpen={() => {getTooltipTitle(course.code)}}
-                                            onClose={() => {setTooltipOpen(false); setToolTipTitle(Loader)}}>
+                                            onOpen={() => { getTooltipTitle(course.code) }}
+                                            onClose={() => { setToolTipTitle(Loader) }}>
                                             <Card style={{
                                                 margin: "5px 5px 5px 0",
                                                 padding: "10px",

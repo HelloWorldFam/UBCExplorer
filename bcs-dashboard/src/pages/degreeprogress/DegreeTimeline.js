@@ -61,12 +61,10 @@ const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
 function Timeline(props) {
   const [toolTipTitle, setToolTipTitle] = useState(Loader);
-  const [toolTipOpen, setTooltipOpen] = useState(false);
 
   const classes = useStyles();
 
   const getTooltipTitle = (course) => {
-    setTooltipOpen(true);
     axios
       .get(
         (window.location.host === "ubcexplorer.io"
@@ -116,11 +114,10 @@ function Timeline(props) {
                     <>
                       <Tooltip
                         title={toolTipTitle}
-                        open={toolTipOpen}
                         placement="bottom"
                         arrow
                         onOpen={() => { getTooltipTitle(course.code) }}
-                        onClose={() => { setTooltipOpen(false); setToolTipTitle(Loader) }}>
+                        onClose={() => { setToolTipTitle(Loader) }}>
                         <Button
                           className="vertical-timeline-element-subtitle"
                           variant="outlined"
