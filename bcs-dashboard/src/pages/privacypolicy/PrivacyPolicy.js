@@ -22,32 +22,31 @@ function PrivacyPolicy() {
     <React.Fragment>
       <Helmet title="Privacy Policy" />
       <Grid justify="space-between" container spacing={6}>
-        <Typography variant="h3" display="inline">
-          <h3>&nbsp;UBC Explorer Privacy Policy</h3>
+        <Typography variant="h1" display="inline" style={{ margin: '20px' }}>
+          UBC Explorer Privacy Policy
         </Typography>
       </Grid>
 
       <TaskWrapper>
         <TaskWrapperContent>
           <Typography variant="body">
+            <p><b>
+              Your data is safe with us. We are a group of students who want
+              to make course planning easier. We've gone through the same
+              struggles of course planning ourselves, and that's why we want
+              to make sure that you have one less thing to worry about.
+            </b></p>
             <p>
-              At UBC Explorer, accessible from https://ubcexplorer.io/, one of
-              our main priorities is the privacy of our visitors. This Privacy
-              Policy document contains types of information that is collected
-              and recorded by UBC Explorer and how we use it.
-            </p>
-
-            <p>
-              If you have additional questions or require more information about
-              our Privacy Policy, do not hesitate to contact us.
+              This policy document contains types of information that is collected
+              and recorded by UBC Explorer and how we use it. If you have additional
+              questions or require more information about our Privacy Policy,
+              do not hesitate to contact us.
             </p>
 
             <p>
               This Privacy Policy applies only to our online activities and is
               valid for visitors to our website with regards to the information
-              that they shared and/or collect in UBC Explorer. This policy is
-              not applicable to any information collected offline or via
-              channels other than this website.
+              that they shared and/or collect in UBC Explorer.
             </p>
 
             <h2>Consent</h2>
@@ -60,23 +59,17 @@ function PrivacyPolicy() {
             <h2>Information we collect</h2>
 
             <p>
-              The personal information that you are asked to provide, and the
-              reasons why you are asked to provide it, will be made clear to you
-              at the point we ask you to provide your personal information.
-            </p>
-
-            <p>
               When you register for an Account, we may ask for your Google
               account, Facebook account, or GitHub. This is solely used to
               create your user profile and login so that you can store your
-              information and access later. Your data is safe with us.
+              information and access later. Your data will not be used in
+              any other way.
             </p>
 
             <p>
-              We offer the user the ability to download their entire profile as
-              a JSON. <br />
-              Users can completely remove their user profile from our website at
-              any time.
+              At any time, you may download a copy of your data in JSON format
+              in your Settings page. <b>You may delete your account at any
+              time and your data will be completely removed from our database.</b>
             </p>
 
             <h2>How we use your information</h2>
@@ -90,26 +83,16 @@ function PrivacyPolicy() {
                 Creation of user profile to allow for saving your data and
                 accessing at a later time.
               </li>
-              <li>Provide, operate, and maintain our website</li>
-              <li>Improve, personalize, and expand our website</li>
-              <li>Understand and analyze how you use our website</li>
-              <li>
-                Develop new products, services, features, and functionality
-              </li>
-              <li>
-                Communicate with you to provide you with updates and other
-                information relating to the webste, and for marketing and
-                promotional purposes
-              </li>
-
-              <li>Find and prevent fraud</li>
             </ul>
 
-            <h2>Cookies and Web Beacons</h2>
+            <h2>Cookies</h2>
 
             <p>
-              Like any other website, UBC Explorer uses 'cookies'. These cookies
-              are used to store your authentication session.
+              UBC Explorer uses 'cookies' to store your authentication session.
+              So that we can continuously improve our site, we use Google
+              Analytics to track our site traffic. If you wish to opt out of
+              Google Analytics, you can do so by following the
+              steps <a href='https://tools.google.com/dlpage/gaoptout'>here</a>.
             </p>
 
             <p>
