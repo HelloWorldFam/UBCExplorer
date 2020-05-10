@@ -3,37 +3,26 @@ import { makeStyles } from '@material-ui/core/styles';
 import MobileRightMenuSlider from "@material-ui/core/Drawer"
 import "./Navbar.css";
 import AnchorLink from "react-anchor-link-smooth-scroll";
-import Helmet from "react-helmet";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
 
-import { NavItem, Icon } from "react-materialize";
+import { NavItem } from "react-materialize";
 // Logos
 import GithubLogo from "./LogoFolder/Github.png";
 import GoogleLogo from "./LogoFolder/Google.png";
 import FacebookLogo from "./LogoFolder/Facebook.png";
-// added
-
-import NoteIcon from '@material-ui/icons/Note';
-import StorageIcon from '@material-ui/icons/Storage';
 import ViewHeadlineIcon from '@material-ui/icons/ViewHeadline';
-import ListAltIcon from '@material-ui/icons/ListAlt';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
 import {
   Button as MuiButton,
-  CardContent,
-  Fade,
-  Grid,
   // Link,
   List,
   ListItem,
   ListItemIcon,
   Menu,
-  MenuItem,
   Breadcrumbs as MuiBreadcrumbs,
   Card as MuiCard,
   Divider as MuiDivider,
@@ -42,39 +31,21 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import {
-  Drafts as DraftsIcon,
-  MoveToInbox as InboxIcon,
-  Send as SendIcon,
-} from "@material-ui/icons";
 
 import { spacing } from "@material-ui/system";
 
 import {
 AppBar,
 Toolbar,
-// ListItem,
 IconButton,
-// ListItemIcon,
-// ListItemText,
-Avatar,
-// Divider,
-// List,
-// Typography,
 Box
 } from "@material-ui/core";
 
 import {
   
   School,
-    ArrowBack,
-    AssignmentInd,
-    Home,
-    Apps,
-    ContactMail
-} from "@material-ui/icons";
+    Home} from "@material-ui/icons";
 
-const ExploreLogo = fetch("/favicon.ico");
 
 const Card = styled(MuiCard)`
   margin: 10px;
@@ -86,9 +57,7 @@ const Button = styled(MuiButton)`
 
 const Divider = styled(MuiDivider)(spacing);
 
-const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
-const Paper = styled(MuiPaper)(spacing);
 
 const ListItemText = styled(MuiListItemText)(spacing);
 
@@ -159,7 +128,7 @@ class IconMenu extends React.Component {
 
 
 // CSS styles
-const useStyles = makeStyles(theme=> ({
+const useStyles = makeStyles(()=> ({
     menuSliderContainer: {
         width: 240,
         background: "#232f3e", 
@@ -219,7 +188,7 @@ const menuItems = [
 ]
 
 
-const Navbar = (props) => { 
+const Navbar = () => { 
     const [state, setState] = useState({
         right: false
     });
