@@ -136,11 +136,12 @@ export function Lane(props) {
     }
   }, [props.zoom]);
 
-  // const handleContainerLoaded = (container) => {
-  //   if (container) {
-  //     props.onContainerLoaded(container);
-  //   }
-  // };
+  const handleContainerLoaded = (container) => {
+    if (container) {
+      props.onContainerLoaded(container)
+    }
+  }
+
   const { title, className, description, children } = props;
 
   return (
@@ -157,7 +158,7 @@ export function Lane(props) {
             className={className}
             termid={props.termId}
             style={{ minHeight: "20px" }}
-          // ref={handleContainerLoaded}
+            ref={handleContainerLoaded}
           >
             {children}
           </div>
@@ -797,7 +798,7 @@ function CourseSelector() {
   const MAX_HEIGHT = windowHeight - 230;
 
   const onContainerReady = (container) => {
-    setContainers(containers.push(container));
+    containers.push(container);
   };
 
   useEffect(() => {
