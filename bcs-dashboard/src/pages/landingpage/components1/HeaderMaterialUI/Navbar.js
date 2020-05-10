@@ -7,10 +7,9 @@ import Helmet from "react-helmet";
 import styled from "styled-components";
 
 // Logos
-import GithubLogo from "./SignInLogos/Github.png";
-import GoogleLogo from "./SignInLogos/Google.png";
-import FacebookLogo from "./SignInLogos/Facebook.png";
-
+import GithubLogo from "./LogoFolder/Github.png";
+import GoogleLogo from "./LogoFolder/Google.png";
+import FacebookLogo from "./LogoFolder/Facebook.png";
 // added
 import {
   Button as MuiButton,
