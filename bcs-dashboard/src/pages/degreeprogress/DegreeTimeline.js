@@ -184,15 +184,3 @@ function DegreeTimeline() {
 }
 
 export default DegreeTimeline;
-
-
-function tooltipText(course) {
-
-  // Removed prereqs and coreqs.. will possibly come back to this
-  return (
-    <>
-      <h3>Name: {course.name}</h3>
-      <h3>Credits: {course.cred}</h3>
-    </>
-  );
-}
