@@ -381,7 +381,7 @@ function Overview(props) {
                     {(Math.max(0, (exemptionCourses - exemptionCoursesComplete - exemptionReplacement.inProgress?.length - exemptionReplacement.incomplete?.length)) === 0) ? 
                     <span style={{ color: 'green' }}>All courses added! Please consult BCS director to ensure courses are appropriate.</span> :
                     <span style={{ color: 'red' }}>
-                        You must add additional {(exemptionCourses - exemptionCoursesComplete - exemptionReplacement.inProgress?.length - exemptionReplacement.incomplete?.length)} exemption course(s).
+                        You must add additional {(exemptionCourses - exemptionCoursesComplete - exemptionReplacement.inProgress?.length - exemptionReplacement.incomplete?.length)} exemption replacement course(s).
                     </span>}
                 </Typography>
 
