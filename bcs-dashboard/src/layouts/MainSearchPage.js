@@ -64,6 +64,16 @@ const DropDownCard = styled(MuiCard)`
   line-height: 1.5;
 `;
 
+const LinkStyling = styled.div`
+  a:visited {
+    color: black;
+  }
+
+  a:link {
+    color: black;
+  }
+`;
+
 class Lane extends React.Component {
   handleContainerLoaded = (container) => {
     if (container) {
@@ -135,7 +145,17 @@ function SearchResultCard(props) {
           <Typography variant="h6" align="left">
             {props.title}
             <br />
-            {props.course.name ? props.course.name : props.name}
+            <LinkStyling>
+              {props.course.name ? (
+                <Tooltip title="Click to see course on SSC">
+                  <a href={props.course.link} target="none">
+                    {props.course.name}
+                  </a>
+                </Tooltip>
+              ) : (
+                  props.name
+                )}
+            </LinkStyling>
           </Typography>
           <Typography variant="body2" mb={3}>
             {

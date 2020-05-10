@@ -29,7 +29,10 @@ import {
   Tooltip,
   Typography as MuiTypography,
   Fade,
+  Fab,
 } from "@material-ui/core";
+
+import { ZoomOut, ZoomIn } from "@material-ui/icons";
 
 import { spacing } from "@material-ui/system";
 
@@ -47,7 +50,7 @@ const TextField = styled(TextFieldSpacing)`
 
 export const Card = styled(MuiCard)`
   overflow: visible;
-`; 
+`;
 
 export const Divider = styled(MuiDivider)(spacing);
 
@@ -77,17 +80,72 @@ export const TaskWrapperContent = styled(CardContent)`
 
 export const Typography = styled(MuiTypography)(spacing);
 
-export class Lane extends React.Component {
-  handleContainerLoaded = (container) => {
-    if (container) {
-      this.props.onContainerLoaded(container);
+const ScaleFull = styled.div`
+  /*  */
+`;
+
+const Scale9 = styled.div`
+  transform: scale(0.9);
+  transform-origin: top left;
+  width: 110%;
+  height: 90%;
+`;
+
+const Scale8 = styled.div`
+  transform: scale(0.8);
+  transform-origin: top left;
+  width: 127%;
+  height: 80%;
+`;
+
+const Scale7 = styled.div`
+  transform: scale(0.7);
+  transform-origin: top left;
+  width: 143%;
+  height: 70%;
+`;
+
+const Scale6 = styled.div`
+  transform: scale(0.6);
+  transform-origin: top left;
+  width: 167%;
+  height: 60%;
+`;
+
+const Scale = (props) => {
+  switch (props.zoom) {
+    case 0:
+      return <ScaleFull>{props.children}</ScaleFull>;
+    case 1:
+      return <Scale9>{props.children}</Scale9>;
+    case 2:
+      return <Scale8>{props.children}</Scale8>;
+    case 3:
+      return <Scale7>{props.children}</Scale7>;
+    case 4:
+      return <Scale6>{props.children}</Scale6>;
+  }
+};
+
+export function Lane(props) {
+  const [zoom, setZoom] = useState(0);
+
+  useEffect(() => {
+    if (props.zoom <= 4 && props.zoom >= 0) {
+      setZoom(props.zoom);
     }
-  };
+  }, [props.zoom]);
 
-  render() {
-    const { title, className, description, children } = this.props;
+  const handleContainerLoaded = (container) => {
+    if (container) {
+      props.onContainerLoaded(container)
+    }
+  }
 
-    return (
+  const { title, className, description, children } = props;
+
+  return (
+    <Scale zoom={zoom}>
       <Card mb={6}>
         <CardContent>
           <Typography variant="h6" gutterBottom>
@@ -98,16 +156,16 @@ export class Lane extends React.Component {
           </Typography>
           <div
             className={className}
-            termid={this.props.termId}
+            termid={props.termId}
             style={{ minHeight: "20px" }}
-            ref={this.handleContainerLoaded}
+            ref={handleContainerLoaded}
           >
             {children}
           </div>
         </CardContent>
       </Card>
-    );
-  }
+    </Scale>
+  );
 }
 
 function InformationCard(props) {
@@ -126,6 +184,16 @@ function InformationCard(props) {
     </TaskWrapper>
   );
 }
+
+const LinkStyling = styled.div`
+  a:visited {
+    color: black;
+  }
+
+  a:link {
+    color: black;
+  }
+`;
 
 function SearchResultCard(props) {
   const [average, setAverage] = useState({});
@@ -155,7 +223,17 @@ function SearchResultCard(props) {
           <Typography variant="h6" align="left">
             {props.title}
             <br />
-            {props.course.name ? props.course.name : props.name}
+            <LinkStyling>
+              {props.course.name ? (
+                <Tooltip title="Click to see course on SSC">
+                  <a href={props.course.link} target="none">
+                    {props.course.name}
+                  </a>
+                </Tooltip>
+              ) : (
+                  props.name
+                )}
+            </LinkStyling>
           </Typography>
           <Typography variant="body2" mb={3}>
             {
@@ -313,11 +391,11 @@ function bridgingModule() {
         Bridging Module as part of BCS degree requirement is 15 credits of
         courses. <br />
         <br />
-        Courses must be 300/400 level from a single discipline.
-        However, you can create your own bridging module from
-        multiple disciplines. <br /> Note that at least 9 credits of the
-        bridging module need to be from outside the CPSC. <br /> Email the BCS
-        Director to check if your bridging module is valid.
+        Courses must be 300/400 level from a single discipline. However, you can
+        create your own bridging module from multiple disciplines. <br /> Note
+        that at least 9 credits of the bridging module need to be from outside
+        the CPSC. <br /> Email the BCS Director to check if your bridging module
+        is valid.
       </h3>
     </>
   );
@@ -326,7 +404,10 @@ function bridgingModule() {
 function upperCPSC() {
   return (
     <>
-      <h3>Upper Year CPSC courses 300/400 level that are not apart of the bridging module or core CPSC courses.</h3>
+      <h3>
+        Upper Year CPSC courses 300/400 level that are not apart of the bridging
+        module or core CPSC courses.
+      </h3>
     </>
   );
 }
@@ -663,7 +744,9 @@ const addToDegreeFunction = (
     for (let coursesInTerm of courseArray) {
       if (coursesInTerm.code === courseToAdd.code) {
         //term exists; confirm if user wants to add?
-        isInCourseArray = !window.confirm("You have already added this course in the current term. Are you sure you want to add it again?");
+        isInCourseArray = !window.confirm(
+          "You have already added this course in the current term. Are you sure you want to add it again?"
+        );
         break;
       }
     }
@@ -675,11 +758,14 @@ const addToDegreeFunction = (
   } else {
     // Search to see if the user has added the course in the degree
     let courseAlreadyAddedToDegree = false;
-    upper_loop:
-    for (let term of usersCourseArray) {
+    upper_loop: for (let term of usersCourseArray) {
       for (let course of term.courses) {
         if (course.code === courseToAdd.code) {
-          courseAlreadyAddedToDegree = !window.confirm("You have already added this course in " + term.name + ". Are you sure you want to add it again?");
+          courseAlreadyAddedToDegree = !window.confirm(
+            "You have already added this course in " +
+            term.name +
+            ". Are you sure you want to add it again?"
+          );
           break upper_loop;
         }
       }
@@ -708,10 +794,11 @@ function CourseSelector() {
   const [courseToAdd, setCourseToAdd] = useState({});
   const [usersCourseArray, setUsersCourseArray] = useState([-1]);
   const [windowHeight, setWindowHeight] = useState(0);
+  const [zoom, setZoom] = useState(0);
   const MAX_HEIGHT = windowHeight - 230;
 
   const onContainerReady = (container) => {
-    setContainers(containers.push(container));
+    containers.push(container);
   };
 
   useEffect(() => {
@@ -754,20 +841,68 @@ function CourseSelector() {
     }
   }, [courseToAdd]);
 
+  const zoomOut = () => {
+    if (zoom < 4) {
+      setZoom(zoom + 1);
+    }
+  };
+
+  const zoomIn = () => {
+    if (zoom > 0) {
+      setZoom(zoom - 1);
+    }
+  };
+
   return (
     <React.Fragment>
       <Helmet title="Course Selector" />
-      <Typography variant="h3" gutterBottom display="inline">
-        Course Selector
-      </Typography>
-
-      <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-        <Link component={NavLink} exact to="/bcs/start">
-          Get Started
-        </Link>
-
-        <Typography>Course Selector</Typography>
-      </Breadcrumbs>
+      <Grid container spacing={6}>
+        <Grid item>
+          <Typography variant="h3" gutterBottom display="inline">
+            Course Selector
+          </Typography>
+          <Breadcrumbs aria-label="Breadcrumb" mt={2}>
+            <Link component={NavLink} exact to="/bcs/start">
+              Get Started
+            </Link>
+            <Typography>Course Selector</Typography>
+          </Breadcrumbs>
+        </Grid>
+        <Grid item>
+          <Button
+            mx={2}
+            size="small"
+            variant="outlined"
+            disabled={zoom === 4}
+            color="primary"
+            aria-label="Add"
+            onClick={zoomOut}
+          >
+            <ZoomOut />
+          </Button>
+          <Button
+            mx={2}
+            size="small"
+            variant="outlined"
+            disabled={zoom === 0}
+            color="primary"
+            aria-label="Add"
+            onClick={() => setZoom(0)}>
+            Default
+          </Button>
+          <Button
+            mx={2}
+            size="small"
+            variant="outlined"
+            disabled={zoom === 0}
+            color="primary"
+            aria-label="Add"
+            onClick={zoomIn}
+          >
+            <ZoomIn />
+          </Button>
+        </Grid>
+      </Grid>
 
       <Divider my={6} />
       <Grid container spacing={6}>
@@ -782,6 +917,8 @@ function CourseSelector() {
             title="Search"
             description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
             onContainerLoaded={onContainerReady}
+            fullWidth
+            zoom={zoom}
           >
             <SearchCard
               onChange={setSelectedCourse}
@@ -800,6 +937,7 @@ function CourseSelector() {
             title="Prerequisite / Corequisite Courses"
             description="Selected course's prerequisites and corequisites."
             onContainerLoaded={onContainerReady}
+            zoom={zoom}
           >
             <PrerequisitesCard
               course={selectedCourse === undefined ? [] : selectedCourse}
@@ -817,6 +955,7 @@ function CourseSelector() {
             title="Dependent Courses"
             description="Courses that list this course as a direct prerequisite."
             onContainerLoaded={onContainerReady}
+            zoom={zoom}
           >
             <DependenciesCard
               course={selectedCourse === undefined ? [] : selectedCourse}
@@ -834,6 +973,7 @@ function CourseSelector() {
             title="Your Degree"
             description="The courses that you have added to your worklist."
             onContainerLoaded={onContainerReady}
+            zoom={zoom}
           >
             <YourDegreeCard
               usersCourseArray={usersCourseArray}
@@ -842,7 +982,7 @@ function CourseSelector() {
           </Lane>
         </Grid>
       </Grid>
-    </React.Fragment>
+    </React.Fragment >
   );
 }
 

@@ -72,6 +72,7 @@
     "react-sweet-progress": "^1.1.2",
     "react-typed": "^1.2.0",
     "react-vertical-timeline-component": "^2.6.0",
+    "react-zoom-pan-pinch": "^1.6.1",
     "redux": "4.0.5",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2",

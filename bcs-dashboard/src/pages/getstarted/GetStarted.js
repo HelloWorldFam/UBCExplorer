@@ -80,7 +80,7 @@ function Default({ theme }) {
     };
 
     const onContainerReady = (container) => {
-        setContainers(containers.push(container));
+        containers.push(container);
     };
 
     useEffect(() => {
