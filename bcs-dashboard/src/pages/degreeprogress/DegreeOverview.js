@@ -128,7 +128,11 @@ function Overview(props) {
     const sortCourses = () => {
         props.courseResult.map((term) => {
             if (term.name === "Exemptions") {
-                exemptions.completed = term.courses;
+                exemptions.completed = function() {
+                    let exemptCourses = [];
+                    term.courses.map(course => exemptCourses.push(course.code));
+                    return exemptCoruses;
+                } ();
             } else {
                 const progress = () => {
                     if (getRelativeProgress(term.name) == -1) return "completed";
