@@ -440,6 +440,7 @@ function MainSearchPage() {
                 <Button style={{ margin: '1px', }} variant="outlined" href="/auth/github">
                   <strong>Github</strong> <img style={{ width: '52px', height: '16px', marginLeft: '10px' }} src={GithubLogo}></img>
                 </Button>
+                <Typography variant="subtitle2" style={{ padding: '10px 10px 10px 0', display: 'block' }}>Your privacy is important to us. For more information, see our <a href='/privacypolicy'>privacy policy</a>.</Typography>
               </DropDownCard>
             </Menu>
           </Toolbar>
