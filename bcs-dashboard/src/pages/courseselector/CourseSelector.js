@@ -127,46 +127,45 @@ const Scale = (props) => {
   }
 };
 
-export class Lane extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      zoom: this.props.zoom ? this.props.zoom : 0
-    };
-  }
+export function Lane(props) {
+  const [zoom, setZoom] = useState(0);
 
-  handleContainerLoaded = (container) => {
-    if (container) {
-      this.props.onContainerLoaded(container);
+  useEffect(() => {
+    console.log(props.zoom);
+    if (props.zoom <= 4 && props.zoom >= 0) {
+      setZoom(props.zoom);
     }
-  };
+  }, [props.zoom]);
 
-  render() {
-    const { title, className, description, children } = this.props;
+  // const handleContainerLoaded = (container) => {
+  //   if (container) {
+  //     props.onContainerLoaded(container);
+  //   }
+  // };
+  const { title, className, description, children } = props;
 
-    return (
-      <Scale zoom={this.state.zoom}>
-        <Card mb={6}>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
-              {title}
-            </Typography>
-            <Typography variant="body2" mb={4}>
-              {description}
-            </Typography>
-            <div
-              className={className}
-              termid={this.props.termId}
-              style={{ minHeight: "20px" }}
-              ref={this.handleContainerLoaded}
-            >
-              {children}
-            </div>
-          </CardContent>
-        </Card>
-      </Scale>
-    );
-  }
+  return (
+    <Scale zoom={zoom}>
+      <Card mb={6}>
+        <CardContent>
+          <Typography variant="h6" gutterBottom>
+            {title}
+          </Typography>
+          <Typography variant="body2" mb={4}>
+            {description}
+          </Typography>
+          <div
+            className={className}
+            termid={props.termId}
+            style={{ minHeight: "20px" }}
+            // ref={handleContainerLoaded}
+          >
+            {children}
+          </div>
+        </CardContent>
+      </Card>
+    </Scale>
+  );
 }
 
 function InformationCard(props) {
@@ -185,6 +184,16 @@ function InformationCard(props) {
     </TaskWrapper>
   );
 }
+
+const LinkStyling = styled.div`
+  a:visited {
+    color: black;
+  }
+
+  a:link {
+    color: black;
+  }
+`;
 
 function SearchResultCard(props) {
   const [average, setAverage] = useState({});
@@ -214,7 +223,15 @@ function SearchResultCard(props) {
           <Typography variant="h6" align="left">
             {props.title}
             <br />
-            {props.course.name ? props.course.name : props.name}
+            <LinkStyling>
+              {props.course.name ? (
+                <a href={props.course.link} target="none">
+                  {props.course.name}
+                </a>
+              ) : (
+                props.name
+              )}
+            </LinkStyling>
           </Typography>
           <Typography variant="body2" mb={3}>
             {
@@ -823,14 +840,14 @@ function CourseSelector() {
   }, [courseToAdd]);
 
   const zoomOut = () => {
-    if (zoom >= 0) {
-      setZoom(zoom - 1);
+    if (zoom <= 4) {
+      setZoom(zoom + 1);
     }
   };
 
   const zoomIn = () => {
-    if (zoom <= 5) {
-      setZoom(zoom + 1);
+    if (zoom > 0) {
+      setZoom(zoom - 1);
     }
   };
 
@@ -855,18 +872,18 @@ function CourseSelector() {
             size="small"
             color="primary"
             aria-label="Add"
-            onClick={zoomIn}
+            onClick={zoomOut}
           >
-            <ZoomIn />
+            <ZoomOut />
           </Fab>
           <Fab
             mx={2}
             size="small"
             color="primary"
             aria-label="Add"
-            onClick={zoomOut}
+            onClick={zoomIn}
           >
-            <ZoomOut />
+            <ZoomIn />
           </Fab>
         </Grid>
       </Grid>
@@ -929,7 +946,13 @@ function CourseSelector() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3}>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: MAX_HEIGHT, overflow: "auto" }}
+        >
           <Lane
             title="Your Degree"
             description="The courses that you have added to your worklist."
