@@ -136,11 +136,12 @@ export function Lane(props) {
     }
   }, [props.zoom]);
 
-  // const handleContainerLoaded = (container) => {
-  //   if (container) {
-  //     props.onContainerLoaded(container);
-  //   }
-  // };
+  const handleContainerLoaded = (container) => {
+    if (container) {
+      props.onContainerLoaded(container)
+    }
+  }
+
   const { title, className, description, children } = props;
 
   return (
@@ -157,7 +158,7 @@ export function Lane(props) {
             className={className}
             termid={props.termId}
             style={{ minHeight: "20px" }}
-          // ref={handleContainerLoaded}
+            ref={handleContainerLoaded}
           >
             {children}
           </div>
@@ -278,8 +279,8 @@ function SearchCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-        "/getCourseInfo/" +
-        courseInfo
+          "/getCourseInfo/" +
+          courseInfo
       )
       .then((res) => {
         setCode(courseInfo);
@@ -634,8 +635,8 @@ function PrerequisitesCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-        "/getCourseInfo/" +
-        course
+          "/getCourseInfo/" +
+          course
       )
       .then((res) => {
         if (res.data.desc) {
@@ -683,8 +684,8 @@ function DependenciesCard(props) {
             (window.location.host === "ubcexplorer.io"
               ? ""
               : "http://localhost:3000") +
-            "/getCourseInfo/" +
-            course
+              "/getCourseInfo/" +
+              course
           )
           .then((res) => {
             if (res.data.desc) {
@@ -797,7 +798,7 @@ function CourseSelector() {
   const MAX_HEIGHT = windowHeight - 230;
 
   const onContainerReady = (container) => {
-    setContainers(containers.push(container));
+    containers.push(container);
   };
 
   useEffect(() => {
@@ -809,7 +810,7 @@ function CourseSelector() {
             : "http://localhost:3000") + "/updateUserWorkList",
           usersCourseArray
         )
-        .then(() => { });
+        .then(() => {});
     }
   }, [usersCourseArray]);
 

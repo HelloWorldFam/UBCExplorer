@@ -43,7 +43,15 @@ const SmoothScroll = () => {
     )
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems, options);
+  });
 
+  
+$(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
 
 export default class Header extends Component {
     render() {
