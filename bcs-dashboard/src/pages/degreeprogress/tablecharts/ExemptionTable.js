@@ -74,7 +74,7 @@ const ExemptionTable = (props) => {
         if (status === "completed") {
           return <Chip label="Complete" rgbcolor={green[500]} />;
         } else if (status === "inProgress") {
-          return <Chip label="Inprogress" rgbcolor={orange[500]} />;
+          return <Chip label="In progress" rgbcolor={orange[500]} />;
         } else if (status === "incomplete") {
           return <Chip label="Incomplete" rgbcolor={red[500]} />;
         }
