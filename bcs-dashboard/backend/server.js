@@ -262,12 +262,12 @@ app.get("/node_modules", (req, res) => {
 
 app.get("/api", (req, res) => {
   // send landing page
-  res.redirect("/");
+  res.sendFile(path.join(__dirname, "../build/index.html"));
 });
 
 app.get("/privacypolicy", (req, res) => {
   // send landing page
-  res.redirect("/");
+  res.sendFile(path.join(__dirname, "../build/index.html"));
 });
 
 // Nodemon success message
