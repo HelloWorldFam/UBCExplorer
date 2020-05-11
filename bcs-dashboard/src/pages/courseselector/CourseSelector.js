@@ -138,9 +138,9 @@ export function Lane(props) {
 
   const handleContainerLoaded = (container) => {
     if (container) {
-      props.onContainerLoaded(container)
+      props.onContainerLoaded(container);
     }
-  }
+  };
 
   const { title, className, description, children } = props;
 
@@ -231,8 +231,8 @@ function SearchResultCard(props) {
                   </a>
                 </Tooltip>
               ) : (
-                  props.name
-                )}
+                props.name
+              )}
             </LinkStyling>
           </Typography>
           <Typography variant="body2" mb={3}>
@@ -279,8 +279,8 @@ function SearchCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-        "/getCourseInfo/" +
-        courseInfo
+          "/getCourseInfo/" +
+          courseInfo
       )
       .then((res) => {
         setCode(courseInfo);
@@ -365,6 +365,7 @@ function coreInfo() {
       <h3>
         Core BCS Courses that must be taken:
         <br />
+        <br />
         - CPSC 110: &nbsp;&nbsp;Computation, Programs, and Programming
         <br />
         - CPSC 121: &nbsp;&nbsp;Models of Computation
@@ -379,6 +380,15 @@ function coreInfo() {
         <br />
         - CPSC 313: &nbsp;&nbsp;Computer Hardware and Operating Systems
         <br />- CPSC 320: &nbsp;&nbsp;Intermediate Algorithm Design and Analysis
+        <br />
+        <br />
+        - STAT 203: &nbsp;&nbsp;Statistical Methods <br />- MATH 180:
+        &nbsp;&nbsp;Derivative Calculus with Physical Applications <br />
+        - STCM 3xx: &nbsp;&nbsp;(upper year communication requirement)
+        <br />
+        - ENGL 1xx: &nbsp;&nbsp;(can also be exempted through English Exemption
+        Exam)
+        <br />
       </h3>
     </>
   );
@@ -416,6 +426,9 @@ function exemptionCourses() {
   return (
     <>
       <h3>
+        Select this if you've been exempted from one of the BCS Core Courses.
+        Make sure you tag it with the 'Exemptions' term! <br />
+        <br />
         Courses that may be exempted:
         <br />
         <br />
@@ -598,6 +611,12 @@ function TermDropDown(props) {
         <MenuItem value="2021W1">2021W1</MenuItem>
         <MenuItem value="2021W2">2021W2</MenuItem>
         <MenuItem value="2021S">2021S</MenuItem>
+        <MenuItem value="2022W1">2022W1</MenuItem>
+        <MenuItem value="2022W2">2022W2</MenuItem>
+        <MenuItem value="2022S">2022S</MenuItem>
+        <MenuItem value="2023W1">2023W1</MenuItem>
+        <MenuItem value="2023W2">2023W2</MenuItem>
+        <MenuItem value="2023S">2023S</MenuItem>
       </Select>
       <FormHelperText>
         Select the term you want to take this course
@@ -635,8 +654,8 @@ function PrerequisitesCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-        "/getCourseInfo/" +
-        course
+          "/getCourseInfo/" +
+          course
       )
       .then((res) => {
         if (res.data.desc) {
@@ -684,8 +703,8 @@ function DependenciesCard(props) {
             (window.location.host === "ubcexplorer.io"
               ? ""
               : "http://localhost:3000") +
-            "/getCourseInfo/" +
-            course
+              "/getCourseInfo/" +
+              course
           )
           .then((res) => {
             if (res.data.desc) {
@@ -798,7 +817,7 @@ function CourseSelector() {
             : "http://localhost:3000") + "/updateUserWorkList",
           usersCourseArray
         )
-        .then(() => { });
+        .then(() => {});
     }
   }, [usersCourseArray]);
 
@@ -824,8 +843,7 @@ function CourseSelector() {
 
   useEffect(() => {
     localStorage.setItem("zoom", zoom);
-  }, [zoom])
-
+  }, [zoom]);
 
   const updateWindowDimensions = () => {
     setWindowHeight(window.innerHeight);
@@ -883,7 +901,8 @@ function CourseSelector() {
             disabled={zoom === 0}
             color="primary"
             aria-label="Add"
-            onClick={() => setZoom(0)}>
+            onClick={() => setZoom(0)}
+          >
             Default
           </Button>
           <Button
@@ -978,7 +997,7 @@ function CourseSelector() {
           </Lane>
         </Grid>
       </Grid>
-    </React.Fragment >
+    </React.Fragment>
   );
 }
 
