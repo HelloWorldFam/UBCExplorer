@@ -519,6 +519,8 @@ function MainSearchPage() {
                   select search. A list of prerequisites/corequisites and
                   dependent courses will also be shown in the two right lanes.
                   <br />
+                  To view the course on SSC, click the course name.
+                  <br/>
                   <br />
                   {/* <b>About</b>
                   <br />
