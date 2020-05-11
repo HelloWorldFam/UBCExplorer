@@ -430,7 +430,7 @@ function MainSearchPage() {
                     <strong>Learn More!</strong>
                   </Button>
                 </center>
-                <Typography variant="body" style={{ padding: '0 10px 10px 0', display:'block' }}>Sign in with an OAuth provider:</Typography>
+                <Typography variant="body" style={{ padding: '0 10px 10px 0', display: 'block' }}>Sign in with an OAuth provider:</Typography>
                 <Button style={{ margin: '1px', }} variant="outlined" href="/auth/google">
                   <strong>Google</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={GoogleLogo}></img>
                 </Button>
@@ -534,6 +534,13 @@ function MainSearchPage() {
                   worklists, and degree progress tracking.
                   <br />
                   <br /> */}
+                  <a href="/api">
+                    <b>API</b>
+                  </a> 
+                  <br />
+                  Documentation for the open API can be found here.
+                  <br />
+                  <br />
                   <a
                     href="https://ubc.ca1.qualtrics.com/jfe/form/SV_enyfh63H9Euj8UJ"
                     target="_blank"
