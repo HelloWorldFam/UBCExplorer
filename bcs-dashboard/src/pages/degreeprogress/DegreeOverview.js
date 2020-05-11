@@ -343,10 +343,10 @@ function Overview(props) {
                 <Typography variant="h7" paragraph >
                     Courses Completed: {upperCPSCCoursesCompleted} <br />
                     Courses Remaining: {upperCPSCCoursesRemaining} <br />
-                    {(Math.max(0, (4 - upperCPSCCoursesCompleted - courseBaskets.upperCPSC.inProgress?.length - courseBaskets.upperCPSC.incomplete?.length)) === 0) ?
+                    {(Math.max(0, (4 - upperCPSCCoursesCompleted - courseBaskets.upperCPSC?.inProgress?.length - courseBaskets.upperCPSC?.incomplete?.length)) === 0) ?
                         <span style={{ color: 'green' }}>All courses added!</span> :
                         <span style={{ color: 'red' }}>
-                            You must add additional {4 - upperCPSCCoursesCompleted - courseBaskets.upperCPSC.inProgress?.length - courseBaskets.upperCPSC.incomplete?.length} upper CPSC course(s).
+                            You must add additional {4 - upperCPSCCoursesCompleted - courseBaskets.upperCPSC?.inProgress?.length - courseBaskets.upperCPSC?.incomplete?.length} upper CPSC course(s).
                         </span>}
                 </Typography>
 
@@ -363,10 +363,10 @@ function Overview(props) {
                     <br />
                     Courses Remaining: {bridgingCoursesCompletedRemaining}
                     <br/>
-                    {(Math.max(0, (5 - bridgingCoursesCompleted - courseBaskets.bridgMod.inProgress?.length - courseBaskets.bridgMod.incomplete?.length)) === 0) ? 
+                    {(Math.max(0, (5 - bridgingCoursesCompleted - courseBaskets.bridgMod?.inProgress?.length - courseBaskets.bridgMod?.incomplete?.length)) === 0) ? 
                     <span style={{ color: 'green' }}>All courses added! Please consult BCS director to ensure courses are appropriate.</span> :
                     <span style={{ color: 'red' }}>
-                        You must add additional {5 - bridgingCoursesCompleted - courseBaskets.bridgMod.inProgress?.length - courseBaskets.bridgMod.incomplete?.length} bridging module course(s).
+                        You must add additional {5 - bridgingCoursesCompleted - courseBaskets.bridgMod?.inProgress?.length - courseBaskets.bridgMod?.incomplete?.length} bridging module course(s).
                     </span>}
                 </Typography>
 
@@ -381,10 +381,10 @@ function Overview(props) {
                 <Typography variant="h7" paragraph >
                     Courses Completed: {exemptionCoursesComplete} <br />
                     Courses Remaining: {exemptionCoursesRemaining} <br/>
-                    {(Math.max(0, (exemptionCourses - exemptionCoursesComplete - courseBaskets.exemptionReplacement.inProgress?.length - courseBaskets.exemptionReplacement.incomplete?.length)) === 0) ? 
+                    {(Math.max(0, (exemptionCourses - exemptionCoursesComplete - courseBaskets.exemptionReplacement?.inProgress?.length - courseBaskets.exemptionReplacement?.incomplete?.length)) === 0) ? 
                     <span style={{ color: 'green' }}>All courses added! Please consult BCS director to ensure courses are appropriate.</span> :
                     <span style={{ color: 'red' }}>
-                        You must add additional {(exemptionCourses - exemptionCoursesComplete - courseBaskets.exemptionReplacement.inProgress?.length - courseBaskets.exemptionReplacement.incomplete?.length)} exemption replacement course(s).
+                        You must add additional {(exemptionCourses - exemptionCoursesComplete - courseBaskets.exemptionReplacement?.inProgress?.length - courseBaskets.exemptionReplacement?.incomplete?.length)} exemption replacement course(s).
                     </span>}
                 </Typography>
 
