@@ -116,7 +116,7 @@ class IconMenu extends React.Component {
           color="buttoncolor"
         >
           <Card>
-            <Typography variant="h6" style={{ padding: '0 10px 10px 10px', }}>Sign in with an OAuth provider:</Typography>
+            <Typography variant="h6" style={{ padding: '0 10px 10px 0', }}>Sign in with an OAuth provider:</Typography>
             <Button style={{ margin: '3px', }} variant="outlined" href="/auth/google">
               <strong>Google</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={GoogleLogo}></img>
             </Button>
@@ -126,6 +126,7 @@ class IconMenu extends React.Component {
             <Button style={{ margin: '3px', }} variant="outlined" href="/auth/github">
               <strong>Github</strong> <img style={{ width: '52px', height: '16px', marginLeft: '10px' }} src={GithubLogo}></img>
             </Button>
+            <Typography variant="subtitle2" style={{ padding: '10px 10px 10px 0', display: 'block' }}>Your privacy is important to us. For more information, see our <a href='/privacypolicy'>privacy policy</a>.</Typography>
           </Card>
         </Menu>
       </>
