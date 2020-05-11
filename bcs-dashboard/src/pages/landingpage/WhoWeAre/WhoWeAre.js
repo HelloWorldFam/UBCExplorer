@@ -66,7 +66,7 @@ class PhotoGallery extends Component {
     return (
       <div className="row">
         {this.state.photo.map((gal) => (
-          <a href={gal.src}>
+          <a href={gal.src} target="none">
             {" "}
             <Photo key={gal.id} img={gal.img} alt={gal.alt} />
           </a>
