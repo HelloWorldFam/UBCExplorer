@@ -64,7 +64,7 @@ const ExemptionTable = (props) => {
     }
 
     const arrayCheckExemptions = (i) => {
-      return (props.exemptions?.completed[i]?.code || "-");
+      return (props.exemptions?.completed[i] || "-");
     }
 
     const chipMaker = (boolean, status) => {
@@ -85,7 +85,7 @@ const ExemptionTable = (props) => {
       var j = 0;
       while (j < replCompletedLength) {
         rows.push(createData(
-          props.exemptions.completed[j].code,
+          props.exemptions.completed[j],
           arrayCheck(j, "completed"),
           chipMaker(arrayCheck(j, "completed"), "completed")
         ))
@@ -95,7 +95,7 @@ const ExemptionTable = (props) => {
       var j2 = 0;
       while (j2 < replInprogressLength) {
         rows.push(createData(
-          props.exemptions.completed[j].code,
+          props.exemptions.completed[j],
           arrayCheck(j2, "inProgress"),
           chipMaker(arrayCheck(j2, "inProgress"), "inProgress")
         ))
@@ -106,7 +106,7 @@ const ExemptionTable = (props) => {
       var j3 = 0;
       while (j3 < replIncompleteLength) {
         rows.push(createData(
-          props.exemptions.completed[j].code,
+          props.exemptions.completed[j],
           arrayCheck(j3, "incomplete"),
           chipMaker(arrayCheck(j3, "incomplete"), "incomplete")
         ))
@@ -119,7 +119,7 @@ const ExemptionTable = (props) => {
       var i = 0;
       while (i < exLength) {
         rows.push(createData(
-          props.exemptions.completed[i].code,
+          props.exemptions.completed[i],
           arrayCheck(i, "completed"),
           chipMaker(arrayCheck(i, "completed"), "completed")
         ))
@@ -129,7 +129,7 @@ const ExemptionTable = (props) => {
       var i2 = 0;
       while (i < exLength) {
         rows.push(createData(
-          props.exemptions.completed[i].code,
+          props.exemptions.completed[i],
           arrayCheck(i2, "inProgress"),
           chipMaker(arrayCheck(i2, "inProgress"), "inProgress")
         ))
@@ -140,7 +140,7 @@ const ExemptionTable = (props) => {
       var i3 = 0;
       while (i < exLength) {
         rows.push(createData(
-          props.exemptions.completed[i].code,
+          props.exemptions.completed[i],
           arrayCheck(i3, "incomplete"),
           chipMaker(arrayCheck(i3, "incomplete"), "incomplete")
         ))

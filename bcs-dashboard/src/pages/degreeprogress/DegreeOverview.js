@@ -86,7 +86,7 @@ function Overview(props) {
 // function Overview(props) {
 //     const [courseBaskets, updateCourseBaskets] = React.useState({});
 //     const coreBCS = {
-//         "completed": ["CPSC 121", "CPSC 210", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320", "MATH 180", "STAT 200", "ENGL 301"],
+//         "completed": ["CPSC 121", "CPSC 210", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320", "STAT 200", "ENGL 301"],
 //         "inProgress": ["CPSC 110"],
 //         "incomplete": [],
 //         "required": ["CPSC 110", "CPSC 121", "CPSC 213", "CPSC 221", "CPSC 310", "CPSC 313", "CPSC 320"],
@@ -128,7 +128,11 @@ function Overview(props) {
     const sortCourses = () => {
         props.courseResult.map((term) => {
             if (term.name === "Exemptions") {
-                exemptions.completed = term.courses;
+                exemptions.completed = function() {
+                    let exemptCourses = [];
+                    term.courses.map(course => exemptCourses.push(course.code));
+                    return exemptCourses;
+                } ();
             } else {
                 const progress = () => {
                     if (getRelativeProgress(term.name) == -1) return "completed";
@@ -172,7 +176,7 @@ function Overview(props) {
         if (!coreBCS.completed?.some((course) => coreBCS.mathReq.includes(course))
         && !coreBCS.inProgress?.some((course) => coreBCS.mathReq.includes(course)) 
         && !coreBCS.incomplete?.some((course) => coreBCS.mathReq.includes(course))
-        && !exemptions.completed?.some((course) => coreBCS.lowerEnglReq.includes(course))) {
+        && !exemptions.completed?.some((course) => coreBCS.mathReq.includes(course))) {
             coreBCS.missing.push("MATH 180 (or equiv.)");
         }
 
@@ -196,7 +200,6 @@ function Overview(props) {
         && !exemptions.completed?.some((course) => coreBCS.upperCommReq.includes(course))) {
             coreBCS.missing.push("ENGL 301");
         }
-
 
         updateCourseBaskets({
             "coreBCS": coreBCS,
