@@ -279,8 +279,8 @@ function SearchCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-          "/getCourseInfo/" +
-          courseInfo
+        "/getCourseInfo/" +
+        courseInfo
       )
       .then((res) => {
         setCode(courseInfo);
@@ -635,8 +635,8 @@ function PrerequisitesCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-          "/getCourseInfo/" +
-          course
+        "/getCourseInfo/" +
+        course
       )
       .then((res) => {
         if (res.data.desc) {
@@ -684,8 +684,8 @@ function DependenciesCard(props) {
             (window.location.host === "ubcexplorer.io"
               ? ""
               : "http://localhost:3000") +
-              "/getCourseInfo/" +
-              course
+            "/getCourseInfo/" +
+            course
           )
           .then((res) => {
             if (res.data.desc) {
@@ -810,11 +810,14 @@ function CourseSelector() {
             : "http://localhost:3000") + "/updateUserWorkList",
           usersCourseArray
         )
-        .then(() => {});
+        .then(() => { });
     }
   }, [usersCourseArray]);
 
   useEffect(() => {
+    // Restore previous zoom or set default 0
+    setZoom(Number(localStorage.getItem("zoom")));
+    // Get request to load user data
     axios
       .get(
         (window.location.host === "ubcexplorer.io"
@@ -830,6 +833,11 @@ function CourseSelector() {
     window.addEventListener("resize", updateWindowDimensions);
     updateWindowDimensions();
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("zoom", zoom);
+  }, [zoom])
+
 
   const updateWindowDimensions = () => {
     setWindowHeight(window.innerHeight);
