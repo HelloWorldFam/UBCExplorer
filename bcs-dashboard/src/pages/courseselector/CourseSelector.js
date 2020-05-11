@@ -739,6 +739,22 @@ const addToDegreeFunction = (
   usersCourseArray, // [-1]
   setUsersCourseArray
 ) => {
+  // Search to see if the user has added the course in the degree
+  let courseAlreadyAddedToDegree = false;
+  upper_loop: for (let term of usersCourseArray) {
+    for (let course of term.courses) {
+      if (course.code === courseToAdd.code) {
+        courseAlreadyAddedToDegree = !window.confirm(
+          "You have already added this course in " +
+          term.name +
+          ". Are you sure you want to add it again?"
+        );
+        break upper_loop;
+      }
+    }
+  }
+  if (courseAlreadyAddedToDegree) return;
+
   // courseToAdd is the course object passed on button click
   // usersCourseArray is the term array from the MONGODB database
   let termExists = false;
@@ -759,37 +775,9 @@ const addToDegreeFunction = (
 
   // Add the course to the degree
   if (termExists) {
-    let isInCourseArray = false;
-    for (let coursesInTerm of courseArray) {
-      if (coursesInTerm.code === courseToAdd.code) {
-        //term exists; confirm if user wants to add?
-        isInCourseArray = !window.confirm(
-          "You have already added this course in the current term. Are you sure you want to add it again?"
-        );
-        break;
-      }
-    }
-
-    if (!isInCourseArray) {
       // term exists, but course is not in term - add course to term
       courseArray.push(courseToAdd);
-    }
   } else {
-    // Search to see if the user has added the course in the degree
-    let courseAlreadyAddedToDegree = false;
-    upper_loop: for (let term of usersCourseArray) {
-      for (let course of term.courses) {
-        if (course.code === courseToAdd.code) {
-          courseAlreadyAddedToDegree = !window.confirm(
-            "You have already added this course in " +
-              term.name +
-              ". Are you sure you want to add it again?"
-          );
-          break upper_loop;
-        }
-      }
-    }
-    if (courseAlreadyAddedToDegree) return;
     // term does not exist- so create new term object with the course added.
     usersCourseArray.push({ name: courseToAdd.term, courses: [courseToAdd] });
   }
