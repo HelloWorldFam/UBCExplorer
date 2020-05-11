@@ -387,7 +387,6 @@ function MainSearchPage() {
   const updateWindowDimensions = () => {
     setWindowHeight(window.innerHeight);
     setWindowWidth(window.innerWidth);
-    console.log(window.innerWidth);
   };
 
   const openExplorerMenu = (event) => {
