@@ -57,7 +57,7 @@ const BridgingTable = (props) => {
     props.bridgMod.inProgress.forEach(element => {
       rows.push(createData(
         element,
-        <Chip label="Inprogress" rgbcolor={orange[500]} />
+        <Chip label="In progress" rgbcolor={orange[500]} />
       )
       )
     })
