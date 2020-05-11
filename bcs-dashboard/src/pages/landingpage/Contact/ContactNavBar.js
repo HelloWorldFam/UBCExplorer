@@ -183,7 +183,7 @@ const ListItemText = styled(MuiListItemText)(spacing);
 const menuItems = [
   
   {
-    listText: "UBC Explorer",
+    listText: "UBC Degree Explorer",
    
   },
 
@@ -250,10 +250,15 @@ const HeaderBar = () => {
                         >
                             {sideList("right")}
                     </MobileRightMenuSlider>
+                    {/* <Typography variant="h3" style={{color: "white"}}>
+                    <School style={{color: "white"}}/>&nbsp;
+                    UBC Degree Explorer 
+                    </Typography> */}
+                     <School style={{color: "white"}}/> 
                     <Typography variant="h3" style={{color: "white"}}>
-                        UBC Explorer &nbsp;
-                    </Typography>
-                    <School style={{color: "white"}}/>
+                      &nbsp;&nbsp;UBC Degree Explorer
+                    
+                      </Typography>
                     <div className="spacer"/>
                     <ul className="right hide-on-med-and-down">
                 <li>
