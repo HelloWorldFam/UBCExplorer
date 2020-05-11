@@ -183,7 +183,7 @@ const ListItemText = styled(MuiListItemText)(spacing);
 const menuItems = [
   
   {
-    listText: "UBC Degree Explorer",
+    listText: "UBC Explorer",
    
   },
 
