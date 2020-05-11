@@ -381,10 +381,10 @@ function Overview(props) {
                 <Typography variant="h7" paragraph >
                     Courses Completed: {exemptionCoursesComplete} <br />
                     Courses Remaining: {exemptionCoursesRemaining} <br/>
-                    {(Math.max(0, (exemptionCourses - exemptionCoursesComplete - exemptionReplacement.inProgress?.length - exemptionReplacement.incomplete?.length)) === 0) ? 
+                    {(Math.max(0, (exemptionCourses - exemptionCoursesComplete - courseBaskets.exemptionReplacement.inProgress?.length - courseBaskets.exemptionReplacement.incomplete?.length)) === 0) ? 
                     <span style={{ color: 'green' }}>All courses added! Please consult BCS director to ensure courses are appropriate.</span> :
                     <span style={{ color: 'red' }}>
-                        You must add additional {(exemptionCourses - exemptionCoursesComplete - exemptionReplacement.inProgress?.length - exemptionReplacement.incomplete?.length)} exemption replacement course(s).
+                        You must add additional {(exemptionCourses - exemptionCoursesComplete - courseBaskets.exemptionReplacement.inProgress?.length - courseBaskets.exemptionReplacement.incomplete?.length)} exemption replacement course(s).
                     </span>}
                 </Typography>
 
