@@ -270,6 +270,11 @@ app.get("/privacypolicy", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
 });
 
+app.get("/contact", (req, res) => {
+  // send landing page
+  res.sendFile(path.join(__dirname, "../build/index.html"));
+});
+
 // Nodemon success message
 app.listen(port, () => {
   // Only keep dyno awake in production

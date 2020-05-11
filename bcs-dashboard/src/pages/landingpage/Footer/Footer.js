@@ -12,7 +12,7 @@ export default class Footer extends Component {
                     <div className="row">
                         <div className="col s12 center">
                      
-                        <NavItem href="./contact" className="white-text">About</NavItem> &nbsp;| &nbsp;
+                        <NavItem href="/contact" className="white-text">About</NavItem> &nbsp;| &nbsp;
                                  
                         <a href="mailto:hello@ubcexplorer.io"><span className="white-text">Contact Us</span></a>
                         <br/>
