@@ -236,7 +236,7 @@ const HeaderBar = () => {
         // <>
          <React.Fragment>
         <Box component="nav">
-          <div className="try">asdffs</div>
+      
             <AppBar position="fixed" style={{background: "#232f3e"}}>
              
                 <Toolbar>
