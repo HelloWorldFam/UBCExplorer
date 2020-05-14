@@ -141,7 +141,7 @@ const SmoothScroll = () => {
                   <AnchorLink href="/Footer">Contact</AnchorLink>
                 </li>
                 <li>
-                  <AnchorLink href="./contact">About</AnchorLink>
+                  <AnchorLink href="/contact">About</AnchorLink>
                 </li>
                 <li>
                   <IconMenu />
@@ -167,7 +167,7 @@ const SmoothScroll = () => {
           <AnchorLink href="/contact">Contact</AnchorLink>
         </li>
         <li>
-          <NavItem href="./contact">About</NavItem>
+          <NavItem href="/contact">About</NavItem>
         </li>
 
         <li>
