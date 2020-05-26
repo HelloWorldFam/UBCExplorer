@@ -263,11 +263,13 @@ const Navbar = () => {
                   <AnchorLink href="/about">Features</AnchorLink>
                 </li>
                 <li>
-                  <NavItem href="/contact">About</NavItem>
+                  <NavItem href="/contact">About &nbsp;&nbsp;&nbsp;</NavItem>
+                  
                 </li>
-                <li>
+           
+                {/* <li>
                   <AnchorLink href="/Footer">Contact</AnchorLink>
-                </li>
+                </li> */}
                 <li>
                   <IconMenu />
                 </li>

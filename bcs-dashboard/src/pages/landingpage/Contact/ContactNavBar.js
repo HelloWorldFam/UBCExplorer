@@ -263,7 +263,7 @@ const HeaderBar = () => {
                     <div className="spacer"/>
                     <ul className="right hide-on-med-and-down">
                 <li>
-                  <NavItem href="./bcs">Home</NavItem>
+                  <NavItem href="./bcs">Home  &nbsp;</NavItem>
                 </li>
                 <li>
                   <IconMenu/>
