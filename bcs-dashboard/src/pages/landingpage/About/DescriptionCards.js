@@ -25,7 +25,7 @@ export default class DescriptionCards extends Component {
                                 <p className="flow-text">
                                     <h4 className="important-message">Explore courses at UBC</h4>
                                     <h5 className="important-message">Find about the course pre-requisites and dependencies</h5>
-                                    <h6> Choose a course of interest | assign an academic term.</h6>
+                                    <h6> Choose a course of interest and assign an academic term.</h6>
                                     <h6> Create your personalized course schedule throughout your degree.</h6>
                                 </p>
                             </div>
