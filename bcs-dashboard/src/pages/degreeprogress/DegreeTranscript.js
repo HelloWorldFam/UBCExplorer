@@ -61,7 +61,7 @@ function DegreeTranscript() {
     <React.Fragment>
       <Helmet title="Degree Transcript" />
       <Typography variant="h3" gutterBottom display="inline">
-        Degree Overview
+        Degree Transcript
       </Typography>
 
       <Breadcrumbs aria-label="Breadcrumb" mt={2}>
