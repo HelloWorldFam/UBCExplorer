@@ -147,11 +147,11 @@ const DashboardTable = (props) => {
   return (
     <Card mb={6}>
       <CardHeader
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertical />
-          </IconButton>
-        }
+        // action={
+        //   <IconButton aria-label="settings">
+        //     <MoreVertical />
+        //   </IconButton>
+        // }
         title="Degree Transcript Table"
       />
       <Paper>

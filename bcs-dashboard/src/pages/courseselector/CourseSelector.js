@@ -429,15 +429,15 @@ function exemptionCourses() {
         Select this if you've been exempted from one of the BCS Core Courses.
         Make sure you tag it with the 'Exemptions' term! <br />
         <br />
-        Courses that may be exempted:
+        Here are some commonly exempted courses, but check your own exemptions in your welcome letter.
         <br />
         <br />
-        - STCM 3xx (upper year communication requirement)
+        - STCM 3xx (upper year communication requirement) - Can add this requirement with ENGL 112, ENGL 301, or the like.
         <br />
         - STAT 203 <br />
         - MATH 180 <br />
         - ENGL 1xx (can also be exempted through English Exemption Exam)
-        <br />- CPSC 110 (exempted through CPSC110 challenge exam)
+        <br />- CPSC 110
       </h3>
     </>
   );

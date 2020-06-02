@@ -112,7 +112,8 @@ function Default({ theme }) {
             <Divider my={6} />
             <Lane
                 title="Get Started"
-                description={(<small>For detailed requirements, see: <a href='https://my.cs.ubc.ca/node/41871'>Welcome Notes to BCS Students (Steve Wolfman, 2018)</a> and <a href='https://www.cs.ubc.ca/students/undergrad/programs/second-degree/academic-schedule'>BCS Academic Schedule</a>.</small>)}
+                description={(<small>For detailed requirements, see: <a href='https://my.cs.ubc.ca/node/41871'>Welcome Notes to BCS Students (Steve Wolfman, 2018)</a> (CWL required for access) and <a href='https://www.cs.ubc.ca/students/undergrad/programs/second-degree/academic-schedule'>Sample BCS Academic Schedule</a>. 
+                <br/> To contact the BCS Director, send an email to <a href = "mailto:bcs-director@cs.ubc.ca">bcs-director@cs.ubc.ca</a>.</small>)}
                 onContainerLoaded={onContainerReady}
             >
                 <Divider my={6} />
@@ -128,21 +129,26 @@ function Default({ theme }) {
                                     {snackBar.message}
                                 </MuiAlert>
                             </Snackbar>
-                            Get started by adding these courses to your worklist:
+                            Get started by adding these courses to your worklist:<br/>
                             <ul>
-                                <li>ENGL 112 - Strategies for University Writing</li>
                                 <li>CPSC 110 - Computation, Programs and Programming</li>
-                                <li>STAT 203 - Statistical Methods</li>
-                                <li>MATH 180 - Calculus I (derivatives)</li>
                                 <li>CPSC 121 - Models of Computation</li>
                                 <li>CPSC 210 - Software Construction</li>
-                                <li>ENGL 301 - Technical Writing</li>
                                 <li>CPSC 221 - Basic Algorithms and Data Structures</li>
                                 <li>CPSC 213 - Introduction to Computer Systems</li>
-                                <li>CPSC 310 - Introduction to Software Engineering (or CPSC 313 or 320, depending on summer schedule)</li>
+                                <li>CPSC 310 - Introduction to Software Engineering</li>
                                 <li>CPSC 313 - Computer Hardware and Operating Systems</li>
                                 <li>CPSC 320 - Intermediate Algorithm Design and Analysis</li>
                             </ul>
+                            <ul>
+                                <li>ENGL 112 - Strategies for University Writing<small><sup>1</sup></small></li>
+                                <li>STAT 203 - Statistical Methods<small><sup>1</sup></small></li>
+                                <li>MATH 180 - Calculus I (derivatives)<small><sup>1</sup></small></li>
+                                <li>ENGL 301 - Technical Writing<small><sup>1</sup></small></li>
+                            </ul>
+                            <small><sup>1</sup> Courses that can be replaced with an equivalent or exempted.</small>
+                          
+                            {/* The following courses cannot be exempted or replaced with equivalents. */}
                         </TaskWrapperContent>
                     </TaskWrapper>
                     <h3>Step two:</h3>
@@ -160,7 +166,7 @@ function Default({ theme }) {
                     <h3>Step three:</h3>
                     <TaskWrapper>
                         <TaskWrapperContent>
-                            Got exemptions? Make sure you add them to your worklist. <br /><br />
+                            Got exemptions? Make sure you add them to your worklist. (listed in your welcome letter)<br /><br />
                             <img src={AddExemptionsGif} style={{ maxHeight: '60em', maxWidth: '30em' }}></img>
                         </TaskWrapperContent>
                     </TaskWrapper>
