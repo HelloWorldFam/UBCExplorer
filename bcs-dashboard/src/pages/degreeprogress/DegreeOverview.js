@@ -441,6 +441,7 @@ function DegreeOverview() {
                     Degree Overview
                 </Typography>
             </Breadcrumbs>
+            
             <Divider my={6} />
 
             <Grid container spacing={6}>

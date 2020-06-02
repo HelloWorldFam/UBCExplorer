@@ -399,9 +399,23 @@ app.get("/downloadUserData", isUserAuthenticated, (req, res) => {
     const data = user;
     fs.writeFile("userdata.json", data, function (error) {
       if (error) throw error;
-      console.log("Write to userdata.csv successfully!");
+      console.log("Write to userdata.json successfully!");
     });
     res.attachment("userdata.json");
+    res.status(200).send(data);
+  });
+});
+
+// Print Grad Check
+const GradCheck = require("./templates/GradCheck");
+app.get("/printGradCheck", isUserAuthenticated, (req, res) => {
+  Users.findOne({ email: req.user }).then((user) => {
+    const data = GradCheck.GradCheck(user.firstName, user.lastName, user.courses);
+    fs.writeFile("gradcheck.txt", data, function (error) {
+      if (error) throw error;
+      console.log("Write to gradcheck.txt successfully!");
+    });
+    res.attachment("gradcheck.txt");
     res.status(200).send(data);
   });
 });

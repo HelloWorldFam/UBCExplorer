@@ -6,6 +6,7 @@ import axios from "axios";
 import Helmet from "react-helmet";
 
 import {
+  Button,
   CardContent,
   Grid,
   Link,
@@ -41,6 +42,7 @@ function Transcript(props) {
   );
 }
 
+
 function DegreeTranscript() {
   const [courseResult, setCourseResult] = React.useState([]);
 
@@ -57,22 +59,40 @@ function DegreeTranscript() {
     });
   }, []);
 
+  const downloadData = () => {
+    window.open("/printGradCheck");
+  };
+
   return (
     <React.Fragment>
       <Helmet title="Degree Transcript" />
-      <Typography variant="h3" gutterBottom display="inline">
-        Degree Transcript
-      </Typography>
-
-      <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-        <Link component={NavLink} exact to="/bcs/start">
-          Get Started
-        </Link>
-        <Typography>Your Courses</Typography>
-      </Breadcrumbs>
+      <Grid justify="space-between" container spacing={6}>
+        <Grid item>
+          <Typography variant="h3" gutterBottom display="inline">
+            Degree Transcript
+          </Typography>
+          <Breadcrumbs aria-label="Breadcrumb" mt={2}>
+            <Link component={NavLink} exact to="/bcs/start">
+              Get Started
+            </Link>
+            <Typography>Your Courses</Typography>
+          </Breadcrumbs>
+        </Grid>
+        <Grid item>
+          <Button onClick={downloadData} direction="reverse">
+            Export Courses
+          </Button>
+        </Grid>
+      </Grid>
 
       <Divider my={6} />
-
+      <Grid
+        container
+        alignItems="flex-start"
+        justify="flex-end"
+        direction="row"
+      ></Grid>
+      <br />
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <Transcript courseResult={courseResult} />
