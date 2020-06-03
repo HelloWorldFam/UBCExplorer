@@ -24,8 +24,6 @@ var retVal = (firstName, lastName, courses) => {
     var cpscElectives = [];
     var bridgingModule = [];
 
-    exemptionSetBuilder();
-
     for (let term of courses) {
         /**
          * Loop through exempted courses and add them to "exemptions"
