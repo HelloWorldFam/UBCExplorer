@@ -24,6 +24,8 @@ var retVal = (firstName, lastName, courses) => {
     var cpscElectives = [];
     var bridgingModule = [];
 
+    exemptionSetBuilder();
+
     for (let term of courses) {
         /**
          * Loop through exempted courses and add them to "exemptions"
@@ -44,7 +46,7 @@ var retVal = (firstName, lastName, courses) => {
                 exemptionReplacements.push(course.code);
             } else if (course.tag === "Upper CPSC") {
                 cpscElectives.push(course.code);
-            } else {
+            } else if (course.tag === "Bridging Module") {
                 bridgingModule.push(course.code);
             }
         }
