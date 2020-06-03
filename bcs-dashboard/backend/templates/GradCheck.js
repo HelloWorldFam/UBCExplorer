@@ -52,8 +52,8 @@ var retVal = (firstName, lastName, courses) => {
     }
       
     return `
-    :::::::::Grad Check:::::::::
-    Printed from ubcexplorer.io/bcs
+    :::::::::BCS Grad Check:::::::::
+    Printed from ubcexplorer.io/bcs/transcript
     For: ${firstName} ${lastName}
     Date: ${new Date}
 
