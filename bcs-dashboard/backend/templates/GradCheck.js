@@ -32,6 +32,7 @@ var retVal = (firstName, lastName, courses) => {
             for (let course of term.courses) {
                 exemptions.push(getExemption(course.code));
             }
+            continue;
         }
 
         /**
@@ -44,7 +45,7 @@ var retVal = (firstName, lastName, courses) => {
                 exemptionReplacements.push(course.code);
             } else if (course.tag === "Upper CPSC") {
                 cpscElectives.push(course.code);
-            } else {
+            } else if (course.tag === "Bridging Module") {
                 bridgingModule.push(course.code);
             }
         }
