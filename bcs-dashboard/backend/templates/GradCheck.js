@@ -52,8 +52,8 @@ var retVal = (firstName, lastName, courses) => {
     }
       
     return `
-    :::::::::Grad Check:::::::::
-    Printed from ubcexplorer.io/bcs
+    :::::::::BCS Grad Check:::::::::
+    Printed from ubcexplorer.io/bcs/transcript
     For: ${firstName} ${lastName}
     Date: ${new Date}
 
@@ -104,10 +104,10 @@ var retVal = (firstName, lastName, courses) => {
     Bridging module:
 
     ${bridgingModule}
-
-    EXTRA courses:
-    NOTE: This currently does not populate courses.
     `
+    // EXTRA courses:
+    // NOTE: This currently does not populate courses.
+    // `
 }
 
 exports.GradCheck = retVal;
