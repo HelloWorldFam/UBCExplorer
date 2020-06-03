@@ -104,10 +104,10 @@ var retVal = (firstName, lastName, courses) => {
     Bridging module:
 
     ${bridgingModule}
-
-    EXTRA courses:
-    NOTE: This currently does not populate courses.
     `
+    // EXTRA courses:
+    // NOTE: This currently does not populate courses.
+    // `
 }
 
 exports.GradCheck = retVal;
