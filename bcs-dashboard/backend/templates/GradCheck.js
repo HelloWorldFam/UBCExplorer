@@ -32,6 +32,7 @@ var retVal = (firstName, lastName, courses) => {
             for (let course of term.courses) {
                 exemptions.push(getExemption(course.code));
             }
+            continue;
         }
 
         /**
