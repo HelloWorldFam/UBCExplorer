@@ -5,17 +5,6 @@ const exemptionList = {
     "MATH 180": ["MATH 100", "MATH 102", "MATH 104", "MATH 110", "MATH 120", "MATH 180", "MATH 184"]
 };
 
-/**
- * Returns the exempted course
- * @param course
- * 
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in
- */
-const getExemption = (courseCode) => {
-    for (let exemption in exemptionList) {
-        if (exemptionList[exemption].includes(courseCode)) return exemption;
-    }
-}
 
 var retVal = (firstName, lastName, courses) => {
     var exemptions = [];
@@ -24,13 +13,32 @@ var retVal = (firstName, lastName, courses) => {
     var cpscElectives = [];
     var bridgingModule = [];
 
+    /**
+     * Returns the exempted course
+     * @param course
+     * 
+     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in
+     */
+    const getExemption = (courseCode) => {
+        for (let exemption in exemptionList) {
+            if (exemptionList[exemption].includes(courseCode)) return exemption;
+        }
+    }
+
+    const processExemption = (course) => {
+        let exemption = getExemption(course.code);
+        let courseObj = {};
+        courseObj[exemption] = [course.code, course.term === "Exemptions" ? " Completed prior to BCS" : " " + course.term];
+        exemptions.push(courseObj);
+    }
+    
     for (let term of courses) {
         /**
          * Loop through exempted courses and add them to "exemptions"
          */
         if (term.name === "Exemptions") {
             for (let course of term.courses) {
-                exemptions.push(getExemption(course.code));
+                processExemption(course);
             }
             continue;
         }
@@ -39,8 +47,12 @@ var retVal = (firstName, lastName, courses) => {
          * Loop through courses and add them to buckets.
          */
         for (let course of term.courses) {
-            if (course.tag === "Core Course") {
-                coreCPSC.push(course.code);
+            if (course.tag === "Exemption") {
+                processExemption(course);
+            } else if (course.tag === "Core Course") {
+                let courseObj = {};
+                courseObj[course.code] = course.term;
+                coreCPSC.push(courseObj);
             } else if (course.tag === "Exemption Replacement") {
                 exemptionReplacements.push(course.code);
             } else if (course.tag === "Upper CPSC") {
@@ -50,6 +62,21 @@ var retVal = (firstName, lastName, courses) => {
             }
         }
     }
+
+    const doesCourseExist = (course, courseBucket) => {
+        for (let object of courseBucket) {
+            if (object[course]) return true;
+        }
+        return false;
+    }
+
+    const getCourse = (course, courseBucket) => {
+        for (let object of courseBucket) {
+            if (object[course]) return object[course];
+        }
+        return undefined;
+    }
+
       
     return `
     :::::::::BCS Grad Check:::::::::
@@ -73,10 +100,10 @@ var retVal = (firstName, lastName, courses) => {
     
     Non-CPSC named req'ts: 
 
-    ENGL 1xx: ${exemptions.includes("ENGL 1xx")}
-    MATH 180: ${exemptions.includes("MATH 180")}
-    STAT 203: ${exemptions.includes("STAT 203")}
-    STCM 3xx: ${exemptions.includes("STCM 3xx")}
+    ENGL 1xx: ${doesCourseExist("ENGL 1xx", exemptions) ? "true - " + getCourse("ENGL 1xx", exemptions) : false}
+    MATH 180: ${doesCourseExist("MATH 180", exemptions) ? "true - " + getCourse("MATH 180", exemptions) : false}
+    STAT 203: ${doesCourseExist("STAT 203", exemptions) ? "true - " + getCourse("STAT 203", exemptions) : false}
+    STCM 3xx: ${doesCourseExist("STCM 3xx", exemptions) ? "true - " + getCourse("STCM 3xx", exemptions) : false}
 
 
     Exemption Replacements:
@@ -86,14 +113,14 @@ var retVal = (firstName, lastName, courses) => {
 
     CPSC named req'ts:
 
-    110: ${coreCPSC.includes("CPSC 110")}
-    121: ${coreCPSC.includes("CPSC 121")}
-    210: ${coreCPSC.includes("CPSC 210")}
-    213: ${coreCPSC.includes("CPSC 213")}
-    221: ${coreCPSC.includes("CPSC 221")}
-    310: ${coreCPSC.includes("CPSC 310")}
-    313: ${coreCPSC.includes("CPSC 313")}
-    320: ${coreCPSC.includes("CPSC 320")}
+    110: ${doesCourseExist("CPSC 110", coreCPSC) ? "true - " + getCourse("CPSC 110", coreCPSC) : false}
+    121: ${doesCourseExist("CPSC 121", coreCPSC) ? "true - " + getCourse("CPSC 121", coreCPSC) : false}
+    210: ${doesCourseExist("CPSC 210", coreCPSC) ? "true - " + getCourse("CPSC 210", coreCPSC) : false}
+    213: ${doesCourseExist("CPSC 213", coreCPSC) ? "true - " + getCourse("CPSC 213", coreCPSC) : false}
+    221: ${doesCourseExist("CPSC 221", coreCPSC) ? "true - " + getCourse("CPSC 221", coreCPSC) : false}
+    310: ${doesCourseExist("CPSC 310", coreCPSC) ? "true - " + getCourse("CPSC 310", coreCPSC) : false}
+    313: ${doesCourseExist("CPSC 313", coreCPSC) ? "true - " + getCourse("CPSC 313", coreCPSC) : false}
+    320: ${doesCourseExist("CPSC 320", coreCPSC) ? "true - " + getCourse("CPSC 320", coreCPSC) : false}
 
 
     CPSC electives:
