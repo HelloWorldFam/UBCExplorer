@@ -25,6 +25,12 @@ var retVal = (firstName, lastName, courses) => {
         }
     }
 
+    /**
+     * Pushes an object to the exemptions array with the exemption category (eg. ENGL 1xx, STAT 203, etc) as the key,
+     * and an array as the value with arr[0] as the course code of the course completed and arr[1] as when the student
+     * completed the exemption
+     * @param course 
+     */
     const processExemption = (course) => {
         let exemption = getExemption(course.code);
         let courseObj = {};
@@ -63,6 +69,11 @@ var retVal = (firstName, lastName, courses) => {
         }
     }
 
+    /**
+     * Returns true if a course is found within a course bucket, false otherwise
+     * @param course - the course to search 
+     * @param courseBucket - the course bucket to be searched
+     */
     const doesCourseExist = (course, courseBucket) => {
         for (let object of courseBucket) {
             if (object[course]) return true;
@@ -70,6 +81,11 @@ var retVal = (firstName, lastName, courses) => {
         return false;
     }
 
+    /**
+     * Returns the term a course was taken if a course is found within a course bucket, undefined otherwise
+     * @param course - the course to search 
+     * @param courseBucket - the course bucket to be searched
+     */
     const getCourse = (course, courseBucket) => {
         for (let object of courseBucket) {
             if (object[course]) return object[course];
