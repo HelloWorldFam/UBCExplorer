@@ -116,10 +116,10 @@ var retVal = (firstName, lastName, courses) => {
     
     Non-CPSC named req'ts: 
 
-    ENGL 1xx: ${doesCourseExist("ENGL 1xx", exemptions) ? "true - " + getCourseTermTaken("ENGL 1xx", exemptions) : false}
-    MATH 180: ${doesCourseExist("MATH 180", exemptions) ? "true - " + getCourseTermTaken("MATH 180", exemptions) : false}
-    STAT 203: ${doesCourseExist("STAT 203", exemptions) ? "true - " + getCourseTermTaken("STAT 203", exemptions) : false}
-    STCM 3xx: ${doesCourseExist("STCM 3xx", exemptions) ? "true - " + getCourseTermTaken("STCM 3xx", exemptions) : false}
+    ENGL 1xx: ${doesCourseExist("ENGL 1xx", exemptions) ? "true - " + getCourseTermTaken("ENGL 1xx", exemptions) : doesCourseExist("ENGL 1xx", coreCPSC) ? "true - " + getCourseTermTaken("ENGL 1xx", exemptions) : false}
+    MATH 180: ${doesCourseExist("MATH 180", exemptions) ? "true - " + getCourseTermTaken("MATH 180", exemptions) : doesCourseExist("MATH 180", coreCPSC) ? "true - " + getCourseTermTaken("MATH 180", exemptions) : false}
+    STAT 203: ${doesCourseExist("STAT 203", exemptions) ? "true - " + getCourseTermTaken("STAT 203", exemptions) : doesCourseExist("STAT 203", coreCPSC) ? "true - " + getCourseTermTaken("STAT 203", exemptions) : false}
+    STCM 3xx: ${doesCourseExist("STCM 3xx", exemptions) ? "true - " + getCourseTermTaken("STCM 3xx", exemptions) : doesCourseExist("STCM 3xx", coreCPSC) ? "true - " + getCourseTermTaken("STCM 3xx", exemptions) : false}
 
 
     Exemption Replacements:
