@@ -86,7 +86,7 @@ var retVal = (firstName, lastName, courses) => {
      * @param course - the course to search 
      * @param courseBucket - the course bucket to be searched
      */
-    const getCourse = (course, courseBucket) => {
+    const getCourseTermTaken = (course, courseBucket) => {
         for (let object of courseBucket) {
             if (object[course]) return object[course];
         }
@@ -116,10 +116,10 @@ var retVal = (firstName, lastName, courses) => {
     
     Non-CPSC named req'ts: 
 
-    ENGL 1xx: ${doesCourseExist("ENGL 1xx", exemptions) ? "true - " + getCourse("ENGL 1xx", exemptions) : false}
-    MATH 180: ${doesCourseExist("MATH 180", exemptions) ? "true - " + getCourse("MATH 180", exemptions) : false}
-    STAT 203: ${doesCourseExist("STAT 203", exemptions) ? "true - " + getCourse("STAT 203", exemptions) : false}
-    STCM 3xx: ${doesCourseExist("STCM 3xx", exemptions) ? "true - " + getCourse("STCM 3xx", exemptions) : false}
+    ENGL 1xx: ${doesCourseExist("ENGL 1xx", exemptions) ? "true - " + getCourseTermTaken("ENGL 1xx", exemptions) : false}
+    MATH 180: ${doesCourseExist("MATH 180", exemptions) ? "true - " + getCourseTermTaken("MATH 180", exemptions) : false}
+    STAT 203: ${doesCourseExist("STAT 203", exemptions) ? "true - " + getCourseTermTaken("STAT 203", exemptions) : false}
+    STCM 3xx: ${doesCourseExist("STCM 3xx", exemptions) ? "true - " + getCourseTermTaken("STCM 3xx", exemptions) : false}
 
 
     Exemption Replacements:
@@ -129,14 +129,14 @@ var retVal = (firstName, lastName, courses) => {
 
     CPSC named req'ts:
 
-    110: ${doesCourseExist("CPSC 110", coreCPSC) ? "true - " + getCourse("CPSC 110", coreCPSC) : false}
-    121: ${doesCourseExist("CPSC 121", coreCPSC) ? "true - " + getCourse("CPSC 121", coreCPSC) : false}
-    210: ${doesCourseExist("CPSC 210", coreCPSC) ? "true - " + getCourse("CPSC 210", coreCPSC) : false}
-    213: ${doesCourseExist("CPSC 213", coreCPSC) ? "true - " + getCourse("CPSC 213", coreCPSC) : false}
-    221: ${doesCourseExist("CPSC 221", coreCPSC) ? "true - " + getCourse("CPSC 221", coreCPSC) : false}
-    310: ${doesCourseExist("CPSC 310", coreCPSC) ? "true - " + getCourse("CPSC 310", coreCPSC) : false}
-    313: ${doesCourseExist("CPSC 313", coreCPSC) ? "true - " + getCourse("CPSC 313", coreCPSC) : false}
-    320: ${doesCourseExist("CPSC 320", coreCPSC) ? "true - " + getCourse("CPSC 320", coreCPSC) : false}
+    110: ${doesCourseExist("CPSC 110", coreCPSC) ? "true - " + getCourseTermTaken("CPSC 110", coreCPSC) : false}
+    121: ${doesCourseExist("CPSC 121", coreCPSC) ? "true - " + getCourseTermTaken("CPSC 121", coreCPSC) : false}
+    210: ${doesCourseExist("CPSC 210", coreCPSC) ? "true - " + getCourseTermTaken("CPSC 210", coreCPSC) : false}
+    213: ${doesCourseExist("CPSC 213", coreCPSC) ? "true - " + getCourseTermTaken("CPSC 213", coreCPSC) : false}
+    221: ${doesCourseExist("CPSC 221", coreCPSC) ? "true - " + getCourseTermTaken("CPSC 221", coreCPSC) : false}
+    310: ${doesCourseExist("CPSC 310", coreCPSC) ? "true - " + getCourseTermTaken("CPSC 310", coreCPSC) : false}
+    313: ${doesCourseExist("CPSC 313", coreCPSC) ? "true - " + getCourseTermTaken("CPSC 313", coreCPSC) : false}
+    320: ${doesCourseExist("CPSC 320", coreCPSC) ? "true - " + getCourseTermTaken("CPSC 320", coreCPSC) : false}
 
 
     CPSC electives:
