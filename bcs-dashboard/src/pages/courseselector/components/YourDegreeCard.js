@@ -53,6 +53,7 @@ export function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
                     term.courses.map((course, courseIndex) => {
                         if (el.getAttribute("courseid") === course.code) {
                             newCourse = term.courses.splice(courseIndex, 1);
+                            newCourse.term = container.getAttribute("termid");
                         }
                     });
                 }
