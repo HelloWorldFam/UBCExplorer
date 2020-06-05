@@ -59,6 +59,9 @@ var retVal = (firstName, lastName, courses) => {
                 let courseObj = {};
                 courseObj[course.code] = course.term;
                 coreCPSC.push(courseObj);
+                let exemptionCode = getExemption(course.code);
+                if (exemptionCode) {exemptions.push({[exemptionCode]: course.code + ", " + course.term});
+            }
             } else if (course.tag === "Exemption Replacement") {
                 exemptionReplacements.push(course.code);
             } else if (course.tag === "Upper CPSC") {
@@ -116,15 +119,17 @@ var retVal = (firstName, lastName, courses) => {
     
     Non-CPSC named req'ts: 
 
-    ENGL 1xx: ${doesCourseExist("ENGL 1xx", exemptions) ? "true - " + getCourseTermTaken("ENGL 1xx", exemptions) : doesCourseExist("ENGL 1xx", coreCPSC) ? "true - " + getCourseTermTaken("ENGL 1xx", exemptions) : false}
-    MATH 180: ${doesCourseExist("MATH 180", exemptions) ? "true - " + getCourseTermTaken("MATH 180", exemptions) : doesCourseExist("MATH 180", coreCPSC) ? "true - " + getCourseTermTaken("MATH 180", exemptions) : false}
-    STAT 203: ${doesCourseExist("STAT 203", exemptions) ? "true - " + getCourseTermTaken("STAT 203", exemptions) : doesCourseExist("STAT 203", coreCPSC) ? "true - " + getCourseTermTaken("STAT 203", exemptions) : false}
-    STCM 3xx: ${doesCourseExist("STCM 3xx", exemptions) ? "true - " + getCourseTermTaken("STCM 3xx", exemptions) : doesCourseExist("STCM 3xx", coreCPSC) ? "true - " + getCourseTermTaken("STCM 3xx", exemptions) : false}
+    ENGL 1xx: ${doesCourseExist("ENGL 1xx", exemptions) ? "true - " + getCourseTermTaken("ENGL 1xx", exemptions) : false}
+    MATH 180: ${doesCourseExist("MATH 180", exemptions) ? "true - " + getCourseTermTaken("MATH 180", exemptions) : false}
+    STAT 203: ${doesCourseExist("STAT 203", exemptions) ? "true - " + getCourseTermTaken("STAT 203", exemptions) : false}
+    STCM 3xx: ${doesCourseExist("STCM 3xx", exemptions) ? "true - " + getCourseTermTaken("STCM 3xx", exemptions) : false}
 
 
     Exemption Replacements:
 
-    ${exemptionReplacements}
+    ${exemptionReplacements.map((item, index) => {
+        return index === 0 ? item : " " + item;
+    })}
 
 
     CPSC named req'ts:
@@ -141,12 +146,16 @@ var retVal = (firstName, lastName, courses) => {
 
     CPSC electives:
 
-    ${cpscElectives}
+    ${cpscElectives.map((item, index) => {
+        return index === 0 ? item : " " + item;
+    })}
 
 
     Bridging module:
 
-    ${bridgingModule}
+    ${bridgingModule.map((item, index) => {
+        return index === 0 ? item : " " + item;
+    })}
     `
     // EXTRA courses:
     // NOTE: This currently does not populate courses.
