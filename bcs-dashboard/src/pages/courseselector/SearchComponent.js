@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import { Search } from "semantic-ui-react";
 import "./semantic.css";
@@ -8,6 +8,11 @@ export default function SearchComponent(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState([]);
   const [value, setValue] = useState("");
+
+  useEffect(() => {
+    // Sets focus to search component on window load
+    document.querySelector("#root > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-6 > div:nth-child(1) > div > div > div > div > div > div:nth-child(1) > div > div.ui.fluid.icon.input > input").focus();
+  }, []);
 
   const handleResultSelect = (e, { result }) => {
     setValue(result.title);
