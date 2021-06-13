@@ -574,6 +574,47 @@ const useStyles = makeStyles((theme) => ({
 function TermDropDown(props) {
   const classes = useStyles();
   const [term, setTerm] = React.useState("");
+  const [termList, setTermList] = React.useState([]);
+
+  const terms = Object.freeze({
+    'W1': { // Sep - Dec
+      start: 8,
+      end: 11
+    },
+    'W2': { // Jan - Apr
+      start: 0,
+      end: 3
+    }, 
+    'S': { // May  - Aug
+      start: 4,
+      end: 7
+    }
+  });
+
+  useEffect(() => {
+    const currentYear = new Date().getFullYear();
+    const startYear = currentYear - 10;
+    const endYear = currentYear + 10;
+    const yearArray = [];
+    for (let i = startYear; i <= endYear; i++) { 
+      for (let currentTerm of Object.keys(terms)) {
+        yearArray.push(`${i}${currentTerm}`);
+      }
+    }
+    setTermList(yearArray);
+  }, []);
+
+  useEffect(() => {
+    if (termList.length) {
+      const currentYear = new Date().getFullYear();
+      const currentDate = new Date().getMonth(); // returns Month integer  
+      Object.keys(terms).forEach((currTerm, i) => {
+        if (currentDate >= terms[currTerm].start && currentDate <= terms[currTerm].end) {
+          setTerm(`${currentYear}${Object.keys(terms)[(i + 1) % 3]}`);
+        }
+      })
+    }
+  }, [termList]);
 
   const handleChange = (event) => {
     setTerm(event.target.value);
@@ -595,28 +636,8 @@ function TermDropDown(props) {
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
+        {termList.map( (value) => <MenuItem value = {value}>{value}</MenuItem>)}
         <MenuItem value="Exemptions">Exemptions</MenuItem>
-        <MenuItem value="2017W1">2017W1</MenuItem>
-        <MenuItem value="2017W2">2017W2</MenuItem>
-        <MenuItem value="2017S">2017S</MenuItem>
-        <MenuItem value="2018W1">2018W1</MenuItem>
-        <MenuItem value="2018W2">2018W2</MenuItem>
-        <MenuItem value="2018S">2018S</MenuItem>
-        <MenuItem value="2019W1">2019W1</MenuItem>
-        <MenuItem value="2019W2">2019W2</MenuItem>
-        <MenuItem value="2019S">2019S</MenuItem>
-        <MenuItem value="2020W1">2020W1</MenuItem>
-        <MenuItem value="2020W2">2020W2</MenuItem>
-        <MenuItem value="2020S">2020S</MenuItem>
-        <MenuItem value="2021W1">2021W1</MenuItem>
-        <MenuItem value="2021W2">2021W2</MenuItem>
-        <MenuItem value="2021S">2021S</MenuItem>
-        <MenuItem value="2022W1">2022W1</MenuItem>
-        <MenuItem value="2022W2">2022W2</MenuItem>
-        <MenuItem value="2022S">2022S</MenuItem>
-        <MenuItem value="2023W1">2023W1</MenuItem>
-        <MenuItem value="2023W2">2023W2</MenuItem>
-        <MenuItem value="2023S">2023S</MenuItem>
       </Select>
       <FormHelperText>
         Select the term you want to take this course
