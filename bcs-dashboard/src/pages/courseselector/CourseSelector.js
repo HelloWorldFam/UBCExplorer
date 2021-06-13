@@ -569,6 +569,10 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  menuPaper: { 
+    // Controls max height of terms dropdown menu found in course selector
+    maxHeight: 400
+  }
 }));
 
 function TermDropDown(props) {
@@ -632,6 +636,7 @@ function TermDropDown(props) {
         onChange={handleChange}
         displayEmpty
         className={classes.selectEmpty}
+        MenuProps={{ classes: { paper: classes.menuPaper } }}
       >
         <MenuItem value="">
           <em>None</em>
