@@ -13,8 +13,8 @@ export default function SearchComponent(props) {
     // Sets focus to search component on window load
     if (window.location.pathname === '/')
       document.querySelector("#root > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-6 > div:nth-child(1) > div > div > div > div > div > div:nth-child(1) > div > div.ui.fluid.icon.input > input").focus();
-    else if (window.location.pathname === '/bcs/courseselector')
-      document.querySelector("#root > div > div.sc-fzoYkl.uxoyg > div > div:nth-child(3) > div:nth-child(1) > div > div > div > div > div > div > form > div:nth-child(1) > div > div.ui.fluid.icon.input > input").focus();
+    // else if (window.location.pathname === '/bcs/courseselector')
+    //   document.querySelector("#root > div > div.sc-fzoYkl.uxoyg > div > div:nth-child(3) > div:nth-child(1) > div > div > div > div > div > div > form > div:nth-child(1) > div > div.ui.fluid.icon.input > input").focus();
   }, []);
 
   const handleResultSelect = (e, { result }) => {
