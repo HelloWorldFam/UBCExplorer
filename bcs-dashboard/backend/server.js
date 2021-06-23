@@ -410,7 +410,11 @@ app.get("/downloadUserData", isUserAuthenticated, (req, res) => {
 const GradCheck = require("./templates/GradCheck");
 app.get("/printGradCheck", isUserAuthenticated, (req, res) => {
   Users.findOne({ email: req.user }).then((user) => {
-    const data = GradCheck.GradCheck(user.firstName, user.lastName, user.courses);
+    const data = GradCheck.GradCheck(
+      user.firstName,
+      user.lastName,
+      user.courses
+    );
     fs.writeFile("gradcheck.txt", data, function (error) {
       if (error) throw error;
       console.log("Write to gradcheck.txt successfully!");

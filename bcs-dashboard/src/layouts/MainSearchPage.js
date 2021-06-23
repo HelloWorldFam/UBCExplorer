@@ -7,13 +7,12 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { blue } from "@material-ui/core/colors";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import DirectionsIcon from '@material-ui/icons/Directions';
+import DirectionsIcon from "@material-ui/icons/Directions";
 
 // Logos
 import GithubLogo from "../pages/landingpage/Header/SignInLogos/Github.png";
 import GoogleLogo from "../pages/landingpage/Header/SignInLogos/Google.png";
 import FacebookLogo from "../pages/landingpage/Header/SignInLogos/Facebook.png";
-
 
 import {
   Card as MuiCard,
@@ -61,7 +60,7 @@ const Typography = styled(MuiTypography)(spacing);
 const DropDownCard = styled(MuiCard)`
   box-shadow: none;
   margin: 10px;
-  max-width:26.5em;
+  max-width: 26.5em;
   line-height: 1.5;
 `;
 
@@ -154,8 +153,8 @@ function SearchResultCard(props) {
                   </a>
                 </Tooltip>
               ) : (
-                  props.name
-                )}
+                props.name
+              )}
             </LinkStyling>
           </Typography>
           <Typography variant="body2" mb={3}>
@@ -206,8 +205,8 @@ function SearchCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-        "/getCourseInfo/" +
-        courseInfo
+          "/getCourseInfo/" +
+          courseInfo
       )
       .then((res) => {
         setDesc(res.data.desc);
@@ -269,8 +268,8 @@ function PrerequisitesCard(props) {
         (window.location.host === "ubcexplorer.io"
           ? ""
           : "http://localhost:3000") +
-        "/getCourseInfo/" +
-        course
+          "/getCourseInfo/" +
+          course
       )
       .then((res) => {
         if (res.data.desc) {
@@ -318,8 +317,8 @@ function DependenciesCard(props) {
             (window.location.host === "ubcexplorer.io"
               ? ""
               : "http://localhost:3000") +
-            "/getCourseInfo/" +
-            course
+              "/getCourseInfo/" +
+              course
           )
           .then((res) => {
             if (res.data.desc) {
@@ -348,7 +347,7 @@ const navBarStyle = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(1),
-    color: "#FFF"
+    color: "#FFF",
   },
   title: {
     flexGrow: 1,
@@ -410,10 +409,16 @@ function MainSearchPage() {
           >
             logo here
           </IconButton>  */}
-            <Typography className={navBarClasses.root} variant="h6">UBC Explorer Course Search</Typography>
+            <Typography className={navBarClasses.root} variant="h6">
+              UBC Explorer Course Search
+            </Typography>
             {/* <Button color="inherit">Login/Register</Button> */}
-            <Button className={navBarClasses.menuButton} onClick={openExplorerMenu}>
-              <DirectionsIcon />{(windowWidth > 625) ? <>&nbsp;BCS Explorer</> : ""}
+            <Button
+              className={navBarClasses.menuButton}
+              onClick={openExplorerMenu}
+            >
+              <DirectionsIcon />
+              {windowWidth > 625 ? <>&nbsp;BCS Explorer</> : ""}
             </Button>
             <Menu
               id="simple-menu"
@@ -423,24 +428,76 @@ function MainSearchPage() {
               color="buttoncolor"
             >
               <DropDownCard>
-                <strong>BCS Degree Explorer:</strong> a simplified course planning tool for
-                Bachelor of Computer Science (BCS) students. <br />
+                <strong>BCS Degree Explorer:</strong> a simplified course
+                planning tool for Bachelor of Computer Science (BCS) students.{" "}
+                <br />
                 <center>
-                  <Button style={{ margin: '10px', backgroundColor: '#f7f9fc' }} variant="outlined" href="/bcs">
+                  <Button
+                    style={{ margin: "10px", backgroundColor: "#f7f9fc" }}
+                    variant="outlined"
+                    href="/bcs"
+                  >
                     <strong>Learn More!</strong>
                   </Button>
                 </center>
-                <Typography variant="body" style={{ padding: '0 10px 10px 0', display: 'block' }}>Sign in with an OAuth provider:</Typography>
-                <Button style={{ margin: '1px', }} variant="outlined" href="/auth/google">
-                  <strong>Google</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={GoogleLogo}></img>
+                <Typography
+                  variant="body"
+                  style={{ padding: "0 10px 10px 0", display: "block" }}
+                >
+                  Sign in with an OAuth provider:
+                </Typography>
+                <Button
+                  style={{ margin: "1px" }}
+                  variant="outlined"
+                  href="/auth/google"
+                >
+                  <strong>Google</strong>{" "}
+                  <img
+                    style={{
+                      width: "16px",
+                      height: "16px",
+                      marginLeft: "10px",
+                    }}
+                    src={GoogleLogo}
+                  ></img>
                 </Button>
-                <Button style={{ margin: '1px', }} variant="outlined" href="/auth/facebook">
-                  <strong>Facebook</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={FacebookLogo}></img>
+                <Button
+                  style={{ margin: "1px" }}
+                  variant="outlined"
+                  href="/auth/facebook"
+                >
+                  <strong>Facebook</strong>{" "}
+                  <img
+                    style={{
+                      width: "16px",
+                      height: "16px",
+                      marginLeft: "10px",
+                    }}
+                    src={FacebookLogo}
+                  ></img>
                 </Button>
-                <Button style={{ margin: '1px', }} variant="outlined" href="/auth/github">
-                  <strong>Github</strong> <img style={{ width: '52px', height: '16px', marginLeft: '10px' }} src={GithubLogo}></img>
+                <Button
+                  style={{ margin: "1px" }}
+                  variant="outlined"
+                  href="/auth/github"
+                >
+                  <strong>Github</strong>{" "}
+                  <img
+                    style={{
+                      width: "52px",
+                      height: "16px",
+                      marginLeft: "10px",
+                    }}
+                    src={GithubLogo}
+                  ></img>
                 </Button>
-                <Typography variant="subtitle2" style={{ padding: '10px 10px 10px 0', display: 'block' }}>Your privacy is important to us. For more information, see our <a href='/privacypolicy'>privacy policy</a>.</Typography>
+                <Typography
+                  variant="subtitle2"
+                  style={{ padding: "10px 10px 10px 0", display: "block" }}
+                >
+                  Your privacy is important to us. For more information, see our{" "}
+                  <a href="/privacypolicy">privacy policy</a>.
+                </Typography>
               </DropDownCard>
             </Menu>
           </Toolbar>
@@ -461,7 +518,7 @@ function MainSearchPage() {
           {/* TODO: Pass in a prop for the course that is searched.
           Add conditional rendering and only show comment box when the course is searched
           The prop (the course code ) should be passed in to comment box which will then be used as a unique id */}
-          <CommentBox/> 
+          {setSelectedCourse ? <CommentBox /> : <>Hello world</>}
         </Grid>
         <Grid
           item
@@ -526,7 +583,7 @@ function MainSearchPage() {
                   dependent courses will also be shown in the two right lanes.
                   <br />
                   To view the course on SSC, click the course name.
-                  <br/>
+                  <br />
                   <br />
                   {/* <b>About</b>
                   <br />
@@ -543,7 +600,7 @@ function MainSearchPage() {
                   <br /> */}
                   <a href="/api">
                     <b>API</b>
-                  </a> 
+                  </a>
                   <br />
                   Documentation for the open API can be found here.
                   <br />
