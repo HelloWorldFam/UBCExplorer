@@ -1,30 +1,20 @@
-import React, { useState, useEffect } from "react";
-// import jsboxscript from "./commentboxscript";
-
-function scriptContents() {
-  var disqus_config = function () {
-    this.page.url = "ubcexplorer.io"; // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = "CPSC210"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable (our prop)
-  };
-  var d = document,
-    s = d.createElement("script");
-  s.src = "https://ubcexplorer.disqus.com/embed.js";
-  s.setAttribute("data-timestamp", +new Date());
-  (d.head || d.body).appendChild(s);
-}
+import React from "react";
+import { DiscussionEmbed } from "disqus-react";
 
 function CommentBox() {
+  const disqusShortname = "ubcexplorer";
+
+  
+  const disqusConfig = {
+    url: "http://localhost:3000",
+    identifier: "article-id",
+    title: "Title of Your Article2",
+  };
+
   return (
-    <div>
-      <div id="disqus_thread"></div>
-      <script>{scriptContents()}</script>
-      <p>Comment Box</p>
-      <noscript>
-        Please enable JavaScript to view the{" "}
-        <a href="https://disqus.com/?ref_noscript">
-          comments powered by Disqus.
-        </a>
-      </noscript>
+    <div className="article-container">
+      <p>Page content.</p>
+      <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
     </div>
   );
 }
