@@ -26,6 +26,7 @@ import {
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
+import CommentBox from "../pages/courseselector/CommentBox";
 
 const Card = styled(MuiCard)`
   overflow: visible;
@@ -456,6 +457,11 @@ function MainSearchPage() {
           >
             <SearchCard onChange={setSelectedCourse} />
           </Lane>
+
+          {/* TODO: Pass in a prop for the course that is searched.
+          Add conditional rendering and only show comment box when the course is searched
+          The prop (the course code ) should be passed in to comment box which will then be used as a unique id */}
+          <CommentBox/> 
         </Grid>
         <Grid
           item
