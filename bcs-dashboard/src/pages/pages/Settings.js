@@ -87,7 +87,7 @@ function Personal(props) {
       .post(
         (window.location.host === "ubcexplorer.io"
           ? ""
-          : "http://localhost:3000") + "/updateUser",
+          : "http://localhost:5000") + "/updateUser",
         user
       )
       .then(() => alert("Your changes have been saved."))
@@ -162,7 +162,7 @@ function SimpleList() {
         .post(
           (window.location.host === "ubcexplorer.io"
             ? ""
-            : "http://localhost:3000") + "/deleteUser"
+            : "http://localhost:5000") + "/deleteUser"
         )
         .then(() => {
           alert("Your account has successfully been deleted.");

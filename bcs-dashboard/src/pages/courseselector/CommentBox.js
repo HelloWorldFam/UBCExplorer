@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { DiscussionEmbed } from "disqus-react";
 
-function CommentBox() {
-  const disqusShortname = "ubcexplorer";
+function CommentBox({ courseCode, courseNum, url }) {
+  const [disqusConfig, setDisqusConfig] = useState({});
 
-  
-  const disqusConfig = {
-    url: "http://localhost:3000",
-    identifier: "article-id",
-    title: "Title of Your Article2",
-  };
+  useEffect(() => {
+    setDisqusConfig({
+      url: `https://ubcexplorer.io${url}`,
+      identifier: `${courseCode}${courseNum}`,
+      title: `${courseCode}${courseNum}`,
+    });
+  }, [courseCode, courseNum, url]);
 
   return (
     <div className="article-container">
-      <p>Page content.</p>
-      <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
+      <h4>UBC Explorer Comment Box</h4>
+      <p>
+        Interested in becoming a moderator to help keep the community clean?{" "}
+        <b>Apply.</b>
+      </p>
+      <DiscussionEmbed shortname="ubcexplorer" config={disqusConfig} />
     </div>
   );
 }

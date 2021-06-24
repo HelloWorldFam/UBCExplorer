@@ -12,12 +12,20 @@ export default function SearchComponent(props) {
   useEffect(() => {
     // Sets focus to search component on window load
     try {
-      if (window.location.pathname === '/')
-        document.querySelector("#root > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-6 > div:nth-child(1) > div > div > div > div > div > div:nth-child(1) > div > div.ui.fluid.icon.input > input").focus();
-      else if (window.location.pathname === '/bcs/courseselector')
-        document.querySelector("#root > div > div.sc-fzoYkl.hfPoTr > div > div:nth-child(3) > div:nth-child(1) > div > div > div > div > div > div > form > div:nth-child(1) > div > div.ui.fluid.icon.input > input").focus();
+      if (window.location.pathname === "/")
+        document
+          .querySelector(
+            "#root > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-6 > div:nth-child(1) > div > div > div > div > div > div:nth-child(1) > div > div.ui.fluid.icon.input > input"
+          )
+          .focus();
+      else if (window.location.pathname === "/bcs/courseselector")
+        document
+          .querySelector(
+            "#root > div > div.sc-fzoYkl.hfPoTr > div > div:nth-child(3) > div:nth-child(1) > div > div > div > div > div > div > form > div:nth-child(1) > div > div.ui.fluid.icon.input > input"
+          )
+          .focus();
     } catch (error) {
-      console.log('Document failed to select search component. ', error)
+      console.log("Document failed to select search component. ", error);
     }
   }, []);
 
@@ -38,7 +46,13 @@ export default function SearchComponent(props) {
       }
 
       axios
-        .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/searchAny/" + value)
+        .get(
+          (window.location.host === "ubcexplorer.io"
+            ? ""
+            : "http://localhost:5000") +
+            "/searchAny/" +
+            value
+        )
         .then((res) => {
           if (!(res.data instanceof Array)) {
             setIsLoading(false);

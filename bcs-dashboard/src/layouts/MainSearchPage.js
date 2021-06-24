@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
@@ -199,12 +200,16 @@ function SearchCard(props) {
   const [course, setCourse] = useState({});
   const [title, setTitle] = useState("Search results will appear here.");
 
+  const history = useHistory();
+
   const handleClick = (courseInfo) => {
+    const courseArr = courseInfo.split(" ");
+    history.push(`/course/${courseArr[0]}/${courseArr[1]}`);
     axios
       .get(
         (window.location.host === "ubcexplorer.io"
           ? ""
-          : "http://localhost:3000") +
+          : "http://localhost:5000") +
           "/getCourseInfo/" +
           courseInfo
       )
@@ -267,7 +272,7 @@ function PrerequisitesCard(props) {
       .get(
         (window.location.host === "ubcexplorer.io"
           ? ""
-          : "http://localhost:3000") +
+          : "http://localhost:5000") +
           "/getCourseInfo/" +
           course
       )
@@ -316,7 +321,7 @@ function DependenciesCard(props) {
           .get(
             (window.location.host === "ubcexplorer.io"
               ? ""
-              : "http://localhost:3000") +
+              : "http://localhost:5000") +
               "/getCourseInfo/" +
               course
           )
@@ -374,6 +379,18 @@ function MainSearchPage() {
   const [windowWidth, setWindowWidth] = useState(0);
   const [anchorEl, setAnchorEl] = useState();
   const navBarClasses = navBarStyle();
+
+  const [course, setCourse] = useState({});
+
+  useEffect(() => {
+    if (selectedCourse?.code) {
+      const courseArr = selectedCourse.code.split(" ");
+      setCourse({
+        code: courseArr[0],
+        num: courseArr[1],
+      });
+    }
+  }, [selectedCourse]);
 
   const onContainerReady = (container) => {
     setContainers(containers.push(container));
@@ -513,12 +530,17 @@ function MainSearchPage() {
             onContainerLoaded={onContainerReady}
           >
             <SearchCard onChange={setSelectedCourse} />
+            <CommentBox
+              courseCode={course.code}
+              courseNum={course.num}
+              url={window.location.pathname}
+            />
           </Lane>
 
           {/* TODO: Pass in a prop for the course that is searched.
           Add conditional rendering and only show comment box when the course is searched
           The prop (the course code ) should be passed in to comment box which will then be used as a unique id */}
-          {setSelectedCourse ? <CommentBox /> : <>Hello world</>}
+          {/* {selectedCourse ? <CommentBox /> : <>Hello world</>} */}
         </Grid>
         <Grid
           item

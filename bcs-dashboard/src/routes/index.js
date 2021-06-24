@@ -285,7 +285,19 @@ const mainSearchRoutes = {
   id: "mainSearchRoutes",
   path: "/",
   component: Blank,
-  children: null,
+};
+
+const courseSearchRoutes = {
+  id: "courseSearchRoutes",
+  path: "/course",
+  component: Blank,
+  children: [
+    {
+      path: "/course/*",
+      name: "Course Search",
+      component: Blank,
+    },
+  ],
 };
 
 const authRoutes = {
@@ -562,6 +574,7 @@ export const dashboard = [
 
 export const auth = [authRoutes];
 export const mainSearch = [mainSearchRoutes];
+export const courseSearch = [courseSearchRoutes];
 export const privacy = [privacyPolicyRoutes];
 export const restapi = [restAPIDocsRoutes];
 

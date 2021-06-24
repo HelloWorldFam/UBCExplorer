@@ -6,6 +6,7 @@ import {
   landing as landingRoutes,
   contact as contactRoutes,
   mainSearch as mainSearchRoutes,
+  courseSearch as courseSearchRoutes,
   privacy as privacyPolicyRoutes,
   restapi as restAPIDocsRoutes,
 } from "./index";
@@ -56,6 +57,7 @@ const Routes = () => (
       {childRoutes(RestApiDocs, restAPIDocsRoutes)}
       {childRoutes(PrivacyPolicy, privacyPolicyRoutes)}
       {childRoutes(MainSearchPage, mainSearchRoutes)}
+      {childRoutes(MainSearchPage, courseSearchRoutes)}
       {childRoutes(DashboardLayout, dashboardRoutes)}
       {childRoutes(AuthLayout, authRoutes)}
       {childRoutes(LandingLayout, landingRoutes)}
