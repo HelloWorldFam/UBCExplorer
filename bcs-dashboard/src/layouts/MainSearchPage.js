@@ -579,7 +579,7 @@ function MainSearchPage() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3}>
+        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: windowHeight - 95, overflow: "auto" }}>
           <Lane
             title="UBC Explorer Course Search"
             description=""
