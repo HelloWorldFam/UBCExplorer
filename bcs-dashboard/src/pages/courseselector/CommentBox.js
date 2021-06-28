@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DiscussionEmbed } from "disqus-react";
+import { isEmpty } from "lodash";
 
 function CommentBox({ courseCode, courseNum, url }) {
   const [disqusConfig, setDisqusConfig] = useState({});
@@ -19,7 +20,9 @@ function CommentBox({ courseCode, courseNum, url }) {
         Interested in becoming a moderator to help keep the community clean?{" "}
         <b>Apply.</b>
       </p>
-      <DiscussionEmbed shortname="ubcexplorer" config={disqusConfig} />
+      {!isEmpty(disqusConfig) && (
+        <DiscussionEmbed shortname="ubcexplorer2" config={disqusConfig} />
+      )}
     </div>
   );
 }

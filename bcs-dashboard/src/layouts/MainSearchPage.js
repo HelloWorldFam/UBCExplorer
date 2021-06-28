@@ -380,7 +380,7 @@ function MainSearchPage() {
   const [anchorEl, setAnchorEl] = useState();
   const navBarClasses = navBarStyle();
 
-  const [course, setCourse] = useState({});
+  const [course, setCourse] = useState(null);
 
   useEffect(() => {
     if (selectedCourse?.code) {
@@ -530,11 +530,13 @@ function MainSearchPage() {
             onContainerLoaded={onContainerReady}
           >
             <SearchCard onChange={setSelectedCourse} />
-            <CommentBox
-              courseCode={course.code}
-              courseNum={course.num}
-              url={window.location.pathname}
-            />
+            {course && (
+              <CommentBox
+                courseCode={course?.code}
+                courseNum={course?.num}
+                url={window.location.pathname}
+              />
+            )}
           </Lane>
 
           {/* TODO: Pass in a prop for the course that is searched.
