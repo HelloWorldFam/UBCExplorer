@@ -523,7 +523,13 @@ function MainSearchPage() {
 
       <Spacer mb={20} />
       <Grid container spacing={6}>
-        <Grid item xs={12} lg={6} xl={3}>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
+        >
           <Lane
             title="Search"
             description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
@@ -538,11 +544,6 @@ function MainSearchPage() {
               />
             )}
           </Lane>
-
-          {/* TODO: Pass in a prop for the course that is searched.
-          Add conditional rendering and only show comment box when the course is searched
-          The prop (the course code ) should be passed in to comment box which will then be used as a unique id */}
-          {/* {selectedCourse ? <CommentBox /> : <>Hello world</>} */}
         </Grid>
         <Grid
           item
