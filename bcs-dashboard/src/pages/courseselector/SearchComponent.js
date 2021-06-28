@@ -10,6 +10,17 @@ export default function SearchComponent(props) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
+    //console.log(window.location.pathname.split("/"));
+    const urlArray = window.location.pathname.split("/");
+
+    if (urlArray.length === 4 && urlArray[1] === "course") {
+      handleResultSelect(null, {
+        result: { title: `${urlArray[2]} ${urlArray[3]}` },
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     // Sets focus to search component on window load
     try {
       if (window.location.pathname === "/")
