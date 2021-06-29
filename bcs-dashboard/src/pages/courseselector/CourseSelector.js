@@ -276,8 +276,10 @@ function SearchCard(props) {
   const handleClick = (courseInfo) => {
     axios
       .get(
-        window.location.href +
-          "getCourseInfo/" +
+        (window.location.hostname === "localhost" ? 
+        `http://${window.location.hostname}:5000` : 
+        window.location.origin) +
+          "/getCourseInfo/" +
           courseInfo
       )
       .then((res) => {
@@ -685,8 +687,10 @@ function PrerequisitesCard(props) {
   const getCourseInfo = (course) => {
     axios
       .get(
-        window.location.href + 
-          "getCourseInfo/" +
+        (window.location.hostname === "localhost" ? 
+        `http://${window.location.hostname}:5000` : 
+        window.location.origin) + 
+          "/getCourseInfo/" +
           course
       )
       .then((res) => {
@@ -732,8 +736,10 @@ function DependenciesCard(props) {
       for (let course of dependencies) {
         axios
           .get(
-            window.location.href + 
-              "getCourseInfo/" +
+            (window.location.hostname === "localhost" ? 
+            `http://${window.location.hostname}:5000` : 
+            window.location.origin) + 
+              "/getCourseInfo/" +
               course
           )
           .then((res) => {
@@ -842,8 +848,10 @@ function CourseSelector() {
     if (usersCourseArray && usersCourseArray[0] !== -1) {
       axios
         .post(
-          window.location.href +
-          "updateUserWorkList",
+          (window.location.hostname === "localhost" ? 
+          `http://${window.location.hostname}:5000` : 
+          window.location.origin) +
+          "/updateUserWorkList",
           usersCourseArray
         )
         .then(() => {});
@@ -856,8 +864,10 @@ function CourseSelector() {
     // Get request to load user data
     axios
       .get(
-        window.location.href +
-          "userdata"
+        (window.location.hostname === "localhost" ? 
+        `http://${window.location.hostname}:5000` : 
+        window.location.origin) +
+          "/userdata"
       )
       .then((res) => {
         setUsersCourseArray(res.data[0].courses);

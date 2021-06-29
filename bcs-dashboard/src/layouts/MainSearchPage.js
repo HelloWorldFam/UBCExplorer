@@ -207,8 +207,10 @@ function SearchCard(props) {
     history.push(`/course/${courseArr[0]}/${courseArr[1]}`);
     axios
       .get(
-        window.location.href +
-          "getCourseInfo/" +
+        (window.location.hostname === "localhost" ? 
+        `http://${window.location.hostname}:5000` : 
+        window.location.origin) +
+          "/getCourseInfo/" +
           courseInfo
       )
       .then((res) => {
@@ -268,8 +270,10 @@ function PrerequisitesCard(props) {
   const getCourseInfo = (course) => {
     axios
       .get(
-        window.location.href +
-          "getCourseInfo/" +
+        (window.location.hostname === "localhost" ? 
+        `http://${window.location.hostname}:5000` : 
+        window.location.origin) +
+          "/getCourseInfo/" +
           course
       )
       .then((res) => {
@@ -315,8 +319,10 @@ function DependenciesCard(props) {
       for (let course of dependencies) {
         axios
           .get(
-            window.location.href +
-              "getCourseInfo/" +
+            (window.location.hostname === "localhost" ? 
+            `http://${window.location.hostname}:5000` : 
+            window.location.origin) +
+              "/getCourseInfo/" +
               course
           )
           .then((res) => {

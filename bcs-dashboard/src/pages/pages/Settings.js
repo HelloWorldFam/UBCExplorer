@@ -85,7 +85,9 @@ function Personal(props) {
 
     axios
       .post(
-        window.location.href +
+        (window.location.hostname === "localhost" ? 
+        `http://${window.location.hostname}:5000` : 
+        window.location.origin) +
           "updateUser",
         user
       )
@@ -159,7 +161,9 @@ function SimpleList() {
     if (confirmation == true) {
       axios
         .post(
-          window.location.href +
+          (window.location.hostname === "localhost" ? 
+          `http://${window.location.hostname}:5000` : 
+          window.location.origin) +
             "deleteUser"
         )
         .then(() => {

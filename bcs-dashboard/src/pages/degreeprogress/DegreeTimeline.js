@@ -67,7 +67,9 @@ function Timeline(props) {
   const getTooltipTitle = (course) => {
     axios
       .get(
-        window.location.href +
+        (window.location.hostname === "localhost" ? 
+        `http://${window.location.hostname}:5000` : 
+        window.location.origin) +
           "getCourseInfo/" +
           course
       )
@@ -156,7 +158,9 @@ function DegreeTimeline() {
 
   useEffect(() => {
     fetch(
-      window.location.href +
+      (window.location.hostname === "localhost" ? 
+      `http://${window.location.hostname}:5000` : 
+      window.location.origin) +
         "getcourses"
     )
       .then((response) => response.json())

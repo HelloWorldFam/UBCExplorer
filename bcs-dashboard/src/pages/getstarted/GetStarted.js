@@ -41,7 +41,9 @@ const addCoreToDegree = (setSnackbar) => {
   let workList = BuildWorklist(year);
   let hasExistingWorklist = false;
   fetch(
-    window.location.href +
+    (window.location.hostname === "localhost" ? 
+    `http://${window.location.hostname}:5000` : 
+    window.location.origin) +
       "getcourses"
   )
     .then((response) => response.json())
@@ -59,7 +61,9 @@ const addCoreToDegree = (setSnackbar) => {
       if (!hasExistingWorklist) {
         axios
           .post(
-            window.location.href +
+            (window.location.hostname === "localhost" ? 
+            `http://${window.location.hostname}:5000` : 
+            window.location.origin) +
               "updateUserWorkList",
             workList
           )
