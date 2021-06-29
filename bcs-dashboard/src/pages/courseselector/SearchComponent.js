@@ -25,6 +25,7 @@ export default function SearchComponent(props) {
 
     if (urlArray.length === 4 && urlArray[1] === "course") {
       setSearchedValue(`${urlArray[2]} ${urlArray[3]}`);
+      window.scrollTo(0, 0);
     }
   }, [history.location])
 
