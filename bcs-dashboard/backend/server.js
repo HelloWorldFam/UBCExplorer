@@ -424,6 +424,10 @@ app.get("/printGradCheck", isUserAuthenticated, (req, res) => {
   });
 });
 
+app.get("/course/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../build/index.html"));
+});
+
 // Commented out for testing
 app.get("/*", isUserAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
