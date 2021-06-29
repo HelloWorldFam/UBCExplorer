@@ -276,10 +276,8 @@ function SearchCard(props) {
   const handleClick = (courseInfo) => {
     axios
       .get(
-        (window.location.host === "ubcexplorer.io"
-          ? ""
-          : "http://localhost:5000") +
-          "/getCourseInfo/" +
+        window.location.href +
+          "getCourseInfo/" +
           courseInfo
       )
       .then((res) => {
@@ -687,10 +685,8 @@ function PrerequisitesCard(props) {
   const getCourseInfo = (course) => {
     axios
       .get(
-        (window.location.host === "ubcexplorer.io"
-          ? ""
-          : "http://localhost:5000") +
-          "/getCourseInfo/" +
+        window.location.href + 
+          "getCourseInfo/" +
           course
       )
       .then((res) => {
@@ -736,10 +732,8 @@ function DependenciesCard(props) {
       for (let course of dependencies) {
         axios
           .get(
-            (window.location.host === "ubcexplorer.io"
-              ? ""
-              : "http://localhost:5000") +
-              "/getCourseInfo/" +
+            window.location.href + 
+              "getCourseInfo/" +
               course
           )
           .then((res) => {
@@ -848,9 +842,8 @@ function CourseSelector() {
     if (usersCourseArray && usersCourseArray[0] !== -1) {
       axios
         .post(
-          (window.location.host === "ubcexplorer.io"
-            ? ""
-            : "http://localhost:5000") + "/updateUserWorkList",
+          window.location.href +
+          "updateUserWorkList",
           usersCourseArray
         )
         .then(() => {});
@@ -863,9 +856,8 @@ function CourseSelector() {
     // Get request to load user data
     axios
       .get(
-        (window.location.host === "ubcexplorer.io"
-          ? ""
-          : "http://localhost:5000") + "/userdata"
+        window.location.href +
+          "userdata"
       )
       .then((res) => {
         setUsersCourseArray(res.data[0].courses);

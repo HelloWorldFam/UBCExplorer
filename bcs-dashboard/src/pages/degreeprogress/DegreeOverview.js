@@ -557,9 +557,8 @@ function DegreeOverview() {
 
   useEffect(() => {
     fetch(
-      (window.location.host === "ubcexplorer.io"
-        ? ""
-        : "http://localhost:5000") + "/getcourses"
+      window.location.href +
+        "getcourses"
     )
       .then((response) => response.json())
       .then((json) => {

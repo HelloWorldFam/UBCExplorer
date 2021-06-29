@@ -207,10 +207,8 @@ function SearchCard(props) {
     history.push(`/course/${courseArr[0]}/${courseArr[1]}`);
     axios
       .get(
-        (window.location.host === "ubcexplorer.io"
-          ? ""
-          : "http://localhost:5000") +
-          "/getCourseInfo/" +
+        window.location.href +
+          "getCourseInfo/" +
           courseInfo
       )
       .then((res) => {
@@ -270,10 +268,8 @@ function PrerequisitesCard(props) {
   const getCourseInfo = (course) => {
     axios
       .get(
-        (window.location.host === "ubcexplorer.io"
-          ? ""
-          : "http://localhost:5000") +
-          "/getCourseInfo/" +
+        window.location.href +
+          "getCourseInfo/" +
           course
       )
       .then((res) => {
@@ -319,10 +315,8 @@ function DependenciesCard(props) {
       for (let course of dependencies) {
         axios
           .get(
-            (window.location.host === "ubcexplorer.io"
-              ? ""
-              : "http://localhost:5000") +
-              "/getCourseInfo/" +
+            window.location.href +
+              "getCourseInfo/" +
               course
           )
           .then((res) => {

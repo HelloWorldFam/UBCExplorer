@@ -41,8 +41,8 @@ const addCoreToDegree = (setSnackbar) => {
   let workList = BuildWorklist(year);
   let hasExistingWorklist = false;
   fetch(
-    (window.location.host === "ubcexplorer.io" ? "" : "http://localhost:5000") +
-      "/getcourses"
+    window.location.href +
+      "getcourses"
   )
     .then((response) => response.json())
     .then((json) => {
@@ -59,9 +59,8 @@ const addCoreToDegree = (setSnackbar) => {
       if (!hasExistingWorklist) {
         axios
           .post(
-            (window.location.host === "ubcexplorer.io"
-              ? ""
-              : "http://localhost:5000") + "/updateUserWorkList",
+            window.location.href +
+              "updateUserWorkList",
             workList
           )
           .then(() => {

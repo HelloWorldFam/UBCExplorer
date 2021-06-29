@@ -85,9 +85,8 @@ function Personal(props) {
 
     axios
       .post(
-        (window.location.host === "ubcexplorer.io"
-          ? ""
-          : "http://localhost:5000") + "/updateUser",
+        window.location.href +
+          "updateUser",
         user
       )
       .then(() => alert("Your changes have been saved."))
@@ -160,9 +159,8 @@ function SimpleList() {
     if (confirmation == true) {
       axios
         .post(
-          (window.location.host === "ubcexplorer.io"
-            ? ""
-            : "http://localhost:5000") + "/deleteUser"
+          window.location.href +
+            "deleteUser"
         )
         .then(() => {
           alert("Your account has successfully been deleted.");

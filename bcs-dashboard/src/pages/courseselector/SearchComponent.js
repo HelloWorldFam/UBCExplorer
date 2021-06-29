@@ -58,10 +58,8 @@ export default function SearchComponent(props) {
 
       axios
         .get(
-          (window.location.host === "ubcexplorer.io"
-            ? ""
-            : "http://localhost:5000") +
-            "/searchAny/" +
+          window.location.href +
+            "searchAny/" +
             value
         )
         .then((res) => {

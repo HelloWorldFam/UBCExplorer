@@ -110,10 +110,8 @@ export function YourDegreeCard({ usersCourseArray, setUsersCourseArray }) {
   const getTooltipTitle = (course) => {
     axios
       .get(
-        (window.location.host === "ubcexplorer.io"
-          ? ""
-          : "http://localhost:5000") +
-          "/getCourseInfo/" +
+        window.location.href +
+          "getCourseInfo/" +
           course
       )
       .then((res) => {
