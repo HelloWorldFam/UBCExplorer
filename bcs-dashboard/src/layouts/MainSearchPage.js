@@ -75,6 +75,13 @@ const LinkStyling = styled.div`
   }
 `;
 
+const CourseCardStyling = styled.div`
+  :hover {
+    filter: drop-shadow(10px 10px 0.75rem #d3d3d3);
+    cursor: pointer;
+  }
+`;
+
 class Lane extends React.Component {
   handleContainerLoaded = (container) => {
     if (container) {
@@ -252,6 +259,8 @@ function PrerequisitesCard(props) {
   const prereqDescription = props.course.prer;
   const coreqDescription = props.course.crer;
 
+  const history = useHistory();
+
   useEffect(() => {
     setCourseListToDisplay([]);
     if (prereqs) {
@@ -286,6 +295,11 @@ function PrerequisitesCard(props) {
       .catch((err) => console.log(err));
   };
 
+  const handleClick = (courseCode) => {
+    const arr = courseCode.split(" ");
+    history.push(`/course/${arr[0]}/${arr[1]}`);
+  };
+
   return (
     <div>
       {prereqDescription && (
@@ -303,7 +317,11 @@ function PrerequisitesCard(props) {
         />
       )}
       {courseListToDisplay.map((course) => {
-        return <SearchResultCard course={course} title={course.code} />;
+        return (
+          <CourseCardStyling onClick={() => handleClick(course.code)}>
+            <SearchResultCard course={course} title={course.code} />
+          </CourseCardStyling>
+        );
       })}
     </div>
   );
@@ -312,6 +330,8 @@ function PrerequisitesCard(props) {
 function DependenciesCard(props) {
   const [courseListToDisplay, setCourseListToDisplay] = useState([]);
   let dependencies = props.course.depn;
+
+  const history = useHistory();
 
   useEffect(() => {
     setCourseListToDisplay([]);
@@ -337,10 +357,19 @@ function DependenciesCard(props) {
     }
   }, [dependencies]);
 
+  const handleClick = (courseCode) => {
+    const arr = courseCode.split(" ");
+    history.push(`/course/${arr[0]}/${arr[1]}`);
+  };
+
   return (
     <div>
       {courseListToDisplay.map((course) => {
-        return <SearchResultCard course={course} title={course.code} />;
+        return (
+          <CourseCardStyling onClick={() => handleClick(course.code)}>
+            <SearchResultCard course={course} title={course.code} />
+          </CourseCardStyling>
+        );
       })}
     </div>
   );
@@ -579,7 +608,13 @@ function MainSearchPage() {
             />
           </Lane>
         </Grid>
-        <Grid item xs={12} lg={6} xl={3} style={{ maxHeight: windowHeight - 95, overflow: "auto" }}>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          xl={3}
+          style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
+        >
           <Lane
             title="UBC Explorer Course Search"
             description=""

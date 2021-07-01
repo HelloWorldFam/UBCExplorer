@@ -3,14 +3,33 @@ import _ from "lodash";
 import { Search } from "semantic-ui-react";
 import "./semantic.css";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 export default function SearchComponent(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState([]);
   const [value, setValue] = useState("");
+  const [searchedValue, setSearchedValue] = useState("");
+
+  const history = useHistory();
 
   useEffect(() => {
-    //console.log(window.location.pathname.split("/"));
+    if (searchedValue) {
+      setValue(searchedValue);
+      props.onChange(searchedValue);
+    }
+  }, [searchedValue])
+
+  useEffect(() => {
+    const urlArray = window.location.pathname.split("/");
+
+    if (urlArray.length === 4 && urlArray[1] === "course") {
+      setSearchedValue(`${urlArray[2]} ${urlArray[3]}`);
+      window.scrollTo(0, 0);
+    }
+  }, [history.location])
+
+  useEffect(() => {
     const urlArray = window.location.pathname.split("/");
 
     if (urlArray.length === 4 && urlArray[1] === "course") {
