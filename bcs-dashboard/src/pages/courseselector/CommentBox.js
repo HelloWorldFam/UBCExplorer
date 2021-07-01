@@ -7,7 +7,7 @@ function CommentBox({ courseCode, courseNum, url }) {
 
   useEffect(() => {
     setDisqusConfig({
-      url: window.location.href.slice(0, -1) + url, // Must use .slice(0,-1), as the variable url starts with '/'
+      url: window.location.origin + url, 
       identifier: `${courseCode}${courseNum}`,
       title: `${courseCode}${courseNum}`,
     });
