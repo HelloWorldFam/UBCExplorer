@@ -58,10 +58,10 @@ export default function SearchComponent(props) {
 
       axios
         .get(
-          (window.location.hostname === "localhost" ? 
-          `http://${window.location.hostname}:5000` : 
-          window.location.origin) +
-            "searchAny/" +
+          (window.location.hostname === "localhost"
+            ? `http://${window.location.hostname}:5000`
+            : window.location.origin) +
+            "/searchAny/" +
             value
         )
         .then((res) => {

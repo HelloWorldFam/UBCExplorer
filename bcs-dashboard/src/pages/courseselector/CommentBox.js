@@ -7,7 +7,7 @@ function CommentBox({ courseCode, courseNum, url }) {
 
   useEffect(() => {
     setDisqusConfig({
-      url: window.location.href.slice(0,-1) + url,    // Must use .slice(0,-1), as the variable url starts with '/'
+      url: window.location.href.slice(0, -1) + url, // Must use .slice(0,-1), as the variable url starts with '/'
       identifier: `${courseCode}${courseNum}`,
       title: `${courseCode}${courseNum}`,
     });
@@ -18,7 +18,9 @@ function CommentBox({ courseCode, courseNum, url }) {
       <h4>UBC Explorer Comment Box</h4>
       <p>
         Interested in becoming a moderator to help keep the community clean?{" "}
-        <b>Apply.</b>
+        <b>
+          <a href="https://forms.gle/64LnAw5RrNi3HtKM8">Apply</a>.
+        </b>
       </p>
       {!isEmpty(disqusConfig) && (
         <DiscussionEmbed shortname="ubcexplorer2" config={disqusConfig} />
