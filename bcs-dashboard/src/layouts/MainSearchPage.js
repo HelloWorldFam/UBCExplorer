@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,13 +8,12 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { blue } from "@material-ui/core/colors";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import DirectionsIcon from '@material-ui/icons/Directions';
+import DirectionsIcon from "@material-ui/icons/Directions";
 
 // Logos
 import GithubLogo from "../pages/landingpage/Header/SignInLogos/Github.png";
 import GoogleLogo from "../pages/landingpage/Header/SignInLogos/Google.png";
 import FacebookLogo from "../pages/landingpage/Header/SignInLogos/Facebook.png";
-
 
 import {
   Card as MuiCard,
@@ -26,6 +26,7 @@ import {
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
+import CommentBox from "../pages/courseselector/CommentBox";
 
 const Card = styled(MuiCard)`
   overflow: visible;
@@ -60,7 +61,7 @@ const Typography = styled(MuiTypography)(spacing);
 const DropDownCard = styled(MuiCard)`
   box-shadow: none;
   margin: 10px;
-  max-width:26.5em;
+  max-width: 26.5em;
   line-height: 1.5;
 `;
 
@@ -71,6 +72,21 @@ const LinkStyling = styled.div`
 
   a:link {
     color: black;
+  }
+`;
+
+const CourseCardStyling = styled.div`
+  :hover {
+    filter: drop-shadow(10px 10px 0.75rem #d3d3d3);
+    cursor: pointer;
+  }
+`;
+
+const MobileLaneStyling = styled.div`
+  @media (max-width: 1400px) {
+    div {
+      max-height: unset !important;
+    }
   }
 `;
 
@@ -153,8 +169,8 @@ function SearchResultCard(props) {
                   </a>
                 </Tooltip>
               ) : (
-                  props.name
-                )}
+                props.name
+              )}
             </LinkStyling>
           </Typography>
           <Typography variant="body2" mb={3}>
@@ -199,14 +215,18 @@ function SearchCard(props) {
   const [course, setCourse] = useState({});
   const [title, setTitle] = useState("Search results will appear here.");
 
+  const history = useHistory();
+
   const handleClick = (courseInfo) => {
+    const courseArr = courseInfo.split(" ");
+    history.push(`/course/${courseArr[0]}/${courseArr[1]}`);
     axios
       .get(
-        (window.location.host === "ubcexplorer.io"
-          ? ""
-          : "http://localhost:3000") +
-        "/getCourseInfo/" +
-        courseInfo
+        (window.location.hostname === "localhost" ? 
+        `http://${window.location.hostname}:5000` : 
+        window.location.origin) +
+          "/getCourseInfo/" +
+          courseInfo
       )
       .then((res) => {
         setDesc(res.data.desc);
@@ -247,6 +267,8 @@ function PrerequisitesCard(props) {
   const prereqDescription = props.course.prer;
   const coreqDescription = props.course.crer;
 
+  const history = useHistory();
+
   useEffect(() => {
     setCourseListToDisplay([]);
     if (prereqs) {
@@ -265,11 +287,11 @@ function PrerequisitesCard(props) {
   const getCourseInfo = (course) => {
     axios
       .get(
-        (window.location.host === "ubcexplorer.io"
-          ? ""
-          : "http://localhost:3000") +
-        "/getCourseInfo/" +
-        course
+        (window.location.hostname === "localhost" ? 
+        `http://${window.location.hostname}:5000` : 
+        window.location.origin) +
+          "/getCourseInfo/" +
+          course
       )
       .then((res) => {
         if (res.data.desc) {
@@ -279,6 +301,11 @@ function PrerequisitesCard(props) {
         }
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleClick = (courseCode) => {
+    const arr = courseCode.split(" ");
+    history.push(`/course/${arr[0]}/${arr[1]}`);
   };
 
   return (
@@ -298,7 +325,11 @@ function PrerequisitesCard(props) {
         />
       )}
       {courseListToDisplay.map((course) => {
-        return <SearchResultCard course={course} title={course.code} />;
+        return (
+          <CourseCardStyling onClick={() => handleClick(course.code)}>
+            <SearchResultCard course={course} title={course.code} />
+          </CourseCardStyling>
+        );
       })}
     </div>
   );
@@ -308,17 +339,19 @@ function DependenciesCard(props) {
   const [courseListToDisplay, setCourseListToDisplay] = useState([]);
   let dependencies = props.course.depn;
 
+  const history = useHistory();
+
   useEffect(() => {
     setCourseListToDisplay([]);
     if (dependencies) {
       for (let course of dependencies) {
         axios
           .get(
-            (window.location.host === "ubcexplorer.io"
-              ? ""
-              : "http://localhost:3000") +
-            "/getCourseInfo/" +
-            course
+            (window.location.hostname === "localhost" ? 
+            `http://${window.location.hostname}:5000` : 
+            window.location.origin) +
+              "/getCourseInfo/" +
+              course
           )
           .then((res) => {
             if (res.data.desc) {
@@ -332,10 +365,19 @@ function DependenciesCard(props) {
     }
   }, [dependencies]);
 
+  const handleClick = (courseCode) => {
+    const arr = courseCode.split(" ");
+    history.push(`/course/${arr[0]}/${arr[1]}`);
+  };
+
   return (
     <div>
       {courseListToDisplay.map((course) => {
-        return <SearchResultCard course={course} title={course.code} />;
+        return (
+          <CourseCardStyling onClick={() => handleClick(course.code)}>
+            <SearchResultCard course={course} title={course.code} />
+          </CourseCardStyling>
+        );
       })}
     </div>
   );
@@ -347,7 +389,7 @@ const navBarStyle = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(1),
-    color: "#FFF"
+    color: "#FFF",
   },
   title: {
     flexGrow: 1,
@@ -374,6 +416,18 @@ function MainSearchPage() {
   const [windowWidth, setWindowWidth] = useState(0);
   const [anchorEl, setAnchorEl] = useState();
   const navBarClasses = navBarStyle();
+
+  const [course, setCourse] = useState(null);
+
+  useEffect(() => {
+    if (selectedCourse?.code) {
+      const courseArr = selectedCourse.code.split(" ");
+      setCourse({
+        code: courseArr[0],
+        num: courseArr[1],
+      });
+    }
+  }, [selectedCourse]);
 
   const onContainerReady = (container) => {
     setContainers(containers.push(container));
@@ -409,10 +463,16 @@ function MainSearchPage() {
           >
             logo here
           </IconButton>  */}
-            <Typography className={navBarClasses.root} variant="h6">UBC Explorer Course Search</Typography>
+            <Typography className={navBarClasses.root} variant="h6">
+              UBC Explorer Course Search
+            </Typography>
             {/* <Button color="inherit">Login/Register</Button> */}
-            <Button className={navBarClasses.menuButton} onClick={openExplorerMenu}>
-              <DirectionsIcon />{(windowWidth > 625) ? <>&nbsp;BCS Explorer</> : ""}
+            <Button
+              className={navBarClasses.menuButton}
+              onClick={openExplorerMenu}
+            >
+              <DirectionsIcon />
+              {windowWidth > 625 ? <>&nbsp;BCS Explorer</> : ""}
             </Button>
             <Menu
               id="simple-menu"
@@ -422,24 +482,76 @@ function MainSearchPage() {
               color="buttoncolor"
             >
               <DropDownCard>
-                <strong>BCS Degree Explorer:</strong> a simplified course planning tool for
-                Bachelor of Computer Science (BCS) students. <br />
+                <strong>BCS Degree Explorer:</strong> a simplified course
+                planning tool for Bachelor of Computer Science (BCS) students.{" "}
+                <br />
                 <center>
-                  <Button style={{ margin: '10px', backgroundColor: '#f7f9fc' }} variant="outlined" href="/bcs">
+                  <Button
+                    style={{ margin: "10px", backgroundColor: "#f7f9fc" }}
+                    variant="outlined"
+                    href="/bcs"
+                  >
                     <strong>Learn More!</strong>
                   </Button>
                 </center>
-                <Typography variant="body" style={{ padding: '0 10px 10px 0', display: 'block' }}>Sign in with an OAuth provider:</Typography>
-                <Button style={{ margin: '1px', }} variant="outlined" href="/auth/google">
-                  <strong>Google</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={GoogleLogo}></img>
+                <Typography
+                  variant="body"
+                  style={{ padding: "0 10px 10px 0", display: "block" }}
+                >
+                  Sign in with an OAuth provider:
+                </Typography>
+                <Button
+                  style={{ margin: "1px" }}
+                  variant="outlined"
+                  href="/auth/google"
+                >
+                  <strong>Google</strong>{" "}
+                  <img
+                    style={{
+                      width: "16px",
+                      height: "16px",
+                      marginLeft: "10px",
+                    }}
+                    src={GoogleLogo}
+                  ></img>
                 </Button>
-                <Button style={{ margin: '1px', }} variant="outlined" href="/auth/facebook">
-                  <strong>Facebook</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={FacebookLogo}></img>
+                <Button
+                  style={{ margin: "1px" }}
+                  variant="outlined"
+                  href="/auth/facebook"
+                >
+                  <strong>Facebook</strong>{" "}
+                  <img
+                    style={{
+                      width: "16px",
+                      height: "16px",
+                      marginLeft: "10px",
+                    }}
+                    src={FacebookLogo}
+                  ></img>
                 </Button>
-                <Button style={{ margin: '1px', }} variant="outlined" href="/auth/github">
-                  <strong>Github</strong> <img style={{ width: '52px', height: '16px', marginLeft: '10px' }} src={GithubLogo}></img>
+                <Button
+                  style={{ margin: "1px" }}
+                  variant="outlined"
+                  href="/auth/github"
+                >
+                  <strong>Github</strong>{" "}
+                  <img
+                    style={{
+                      width: "52px",
+                      height: "16px",
+                      marginLeft: "10px",
+                    }}
+                    src={GithubLogo}
+                  ></img>
                 </Button>
-                <Typography variant="subtitle2" style={{ padding: '10px 10px 10px 0', display: 'block' }}>Your privacy is important to us. For more information, see our <a href='/privacypolicy'>privacy policy</a>.</Typography>
+                <Typography
+                  variant="subtitle2"
+                  style={{ padding: "10px 10px 10px 0", display: "block" }}
+                >
+                  Your privacy is important to us. For more information, see our{" "}
+                  <a href="/privacypolicy">privacy policy</a>.
+                </Typography>
               </DropDownCard>
             </Menu>
           </Toolbar>
@@ -447,82 +559,103 @@ function MainSearchPage() {
       </MuiThemeProvider>
 
       <Spacer mb={20} />
-      <Grid container spacing={6}>
-        <Grid item xs={12} lg={6} xl={3}>
-          <Lane
-            title="Search"
-            description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
-            onContainerLoaded={onContainerReady}
+      <MobileLaneStyling>
+        <Grid container spacing={6}>
+          <Grid
+            item
+            xs={12}
+            lg={6}
+            xl={3}
+            style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
           >
-            <SearchCard onChange={setSelectedCourse} />
-          </Lane>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          lg={6}
-          xl={3}
-          style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
-        >
-          <Lane
-            title="Prerequisite / Corequisite Courses"
-            description="Selected course's prerequisites and corequisites."
-            onContainerLoaded={onContainerReady}
+            <Lane
+              title="Search"
+              description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
+              onContainerLoaded={onContainerReady}
+            >
+              <SearchCard onChange={setSelectedCourse} />
+              {course && (
+                <CommentBox
+                  courseCode={course?.code}
+                  courseNum={course?.num}
+                  url={window.location.pathname}
+                />
+              )}
+            </Lane>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={6}
+            xl={3}
+            style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
           >
-            <PrerequisitesCard
-              course={selectedCourse === undefined ? [] : selectedCourse}
-            />
-          </Lane>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          lg={6}
-          xl={3}
-          style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
-        >
-          <Lane
-            title="Dependent Courses"
-            description="Courses that list this course as a direct prerequisite."
-            onContainerLoaded={onContainerReady}
+            <Lane
+              title="Prerequisite / Corequisite Courses"
+              description="Selected course's prerequisites and corequisites."
+              onContainerLoaded={onContainerReady}
+            >
+              <PrerequisitesCard
+                course={selectedCourse === undefined ? [] : selectedCourse}
+              />
+            </Lane>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={6}
+            xl={3}
+            style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
           >
-            <DependenciesCard
-              course={selectedCourse === undefined ? [] : selectedCourse}
-            />
-          </Lane>
-        </Grid>
-        <Grid item xs={12} lg={6} xl={3}>
-          <Lane
-            title="UBC Explorer Course Search"
-            description=""
-            onContainerLoaded={onContainerReady}
+            <Lane
+              title="Dependent Courses"
+              description="Courses that list this course as a direct prerequisite."
+              onContainerLoaded={onContainerReady}
+            >
+              <DependenciesCard
+                course={selectedCourse === undefined ? [] : selectedCourse}
+              />
+            </Lane>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={6}
+            xl={3}
+            style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
           >
-            <SearchWrapper mb={4}>
-              <TaskWrapperContent>
-                <Typography>
-                  <b>Welcome to the UBC Explorer - Course Search</b>
-                  <br />
-                  The course search tool is created to enable a seamless, fast
-                  course search experience.
-                  <br />
-                  <br />
-                  <b>Desktop users:</b> Hover over a course to see information
-                  about prerequisites and historical grade averages.
-                  <br />
-                  <br />
-                  <b>Mobile users: </b>
-                  press and hold on a course to see the same information. <br />
-                  <br />
-                  <b>Getting Started</b>
-                  <br />
-                  To get started, input the department and course code and
-                  select search. A list of prerequisites/corequisites and
-                  dependent courses will also be shown in the two right lanes.
-                  <br />
-                  To view the course on SSC, click the course name.
-                  <br/>
-                  <br />
-                  {/* <b>About</b>
+            <Lane
+              title="UBC Explorer Course Search"
+              description=""
+              onContainerLoaded={onContainerReady}
+            >
+              <SearchWrapper mb={4}>
+                <TaskWrapperContent>
+                  <Typography>
+                    <b>Welcome to the UBC Explorer - Course Search</b>
+                    <br />
+                    The course search tool is created to enable a seamless, fast
+                    course search experience.
+                    <br />
+                    <br />
+                    <b>Desktop users:</b> Hover over a course to see information
+                    about prerequisites and historical grade averages.
+                    <br />
+                    <br />
+                    <b>Mobile users: </b>
+                    press and hold on a course to see the same information.{" "}
+                    <br />
+                    <br />
+                    <b>Getting Started</b>
+                    <br />
+                    To get started, input the department and course code and
+                    select search. A list of prerequisites/corequisites and
+                    dependent courses will also be shown in the two right lanes.
+                    <br />
+                    To view the course on SSC, click the course name.
+                    <br />
+                    <br />
+                    {/* <b>About</b>
                   <br />
                   Want to know more about the team behind the project? Check out
                   our about page.
@@ -535,30 +668,33 @@ function MainSearchPage() {
                   worklists, and degree progress tracking.
                   <br />
                   <br /> */}
-                  <a href="/api">
-                    <b>API</b>
-                  </a> 
-                  <br />
-                  Documentation for the open API can be found here.
-                  <br />
-                  <br />
-                  <a
-                    href="https://ubc.ca1.qualtrics.com/jfe/form/SV_enyfh63H9Euj8UJ"
-                    target="_blank"
-                  >
-                    <b>Feedback / Bugs</b>
-                  </a>
-                  <br />
-                  If you notice any bugs or have any feedback, feel free to use
-                  the link above, or send an email to{" "}
-                  <a href="mailto:hello@ubcexplorer.io">hello@ubcexplorer.io</a>
-                  .
-                </Typography>
-              </TaskWrapperContent>
-            </SearchWrapper>
-          </Lane>
+                    <a href="/api">
+                      <b>API</b>
+                    </a>
+                    <br />
+                    Documentation for the open API can be found here.
+                    <br />
+                    <br />
+                    <a
+                      href="https://ubc.ca1.qualtrics.com/jfe/form/SV_enyfh63H9Euj8UJ"
+                      target="_blank"
+                    >
+                      <b>Feedback / Bugs</b>
+                    </a>
+                    <br />
+                    If you notice any bugs or have any feedback, feel free to
+                    use the link above, or send an email to{" "}
+                    <a href="mailto:hello@ubcexplorer.io">
+                      hello@ubcexplorer.io
+                    </a>
+                    .
+                  </Typography>
+                </TaskWrapperContent>
+              </SearchWrapper>
+            </Lane>
+          </Grid>
         </Grid>
-      </Grid>
+      </MobileLaneStyling>
     </React.Fragment>
   );
 }

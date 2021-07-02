@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { NavLink as RouterNavLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import Loader from '../../components/Loader.js';
+import Loader from "../../components/Loader.js";
 
 // Vertical Timeline (Scrolling) component
 import {
@@ -67,11 +67,11 @@ function Timeline(props) {
   const getTooltipTitle = (course) => {
     axios
       .get(
-        (window.location.host === "ubcexplorer.io"
-          ? ""
-          : "http://localhost:3000") +
-        "/getCourseInfo/" +
-        course
+        (window.location.hostname === "localhost" ? 
+        `http://${window.location.hostname}:5000` : 
+        window.location.origin) +
+          "getCourseInfo/" +
+          course
       )
       .then((res) => {
         if (res.data) {
@@ -82,15 +82,23 @@ function Timeline(props) {
           setToolTipTitle(
             <>
               Course: {course} <br />
-                    Credits: {credits} <br />
-                    Prerequisites: {prereqs.map((item, index) => index === 0 ? <>{item}</> : <>, {item}</>)} <br />
-                    Dependencies: {depends.map((item, index) => index === 0 ? <>{item}</> : <>, {item}</>)} <br />
+              Credits: {credits} <br />
+              Prerequisites:{" "}
+              {prereqs.map((item, index) =>
+                index === 0 ? <>{item}</> : <>, {item}</>
+              )}{" "}
+              <br />
+              Dependencies:{" "}
+              {depends.map((item, index) =>
+                index === 0 ? <>{item}</> : <>, {item}</>
+              )}{" "}
+              <br />
             </>
-          )
+          );
         }
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   return (
     <Card style={{ backgroundColor: "#e3e3e3" }} mb={6}>
@@ -104,34 +112,39 @@ function Timeline(props) {
               <h3>You have not added any courses!</h3>
             </VerticalTimelineElement>
           ) : (
-              props.courseResult.map((item, index, array) => (
-                <VerticalTimelineElement
-                  date={item.name}
-                  {...verticalTimelineProps}
-                >
-                  <h3 className="vertical-timeline-element-title">Courses:</h3>
-                  {item.courses.map((course) => (
-                    <>
-                      <Tooltip
-                        title={toolTipTitle}
-                        placement="bottom"
-                        arrow
-                        onOpen={() => { getTooltipTitle(course.code) }}
-                        onClose={() => { setToolTipTitle(Loader) }}>
-                        <Button
-                          className="vertical-timeline-element-subtitle"
-                          variant="outlined"
-                          size="medium"
-                          className={classes.margin}
-                        >
-                          {course.code}
-                        </Button>
-                      </Tooltip>
-                    </>
-                  ))}
-                </VerticalTimelineElement>
-              ))
-            )}
+            props.courseResult.map((item, index, array) => (
+              <VerticalTimelineElement
+                date={item.name}
+                {...verticalTimelineProps}
+              >
+                <h3 className="vertical-timeline-element-title">Courses:</h3>
+                {item.courses.map((course) => (
+                  <>
+                    <Tooltip
+                      title={toolTipTitle}
+                      placement="bottom"
+                      arrow
+                      onOpen={() => {
+                        getTooltipTitle(course.code);
+                      }}
+                      onClose={() => {
+                        setToolTipTitle(Loader);
+                      }}
+                    >
+                      <Button
+                        className="vertical-timeline-element-subtitle"
+                        variant="outlined"
+                        size="medium"
+                        className={classes.margin}
+                      >
+                        {course.code}
+                      </Button>
+                    </Tooltip>
+                  </>
+                ))}
+              </VerticalTimelineElement>
+            ))
+          )}
         </VerticalTimeline>
       </CardContent>
     </Card>
@@ -145,9 +158,10 @@ function DegreeTimeline() {
 
   useEffect(() => {
     fetch(
-      (window.location.host === "ubcexplorer.io"
-        ? ""
-        : "http://localhost:3000") + "/getcourses"
+      (window.location.hostname === "localhost" ? 
+      `http://${window.location.hostname}:5000` : 
+      window.location.origin) +
+        "/getcourses"
     )
       .then((response) => response.json())
       .then((json) => {

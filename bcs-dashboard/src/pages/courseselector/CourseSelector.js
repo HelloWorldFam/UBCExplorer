@@ -276,9 +276,9 @@ function SearchCard(props) {
   const handleClick = (courseInfo) => {
     axios
       .get(
-        (window.location.host === "ubcexplorer.io"
-          ? ""
-          : "http://localhost:3000") +
+        (window.location.hostname === "localhost" ? 
+        `http://${window.location.hostname}:5000` : 
+        window.location.origin) +
           "/getCourseInfo/" +
           courseInfo
       )
@@ -429,10 +429,12 @@ function exemptionCourses() {
         Select this if you've been exempted from one of the BCS Core Courses.
         Make sure you tag it with the 'Exemptions' term! <br />
         <br />
-        Here are some commonly exempted courses, but check your own exemptions in your welcome letter.
+        Here are some commonly exempted courses, but check your own exemptions
+        in your welcome letter.
         <br />
         <br />
-        - STCM 3xx (upper year communication requirement) - Can add this requirement with ENGL 112, ENGL 301, or the like.
+        - STCM 3xx (upper year communication requirement) - Can add this
+        requirement with ENGL 112, ENGL 301, or the like.
         <br />
         - STAT 203 <br />
         - MATH 180 <br />
@@ -569,10 +571,10 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
-  menuPaper: { 
+  menuPaper: {
     // Controls max height of terms dropdown menu found in course selector
-    maxHeight: 400
-  }
+    maxHeight: 400,
+  },
 }));
 
 function TermDropDown(props) {
@@ -581,18 +583,21 @@ function TermDropDown(props) {
   const [termList, setTermList] = React.useState([]);
 
   const terms = Object.freeze({
-    'W1': { // Sep - Dec
+    W1: {
+      // Sep - Dec
       start: 8,
-      end: 11
+      end: 11,
     },
-    'W2': { // Jan - Apr
+    W2: {
+      // Jan - Apr
       start: 0,
-      end: 3
-    }, 
-    'S': { // May  - Aug
+      end: 3,
+    },
+    S: {
+      // May  - Aug
       start: 4,
-      end: 7
-    }
+      end: 7,
+    },
   });
 
   useEffect(() => {
@@ -600,7 +605,7 @@ function TermDropDown(props) {
     const startYear = currentYear - 10;
     const endYear = currentYear + 10;
     const yearArray = [];
-    for (let i = startYear; i <= endYear; i++) { 
+    for (let i = startYear; i <= endYear; i++) {
       for (let currentTerm of Object.keys(terms)) {
         yearArray.push(`${i}${currentTerm}`);
       }
@@ -611,18 +616,24 @@ function TermDropDown(props) {
   useEffect(() => {
     if (termList.length) {
       const currentYear = new Date().getFullYear();
-      const currentDate = new Date().getMonth(); // returns Month integer  
+      const currentDate = new Date().getMonth(); // returns Month integer
       Object.keys(terms).forEach((currTerm, i) => {
-        if (currentDate >= terms[currTerm].start && currentDate <= terms[currTerm].end) {
+        if (
+          currentDate >= terms[currTerm].start &&
+          currentDate <= terms[currTerm].end
+        ) {
           setTerm(`${currentYear}${Object.keys(terms)[(i + 1) % 3]}`);
         }
-      })
+      });
     }
   }, [termList]);
 
+  useEffect(() => {
+    props.onChange(term);
+  }, [term]);
+
   const handleChange = (event) => {
     setTerm(event.target.value);
-    props.onChange(event.target.value);
   };
   return (
     <FormControl className={classes.formControl} fullWidth>
@@ -641,7 +652,9 @@ function TermDropDown(props) {
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {termList.map( (value) => <MenuItem value = {value}>{value}</MenuItem>)}
+        {termList.map((value) => (
+          <MenuItem value={value}>{value}</MenuItem>
+        ))}
         <MenuItem value="Exemptions">Exemptions</MenuItem>
       </Select>
       <FormHelperText>
@@ -677,9 +690,9 @@ function PrerequisitesCard(props) {
   const getCourseInfo = (course) => {
     axios
       .get(
-        (window.location.host === "ubcexplorer.io"
-          ? ""
-          : "http://localhost:3000") +
+        (window.location.hostname === "localhost" ? 
+        `http://${window.location.hostname}:5000` : 
+        window.location.origin) + 
           "/getCourseInfo/" +
           course
       )
@@ -726,9 +739,9 @@ function DependenciesCard(props) {
       for (let course of dependencies) {
         axios
           .get(
-            (window.location.host === "ubcexplorer.io"
-              ? ""
-              : "http://localhost:3000") +
+            (window.location.hostname === "localhost" ? 
+            `http://${window.location.hostname}:5000` : 
+            window.location.origin) + 
               "/getCourseInfo/" +
               course
           )
@@ -772,8 +785,8 @@ const addToDegreeFunction = (
       if (course.code === courseToAdd.code) {
         courseAlreadyAddedToDegree = !window.confirm(
           "You have already added this course in " +
-          term.name +
-          ". Are you sure you want to add it again?"
+            term.name +
+            ". Are you sure you want to add it again?"
         );
         break upper_loop;
       }
@@ -801,8 +814,8 @@ const addToDegreeFunction = (
 
   // Add the course to the degree
   if (termExists) {
-      // term exists, but course is not in term - add course to term
-      courseArray.push(courseToAdd);
+    // term exists, but course is not in term - add course to term
+    courseArray.push(courseToAdd);
   } else {
     // term does not exist- so create new term object with the course added.
     usersCourseArray.push({ name: courseToAdd.term, courses: [courseToAdd] });
@@ -838,9 +851,10 @@ function CourseSelector() {
     if (usersCourseArray && usersCourseArray[0] !== -1) {
       axios
         .post(
-          (window.location.host === "ubcexplorer.io"
-            ? ""
-            : "http://localhost:3000") + "/updateUserWorkList",
+          (window.location.hostname === "localhost" ? 
+          `http://${window.location.hostname}:5000` : 
+          window.location.origin) +
+          "/updateUserWorkList",
           usersCourseArray
         )
         .then(() => {});
@@ -853,9 +867,10 @@ function CourseSelector() {
     // Get request to load user data
     axios
       .get(
-        (window.location.host === "ubcexplorer.io"
-          ? ""
-          : "http://localhost:3000") + "/userdata"
+        (window.location.hostname === "localhost" ? 
+        `http://${window.location.hostname}:5000` : 
+        window.location.origin) +
+          "/userdata"
       )
       .then((res) => {
         setUsersCourseArray(res.data[0].courses);

@@ -3,27 +3,54 @@ import _ from "lodash";
 import { Search } from "semantic-ui-react";
 import "./semantic.css";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 export default function SearchComponent(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState([]);
   const [value, setValue] = useState("");
+  const [searchedValue, setSearchedValue] = useState("");
+
+  const history = useHistory();
+
+  useEffect(() => {
+    if (searchedValue) {
+      setValue(searchedValue);
+      props.onChange(searchedValue);
+    }
+  }, [searchedValue]);
+
+  useEffect(() => {
+    const urlArray = window.location.pathname.split("/");
+
+    if (urlArray.length === 4 && urlArray[1] === "course") {
+      setSearchedValue(`${urlArray[2]} ${urlArray[3]}`);
+      window.scrollTo(0, 0);
+    }
+  }, [history.location]);
 
   useEffect(() => {
     // Sets focus to search component on window load
     try {
-      if (window.location.pathname === '/')
-        document.querySelector("#root > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-6 > div:nth-child(1) > div > div > div > div > div > div:nth-child(1) > div > div.ui.fluid.icon.input > input").focus();
-      else if (window.location.pathname === '/bcs/courseselector')
-        document.querySelector("#root > div > div.sc-fzoYkl.hfPoTr > div > div:nth-child(3) > div:nth-child(1) > div > div > div > div > div > div > form > div:nth-child(1) > div > div.ui.fluid.icon.input > input").focus();
+      if (window.location.pathname === "/")
+        document
+          .querySelector(
+            "#root > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-6 > div:nth-child(1) > div > div > div > div > div > div:nth-child(1) > div > div.ui.fluid.icon.input > input"
+          )
+          .focus();
+      else if (window.location.pathname === "/bcs/courseselector")
+        document
+          .querySelector(
+            "#root > div > div.sc-fzoYkl.hfPoTr > div > div:nth-child(3) > div:nth-child(1) > div > div > div > div > div > div > form > div:nth-child(1) > div > div.ui.fluid.icon.input > input"
+          )
+          .focus();
     } catch (error) {
-      console.log('Document failed to select search component. ', error)
+      console.log("Document failed to select search component. ", error);
     }
   }, []);
 
   const handleResultSelect = (e, { result }) => {
-    setValue(result.title);
-    props.onChange(result.title);
+    setSearchedValue(result.title);
   };
 
   const handleSearchChange = (e, { value }) => {
@@ -38,7 +65,13 @@ export default function SearchComponent(props) {
       }
 
       axios
-        .get((window.location.host === "ubcexplorer.io" ? "" : "http://localhost:3000") + "/searchAny/" + value)
+        .get(
+          (window.location.hostname === "localhost"
+            ? `http://${window.location.hostname}:5000`
+            : window.location.origin) +
+            "/searchAny/" +
+            value
+        )
         .then((res) => {
           if (!(res.data instanceof Array)) {
             setIsLoading(false);
