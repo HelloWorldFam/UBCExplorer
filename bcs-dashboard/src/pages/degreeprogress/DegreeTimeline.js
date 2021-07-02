@@ -70,7 +70,7 @@ function Timeline(props) {
         (window.location.hostname === "localhost" ? 
         `http://${window.location.hostname}:5000` : 
         window.location.origin) +
-          "getCourseInfo/" +
+          "/getCourseInfo/" +
           course
       )
       .then((res) => {
