@@ -82,6 +82,14 @@ const CourseCardStyling = styled.div`
   }
 `;
 
+const MobileLaneStyling = styled.div`
+  @media (max-width: 1400px) {
+    div {
+      max-height: unset !important;
+    }
+  }
+`;
+
 class Lane extends React.Component {
   handleContainerLoaded = (container) => {
     if (container) {
@@ -551,101 +559,103 @@ function MainSearchPage() {
       </MuiThemeProvider>
 
       <Spacer mb={20} />
-      <Grid container spacing={6}>
-        <Grid
-          item
-          xs={12}
-          lg={6}
-          xl={3}
-          style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
-        >
-          <Lane
-            title="Search"
-            description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
-            onContainerLoaded={onContainerReady}
+      <MobileLaneStyling>
+        <Grid container spacing={6}>
+          <Grid
+            item
+            xs={12}
+            lg={6}
+            xl={3}
+            style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
           >
-            <SearchCard onChange={setSelectedCourse} />
-            {course && (
-              <CommentBox
-                courseCode={course?.code}
-                courseNum={course?.num}
-                url={window.location.pathname}
+            <Lane
+              title="Search"
+              description="Enter a department and code below to search for a course. Eg: Department: 'CPSC' Code: '210'"
+              onContainerLoaded={onContainerReady}
+            >
+              <SearchCard onChange={setSelectedCourse} />
+              {course && (
+                <CommentBox
+                  courseCode={course?.code}
+                  courseNum={course?.num}
+                  url={window.location.pathname}
+                />
+              )}
+            </Lane>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={6}
+            xl={3}
+            style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
+          >
+            <Lane
+              title="Prerequisite / Corequisite Courses"
+              description="Selected course's prerequisites and corequisites."
+              onContainerLoaded={onContainerReady}
+            >
+              <PrerequisitesCard
+                course={selectedCourse === undefined ? [] : selectedCourse}
               />
-            )}
-          </Lane>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          lg={6}
-          xl={3}
-          style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
-        >
-          <Lane
-            title="Prerequisite / Corequisite Courses"
-            description="Selected course's prerequisites and corequisites."
-            onContainerLoaded={onContainerReady}
+            </Lane>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={6}
+            xl={3}
+            style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
           >
-            <PrerequisitesCard
-              course={selectedCourse === undefined ? [] : selectedCourse}
-            />
-          </Lane>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          lg={6}
-          xl={3}
-          style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
-        >
-          <Lane
-            title="Dependent Courses"
-            description="Courses that list this course as a direct prerequisite."
-            onContainerLoaded={onContainerReady}
+            <Lane
+              title="Dependent Courses"
+              description="Courses that list this course as a direct prerequisite."
+              onContainerLoaded={onContainerReady}
+            >
+              <DependenciesCard
+                course={selectedCourse === undefined ? [] : selectedCourse}
+              />
+            </Lane>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={6}
+            xl={3}
+            style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
           >
-            <DependenciesCard
-              course={selectedCourse === undefined ? [] : selectedCourse}
-            />
-          </Lane>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          lg={6}
-          xl={3}
-          style={{ maxHeight: windowHeight - 95, overflow: "auto" }}
-        >
-          <Lane
-            title="UBC Explorer Course Search"
-            description=""
-            onContainerLoaded={onContainerReady}
-          >
-            <SearchWrapper mb={4}>
-              <TaskWrapperContent>
-                <Typography>
-                  <b>Welcome to the UBC Explorer - Course Search</b>
-                  <br />
-                  The course search tool is created to enable a seamless, fast
-                  course search experience.
-                  <br />
-                  <br />
-                  <b>Desktop users:</b> Hover over a course to see information
-                  about prerequisites and historical grade averages.
-                  <br />
-                  <br />
-                  <b>Mobile users: </b>
-                  press and hold on a course to see the same information. <br />
-                  <br />
-                  <b>Getting Started</b>
-                  <br />
-                  To get started, input the department and course code and
-                  select search. A list of prerequisites/corequisites and
-                  dependent courses will also be shown in the two right lanes.
-                  <br />
-                  To view the course on SSC, click the course name.
-                  <br />
-                  <br />
-                  {/* <b>About</b>
+            <Lane
+              title="UBC Explorer Course Search"
+              description=""
+              onContainerLoaded={onContainerReady}
+            >
+              <SearchWrapper mb={4}>
+                <TaskWrapperContent>
+                  <Typography>
+                    <b>Welcome to the UBC Explorer - Course Search</b>
+                    <br />
+                    The course search tool is created to enable a seamless, fast
+                    course search experience.
+                    <br />
+                    <br />
+                    <b>Desktop users:</b> Hover over a course to see information
+                    about prerequisites and historical grade averages.
+                    <br />
+                    <br />
+                    <b>Mobile users: </b>
+                    press and hold on a course to see the same information.{" "}
+                    <br />
+                    <br />
+                    <b>Getting Started</b>
+                    <br />
+                    To get started, input the department and course code and
+                    select search. A list of prerequisites/corequisites and
+                    dependent courses will also be shown in the two right lanes.
+                    <br />
+                    To view the course on SSC, click the course name.
+                    <br />
+                    <br />
+                    {/* <b>About</b>
                   <br />
                   Want to know more about the team behind the project? Check out
                   our about page.
@@ -658,30 +668,33 @@ function MainSearchPage() {
                   worklists, and degree progress tracking.
                   <br />
                   <br /> */}
-                  <a href="/api">
-                    <b>API</b>
-                  </a>
-                  <br />
-                  Documentation for the open API can be found here.
-                  <br />
-                  <br />
-                  <a
-                    href="https://ubc.ca1.qualtrics.com/jfe/form/SV_enyfh63H9Euj8UJ"
-                    target="_blank"
-                  >
-                    <b>Feedback / Bugs</b>
-                  </a>
-                  <br />
-                  If you notice any bugs or have any feedback, feel free to use
-                  the link above, or send an email to{" "}
-                  <a href="mailto:hello@ubcexplorer.io">hello@ubcexplorer.io</a>
-                  .
-                </Typography>
-              </TaskWrapperContent>
-            </SearchWrapper>
-          </Lane>
+                    <a href="/api">
+                      <b>API</b>
+                    </a>
+                    <br />
+                    Documentation for the open API can be found here.
+                    <br />
+                    <br />
+                    <a
+                      href="https://ubc.ca1.qualtrics.com/jfe/form/SV_enyfh63H9Euj8UJ"
+                      target="_blank"
+                    >
+                      <b>Feedback / Bugs</b>
+                    </a>
+                    <br />
+                    If you notice any bugs or have any feedback, feel free to
+                    use the link above, or send an email to{" "}
+                    <a href="mailto:hello@ubcexplorer.io">
+                      hello@ubcexplorer.io
+                    </a>
+                    .
+                  </Typography>
+                </TaskWrapperContent>
+              </SearchWrapper>
+            </Lane>
+          </Grid>
         </Grid>
-      </Grid>
+      </MobileLaneStyling>
     </React.Fragment>
   );
 }
