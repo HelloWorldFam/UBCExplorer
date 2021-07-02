@@ -21,6 +21,7 @@ require("dotenv").config();
 // server settings - make sure that your port doesn't conflict with the React port!
 const app = express();
 const port = process.env.PORT || 3000;
+const hostname = process.env[process.env.NODE_ENV] || "http://localhost:3000"
 
 app.use(cors());
 app.use(express.json());
@@ -54,7 +55,7 @@ const FacebookOauthProduction = new FacebookStrategy(
   {
     clientID: "2828647350596227",
     clientSecret: "afde4d264c365d946882ec076bf5d4cd",
-    callbackURL: "https://ubcexplorer.io/auth/facebook/callback",
+    callbackURL: hostname + "/auth/facebook/callback",
     profileFields: ["id", "email", "first_name", "last_name", "photos"],
   },
   function (accessToken, refreshToken, profile, done) {
@@ -81,7 +82,7 @@ const GitHubOAuthProduction = new GitHubStrategy(
   {
     clientID: "Iv1.b83becaf95ef5ce1",
     clientSecret: "71b0cfc8bc19dcf09f5173f5a8949398022adffd",
-    callbackURL: "https://ubcexplorer.io/auth/github/callback",
+    callbackURL: hostname + "/auth/github/callback",
     scope: ["user"],
   },
   function (accessToken, refreshToken, profile, done) {
@@ -107,7 +108,7 @@ const GoogleOauthProduction = new GoogleOauth20Strategy(
     clientID:
       "610240877212-muh7g8rvb1pficemikp3r3vdfaobgo9f.apps.googleusercontent.com",
     clientSecret: "MpRbTT5AssctwpN0Id0GHIwe",
-    callbackURL: "https://ubcexplorer.io/auth/google/callback",
+    callbackURL: hostname + "/auth/google/callback",
   },
   function (accessToken, refreshToken, profile, done) {
     console.log(profile);
@@ -133,11 +134,7 @@ passport.use(FacebookOauthProduction);
 
 passport.use(GitHubOAuthProduction);
 
-passport.use(
-  process.env.NODE_ENV === "production"
-    ? GoogleOauthProduction
-    : GoogleOauthTest
-);
+passport.use(GoogleOauthProduction);
 
 // passport.use(new TwitterStrategy({
 //   clientID: 'must sign up with facebook for one',
