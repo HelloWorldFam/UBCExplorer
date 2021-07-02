@@ -628,9 +628,12 @@ function TermDropDown(props) {
     }
   }, [termList]);
 
+  useEffect(() => {
+    props.onChange(term);
+  }, [term]);
+
   const handleChange = (event) => {
     setTerm(event.target.value);
-    props.onChange(event.target.value);
   };
   return (
     <FormControl className={classes.formControl} fullWidth>
