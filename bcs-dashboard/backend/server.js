@@ -6,7 +6,6 @@ const Users = require("./models/users.model.js");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const findOrCreate = require("mongoose-findorcreate");
-const GoogleOauthTest = require("./helpers/GoogleOauthTest.js");
 const GoogleOauth20Strategy = require("passport-google-oauth20");
 
 const path = require("path");
