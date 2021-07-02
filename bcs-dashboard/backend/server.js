@@ -7,6 +7,7 @@ const passport = require("passport");
 const cookieSession = require("cookie-session");
 const findOrCreate = require("mongoose-findorcreate");
 const GoogleOauth20Strategy = require("passport-google-oauth20");
+const config = require("./config.js")
 
 const path = require("path");
 const keepDynoAwake = require("./helpers/keepDynoAwake");
@@ -20,7 +21,7 @@ require("dotenv").config();
 // server settings - make sure that your port doesn't conflict with the React port!
 const app = express();
 const port = process.env.PORT || 5000;
-const hostname = process.env[process.env.NODE_ENV] || "http://localhost:5000"
+const hostname = config[process.env.NODE_ENV] || "http://localhost:5000"
 
 app.use(cors());
 app.use(express.json());
