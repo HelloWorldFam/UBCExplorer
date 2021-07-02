@@ -44,7 +44,7 @@ const addCoreToDegree = (setSnackbar) => {
     (window.location.hostname === "localhost" ? 
     `http://${window.location.hostname}:5000` : 
     window.location.origin) +
-      "getcourses"
+      "/getcourses"
   )
     .then((response) => response.json())
     .then((json) => {
