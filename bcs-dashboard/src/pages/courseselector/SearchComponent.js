@@ -18,7 +18,7 @@ export default function SearchComponent(props) {
       setValue(searchedValue);
       props.onChange(searchedValue);
     }
-  }, [searchedValue])
+  }, [searchedValue]);
 
   useEffect(() => {
     const urlArray = window.location.pathname.split("/");
@@ -27,17 +27,7 @@ export default function SearchComponent(props) {
       setSearchedValue(`${urlArray[2]} ${urlArray[3]}`);
       window.scrollTo(0, 0);
     }
-  }, [history.location])
-
-  useEffect(() => {
-    const urlArray = window.location.pathname.split("/");
-
-    if (urlArray.length === 4 && urlArray[1] === "course") {
-      handleResultSelect(null, {
-        result: { title: `${urlArray[2]} ${urlArray[3]}` },
-      });
-    }
-  }, []);
+  }, [history.location]);
 
   useEffect(() => {
     // Sets focus to search component on window load
@@ -60,8 +50,7 @@ export default function SearchComponent(props) {
   }, []);
 
   const handleResultSelect = (e, { result }) => {
-    setValue(result.title);
-    props.onChange(result.title);
+    setSearchedValue(result.title);
   };
 
   const handleSearchChange = (e, { value }) => {
