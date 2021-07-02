@@ -23,7 +23,7 @@ function CommentBox({ courseCode, courseNum, url }) {
         </b>
       </p>
       {!isEmpty(disqusConfig) && (
-        <DiscussionEmbed shortname="ubcexplorer2" config={disqusConfig} />
+        <DiscussionEmbed shortname="ubcexplorer" config={disqusConfig} />
       )}
     </div>
   );
