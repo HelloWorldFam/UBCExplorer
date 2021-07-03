@@ -203,7 +203,10 @@ function SearchResultCard(props) {
       let toSearch = props.course.code.split(" ");
       axios
         .get(
-          `https://ubcgrades.com/api/course-profile/${toSearch[0]}/${toSearch[1]}`
+          (window.location.hostname === "localhost"
+            ? `http://${window.location.hostname}:5000`
+            : window.location.origin) +
+            `/grades?dept=${toSearch[0].toUpperCase()}&code=${toSearch[1]}`
         )
         .then((res) => {
           setAverage(res.data);
@@ -255,10 +258,26 @@ function tooltipText(course, average) {
       {course.cred ? <h3>Credits: {course.cred}</h3> : ""}
       {course.prer ? <h3>Pre-reqs: {course.prer}</h3> : ""}
       {course.crer ? <h3>Co-reqs: {course.crer}</h3> : ""}
-      {average.average ? <h3>Historical average: {average.average}%</h3> : ""}
-      {average.high ? <h3>High: {average.high}%</h3> : ""}
-      {average.low ? <h3>Low: {average.low}%</h3> : ""}
-      {average.pass_percent ? <h3>Pass rate: {average.pass_percent}%</h3> : ""}
+      {average.average ? (
+        <h3>Historical average: {average.average.toFixed(2)}%</h3>
+      ) : (
+        ""
+      )}
+      {average.average_past_5_yrs ? (
+        <h3>5 year average: {average.average_past_5_yrs.toFixed(2)}%</h3>
+      ) : (
+        ""
+      )}
+      {average.max_course_avg ? (
+        <h3>Max course average: {average.max_course_avg.toFixed(2)}%</h3>
+      ) : (
+        ""
+      )}
+      {average.min_course_avg ? (
+        <h3>Min course average: {average.min_course_avg.toFixed(2)}%</h3>
+      ) : (
+        ""
+      )}
     </>
   );
 }
