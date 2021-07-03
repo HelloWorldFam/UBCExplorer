@@ -316,8 +316,7 @@ app.get("/getAllCourses", (req, res) => {
 
 app.get("/grades", async (req, res) => {
   try {
-    const dept = req.query.dept;
-    const code = req.query.code;
+    const { dept, code } = req.query;
     const data = await fetch(
       `https://ubcgrades.com/api/v2/course-statistics/UBCV/${dept}/${code}`
     );
