@@ -125,8 +125,8 @@ function InformationCard(props) {
           <br />
           {props.name}
         </Typography>
-        <Typography variant="body2" mb={3}>
-          {<p align="left">{props.desc}</p>}
+        <Typography variant="body2" mb={3} align="left">
+          {props.desc}
         </Typography>
       </TaskWrapperContent>
     </TaskWrapper>
@@ -163,7 +163,8 @@ function SearchResultCard(props) {
         <TaskWrapperContent>
           <Typography variant="h6" align="left">
             {props.title}
-            <br />
+          </Typography>
+          <Typography variant="h6" align="left" style={{ marginBottom: 10 }}>
             <LinkStyling>
               {props.course.name ? (
                 <Tooltip title="Click to see course on SSC">
@@ -176,19 +177,11 @@ function SearchResultCard(props) {
               )}
             </LinkStyling>
           </Typography>
-          <Typography variant="body2" mb={3}>
-            {
-              <p align="left">
-                {props.course.desc ? props.course.desc : props.desc}
-              </p>
-            }
-          </Typography>
           <Typography variant="body2" mb={3} align="left">
-            {
-              <p align="left">
-                {props.course.cred ? "Credits: " + props.course.cred : ""}
-              </p>
-            }
+            {props.course.desc ? props.course.desc : props.desc}
+          </Typography>
+          <Typography variant="body2" mb={3} align="left" style={{ marginBottom: 0 }}>
+            {props.course.cred ? "Credits: " + props.course.cred : ""}
           </Typography>
         </TaskWrapperContent>
       </Tooltip>
@@ -341,7 +334,7 @@ function PrerequisitesCard(props) {
       )}
       {courseListToDisplay.map((course) => {
         return (
-          <CourseCardStyling onClick={() => handleClick(course.code)}>
+          <CourseCardStyling onClick={() => handleClick(course.code)} key={course.code}>
             <SearchResultCard course={course} title={course.code} />
           </CourseCardStyling>
         );
@@ -389,7 +382,10 @@ function DependenciesCard(props) {
     <div>
       {courseListToDisplay.map((course) => {
         return (
-          <CourseCardStyling onClick={() => handleClick(course.code)}>
+          <CourseCardStyling
+            onClick={() => handleClick(course.code)}
+            key={course.code}
+          >
             <SearchResultCard course={course} title={course.code} />
           </CourseCardStyling>
         );
