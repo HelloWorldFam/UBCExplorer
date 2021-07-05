@@ -7,7 +7,8 @@ const passport = require("passport");
 const cookieSession = require("cookie-session");
 const findOrCreate = require("mongoose-findorcreate");
 const GoogleOauth20Strategy = require("passport-google-oauth20");
-const config = require("./config.js")
+const config = require("./config.js");
+const fetch = require("node-fetch");
 
 const path = require("path");
 const keepDynoAwake = require("./helpers/keepDynoAwake");
@@ -21,7 +22,7 @@ require("dotenv").config();
 // server settings - make sure that your port doesn't conflict with the React port!
 const app = express();
 const port = process.env.PORT || 5000;
-const hostname = config[process.env.NODE_ENV] || "http://localhost:5000"
+const hostname = config[process.env.NODE_ENV] || "http://localhost:5000";
 
 app.use(cors());
 app.use(express.json());
@@ -311,6 +312,19 @@ app.get("/getAllCourses", (req, res) => {
   Courses.find()
     .then((courses) => res.send(courses))
     .catch((err) => console.log(err));
+});
+
+app.get("/grades", async (req, res) => {
+  try {
+    const { dept, code } = req.query;
+    const data = await fetch(
+      `https://ubcgrades.com/api/v2/course-statistics/UBCV/${dept}/${code}`
+    );
+    const json = await data.json();
+    res.send(json).status(200);
+  } catch (err) {
+    res.send(err).status(500);
+  }
 });
 
 // To query a specific course from courses database
