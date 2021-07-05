@@ -34,7 +34,7 @@ export default function SearchComponent(props) {
     try {
       document.getElementsByClassName(
         "ui fluid icon input"
-      )[0].children.item("input")
+      ).item('div.ui.fluid.icon.input').children.item('input.prompt')
       .focus();
     } catch (error) {
       console.log("Document failed to select search component. ", error);
