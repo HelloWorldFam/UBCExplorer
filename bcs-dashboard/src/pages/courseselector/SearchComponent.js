@@ -32,18 +32,10 @@ export default function SearchComponent(props) {
   useEffect(() => {
     // Sets focus to search component on window load
     try {
-      if (window.location.pathname === "/")
-        document
-          .querySelector(
-            "#root > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-6 > div:nth-child(1) > div > div > div > div > div > div:nth-child(1) > div > div.ui.fluid.icon.input > input"
-          )
-          .focus();
-      else if (window.location.pathname === "/bcs/courseselector")
-        document
-          .querySelector(
-            "#root > div > div.sc-fzoYkl.hfPoTr > div > div:nth-child(3) > div:nth-child(1) > div > div > div > div > div > div > form > div:nth-child(1) > div > div.ui.fluid.icon.input > input"
-          )
-          .focus();
+      document.getElementsByClassName(
+        "ui fluid icon input"
+      )[0].children.item("input")
+      .focus();
     } catch (error) {
       console.log("Document failed to select search component. ", error);
     }
