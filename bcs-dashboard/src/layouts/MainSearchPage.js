@@ -180,7 +180,12 @@ function SearchResultCard(props) {
           <Typography variant="body2" mb={3} align="left">
             {props.course.desc ? props.course.desc : props.desc}
           </Typography>
-          <Typography variant="body2" mb={3} align="left" style={{ marginBottom: 0 }}>
+          <Typography
+            variant="body2"
+            mb={3}
+            align="left"
+            style={{ marginBottom: 0 }}
+          >
             {props.course.cred ? "Credits: " + props.course.cred : ""}
           </Typography>
         </TaskWrapperContent>
@@ -196,7 +201,11 @@ function tooltipText(course, average) {
       {course.cred ? <h3>Credits: {course.cred}</h3> : ""}
       {course.prer ? <h3>Pre-reqs: {course.prer}</h3> : ""}
       {course.crer ? <h3>Co-reqs: {course.crer}</h3> : ""}
-      {average.average ? <h3>Historical average: {average.average.toFixed(2)}%</h3> : ""}
+      {average.average ? (
+        <h3>Historical average: {average.average.toFixed(2)}%</h3>
+      ) : (
+        ""
+      )}
       {average.average_past_5_yrs ? (
         <h3>5 year average: {average.average_past_5_yrs.toFixed(2)}%</h3>
       ) : (
@@ -230,9 +239,9 @@ function SearchCard(props) {
     history.push(`/course/${courseArr[0]}/${courseArr[1]}`);
     axios
       .get(
-        (window.location.hostname === "localhost" ? 
-        `http://${window.location.hostname}:5000` : 
-        window.location.origin) +
+        (window.location.hostname === "localhost"
+          ? `http://${window.location.hostname}:5000`
+          : window.location.origin) +
           "/getCourseInfo/" +
           courseInfo
       )
@@ -295,9 +304,9 @@ function PrerequisitesCard(props) {
   const getCourseInfo = (course) => {
     axios
       .get(
-        (window.location.hostname === "localhost" ? 
-        `http://${window.location.hostname}:5000` : 
-        window.location.origin) +
+        (window.location.hostname === "localhost"
+          ? `http://${window.location.hostname}:5000`
+          : window.location.origin) +
           "/getCourseInfo/" +
           course
       )
@@ -334,7 +343,10 @@ function PrerequisitesCard(props) {
       )}
       {courseListToDisplay.map((course) => {
         return (
-          <CourseCardStyling onClick={() => handleClick(course.code)} key={course.code}>
+          <CourseCardStyling
+            onClick={() => handleClick(course.code)}
+            key={course.code}
+          >
             <SearchResultCard course={course} title={course.code} />
           </CourseCardStyling>
         );
@@ -355,9 +367,9 @@ function DependenciesCard(props) {
       for (let course of dependencies) {
         axios
           .get(
-            (window.location.hostname === "localhost" ? 
-            `http://${window.location.hostname}:5000` : 
-            window.location.origin) +
+            (window.location.hostname === "localhost"
+              ? `http://${window.location.hostname}:5000`
+              : window.location.origin) +
               "/getCourseInfo/" +
               course
           )
@@ -526,7 +538,7 @@ function MainSearchPage() {
                     src={GoogleLogo}
                   ></img>
                 </Button>
-                <Button
+                {/* <Button
                   style={{ margin: "1px" }}
                   variant="outlined"
                   href="/auth/facebook"
@@ -540,7 +552,7 @@ function MainSearchPage() {
                     }}
                     src={FacebookLogo}
                   ></img>
-                </Button>
+                </Button> */}
                 <Button
                   style={{ margin: "1px" }}
                   variant="outlined"
