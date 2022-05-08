@@ -27,6 +27,7 @@ import {
 
 import { spacing } from "@material-ui/system";
 import CommentBox from "../pages/courseselector/CommentBox";
+import RedditBox from "../pages/courseselector/RedditBox";
 
 const Card = styled(MuiCard)`
   overflow: visible;
@@ -597,12 +598,15 @@ function MainSearchPage() {
               onContainerLoaded={onContainerReady}
             >
               <SearchCard onChange={setSelectedCourse} />
-              {course && (
+              {/* {course && (
                 <CommentBox
                   courseCode={course?.code}
                   courseNum={course?.num}
                   url={window.location.pathname}
                 />
+              )} */}
+              {course && (
+                <RedditBox courseCode={course?.code} courseNum={course?.num} />
               )}
             </Lane>
           </Grid>
