@@ -1,0 +1,6 @@
+# Config file for Google App Engine
+runtime: nodejs16
+env_variables:
+  ATLAS_URI: FILL_ME_IN # Enter ATLAS_URI here
+automatic_scaling:
+  max_instances: 1
