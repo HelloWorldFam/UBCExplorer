@@ -10,6 +10,7 @@ Hello! Welcome to the BCS Course Selector - the full stack application and repo 
 
 UBC Explorer is a product offering two solutions for students aimed at course search and degree planning: UBC Course Explorer and BCS Explorer.
 
+
 - UBC Course Explorer is a a modern course search tool that enables all students to browse UBC course prerequisites and dependencies.
 - BCS Explorer is a modern dashboard with increased functionality related to course search features such as a worklist builder, degree progress tracker, and overview for users to quickly see their stats.
 
