@@ -43,7 +43,7 @@ To set up your local environment, be sure to have the following installed:
 git clone https://github.com/HelloWorldFam/BCS-Course-Selector.git
 ```
 
-The directory of importance is the `bcs-dashboard`. Change directory into this directory and run the installation script. The `bcs-landing-page` is a separate directory for the landing page specifically found on `ubcexplorer.io/bcs`
+The directory of importance is the `bcs-dashboard`. Change directory into this directory and run the installation script. The `bcs-landing-page` is a separate directory for the landing page and is no longer in use. The landing page used is moved to `bcs-dashboard/src/pages/landingpage`
 
 ```
 cd bcs-dashboard
@@ -53,9 +53,6 @@ npm run install
 cd bcs-dashboard/backend
 npm install
 
-# if you want to run the landing page, you will also need to
-cd bcs-landing-page
-npm install
 ```
 
 To be able to read/write to the mongoDB database, you will need to add credentials.
