@@ -1,4 +1,4 @@
-# BCS-Course-Selector
+# UBC Explorer & BCS Dashboard
 
 ## Welcome
 
