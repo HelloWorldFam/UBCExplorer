@@ -21,7 +21,7 @@ We'd also love PRs. If you're thinking of a large PR, we advise opening up an is
 1. Configure and install the dependencies: `npm install`.
 1. Create a new branch: `git checkout -b my-branch-name`.
 1. Make your change.
-1. Push to your fork and [submit a pull request][https://github.com/HelloWorldFam/BCS-Course-Selector/pulls].
+1. Push to your fork and [submit a pull request](https://github.com/HelloWorldFam/UBCExplorer/pulls).
 1. Pat your self on the back and wait for your pull request to be reviewed and merged.
 
 Here are a few things you can do that will increase the likelihood of your pull request being accepted:
