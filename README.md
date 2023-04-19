@@ -2,17 +2,26 @@
 
 ## Welcome
 
-Hello! Welcome to the BCS Course Selector - the full stack application and repo hosting both the frontend and backend of the [UBCExplorer.io](https://ubcexplorer.io/) Course Search tool and the BCS Explorer / Degree planner [UBCExplorer.io/bcs](https://ubcexplorer.io/bcs)
+Hello! Welcome to the UBC Explorer project - the full stack application and repo hosting both the frontend and backend of the [UBC Course Search tool](https://ubcexplorer.io/)  and the [BCS Explorer / Degree planner](https://ubcexplorer.io/bcs).
+
+Try it out at 
+> [ubcexplorer.io](https://ubcexplorer.io/)
 
 ---
 
 ## Intro
 
-UBC Explorer is a product offering two solutions for students aimed at course search and degree planning: UBC Course Explorer and BCS Explorer.
+UBC Explorer is a product offering two solutions for students aimed at course search and degree planning: UBC Course Explorer and BCS Explorer. UBC Explorer was created in 2020 by a group of second degree students (BCS) at the University of British Columbia. It was due to the lack of planning tools offered to us as students. Students would plan their degree through a pdf which seemed silly and required a modern solution. 
+
+> Our mission was to provide students a seamless course search experience with a modern look. Additionally, we wanted to provide a dashboard for students to manage course worklists / course plans with emphasis on BCS program requirements.
+
+You can read our journey at [To Boldly Build: Insights for New Developers to Kickstart their Projects](https://medium.com/world-of-cultivation/to-boldly-build-insights-for-new-developers-to-kickstart-their-projects-d7354a15b396) about how we got started. After 3 years of serving the entire UBC student community with our course search tool, our team is graduating and decided to open source this project to enable future students to contribute. 
 
 
-- UBC Course Explorer is a a modern course search tool that enables all students to browse UBC course prerequisites and dependencies.
-- BCS Explorer is a modern dashboard with increased functionality related to course search features such as a worklist builder, degree progress tracker, and overview for users to quickly see their stats.
+### Products
+- [UBC Course Explorer](https://ubcexplorer.io/)  is a a modern course search tool that enables all students to browse UBC course prerequisites and dependencies.
+- [BCS Explorer and Dashboard ](https://ubcexplorer.io/bcs) is a modern dashboard with increased functionality related to course search features such as a worklist builder, degree progress tracker, and overview for users to quickly see their stats.
+- [UBC Explorer API](https://ubcexplorer.io/api) is an API enabled devs to access our MongoDB database containing our course data. We are proud to support numerous UBC developers in their projects.
 
 This work is to enable students to be incredibly efficient when course planning and to replace the pdf planner offered to UBC BCS students. The BCS Dashboard has been officially endorsed by the UBC BCS director and is home to over 1k users.
 
