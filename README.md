@@ -25,6 +25,22 @@ You can read our journey at [To Boldly Build: Insights for New Developers to Kic
 
 This work is to enable students to be incredibly efficient when course planning and to replace the pdf planner offered to UBC BCS students. The BCS Dashboard has been officially endorsed by the UBC BCS director and is home to over 1k users.
 
+### UBC Explorer Screenshots
+<details>
+	<summary>Expand to view Images</summary>
+
+  ![bcsexplorer_8](https://user-images.githubusercontent.com/10675973/233296463-dd2af219-0208-4ea0-8219-e7e8d48b794d.png)
+  ![bcsexplorer_7](https://user-images.githubusercontent.com/10675973/233296469-aa1d447b-aed5-4397-80d7-3eb52f37f637.png)
+  ![bcsexplorer_6](https://user-images.githubusercontent.com/10675973/233296474-1b1b53cd-d45d-4421-9043-8b5fdf60f880.png)
+  ![bcsexplorer_5](https://user-images.githubusercontent.com/10675973/233296480-387fcbde-4bf4-4889-8405-3ca3a4516734.png)
+  ![bcsexplorer_4](https://user-images.githubusercontent.com/10675973/233296403-5c4d6423-967c-415e-92df-475897673a65.png)
+  ![bcsexplorer_3](https://user-images.githubusercontent.com/10675973/233296441-7dca650f-8f02-48ae-a9ae-14268326b866.png)
+  ![bcsexplorer_2](https://user-images.githubusercontent.com/10675973/233296443-ce6a38e2-ef0e-46a5-b3eb-6c1e972390ba.png)
+  ![bcsexplorer_1](https://user-images.githubusercontent.com/10675973/233296458-0c9f624e-3155-43c1-930b-a3e8ff693af1.png)
+  ![bcsexplorer_9](https://user-images.githubusercontent.com/10675973/233296461-353a3566-9d0f-4f22-a682-1bfad329de35.png)
+  
+</details>
+
 ## Contents
 
 - [Intro](#intro)
