@@ -153,9 +153,9 @@ If you need help, feel free to join our Discord community and inteact with other
 
 ## Contributors
 A huge thanks to all the contributors working to maintain the project.
-- mrbenc88
-- jerry-hall
-- scott-m-king
-- JamesJHPark
-- brendeny
-- schung53
+
+<a href="https://github.com/HelloWorldFam/UBCExplorer/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=HelloWorldFam/UBCExplorer" />
+</a>
+
+
