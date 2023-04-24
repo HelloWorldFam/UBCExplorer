@@ -147,7 +147,7 @@ We have adopted a [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Support
 
-If you need help, feel free to join our Discord community and inteact with other UBC Explorer Devs.
+If you need help, feel free to join our Discord community and interact with other UBC Explorer Devs.
 
 [Discord](https://discord.gg/sF8KMPFYu2)
 
