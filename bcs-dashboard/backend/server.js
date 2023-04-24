@@ -106,7 +106,7 @@ const GitHubOAuthProduction = new GitHubStrategy(
 
 const GoogleOauthProduction = new GoogleOauth20Strategy(
   {
-    clientID: process.env.GOOGLE_CLIENTSECRET,
+    clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENTSECRET,
     callbackURL: hostname + "/auth/google/callback",
   },
