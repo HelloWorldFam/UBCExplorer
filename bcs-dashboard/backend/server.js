@@ -52,31 +52,31 @@ app.use(passport.initialize()); // Used to initialize passport
 app.use(passport.session()); // Used to persist login sessions
 
 //Facebook Strategy config
-const FacebookOauthProduction = new FacebookStrategy(
-  {
-    clientID: "2828647350596227",
-    clientSecret: "afde4d264c365d946882ec076bf5d4cd",
-    callbackURL: hostname + "/auth/facebook/callback",
-    profileFields: ["id", "email", "first_name", "last_name", "photos"],
-  },
-  function (accessToken, refreshToken, profile, done) {
-    console.log(profile);
-    Users.findOrCreate(
-      { email: profile._json.email },
-      {
-        facebookId: profile._json.id,
-        firstName: profile._json.first_name,
-        lastName: profile._json.last_name,
-        courses: [],
-      },
-      function (err, user) {
-        user.picture = profile.photos[0].value;
-        user.save();
-        done(err, user.email);
-      }
-    );
-  }
-);
+// const FacebookOauthProduction = new FacebookStrategy(
+//   {
+//     clientID: "2828647350596227",
+//     clientSecret: "",
+//     callbackURL: hostname + "/auth/facebook/callback",
+//     profileFields: ["id", "email", "first_name", "last_name", "photos"],
+//   },
+//   function (accessToken, refreshToken, profile, done) {
+//     console.log(profile);
+//     Users.findOrCreate(
+//       { email: profile._json.email },
+//       {
+//         facebookId: profile._json.id,
+//         firstName: profile._json.first_name,
+//         lastName: profile._json.last_name,
+//         courses: [],
+//       },
+//       function (err, user) {
+//         user.picture = profile.photos[0].value;
+//         user.save();
+//         done(err, user.email);
+//       }
+//     );
+//   }
+// );
 
 // Github strategy.
 const GitHubOAuthProduction = new GitHubStrategy(
@@ -130,7 +130,7 @@ const GoogleOauthProduction = new GoogleOauth20Strategy(
   }
 );
 
-passport.use(FacebookOauthProduction);
+// passport.use(FacebookOauthProduction);
 
 passport.use(GitHubOAuthProduction);
 
