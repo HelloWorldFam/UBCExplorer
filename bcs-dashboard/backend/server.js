@@ -82,7 +82,7 @@ const FacebookOauthProduction = new FacebookStrategy(
 const GitHubOAuthProduction = new GitHubStrategy(
   {
     clientID: "Iv1.b83becaf95ef5ce1",
-    clientSecret: "71b0cfc8bc19dcf09f5173f5a8949398022adffd",
+    clientSecret: process.env.GITHUB_CLIENTSECRET,
     callbackURL: hostname + "/auth/github/callback",
     scope: ["user"],
   },
@@ -106,9 +106,8 @@ const GitHubOAuthProduction = new GitHubStrategy(
 
 const GoogleOauthProduction = new GoogleOauth20Strategy(
   {
-    clientID:
-      "610240877212-muh7g8rvb1pficemikp3r3vdfaobgo9f.apps.googleusercontent.com",
-    clientSecret: "MpRbTT5AssctwpN0Id0GHIwe",
+    clientID: process.env.GOOGLE_CLIENTSECRET,
+    clientSecret: process.env.GOOGLE_CLIENTSECRET,
     callbackURL: hostname + "/auth/google/callback",
   },
   function (accessToken, refreshToken, profile, done) {
