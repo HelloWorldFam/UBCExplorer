@@ -51,38 +51,11 @@ app.use(
 app.use(passport.initialize()); // Used to initialize passport
 app.use(passport.session()); // Used to persist login sessions
 
-//Facebook Strategy config
-// const FacebookOauthProduction = new FacebookStrategy(
-//   {
-//     clientID: "2828647350596227",
-//     clientSecret: "",
-//     callbackURL: hostname + "/auth/facebook/callback",
-//     profileFields: ["id", "email", "first_name", "last_name", "photos"],
-//   },
-//   function (accessToken, refreshToken, profile, done) {
-//     console.log(profile);
-//     Users.findOrCreate(
-//       { email: profile._json.email },
-//       {
-//         facebookId: profile._json.id,
-//         firstName: profile._json.first_name,
-//         lastName: profile._json.last_name,
-//         courses: [],
-//       },
-//       function (err, user) {
-//         user.picture = profile.photos[0].value;
-//         user.save();
-//         done(err, user.email);
-//       }
-//     );
-//   }
-// );
-
 // Github strategy.
 const GitHubOAuthProduction = new GitHubStrategy(
   {
     clientID: "Iv1.b83becaf95ef5ce1",
-    clientSecret: process.env.GITHUB_CLIENTSECRET,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
     callbackURL: hostname + "/auth/github/callback",
     scope: ["user"],
   },
@@ -107,7 +80,7 @@ const GitHubOAuthProduction = new GitHubStrategy(
 const GoogleOauthProduction = new GoogleOauth20Strategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENTSECRET,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: hostname + "/auth/google/callback",
   },
   function (accessToken, refreshToken, profile, done) {
@@ -130,22 +103,9 @@ const GoogleOauthProduction = new GoogleOauth20Strategy(
   }
 );
 
-// passport.use(FacebookOauthProduction);
-
 passport.use(GitHubOAuthProduction);
 
 passport.use(GoogleOauthProduction);
-
-// passport.use(new TwitterStrategy({
-//   clientID: 'must sign up with facebook for one',
-//   clientSecret: 'must sign up with facebook for one',
-//   callbackURL: 'our callback URL'
-// },
-//   function (accessToken, refreshToken, profile, done) {
-//     Users.findOrCreate({ email: profile.email }, { firstName: profile.firstName, lastName: profile.lastName }, function (err, user) {
-//       return done(err, user);
-//     })
-//   }));
 
 // Used to stuff a piece of information into a cookie
 passport.serializeUser((user, done) => {
