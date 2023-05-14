@@ -9,7 +9,6 @@ import { Slider, Slide, Caption } from "react-materialize";
 // Logos
 import GithubLogo from "./LogoFolder/Github.png";
 import GoogleLogo from "./LogoFolder/Google.png";
-import FacebookLogo from "./LogoFolder/Facebook.png";
 // added
 import {
   Button as MuiButton,
@@ -64,10 +63,10 @@ class IconMenu extends React.Component {
     if (window.innerWidth < 993) {
       this.setState({ anchorEl: document.querySelector("#root > div > nav > header > div") })
     } else {
-    this.setState({ anchorEl: event.currentTarget });
+      this.setState({ anchorEl: event.currentTarget });
     }
-  
-}
+
+  }
 
   handleClose = () => {
     this.setState({ anchorEl: null });
@@ -103,9 +102,6 @@ class IconMenu extends React.Component {
             <Button style={{ margin: '3px', }} variant="outlined" href="/auth/google">
               <strong>Google</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={GoogleLogo}></img>
             </Button>
-            <Button style={{ margin: '3px', }} variant="outlined" href="/auth/facebook">
-              <strong>Facebook</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={FacebookLogo}></img>
-            </Button>
             <Button style={{ margin: '3px', }} variant="outlined" href="/auth/github">
               <strong>Github</strong> <img style={{ width: '52px', height: '16px', marginLeft: '10px' }} src={GithubLogo}></img>
             </Button>
@@ -121,7 +117,7 @@ class IconMenu extends React.Component {
 // for documentation on react-materialize: http://react-materialize.github.io/react-materialize/
 export default function Banner() {
 
-  
+
   return (
     <section id="home">
       <Slider
@@ -143,7 +139,7 @@ export default function Banner() {
             <h2>Course Schedule</h2>
             <h5 className="">Plan your degree</h5>
             <IconMenu />
-            
+
           </Caption>
         </Slide>
         <Slide image={<img alt="" src={ThirdPic} />}>
