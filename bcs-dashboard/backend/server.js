@@ -13,7 +13,6 @@ const fetch = require("node-fetch");
 const path = require("path");
 const keepDynoAwake = require("./helpers/keepDynoAwake");
 
-const FacebookStrategy = require("passport-facebook").Strategy;
 
 const GitHubStrategy = require("passport-github2").Strategy;
 
@@ -157,24 +156,6 @@ app.get(
 app.get(
   "/auth/google/callback",
   passport.authenticate("google"),
-  (req, res) => {
-    console.log("Successfully logged in");
-    res.redirect("/bcs/start");
-  }
-);
-
-// passport.authenticate middleware is used here to authenticate the request
-app.get(
-  "/auth/facebook",
-  passport.authenticate("facebook", {
-    scope: "email",
-  })
-);
-
-// The middleware receives the data from Google and runs the function on Strategy config
-app.get(
-  "/auth/facebook/callback",
-  passport.authenticate("facebook"),
   (req, res) => {
     console.log("Successfully logged in");
     res.redirect("/bcs/start");

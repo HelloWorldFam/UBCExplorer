@@ -65,7 +65,6 @@ import {
 // Logos
 import GithubLogo from "./LogoFolder/Github.png";
 import GoogleLogo from "./LogoFolder/Google.png";
-import FacebookLogo from "./LogoFolder/Facebook.png";
 
 
 
@@ -119,9 +118,6 @@ class IconMenu extends React.Component {
             <Typography variant="h6" style={{ padding: '0 10px 10px 0', }}>Sign in with an OAuth provider:</Typography>
             <Button style={{ margin: '3px', }} variant="outlined" href="/auth/google">
               <strong>Google</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={GoogleLogo}></img>
-            </Button>
-            <Button style={{ margin: '3px', }} variant="outlined" href="/auth/facebook">
-              <strong>Facebook</strong> <img style={{ width: '16px', height: '16px', marginLeft: '10px' }} src={FacebookLogo}></img>
             </Button>
             <Button style={{ margin: '3px', }} variant="outlined" href="/auth/github">
               <strong>Github</strong> <img style={{ width: '52px', height: '16px', marginLeft: '10px' }} src={GithubLogo}></img>

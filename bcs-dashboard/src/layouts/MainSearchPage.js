@@ -13,7 +13,6 @@ import DirectionsIcon from "@material-ui/icons/Directions";
 // Logos
 import GithubLogo from "../pages/landingpage/Header/SignInLogos/Github.png";
 import GoogleLogo from "../pages/landingpage/Header/SignInLogos/Google.png";
-import FacebookLogo from "../pages/landingpage/Header/SignInLogos/Facebook.png";
 
 import {
   Card as MuiCard,
@@ -26,7 +25,6 @@ import {
 } from "@material-ui/core";
 
 import { spacing } from "@material-ui/system";
-import CommentBox from "../pages/courseselector/CommentBox";
 import RedditBox from "../pages/courseselector/RedditBox";
 
 const Card = styled(MuiCard)`
@@ -145,7 +143,7 @@ function SearchResultCard(props) {
           (window.location.hostname === "localhost"
             ? `http://${window.location.hostname}:5000`
             : window.location.origin) +
-            `/grades?dept=${toSearch[0].toUpperCase()}&code=${toSearch[1]}`
+          `/grades?dept=${toSearch[0].toUpperCase()}&code=${toSearch[1]}`
         )
         .then((res) => {
           setAverage(res.data);
@@ -243,8 +241,8 @@ function SearchCard(props) {
         (window.location.hostname === "localhost"
           ? `http://${window.location.hostname}:5000`
           : window.location.origin) +
-          "/getCourseInfo/" +
-          courseInfo
+        "/getCourseInfo/" +
+        courseInfo
       )
       .then((res) => {
         setDesc(res.data.desc);
@@ -308,8 +306,8 @@ function PrerequisitesCard(props) {
         (window.location.hostname === "localhost"
           ? `http://${window.location.hostname}:5000`
           : window.location.origin) +
-          "/getCourseInfo/" +
-          course
+        "/getCourseInfo/" +
+        course
       )
       .then((res) => {
         if (res.data.desc) {
@@ -371,8 +369,8 @@ function DependenciesCard(props) {
             (window.location.hostname === "localhost"
               ? `http://${window.location.hostname}:5000`
               : window.location.origin) +
-              "/getCourseInfo/" +
-              course
+            "/getCourseInfo/" +
+            course
           )
           .then((res) => {
             if (res.data.desc) {
@@ -539,21 +537,6 @@ function MainSearchPage() {
                     src={GoogleLogo}
                   ></img>
                 </Button>
-                {/* <Button
-                  style={{ margin: "1px" }}
-                  variant="outlined"
-                  href="/auth/facebook"
-                >
-                  <strong>Facebook</strong>{" "}
-                  <img
-                    style={{
-                      width: "16px",
-                      height: "16px",
-                      marginLeft: "10px",
-                    }}
-                    src={FacebookLogo}
-                  ></img>
-                </Button> */}
                 <Button
                   style={{ margin: "1px" }}
                   variant="outlined"
@@ -598,13 +581,6 @@ function MainSearchPage() {
               onContainerLoaded={onContainerReady}
             >
               <SearchCard onChange={setSelectedCourse} />
-              {/* {course && (
-                <CommentBox
-                  courseCode={course?.code}
-                  courseNum={course?.num}
-                  url={window.location.pathname}
-                />
-              )} */}
               {course && (
                 <RedditBox courseCode={course?.code} courseNum={course?.num} />
               )}
